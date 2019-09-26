@@ -1,0 +1,16 @@
+<div class="inputs-container">
+    <div class="inputs-group inputs-group--horizontal">
+        <label class="inputs-label" for="ceiling-height">
+            Ceiling Height (H)
+        </label>
+        {{ measurementUnit }} <input id="ceiling-height" class="inputs-input" [(ngModel)]="ceilingHeight" type="number" min="0"/>
+    </div>
+    <div class="inputs-group inputs-group--horizontal">
+        <label class="inputs-label" for="lecture-width">
+            Width of Lecture Area (W)
+        </label>
+        {{ measurementUnit }} <input id="lecture-width" class="inputs-input" [(ngModel)]="lectureWidth" type="number" min="0"/>
+    </div>
+</div>
+
+<app-slide-toggle [leftOption]="MeasurementUnitsEnum.Meters" [rightOption]="MeasurementUnitsEnum.Feet" [(ngModel)]="measurementUnit" (ngModelChange)="onUnitChange($event)"></app-slide-toggle>

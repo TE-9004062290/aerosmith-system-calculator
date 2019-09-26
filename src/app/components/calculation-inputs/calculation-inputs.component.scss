@@ -1,0 +1,13 @@
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+
+    .inputs-group {
+        display: flex;
+        &.inputs-group--horizontal {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}
