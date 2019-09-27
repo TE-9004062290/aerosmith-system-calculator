@@ -24,7 +24,7 @@ export class SlideToggleComponent implements ControlValueAccessor {
   @Output() onToggle: EventEmitter<string> = new EventEmitter();
   
   private innerValue: string = this.defaultOption;
-  private knobPosition: string = this.innerValue === this.leftOption ? "left" : "right";
+  public knobPosition: string = this.innerValue === this.leftOption ? "left" : "right";
 
   constructor() { }
 
