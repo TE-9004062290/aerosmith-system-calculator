@@ -19,7 +19,7 @@ export class CalculationInputsComponent implements OnInit {
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   public inputGroup: CalculationInputs = new CalculationInputs();
 
-  @Output() onUnitChange: EventEmitter<MeasurementUnits> = new EventEmitter();
+  @Output() onUnitChange: EventEmitter<CalculationInputs> = new EventEmitter();
   @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   ngOnInit() {
@@ -31,10 +31,10 @@ export class CalculationInputsComponent implements OnInit {
    */
   changeUnits(measurementUnit: MeasurementUnits) {
     this.inputGroup.measurementUnit = measurementUnit;
-    this.onUnitChange.emit(measurementUnit);
+    this.onUnitChange.emit(this.inputGroup);
   }
 
   calculate() {
-    this.onCalculate.emit();
+    this.onCalculate.emit(this.inputGroup);
   }
 }
