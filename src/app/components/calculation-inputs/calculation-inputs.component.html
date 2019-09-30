@@ -3,25 +3,45 @@
         <label class="inputs-label" for="ceiling-height">
             Ceiling Height (H)
         </label>
-        {{ measurementUnit }} <input id="ceiling-height" class="inputs-input" [(ngModel)]="ceilingHeight" type="number" min="0"/>
+        <div class="inputs-value">
+            <input id="ceiling-height" class="inputs-input" [(ngModel)]="inputGroup.ceilingHeight" type="number" min="0"/>
+            <span class="unit-label">
+                {{ measurementUnit }} 
+            </span>
+        </div>
     </div>
     <div class="inputs-group inputs-group--horizontal">
         <label class="inputs-label" for="lecture-width">
             Width of Lecture Area (W)
         </label>
-        {{ measurementUnit }} <input id="lecture-width" class="inputs-input" [(ngModel)]="lectureWidth" type="number" min="0"/>
+        <div class="inputs-value">
+            <input id="lecture-width" class="inputs-input" [(ngModel)]="inputGroup.lectureWidth" type="number" min="0"/>
+            <span class="unit-label">
+                {{ measurementUnit }} 
+            </span>
+        </div>
     </div>
     <div class="inputs-group inputs-group--horizontal">
         <label class="inputs-label" for="presenter-height">
             Presenter's Height (T1)
         </label>
-        {{ measurementUnit }} <input id="presenter-height" class="inputs-input" [(ngModel)]="presenterHeight" type="number" min="0"/>
+        <div class="inputs-value">
+            <input id="presenter-height" class="inputs-input" [(ngModel)]="inputGroup.presenterHeight" type="number" min="0"/>
+            <span class="unit-label">
+                {{ measurementUnit }} 
+            </span>
+        </div>
     </div>
     <div class="inputs-group inputs-group--horizontal">
         <label class="inputs-label" for="audience-height">
             Audience's Height (T2)
         </label>
-        {{ measurementUnit }} <input id="audience-height" class="inputs-input" [(ngModel)]="audienceHeight" type="number" min="0"/>
+        <div class="inputs-value">
+            <input id="audience-height" class="inputs-input" [(ngModel)]="inputGroup.audienceHeight" type="number" min="0"/>
+            <span class="unit-label">
+                {{ measurementUnit }} 
+            </span>
+        </div>
     </div>
 </div>
 
@@ -29,7 +49,7 @@
     <app-slide-toggle 
         [leftOption]="MeasurementUnitsEnum.Meters" 
         [rightOption]="MeasurementUnitsEnum.Feet" 
-        [(ngModel)]="measurementUnit" 
-        (ngModelChange)="onUnitChange($event)">
+        [(ngModel)]="inputGroup.measurementUnit" 
+        (ngModelChange)="changeUnits($event)">
     </app-slide-toggle>
 </div>

@@ -1,11 +1,9 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { CalculationInputs } from '@app/models/calculation-inputs.model';
+import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { convertMetersToFeet, convertFeetToMeters } from '@app/helpers/unit-conversion.helper';
 
-export enum MeasurementUnits {
-  Meters = "m",
-  Feet = "ft"
-}
 
 @Component({
   selector: 'app-calculation-inputs',
@@ -19,11 +17,10 @@ export class CalculationInputsComponent implements OnInit {
   public MeasurementUnitsEnum = MeasurementUnits;
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  public ceilingHeight: number = 0;
-  public lectureWidth: number = 0;
-  public presenterHeight: number = 0;
-  public audienceHeight: number = 0;
+  public inputGroup: CalculationInputs = new CalculationInputs();
 
+  @Output() onUnitChange: EventEmitter<MeasurementUnits> = new EventEmitter();
+  @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   ngOnInit() {
 
@@ -32,18 +29,12 @@ export class CalculationInputsComponent implements OnInit {
   /* This makes the potentially dangerous assumption that the previous unit has
    * actually changed
    */
-  onUnitChange(measurementUnit: MeasurementUnits) {
-    const conversionFunc: Function = ((unit) => {
-      switch (unit) {
-        case MeasurementUnits.Meters:
-          return convertFeetToMeters;
-        case MeasurementUnits.Feet:
-          return convertMetersToFeet;
-      }
-    })(measurementUnit);
-    this.ceilingHeight = conversionFunc(this.ceilingHeight);
-    this.lectureWidth = conversionFunc(this.lectureWidth);
-    this.presenterHeight = conversionFunc(this.presenterHeight);
-    this.audienceHeight = conversionFunc(this.audienceHeight);
+  changeUnits(measurementUnit: MeasurementUnits) {
+    this.inputGroup.measurementUnit = measurementUnit;
+    this.onUnitChange.emit(measurementUnit);
+  }
+
+  calculate() {
+    this.onCalculate.emit();
   }
 }
