@@ -3,7 +3,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CalculationInputs } from '@app/models/calculation-inputs.model';
 import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { convertMetersToFeet, convertFeetToMeters } from '@app/helpers/unit-conversion.helper';
 
 
 @Component({
