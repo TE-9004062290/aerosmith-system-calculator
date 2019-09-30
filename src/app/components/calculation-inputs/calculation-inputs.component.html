@@ -11,6 +11,25 @@
         </label>
         {{ measurementUnit }} <input id="lecture-width" class="inputs-input" [(ngModel)]="lectureWidth" type="number" min="0"/>
     </div>
+    <div class="inputs-group inputs-group--horizontal">
+        <label class="inputs-label" for="presenter-height">
+            Presenter's Height (T1)
+        </label>
+        {{ measurementUnit }} <input id="presenter-height" class="inputs-input" [(ngModel)]="presenterHeight" type="number" min="0"/>
+    </div>
+    <div class="inputs-group inputs-group--horizontal">
+        <label class="inputs-label" for="audience-height">
+            Audience's Height (T2)
+        </label>
+        {{ measurementUnit }} <input id="audience-height" class="inputs-input" [(ngModel)]="audienceHeight" type="number" min="0"/>
+    </div>
 </div>
 
-<app-slide-toggle [leftOption]="MeasurementUnitsEnum.Meters" [rightOption]="MeasurementUnitsEnum.Feet" [(ngModel)]="measurementUnit" (ngModelChange)="onUnitChange($event)"></app-slide-toggle>
+<div style="width: fit-content;">
+    <app-slide-toggle 
+        [leftOption]="MeasurementUnitsEnum.Meters" 
+        [rightOption]="MeasurementUnitsEnum.Feet" 
+        [(ngModel)]="measurementUnit" 
+        (ngModelChange)="onUnitChange($event)">
+    </app-slide-toggle>
+</div>
