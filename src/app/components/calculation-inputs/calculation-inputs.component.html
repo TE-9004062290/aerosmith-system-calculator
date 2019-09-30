@@ -25,4 +25,11 @@
     </div>
 </div>
 
-<app-slide-toggle [leftOption]="MeasurementUnitsEnum.Meters" [rightOption]="MeasurementUnitsEnum.Feet" [(ngModel)]="measurementUnit" (ngModelChange)="onUnitChange($event)"></app-slide-toggle>
+<div style="width: fit-content;">
+    <app-slide-toggle 
+        [leftOption]="MeasurementUnitsEnum.Meters" 
+        [rightOption]="MeasurementUnitsEnum.Feet" 
+        [(ngModel)]="measurementUnit" 
+        (ngModelChange)="onUnitChange($event)">
+    </app-slide-toggle>
+</div>

@@ -1,4 +1,5 @@
 .slide-toggle-container {
+    cursor: pointer;
     display: flex;
     align-items: center;
 
@@ -20,6 +21,7 @@
     }
 
     .label-left, .label-right {
+        cursor: inherit;
         opacity: .5;
         transition: opacity 125ms linear;
     }
@@ -35,7 +37,6 @@
         margin-right: 14px;
 
         .slide-toggle-knob-wrapper {
-            cursor: grab;
             position: absolute;
             z-index: 1;
             top: -3px;

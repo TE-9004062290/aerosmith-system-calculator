@@ -29,6 +29,9 @@ export class CalculationInputsComponent implements OnInit {
 
   }
 
+  /* This makes the potentially dangerous assumption that the previous unit has
+   * actually changed
+   */
   onUnitChange(measurementUnit: MeasurementUnits) {
     const conversionFunc: Function = ((unit) => {
       switch (unit) {
@@ -43,5 +46,4 @@ export class CalculationInputsComponent implements OnInit {
     this.presenterHeight = conversionFunc(this.presenterHeight);
     this.audienceHeight = conversionFunc(this.audienceHeight);
   }
-
 }
