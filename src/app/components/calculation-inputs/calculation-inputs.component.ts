@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { CalculationInputs } from '@app/models/calculation-inputs.model';
 import { CalculationOutputs } from '@app/models/calculation-outputs.model';
@@ -16,14 +16,16 @@ export class CalculationInputsComponent implements OnInit {
 
   public MeasurementUnitsEnum = MeasurementUnits;
 
-  public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  public inputGroup: CalculationInputs = new CalculationInputs();
-
+  private _inputGroup: CalculationInputs = null;
+  get inputGroup() { return this._inputGroup || new CalculationInputs(); };
+  @Input() set inputGroup(val: CalculationInputs) {
+    this._inputGroup = val;
+  }
+  @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   @Output() onUnitChange: EventEmitter<CalculationInputs> = new EventEmitter();
   @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   ngOnInit() {
-
   }
 
   /* This makes the potentially dangerous assumption that the previous unit has

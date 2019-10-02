@@ -1,1 +1,37 @@
-<app-calculation-inputs></app-calculation-inputs>
+<div class="calculation-theatre-container">
+    <div class="sidebar">
+        <div class="calculation-theatre-title">
+            IP Mic Calculator (TBD)
+        </div>
+        <div class="calculation-theatre-settings">
+            <div class="calculation-theatre-setting" style="width: fit-content;">
+                <app-radio-toggle
+                    toggleLabel="Select measurement units"
+                    leftLabel="Meters (m)"
+                    rightLabel="Feet (ft)"
+                    [leftOption]="MeasurementUnitsEnum.Meters"
+                    [rightOption]="MeasurementUnitsEnum.Feet"
+                    [(ngModel)]="inputGroup.measurementUnit"
+                    (ngModelChange)="changeUnits($event)">
+                </app-radio-toggle>
+            </div>
+            <div class="calculation-theatre-setting" style="width: fit-content;">
+                <app-radio-toggle
+                    toggleLabel="Calculation Priority"
+                    leftLabel="Audio quality"
+                    rightLabel="Capture area"
+                    [leftOption]="quality"
+                    [rightOption]="capture-area"
+                    [(ngModel)]="calculationPriority">
+                </app-radio-toggle>
+            </div>
+        </div>
+        <div class="calculation-theatre-inputs">
+            <app-calculation-inputs [inputGroup]="inputGroup"></app-calculation-inputs>
+        </div>
+        <div @animateOutputArea *ngIf="showOutputs">        
+            <app-calculation-outputs></app-calculation-outputs>
+        </div>
+        <button style="margin-top: 8px;" (click)="calculate()">Calculate</button>
+    </div>
+</div>

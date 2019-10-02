@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Roman';
+    src: url('/assets/common/SSTUI-Roman.ttf') format('truetype'),
+         url('/assets/common/SSTUI-Roman.ttf') format('woff');
+    font-style: normal;
+}
+
+
+*, html, pre, code, kbd, samp, button, input, optgroup, select, textarea, popover, tooltip {
+  font-family:
+    'Roman',
+    'SSTUI',
+    'Light',
+    'Bold',
+    'Lucida Grande',
+    Arial,
+    'ヒラギノ角ゴ Pro W3',
+    'Hiragino Kaku Gothic Pro',
+    'メイリオ',
+    Meiryo,
+    Osaka,
+    '黒体',
+    'simhei',
+    '맑은 고딕',
+    'Malgun Gothic',
+    'Lucida Sans Unicode',
+    'Segoe UI',
+    'ＭＳ Ｐゴシック',
+    'MS PGothic',
+    sans-serif;
+    font-size: 14px;
+}
+
+/*CAUTION: 맑은 고딕 and Malgun Gothic must be single quotation.*/
+
+
+.bold-text {
+    font-family: 'roman', sans-serif;
+    font-weight: 600;
+}
+.light-text {
+    font-family: 'roman', sans-serif;
+    font-weight: 200;
+}
+.roman-text {
+    font-family: 'roman', sans-serif;
+    font-weight: 400;
+}
+
+.blue-bold-text {
+    color: #039BE5;
+    font-weight: bold;
+  }

@@ -1,5 +1,6 @@
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { convertMetersToFeet, convertFeetToMeters } from '@app/helpers/unit-conversion.helper';
+import { round } from '@app/helpers/arithmetic.helper';
 
 export class MeasurableContainer {
 
@@ -33,7 +34,7 @@ export class MeasurableContainer {
                 }
               })(newUnit);
               Object.keys((<typeof MeasurableContainer>this.constructor).MEASURABLES).forEach(propName => {
-                  this[propName] = conversionFunc(this[propName]);
+                  this[propName] = round(conversionFunc(this[propName]), 2);
               });
         }
     }
@@ -54,7 +55,7 @@ export class MeasurableContainer {
                 get: () => this[`m_${propName}`],                       
                 set: (val: any) => {    
                     if (val && typeof(val) === "number" && val > (<typeof MeasurableContainer>this.constructor).MEASURABLES[propName]) {
-                        this[`m_${propName}`] = val;
+                        this[`m_${propName}`] = round(val, 2);
                     }                                                                                                                    
                 }
             });    

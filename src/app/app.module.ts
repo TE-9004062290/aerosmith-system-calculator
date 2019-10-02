@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from '@app/app.component';
@@ -9,7 +10,7 @@ import { CalculationTheatreComponent } from '@main/calculation-theatre/calculati
 
 import { CalculationInputsComponent } from '@components/calculation-inputs/calculation-inputs.component';
 import { CalculationOutputsComponent } from '@components/calculation-outputs/calculation-outputs.component';
-import { SlideToggleComponent } from '@components/slide-toggle/slide-toggle.component';
+import { RadioToggleComponent } from './components/radio-toggle/radio-toggle.component';
 
 @NgModule({
   declarations: [
@@ -17,10 +18,11 @@ import { SlideToggleComponent } from '@components/slide-toggle/slide-toggle.comp
     CalculationTheatreComponent,
     CalculationInputsComponent,
     CalculationOutputsComponent,
-    SlideToggleComponent
+    RadioToggleComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule
   ],

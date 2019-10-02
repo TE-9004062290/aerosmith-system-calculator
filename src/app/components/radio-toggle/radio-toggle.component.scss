@@ -1,0 +1,26 @@
+.radio-toggle-container {
+    display: flex;
+    flex-direction: column;
+
+    .radio-toggle-label {
+        font-weight: bold;
+    }
+    
+    .radio-toggle-options {
+        display: flex;
+        margin-top: 8px;
+        .radio-toggle-option {
+            display: flex;
+            align-items: center;
+            &:first-child {
+                margin-right: 21px;
+            }
+        }
+        .radio-option {
+            margin: .5ex 7px .5ex 0px;
+        }
+        .radio-option-label {
+
+        }
+    }
+}

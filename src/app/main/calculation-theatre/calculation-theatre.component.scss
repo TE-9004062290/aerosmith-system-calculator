@@ -1,0 +1,26 @@
+.calculation-theatre-container {
+    .sidebar {
+        width: 25%;
+    }
+    .calculation-theatre-title {
+        font-family: SST Pro;
+        font-size: 23px;
+        line-height: 30px;
+        /* identical to box height */
+
+
+        /* Blue / #006DB3 */
+
+        color: #006DB3;
+        margin: 16px 0px 16px 0px;
+    }
+    .calculation-theatre-settings {
+        box-sizing: border-box;
+        border-top: 1px solid #E6EBEF;
+        border-bottom: 1px solid #E6EBEF;
+        .calculation-theatre-setting {
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+    }
+}
