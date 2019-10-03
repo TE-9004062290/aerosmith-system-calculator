@@ -1,0 +1,44 @@
+.graphical-stage-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid #E6EBEF;
+    border-bottom: 1px solid #E6EBEF;
+    margin: 0 auto;
+
+    transition: height 1s linear, width 1s linear;
+
+    .resizer-grid {
+        height: 100%;
+        // display: grid;
+        // height: 100%;
+        // grid-template-columns: [col-left] 1% [col-main] 98% [col-right] 1%;
+        // grid-template-rows: [row-top] 0% [row-main] 100% [row-bottom] 0%;
+        // grid-column-gap: 0%;
+        // transition: grid-column-gap 1s linear;
+        // &:hover {
+        //     grid-column-gap: 25%;
+        //     grid-template-columns: [col-left] 1% [col-main] 48% [col-right] 1%;
+        // }
+        .main {
+            position: relative;
+            top: 0%;
+            width: 100%;
+            height: 100%;
+            transition: height 1s linear, top 1s linear, width 1s linear;
+            margin: 0 auto;
+            &:hover {
+                height: 40%;
+                top: 30%;
+                width: 100%;
+            }
+        }
+    }
+
+    .lecturer {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 11%;
+    }
+}

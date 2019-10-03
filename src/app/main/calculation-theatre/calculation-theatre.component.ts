@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
@@ -19,23 +18,17 @@ import { CalculationOutputs } from '@app/models/calculation-outputs.model';
   animations: [
     trigger('animateOutputArea', [
       transition(':enter', [
-        style({ height: '0px', opacity: 0 }),
-        animate('.25s', style({ height: '*', opacity: 1 })),
+        style({ height: '0px'}),
+        style({ opacity: 0 }),
+        animate('.25s', style({ height: '*'})),
+        animate('.5s', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        style({ height: '*', opacity: 1 }),
-        animate('.25s', style({ height: '0px', opacity: 0 }))
+        style({ opacity: 1 }),
+        style({ height: '*' }),
+        animate('.075s', style({ opacity: 0 })),
+        animate('.25s', style({ height: '0px' }))
       ])
-      // state('display', style({
-      //   height: '*',
-      //   opacity: 1
-      // })),
-      // state('hide', style({
-      //   height: '0px',
-      //   opacity: 0
-      // })),
-      // transition('hide=>display', animate('1500ms')),
-      // transition('display=>hide', animate('1500ms'))
     ])
   ]
 })

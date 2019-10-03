@@ -4,18 +4,17 @@
             IP Mic Calculator (TBD)
         </div>
         <div class="calculation-theatre-settings">
-            <div class="calculation-theatre-setting" style="width: fit-content;">
+            <div class="calculation-theatre-setting">
                 <app-radio-toggle
                     toggleLabel="Select measurement units"
                     leftLabel="Meters (m)"
                     rightLabel="Feet (ft)"
                     [leftOption]="MeasurementUnitsEnum.Meters"
                     [rightOption]="MeasurementUnitsEnum.Feet"
-                    [(ngModel)]="inputGroup.measurementUnit"
-                    (ngModelChange)="changeUnits($event)">
+                    [(ngModel)]="inputGroup.measurementUnit">
                 </app-radio-toggle>
             </div>
-            <div class="calculation-theatre-setting" style="width: fit-content;">
+            <div class="calculation-theatre-setting">
                 <app-radio-toggle
                     toggleLabel="Calculation Priority"
                     leftLabel="Audio quality"
@@ -33,5 +32,8 @@
             <app-calculation-outputs></app-calculation-outputs>
         </div>
         <button style="margin-top: 8px;" (click)="calculate()">Calculate</button>
+    </div>
+    <div class="graphical-output">
+        <app-graphical-stage></app-graphical-stage>
     </div>
 </div>

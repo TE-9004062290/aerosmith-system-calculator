@@ -1,6 +1,15 @@
 .calculation-theatre-container {
+    display: flex;
+    .graphical-output {
+        margin: 10% 5%;
+        width: 75%;
+        height: 500px;
+        border: black solid 1px;
+    }
     .sidebar {
         width: 25%;
+        min-width: 320px;
+        padding-left: 24px;
     }
     .calculation-theatre-title {
         font-family: SST Pro;
@@ -12,13 +21,14 @@
         /* Blue / #006DB3 */
 
         color: #006DB3;
-        margin: 16px 0px 16px 0px;
+        margin: 100px 0px 16px 0px;
     }
     .calculation-theatre-settings {
         box-sizing: border-box;
         border-top: 1px solid #E6EBEF;
         border-bottom: 1px solid #E6EBEF;
         .calculation-theatre-setting {
+            width: 100%;
             margin-top: 16px;
             margin-bottom: 16px;
         }

@@ -4,10 +4,10 @@ import { convertMetersToFeet, convertFeetToMeters } from '@app/helpers/unit-conv
 
 export class CalculationInputs extends MeasurableContainer {
     protected static readonly MEASURABLES = {
-        ceilingHeight: 0,
-        lectureWidth: 0,
-        presenterHeight: 0,
-        audienceHeight: 0
+        ceilingHeight: 2.5,
+        lectureWidth: 4,
+        presenterHeight: 1.5,
+        audienceHeight: 1.5
     };
 
     private m_ceilingHeight: number = CalculationInputs.MEASURABLES.ceilingHeight;

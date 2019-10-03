@@ -11,6 +11,8 @@ import { CalculationTheatreComponent } from '@main/calculation-theatre/calculati
 import { CalculationInputsComponent } from '@components/calculation-inputs/calculation-inputs.component';
 import { CalculationOutputsComponent } from '@components/calculation-outputs/calculation-outputs.component';
 import { RadioToggleComponent } from './components/radio-toggle/radio-toggle.component';
+import { SvgStandingPersonComponent } from './components/svg-standing-person/svg-standing-person.component';
+import { GraphicalStageComponent } from './components/graphical-stage/graphical-stage.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { RadioToggleComponent } from './components/radio-toggle/radio-toggle.com
     CalculationTheatreComponent,
     CalculationInputsComponent,
     CalculationOutputsComponent,
-    RadioToggleComponent
+    RadioToggleComponent,
+    SvgStandingPersonComponent,
+    GraphicalStageComponent
   ],
   imports: [
     BrowserModule,

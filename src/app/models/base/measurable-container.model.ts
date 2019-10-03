@@ -54,8 +54,13 @@ export class MeasurableContainer {
             Object.defineProperty(this, propName, {                                           
                 get: () => this[`m_${propName}`],                       
                 set: (val: any) => {    
-                    if (val && typeof(val) === "number" && val > (<typeof MeasurableContainer>this.constructor).MEASURABLES[propName]) {
-                        this[`m_${propName}`] = round(val, 2);
+                    if (val && typeof(val) === "number") {
+                        if (val >= (<typeof MeasurableContainer>this.constructor).MEASURABLES[propName]) {
+                            this[`m_${propName}`] = round(val, 2);
+                        } else {
+                            this[`m_${propName}`] = (<typeof MeasurableContainer>this.constructor).MEASURABLES[propName];
+                        }
+
                     }                                                                                                                    
                 }
             });    
