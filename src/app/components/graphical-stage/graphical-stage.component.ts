@@ -15,7 +15,11 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   get majorAxis() {
-    return this.calculatorService.inputs["lectureWidth"] > this.calculatorService.inputs["ceilingHeight"] ? "width" : "height";
+    if (this.calculatorService.inputs["lectureWidth"] === this.calculatorService.inputs["ceilingHeight"]) {
+      return "square";
+    } else {
+      return this.calculatorService.inputs["lectureWidth"] > this.calculatorService.inputs["ceilingHeight"] ? "width" : "height";
+    }
   }
 
   get ratio() {
@@ -25,6 +29,7 @@ export class GraphicalStageComponent implements OnInit {
   get stageWidth() {
     switch (this.majorAxis) {
       case "width":
+      case "square":
         return 100;
       case "height":
         return this.calculatorService.inputs["lectureWidth"] / this.calculatorService.inputs["ceilingHeight"] * 100;
@@ -36,6 +41,7 @@ export class GraphicalStageComponent implements OnInit {
       case "width":
         return this.calculatorService.inputs["ceilingHeight"] / this.calculatorService.inputs["lectureWidth"] * 100;
       case "height":
+      case "square":
         return 100;
     }
   }
@@ -45,5 +51,16 @@ export class GraphicalStageComponent implements OnInit {
       return (100 - this.stageHeight) / 2;
     }
     return 0;
+  }
+
+  get presenterHeight() {
+    const majorAxisLength = this.majorAxis === "width" ? this.calculatorService.inputs["lectureWidth"] : this.calculatorService.inputs["ceilingHeight"];
+    if (this.majorAxis === "width") {
+      return 1 / majorAxisLength * 50;
+    } else if (this.majorAxis === "height") {
+      return 1 / majorAxisLength / this.ratio * 50;
+    } else if (this.majorAxis === "square") {
+      return 1 / majorAxisLength * 50;
+    }
   }
 }

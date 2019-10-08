@@ -2,11 +2,12 @@
     <div class="resizer-grid">
         <div class="main" style="border: solid black 1px" 
             [ngStyle]="{'width': stageWidth + '%', 'height': stageHeight + '%', 'top': top + '%'}" >
-            <app-svg-standing-person width="2%" height="2%" style="position: absolute; bottom: 0;"></app-svg-standing-person>
+            <app-svg-standing-person [width]="presenterHeight + '%'" style="position: absolute; bottom: 0; width: 100%;"></app-svg-standing-person>
         </div>
     </div>
 </div>
 <div>
+    <div>{{ ratio }}</div>
     <div>
         {{ majorAxis }}
     </div>
