@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalculatorService } from '@app/services/calculator.service';
 
 import {
   trigger,
@@ -42,7 +43,7 @@ export class CalculationTheatreComponent implements OnInit {
 
   public showOutputs = false;
 
-  constructor() { }
+  constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
   }

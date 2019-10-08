@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
+import { CalculatorService } from '@app/services/calculator.service';
 import { CalculationInputs } from '@app/models/calculation-inputs.model';
 import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -12,10 +14,11 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 })
 export class CalculationInputsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public calculatorService: CalculatorService) { }
 
   public MeasurementUnitsEnum = MeasurementUnits;
 
+  private $inputs: BehaviorSubject<CalculationInputs>;
   private _inputGroup: CalculationInputs = null;
   get inputGroup() { return this._inputGroup || new CalculationInputs(); };
   @Input() set inputGroup(val: CalculationInputs) {
@@ -26,6 +29,10 @@ export class CalculationInputsComponent implements OnInit {
   @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   ngOnInit() {
+    this.$inputs = this.calculatorService.$getInputs();
+    this.$inputs.subscribe(inputGroup => {
+      this._inputGroup = inputGroup;
+    });
   }
 
   /* This makes the potentially dangerous assumption that the previous unit has

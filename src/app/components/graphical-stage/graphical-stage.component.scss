@@ -10,16 +10,6 @@
 
     .resizer-grid {
         height: 100%;
-        // display: grid;
-        // height: 100%;
-        // grid-template-columns: [col-left] 1% [col-main] 98% [col-right] 1%;
-        // grid-template-rows: [row-top] 0% [row-main] 100% [row-bottom] 0%;
-        // grid-column-gap: 0%;
-        // transition: grid-column-gap 1s linear;
-        // &:hover {
-        //     grid-column-gap: 25%;
-        //     grid-template-columns: [col-left] 1% [col-main] 48% [col-right] 1%;
-        // }
         .main {
             position: relative;
             top: 0%;
