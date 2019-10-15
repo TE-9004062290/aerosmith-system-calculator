@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 
 import { CalculatorService } from '@app/services/calculator.service';
 import { CalculationInputs } from '@app/models/calculation-inputs.model';
@@ -45,5 +45,9 @@ export class CalculationInputsComponent implements OnInit {
 
   calculate() {
     this.onCalculate.emit(this.inputGroup);
+  }
+
+  yeet(e: OnChanges) {
+    e.value = e.value < 2.5 ? 2.5 : e.value;
   }
 }
