@@ -1,15 +1,31 @@
 .graphical-stage-container {
     position: relative;
-    height: 100%;
+    // height: 100%;
     width: 100%;
     margin: 0 auto;
 
     transition: height 1s linear, width 1s linear;
 
     .resizer-grid {
+        position: relative;
+        // top: 0;
         height: 100%;
+        transition: top 1s linear;
+        display: inline-block;
+        width: 100%;
+        .dummy {
+            margin-top: 67%;
+        }
         .main {
-            position: relative;
+            position: absolute;
+            top: 0%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            // position: relative;
+            box-sizing: border-box;
+            border-top: solid black 1px;
+            border-bottom: solid black 1px;
             top: 0%;
             width: 100%;
             height: 100%;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 // import { SvgStandingPersonComponent } from '@components/svg-standing-person';
 
@@ -15,6 +15,7 @@ export class GraphicalStageComponent implements OnInit {
   public majorAxis: 'width' | 'height' | 'square' = 'square';
   public widthHeightRatio: number = 1;
 
+  private containerHeight: number = 500;
   private stageWidthPercentage: number = 100;
   private stageHeightPercentage: number = 100;
   private stageTopOffsetPercentage: number = 0;
@@ -29,11 +30,18 @@ export class GraphicalStageComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
+    this.containerHeight = this.resizerRef.nativeElement.offsetWidth / 3;
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.calculateProportions();
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.containerHeight = this.resizerRef.nativeElement.offsetWidth / 3;
+    this.calculateProportions();
   }
 
   private calculateProportions() {
@@ -92,6 +100,6 @@ export class GraphicalStageComponent implements OnInit {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
 
-    return presenterCeilingRatio * 502 * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
+    return presenterCeilingRatio * this.containerHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
   }
 }

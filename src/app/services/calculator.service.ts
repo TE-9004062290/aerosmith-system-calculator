@@ -11,8 +11,8 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 })
 export class CalculatorService {
   public static readonly DEFAULTS = {
-    ceilingHeight: 4.5,
-    lectureWidth: 4,
+    ceilingHeight: 5,
+    lectureWidth: 5,
     presenterHeight: 1.7,
     audienceHeight: 1.2
   };

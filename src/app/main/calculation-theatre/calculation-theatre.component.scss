@@ -1,9 +1,12 @@
 .calculation-theatre-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 30% 70%;
     .graphical-output {
-        margin: 10% 5%;
-        width: 75%;
-        height: 500px;
+        // margin: 5% auto;
+        justify-self: center;
+        width: 90%;
+        // max-width: 500px;
+        box-sizing: border-box;
     }
     .sidebar {
         width: 25%;

@@ -1,6 +1,18 @@
 <div class="graphical-stage-container">
-    <div #container class="resizer-grid">
-        <div #resizer class="main" style="border: solid black 1px" 
+    <div #container class="resizer-grid" [ngStyle]="{'top': '-' + stageTopOffsetPercentage + '%'}">
+        <div class="dummy"></div>
+        <div #resizer class="main" 
+            [ngStyle]="{'width': stageWidthPercentage + '%', 'height': stageHeightPercentage + '%', 'top': stageTopOffsetPercentage + '%'}" >
+            <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
+                <app-svg-standing-person></app-svg-standing-person>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="graphical-stage-container">
+    <div class="resizer-grid" [ngStyle]="{'top': '-' + stageTopOffsetPercentage + '%'}">
+        <div class="dummy"></div>
+        <div class="main" 
             [ngStyle]="{'width': stageWidthPercentage + '%', 'height': stageHeightPercentage + '%', 'top': stageTopOffsetPercentage + '%'}" >
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
