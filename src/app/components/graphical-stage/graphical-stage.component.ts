@@ -43,6 +43,9 @@ export class GraphicalStageComponent implements OnInit {
     this.stageHeightPercentage = this.getStageHeightPercentage();
     this.stageTopOffsetPercentage = this.getStageTopOffsetPercentage();
     this.presenterWidthPercentage = this.getPresenterWidthPercentage();
+    // setTimeout(() => {
+    //   console.log(parseInt(getComputedStyle(this.resizerRef.nativeElement).width));
+    // }, 1000);
   }
 
   private getMajorAxis(): 'width' | 'height' | 'square' {
@@ -88,12 +91,7 @@ export class GraphicalStageComponent implements OnInit {
   private getPresenterWidthPercentage(): number {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
-    if (this.majorAxis === 'width') {
-      return (presenterCeilingRatio * (1 / this.widthHeightRatio) ) * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO * 75;
-    } else if (this.majorAxis === 'height') {
-      // return presenterCeilingRatio
-      return this.calculatorService.presenterHeight / this.calculatorService.ceilingHeight * 100 * 0.3463406889982537 * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
-    }
-    return 0;
+
+    return presenterCeilingRatio * 502 * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
   }
 }
