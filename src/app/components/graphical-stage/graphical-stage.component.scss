@@ -2,8 +2,6 @@
     position: relative;
     height: 100%;
     width: 100%;
-    border-top: 1px solid #E6EBEF;
-    border-bottom: 1px solid #E6EBEF;
     margin: 0 auto;
 
     transition: height 1s linear, width 1s linear;
@@ -17,18 +15,19 @@
             height: 100%;
             transition: height 1s linear, top 1s linear, width 1s linear;
             margin: 0 auto;
-            &:hover {
-                height: 40%;
-                top: 30%;
-                width: 100%;
-            }
         }
     }
 
     .lecturer {
         position: absolute;
-        bottom: 0;
+        bottom: -5px;
         left: 50%;
         width: 11%;
     }
+}
+
+.person-wrapper {
+    position: absolute;
+    bottom: 0;
+    transition: width 1s linear;
 }

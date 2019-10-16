@@ -17,6 +17,7 @@ export class CalculationInputsComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   public MeasurementUnitsEnum = MeasurementUnits;
+  public CalculatorDefaults = CalculatorService.DEFAULTS;
 
   private $inputs: BehaviorSubject<CalculationInputs>;
   private _inputGroup: CalculationInputs = null;
@@ -47,7 +48,7 @@ export class CalculationInputsComponent implements OnInit {
     this.onCalculate.emit(this.inputGroup);
   }
 
-  yeet(e: OnChanges) {
+  yeet(e) {
     e.value = e.value < 2.5 ? 2.5 : e.value;
   }
 }

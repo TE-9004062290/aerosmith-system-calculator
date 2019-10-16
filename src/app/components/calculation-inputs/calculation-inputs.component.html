@@ -5,7 +5,7 @@
                 Ceiling height
             </label>
             <div class="inputs-value">
-                <input id="ceiling-height" #ceilHeight class="inputs-input" [(ngModel)]="calculatorService.inputs.ceilingHeight" (change)="yeet(ceilHeight)" type="number" min="2.5"/>
+                <input id="ceiling-height" #ceilHeight class="inputs-input" [(ngModel)]="calculatorService.ceilingHeight" (change)="yeet(ceilHeight)" type="number" [min]="CalculatorDefaults.ceilingHeight"/>
                 <span class="unit-label">
                     {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>
@@ -18,7 +18,7 @@
                 Presentation area width
             </label>
             <div class="inputs-value">
-                <input id="lecture-width" class="inputs-input" [(ngModel)]="calculatorService.inputs.lectureWidth" type="number" min="0"/>
+                <input id="lecture-width" class="inputs-input" [(ngModel)]="calculatorService.lectureWidth" type="number" [min]="CalculatorDefaults.lectureWidth"/>
                 <span class="unit-label">
                     {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>
@@ -31,7 +31,7 @@
                 Presenter height
             </label>
             <div class="inputs-value">
-                <input id="presenter-height" class="inputs-input" [(ngModel)]="calculatorService.inputs.presenterHeight" type="number" min="0"/>
+                <input id="presenter-height" class="inputs-input" [(ngModel)]="calculatorService.presenterHeight" type="number" min="0"/>
                 <span class="unit-label">
                     {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
                 </span>
@@ -44,7 +44,7 @@
                 Audience height
             </label>
             <div class="inputs-value">
-                <input id="audience-height" class="inputs-input" [(ngModel)]="calculatorService.inputs.audienceHeight" type="number" min="0"/>
+                <input id="audience-height" class="inputs-input" [(ngModel)]="calculatorService.audienceHeight" type="number" min="0"/>
                 <span class="unit-label">
                     {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>

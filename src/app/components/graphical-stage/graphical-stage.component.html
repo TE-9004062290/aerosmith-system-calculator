@@ -1,23 +1,27 @@
 <div class="graphical-stage-container">
-    <div class="resizer-grid">
-        <div class="main" style="border: solid black 1px" 
-            [ngStyle]="{'width': stageWidth + '%', 'height': stageHeight + '%', 'top': top + '%'}" >
-            <app-svg-standing-person [width]="presenterHeight + '%'" style="position: absolute; bottom: 0; width: 100%;"></app-svg-standing-person>
+    <div #container class="resizer-grid">
+        <div #resizer class="main" style="border: solid black 1px" 
+            [ngStyle]="{'width': stageWidthPercentage + '%', 'height': stageHeightPercentage + '%', 'top': stageTopOffsetPercentage + '%'}" >
+            <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + '%'}">
+                <app-svg-standing-person></app-svg-standing-person>
+            </div>
         </div>
     </div>
 </div>
 <div>
-    <div>{{ ratio }}</div>
     <div>
-        {{ majorAxis }}
+        Major Axis: {{ majorAxis }}
     </div>
     <div>
-        {{ stageWidth }}
+        Width/Height Ratio: {{ widthHeightRatio }}
     </div>
     <div>
-        {{ stageHeight }}
+        Stage Width Percentage: {{ stageWidthPercentage }}%
     </div>
     <div>
-        {{ top }}
+        Stage Height Percentage: {{ stageHeightPercentage }}%
+    </div>
+    <div>
+        Stage Vertical Offset {{ stageTopOffsetPercentage }}%
     </div>
 </div>
