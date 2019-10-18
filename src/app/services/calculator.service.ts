@@ -11,10 +11,24 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 })
 export class CalculatorService {
   public static readonly DEFAULTS = {
-    ceilingHeight: 5,
-    lectureWidth: 5,
+    ceilingHeight: 3,
+    lectureWidth: 9.13,
     presenterHeight: 1.7,
     audienceHeight: 1.2
+  };
+
+  public static readonly MINIMUMS = {
+    ceilingHeight: 2,
+    lectureWidth: 4,
+    presenterHeight: 1.5,
+    audienceHeight: 1
+  };s
+
+  public static readonly MAXIMUMS = {
+    ceilingHeight: 30,
+    lectureWidth: 62,
+    presenterHeight: 2.5,
+    audienceHeight: 2
   };
 
   private m_ceilingHeight: number = CalculatorService.DEFAULTS.ceilingHeight;

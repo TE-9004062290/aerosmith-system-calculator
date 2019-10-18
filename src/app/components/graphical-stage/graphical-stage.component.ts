@@ -12,10 +12,15 @@ import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-
 })
 export class GraphicalStageComponent implements OnInit {
 
+  public CalculatorMins = CalculatorService.MINIMUMS;
+  public CalculatorMaxes = CalculatorService.MAXIMUMS;
   public majorAxis: 'width' | 'height' | 'square' = 'square';
   public widthHeightRatio: number = 1;
 
   private containerHeight: number = 500;
+  private wrapperWidth: number = 500;
+  private cHeight: number = 0;
+  private halfSquare: boolean = false;
   private stageWidthPercentage: number = 100;
   private stageHeightPercentage: number = 100;
   private stageTopOffsetPercentage: number = 0;
@@ -26,38 +31,53 @@ export class GraphicalStageComponent implements OnInit {
   
   @ViewChild('resizer', null) resizerRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
+  @ViewChild('wrapper', null) wrapperRef: ElementRef;
+  @ViewChild('stage', null) stageRef: ElementRef;
 
   constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
-    this.containerHeight = this.resizerRef.nativeElement.offsetWidth / 3;
+    this.containerHeight = this.resizerRef ? this.resizerRef.nativeElement.offsetWidth / 1 : 0;
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.calculateProportions();
       }
     });
+    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth / 1 : this.wrapperWidth;
+    this.calculateProportions();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.containerHeight = this.resizerRef.nativeElement.offsetWidth / 3;
+    this.containerHeight = this.resizerRef ? this.resizerRef.nativeElement.offsetWidth / 1 : 0;
+    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth / 1 : this.wrapperWidth;
     this.calculateProportions();
   }
 
   private calculateProportions() {
     this.majorAxis = this.getMajorAxis();
     this.widthHeightRatio = this.getWidthHeightRatio();
-    this.stageWidthPercentage = this.getStageWidthPercentage();
-    this.stageHeightPercentage = this.getStageHeightPercentage();
-    this.stageTopOffsetPercentage = this.getStageTopOffsetPercentage();
+    // this.stageWidthPercentage = this.getStageWidthPercentage();
+    // this.stageHeightPercentage = this.getStageHeightPercentage();
+    // this.stageTopOffsetPercentage = this.getStageTopOffsetPercentage();
+
+    this.halfSquare = this.widthHeightRatio <= 2;
+    this.cHeight = this.wrapperWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+    if (this.halfSquare) {
+      this.cHeight = 500 / this.widthHeightRatio; // determine max width and half it
+    }
+    if (this.majorAxis === 'height') {
+      this.cHeight = 600;
+    }
+
     this.presenterWidthPercentage = this.getPresenterWidthPercentage();
-    // setTimeout(() => {
-    //   console.log(parseInt(getComputedStyle(this.resizerRef.nativeElement).width));
-    // }, 1000);
   }
 
   private getMajorAxis(): 'width' | 'height' | 'square' {
     const cService = this.calculatorService;
+    // if (Math.abs(cService.lectureWidth - cService.ceilingHeight) <= 2) {
+    //   return 
+    // }
     if (cService.lectureWidth === cService.ceilingHeight) {
       return 'square';
     } else {
@@ -69,6 +89,17 @@ export class GraphicalStageComponent implements OnInit {
     return this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
   }
 
+  private getPresenterWidthPercentage(): number {
+    const cService = this.calculatorService;
+    const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
+    console.log(presenterCeilingRatio)
+    console.log(this.cHeight);
+    console.log(SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO);
+    // return presenterCeilingRatio * this.cHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
+    return presenterCeilingRatio * this.cHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
+  }
+
+  /* QUARANTINED
   private getStageWidthPercentage(): number {
     switch (this.majorAxis) {
       case 'width':
@@ -95,11 +126,5 @@ export class GraphicalStageComponent implements OnInit {
     }
     return 0;
   }
-
-  private getPresenterWidthPercentage(): number {
-    const cService = this.calculatorService;
-    const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
-
-    return presenterCeilingRatio * this.containerHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
-  }
+  */
 }

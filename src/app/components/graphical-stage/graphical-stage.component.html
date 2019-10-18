@@ -1,26 +1,26 @@
-<div class="graphical-stage-container">
-    <div #container class="resizer-grid" [ngStyle]="{'top': '-' + stageTopOffsetPercentage + '%'}">
-        <div class="dummy"></div>
-        <div #resizer class="main" 
-            [ngStyle]="{'width': stageWidthPercentage + '%', 'height': stageHeightPercentage + '%', 'top': stageTopOffsetPercentage + '%'}" >
+<div #wrapper class="stage-wrapper" [ngStyle]="{'width': halfSquare ? '75%' : '100%'}">
+    <div #container class="stage-container">
+        <div #stage class="stage" [ngStyle]="{'height': cHeight + 'px', 'width': majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '90%'}">
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
-        </div>
-    </div>
-</div>
-<div class="graphical-stage-container">
-    <div class="resizer-grid" [ngStyle]="{'top': '-' + stageTopOffsetPercentage + '%'}">
-        <div class="dummy"></div>
-        <div class="main" 
-            [ngStyle]="{'width': stageWidthPercentage + '%', 'height': stageHeightPercentage + '%', 'top': stageTopOffsetPercentage + '%'}" >
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
+            <div class="lecture-width-ruler ruler-horizontal">
+                <div class="bar"></div>
+                <input id="lecture-width" class="inputs-input" type="number" 
+                    [min]="CalculatorMins.lectureWidth"
+                    [max]="CalculatorMaxes.lectureWidth"
+                    [(ngModel)]="calculatorService.lectureWidth"/>
+                <div class="bar"></div>
+            </div>
         </div>
     </div>
+    <div class="vertical-bar" [ngStyle]="{'height': cHeight + 'px'}"></div>
 </div>
-<div>
+
+<div class="debug-stats">
     <div>
         Major Axis: {{ majorAxis }}
     </div>

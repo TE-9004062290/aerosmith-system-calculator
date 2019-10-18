@@ -1,49 +1,73 @@
-.graphical-stage-container {
+.stage-wrapper {
     position: relative;
-    // height: 100%;
     width: 100%;
+    transition: width .25s linear;
     margin: 0 auto;
-
-    transition: height 1s linear, width 1s linear;
-
-    .resizer-grid {
-        position: relative;
-        // top: 0;
-        height: 100%;
-        transition: top 1s linear;
-        display: inline-block;
+    &.half-ratio {
+        width: 50%;
+    }
+    .stage-container {
         width: 100%;
-        .dummy {
-            margin-top: 67%;
-        }
-        .main {
-            position: absolute;
-            top: 0%;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            // position: relative;
-            box-sizing: border-box;
-            border-top: solid black 1px;
-            border-bottom: solid black 1px;
-            top: 0%;
-            width: 100%;
-            height: 100%;
-            transition: height 1s linear, top 1s linear, width 1s linear;
+        border-bottom: solid blue 2px;
+        border-top: solid blue 2px;
+        .stage {
+            position: relative;
+            width: 90%;
+            // background-color: gold;
             margin: 0 auto;
+            transition: height .25s linear, width .25s linear;
+            .person-wrapper {
+                position: absolute;
+                bottom: 0;
+                transition: width .25s linear;
+            }
+            .lecture-width-ruler.ruler-horizontal {
+                width: 100%;
+                height: 20px;
+                display: grid;
+                grid-template-columns: 1fr 50px 1fr;
+                position: absolute;
+                bottom: -30px;
+                align-content: center;
+                input {
+                    height: 18px;
+                    line-height: 11px;
+                    font-size: 11px;
+                    text-align: center;
+                    box-sizing: content-box;
+                    border: 1px solid #E6EBEF;
+                    border-radius: 3px;
+                    background-color: #006DB3;
+                    color: white;
+                }
+                .bar {
+                    height: 4px;
+                    align-self: center;
+                    background-color: #006DB3;
+                }
+            }
         }
     }
-
-    .lecturer {
+    .vertical-bar {
+        width: 3px;
+        background-color: #006DB3;
+        transition: height .25s linear;
         position: absolute;
-        bottom: -5px;
-        left: 50%;
-        width: 11%;
+        top: 0;
+        left: -32px;
     }
 }
 
-.person-wrapper {
+.debug-stats {
     position: absolute;
-    bottom: 0;
-    transition: width 1s linear;
+    top: 75%;
+    left: 5%;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
