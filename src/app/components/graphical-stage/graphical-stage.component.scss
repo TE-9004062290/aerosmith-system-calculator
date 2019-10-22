@@ -21,6 +21,11 @@
                 bottom: 0;
                 transition: width .25s linear;
             }
+            .microphone-wrapper {
+                position: absolute;
+                top: 0;
+                transition: width .25s linear;
+            }
             .lecture-width-ruler.ruler-horizontal {
                 width: 100%;
                 height: 20px;

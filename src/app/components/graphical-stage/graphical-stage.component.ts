@@ -16,6 +16,7 @@ export class GraphicalStageComponent implements OnInit {
   public CalculatorMaxes = CalculatorService.MAXIMUMS;
   public majorAxis: 'width' | 'height' | 'square' = 'square';
   public widthHeightRatio: number = 1;
+  public captureWidthPercentage: number = 0;
 
   private containerHeight: number = 500;
   private wrapperWidth: number = 500;
@@ -25,7 +26,7 @@ export class GraphicalStageComponent implements OnInit {
   private stageHeightPercentage: number = 100;
   private stageTopOffsetPercentage: number = 0;
 
-  private presenterWidthPercentage: number = 0;
+  public presenterWidthPercentage: number = 0;
 
   private innerElementWidth: number = 1;
   
@@ -71,6 +72,7 @@ export class GraphicalStageComponent implements OnInit {
     }
 
     this.presenterWidthPercentage = this.getPresenterWidthPercentage();
+    this.captureWidthPercentage = this.getRadiusWidthPercentage();
   }
 
   private getMajorAxis(): 'width' | 'height' | 'square' {
@@ -99,32 +101,10 @@ export class GraphicalStageComponent implements OnInit {
     return presenterCeilingRatio * this.cHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
   }
 
-  /* QUARANTINED
-  private getStageWidthPercentage(): number {
-    switch (this.majorAxis) {
-      case 'width':
-      case 'square':
-        return 100;
-      case 'height':
-        return this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight * 100;
-    }
+  private getRadiusWidthPercentage(): number {
+    const cService = this.calculatorService;
+    const captureDiameterWidthRatio = 6 / cService.lectureWidth;
+    console.log(captureDiameterWidthRatio);
+    return captureDiameterWidthRatio * 100;
   }
-
-  private getStageHeightPercentage(): number {
-    switch (this.majorAxis) {
-      case "width":
-        return this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth * 100;
-      case "height":
-      case "square":
-        return 100;
-    }
-  }
-
-  private getStageTopOffsetPercentage(): number {
-    if (this.majorAxis === "width") {
-      return (100 - this.stageHeightPercentage) / 2;
-    }
-    return 0;
-  }
-  */
 }

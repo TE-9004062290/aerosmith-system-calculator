@@ -1,0 +1,12 @@
+.svg-microphone-container {
+    position: relative;
+    .svg-microphone {
+        position: absolute;
+        width: 50%;
+    }
+    .svg-radius {
+        position: absolute;
+        width: 1000%;
+        left: -500%;
+    }
+}

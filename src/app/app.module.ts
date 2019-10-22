@@ -13,6 +13,7 @@ import { CalculationOutputsComponent } from '@components/calculation-outputs/cal
 import { RadioToggleComponent } from './components/radio-toggle/radio-toggle.component';
 import { SvgStandingPersonComponent } from './components/svg-standing-person/svg-standing-person.component';
 import { GraphicalStageComponent } from './components/graphical-stage/graphical-stage.component';
+import { SvgMicrophoneComponent } from './components/svg-microphone/svg-microphone.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GraphicalStageComponent } from './components/graphical-stage/graphical-
     CalculationOutputsComponent,
     RadioToggleComponent,
     SvgStandingPersonComponent,
-    GraphicalStageComponent
+    GraphicalStageComponent,
+    SvgMicrophoneComponent
   ],
   imports: [
     BrowserModule,
