@@ -4,21 +4,19 @@
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
-            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%'}">
+            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
                 <app-svg-microphone></app-svg-microphone>
             </div>
-            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%'}">
-                <app-svg-microphone></app-svg-microphone>
-            </div>
-            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%'}">
+            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
                 <app-svg-microphone></app-svg-microphone>
             </div>
             <div class="lecture-width-ruler ruler-horizontal">
                 <div class="bar"></div>
-                <input id="lecture-width" class="inputs-input" type="number" 
+                <input id="lecture-width" #inputWidth class="inputs-input" type="number" 
                     [min]="CalculatorMins.lectureWidth"
                     [max]="CalculatorMaxes.lectureWidth"
-                    [(ngModel)]="calculatorService.lectureWidth"/>
+                    [(ngModel)]="calculatorService.lectureWidth"
+                    (ngModelChange)="yeet($event, inputWidth)"/>
                 <div class="bar"></div>
             </div>
         </div>
@@ -32,14 +30,5 @@
     </div>
     <div>
         Width/Height Ratio: {{ widthHeightRatio }}
-    </div>
-    <div>
-        Stage Width Percentage: {{ stageWidthPercentage }}%
-    </div>
-    <div>
-        Stage Height Percentage: {{ stageHeightPercentage }}%
-    </div>
-    <div>
-        Stage Vertical Offset {{ stageTopOffsetPercentage }}%
     </div>
 </div>
