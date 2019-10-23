@@ -40,10 +40,6 @@ export class GraphicalStageComponent implements OnInit {
   public capturePosition: number = 0;
 
   public cHeight: number = 0;
-  public halfSquare: boolean = false;
-  private stageWidthPercentage: number = 100;
-  private stageHeightPercentage: number = 100;
-  private stageTopOffsetPercentage: number = 0;
 
   public presenterWidthPercentage: number = 0;
   
@@ -100,9 +96,9 @@ export class GraphicalStageComponent implements OnInit {
   private calculateStageHeight(mode: RatioMode) {
     switch (mode) {
       case RatioMode.Height:
-        return 600;
+        return this.pageHeight / 3;
       case RatioMode.HalfSquareWidth:
-        return 500 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+        return this.pageHeight / 2.5 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
       case RatioMode.Width:
         return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
     }
