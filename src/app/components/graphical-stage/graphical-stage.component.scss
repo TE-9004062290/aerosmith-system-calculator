@@ -5,9 +5,16 @@
     margin: 0 auto;
     border-bottom: solid blue 2px;
     border-top: solid blue 2px;
-    &.half-ratio {
-        width: 50%;
+    &[app-display-mode='width'] {
+        width: 100%;
     }
+    &[app-display-mode='halfsquarewidth'] {
+        width: 75%;
+    }
+    &[app-display-mode='height'] {
+        width: 75%;
+    }
+    
     .stage-container {
         width: 90%;
         margin: 0 auto;

@@ -1,6 +1,6 @@
-<div #wrapper class="stage-wrapper" [ngStyle]="{'width': halfSquare ? '75%' : '100%'}">
+<div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
     <div #container class="stage-container">
-        <div #stage class="stage" [ngStyle]="{'height': cHeight + 'px', 'width': majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '100%'}">
+        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
@@ -25,9 +25,9 @@
 </div>
 
 <div class="debug-stats">
-    <!-- <div>
-        Major Axis: {{ majorAxis }}
-    </div> -->
+    <div>
+        Ratio Mode: {{ RatioModeEnum[ratioMode] }}
+    </div>
     <div>Page Height: {{ pageHeight }}</div>
     <div>
         Height: {{ cHeight + 'px' }}
