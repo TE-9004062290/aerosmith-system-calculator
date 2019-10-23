@@ -3,13 +3,14 @@
     width: 100%;
     transition: width .25s linear;
     margin: 0 auto;
+    border-bottom: solid blue 2px;
+    border-top: solid blue 2px;
     &.half-ratio {
         width: 50%;
     }
     .stage-container {
-        width: 100%;
-        border-bottom: solid blue 2px;
-        border-top: solid blue 2px;
+        width: 90%;
+        margin: 0 auto;
         .stage {
             position: relative;
             width: 90%;
@@ -65,7 +66,7 @@
 
 .debug-stats {
     position: absolute;
-    top: 75%;
+    top: 0;
     left: 5%;
 }
 

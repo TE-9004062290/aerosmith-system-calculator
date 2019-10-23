@@ -17,19 +17,22 @@ export class CalculatorService {
     audienceHeight: 1.2
   };
 
-  public static readonly MINIMUMS = {
+  public static readonly METER_MINIMUMS = {
     ceilingHeight: 2,
     lectureWidth: 4,
     presenterHeight: 1.5,
     audienceHeight: 1
   };s
 
-  public static readonly MAXIMUMS = {
+  public static readonly METER_MAXIMUMS = {
     ceilingHeight: 30,
     lectureWidth: 62,
     presenterHeight: 2.5,
     audienceHeight: 2
   };
+
+  public static MINIMUMS = CalculatorService.METER_MINIMUMS;
+  public static MAXIMUMS = CalculatorService.METER_MAXIMUMS;
 
   private m_ceilingHeight: number = CalculatorService.DEFAULTS.ceilingHeight;
   private m_lectureWidth: number = CalculatorService.DEFAULTS.lectureWidth;

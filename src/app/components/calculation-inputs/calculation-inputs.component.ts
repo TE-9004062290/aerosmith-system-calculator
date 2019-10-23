@@ -49,4 +49,19 @@ export class CalculationInputsComponent implements OnInit {
   calculate() {
     this.onCalculate.emit(this.inputGroup);
   }
+
+  public updateInput(inputField, inputElement) {
+    let numerical = parseFloat(inputElement.value);
+    const cService = this.calculatorService;
+    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null}) {
+      if (!isNaN(numerical)) {
+        numerical = numerical < this.CalculatorMins[inputField] ? this.CalculatorMins[inputField] 
+          : numerical > this.CalculatorMaxes[inputField] ? this.CalculatorMaxes[inputField] : numerical;
+      } else {
+        numerical= this.CalculatorMins[inputField];
+      }
+      inputElement.value = numerical;
+      cService[inputField] = numerical;
+    }
+  }
 }

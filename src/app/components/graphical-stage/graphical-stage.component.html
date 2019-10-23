@@ -1,6 +1,6 @@
 <div #wrapper class="stage-wrapper" [ngStyle]="{'width': halfSquare ? '75%' : '100%'}">
     <div #container class="stage-container">
-        <div #stage class="stage" [ngStyle]="{'height': cHeight + 'px', 'width': majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '90%'}">
+        <div #stage class="stage" [ngStyle]="{'height': cHeight + 'px', 'width': majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '100%'}">
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
@@ -15,8 +15,8 @@
                 <input id="lecture-width" #inputWidth class="inputs-input" type="number" 
                     [min]="CalculatorMins.lectureWidth"
                     [max]="CalculatorMaxes.lectureWidth"
-                    [(ngModel)]="calculatorService.lectureWidth"
-                    (ngModelChange)="yeet($event, inputWidth)"/>
+                    [value]="calculatorService.lectureWidth"
+                    (change)="updateInput('lectureWidth', inputWidth)"/>
                 <div class="bar"></div>
             </div>
         </div>
@@ -25,10 +25,23 @@
 </div>
 
 <div class="debug-stats">
-    <div>
+    <!-- <div>
         Major Axis: {{ majorAxis }}
+    </div> -->
+    <div>Page Height: {{ pageHeight }}</div>
+    <div>
+        Height: {{ cHeight + 'px' }}
+    </div>
+    <div>
+        Width: {{ majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '100%' }}
+    </div>
+    <div>
+        StageWidth: {{ stageWidth }}
     </div>
     <div>
         Width/Height Ratio: {{ widthHeightRatio }}
+    </div>
+    <div>
+        Half Square: {{ halfSquare }}
     </div>
 </div>

@@ -14,7 +14,10 @@ export class GraphicalStageComponent implements OnInit {
 
   public CalculatorMins = CalculatorService.MINIMUMS;
   public CalculatorMaxes = CalculatorService.MAXIMUMS;
+
   public majorAxis: 'width' | 'height' | 'square' = 'square';
+  public pageHeight: number = 500;
+
   public widthHeightRatio: number = 1;
   public captureWidthPercentage: number = 0;
   public stageWidth: number = 500;
@@ -46,28 +49,27 @@ export class GraphicalStageComponent implements OnInit {
         this.calculateProportions();
       }
     });
-    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth / 1 : this.wrapperWidth;
-    this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth / 1 : this.stageWidth;
+    this.pageHeight = window.innerHeight;
+    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth : this.wrapperWidth;
+    this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
     this.calculateProportions();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.containerHeight = this.resizerRef ? this.resizerRef.nativeElement.offsetWidth / 1 : 0;
-    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth / 1 : this.wrapperWidth;
+    this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth : this.wrapperWidth;
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth / 1 : this.stageWidth;
+    this.pageHeight = window.innerHeight;
     this.calculateProportions();
   }
 
   private calculateProportions() {
     this.majorAxis = this.getMajorAxis();
     this.widthHeightRatio = this.getWidthHeightRatio();
-    // this.stageWidthPercentage = this.getStageWidthPercentage();
-    // this.stageHeightPercentage = this.getStageHeightPercentage();
-    // this.stageTopOffsetPercentage = this.getStageTopOffsetPercentage();
 
     this.halfSquare = this.widthHeightRatio <= 2;
-    this.cHeight = this.wrapperWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+    this.cHeight = this.wrapperWidth * (this.halfSquare ? 0.75 : .9) * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
     if (this.halfSquare) {
       this.cHeight = 500 / this.widthHeightRatio; // determine max width and half it
     }
@@ -80,6 +82,10 @@ export class GraphicalStageComponent implements OnInit {
     this.capturePosition = this.getRadiusLeftPosition(null);
   }
 
+  private calculateStageHeight() {
+
+  }
+  
   private getMajorAxis(): 'width' | 'height' | 'square' {
     const cService = this.calculatorService;
     // if (Math.abs(cService.lectureWidth - cService.ceilingHeight) <= 2) {
@@ -99,22 +105,18 @@ export class GraphicalStageComponent implements OnInit {
   private getPresenterWidthPercentage(): number {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
-    console.log(presenterCeilingRatio)
-    console.log(this.cHeight);
-    console.log(SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO);
     // return presenterCeilingRatio * this.cHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO / (this.majorAxis === 'width' ? this.widthHeightRatio : 1);
     return presenterCeilingRatio * this.cHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
   }
 
   private getRadiusWidthPercentage(): number {
-    const cService = this.calculatorService;
-    const captureDiameterWidthRatio = 6 / cService.lectureWidth;
+    const captureDiameterWidthRatio = 4 / this.calculatorService.lectureWidth;
     return captureDiameterWidthRatio * 100;
   }
 
   private getRadiusLeftPosition(numMicrophone): number {
     const cService = this.calculatorService;
-    const captureDiameterWidthRatio = 6 / cService.lectureWidth;
+    const captureDiameterWidthRatio = 4 / cService.lectureWidth;
     const captureWidthRadiusPerc = captureDiameterWidthRatio * 100 / 2;
 
     // const captureDiameterPixelWidth = this.stageWidth * captureDiameterWidthRatio;
@@ -129,11 +131,18 @@ export class GraphicalStageComponent implements OnInit {
     }
   }
 
-  public yeet(event, y) {
-    console.log(y);
-    if (event < this.CalculatorMins.lectureWidth || !event) {
-      this.calculatorService.lectureWidth = this.CalculatorMins.lectureWidth;
-      y.value = this.CalculatorMins.lectureWidth;
+  public updateInput(inputField, inputElement) {
+    let numerical = parseFloat(inputElement.value);
+    const cService = this.calculatorService;
+    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null}) {
+      if (!isNaN(numerical)) {
+        numerical = numerical < this.CalculatorMins[inputField] ? this.CalculatorMins[inputField] 
+          : numerical > this.CalculatorMaxes[inputField] ? this.CalculatorMaxes[inputField] : numerical;
+      } else {
+        numerical= this.CalculatorMins[inputField];
+      }
+      inputElement.value = numerical;
+      cService[inputField] = numerical;
     }
   }
 }
