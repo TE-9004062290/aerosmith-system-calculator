@@ -3,6 +3,7 @@ import { CalculatorService } from '@app/services/calculator.service';
 // import { SvgStandingPersonComponent } from '@components/svg-standing-person';
 
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
+import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 enum RatioMode {
   Height,
@@ -17,8 +18,8 @@ enum RatioMode {
 })
 export class GraphicalStageComponent implements OnInit {
 
-  public CalculatorMins = CalculatorService.MINIMUMS;
-  public CalculatorMaxes = CalculatorService.MAXIMUMS;
+  public CalculatorMins = this.calculatorService.MINIMUMS;
+  public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
   public ratioMode: RatioMode = RatioMode.Width;
   public RatioModeEnum = RatioMode;
@@ -96,9 +97,9 @@ export class GraphicalStageComponent implements OnInit {
   private calculateStageHeight(mode: RatioMode) {
     switch (mode) {
       case RatioMode.Height:
-        return this.pageHeight / 3;
+        return this.pageHeight / 2.5;
       case RatioMode.HalfSquareWidth:
-        return this.pageHeight / 2.5 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+        return this.pageHeight / 2 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
       case RatioMode.Width:
         return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
     }
@@ -136,7 +137,8 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private getRadiusWidthPercentage(): number {
-    const captureDiameterWidthRatio = 4 / this.calculatorService.lectureWidth;
+    const unitlessDiameter = this.calculatorService.measurementUnit === MeasurementUnits.Meters ? 4 : 4 * CalculatorService.METERS_TO_FEET;
+    const captureDiameterWidthRatio = unitlessDiameter / this.calculatorService.lectureWidth;
     return captureDiameterWidthRatio * 100;
   }
 
@@ -145,11 +147,12 @@ export class GraphicalStageComponent implements OnInit {
     const captureDiameterWidthRatio = 4 / cService.lectureWidth;
     const captureWidthRadiusPerc = captureDiameterWidthRatio * 100 / 2;
 
-    if (!numMicrophone) {
-      return 50 - captureWidthRadiusPerc;
-    } else {
-      return 50 - captureWidthRadiusPerc;
-    }
+    // if (!numMicrophone) {
+    //   return 50 - captureWidthRadiusPerc;
+    // } else {
+    //   return 50 - captureWidthRadiusPerc;
+    // }
+    return 50;
   }
 
   public updateInput(inputField, inputElement) {

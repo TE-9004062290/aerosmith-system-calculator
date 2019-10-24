@@ -6,12 +6,12 @@
             </label>
             <div class="inputs-value">
                 <input #inputCeilingHeight id="ceiling-height" class="inputs-input" type="number" 
-                    [min]="CalculatorMins.ceilingHeight"
-                    [max]="CalculatorMaxes.ceilingHeight"
+                    [min]="calculatorService.MINIMUMS.ceilingHeight"
+                    [max]="calculatorService.MAXIMUMS.ceilingHeight"
                     [value]="calculatorService.ceilingHeight"
                     (change)="updateInput('ceilingHeight', inputCeilingHeight)"/>
                 <span class="unit-label">
-                    {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>
             </div>
         </div>
@@ -23,12 +23,12 @@
             </label>
             <div class="inputs-value">
                 <input id="lecture-width" #inputWidth class="inputs-input" type="number" 
-                    [min]="CalculatorMins.lectureWidth"
-                    [max]="CalculatorMaxes.lectureWidth"
+                    [min]="calculatorService.MINIMUMS.lectureWidth"
+                    [max]="calculatorService.MAXIMUMS.lectureWidth"
                     [value]="calculatorService.lectureWidth"
                     (change)="updateInput('lectureWidth', inputWidth)"/>
                 <span class="unit-label">
-                    {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>
             </div>
         </div>
@@ -40,12 +40,12 @@
             </label>
             <div class="inputs-value">
                 <input id="presenter-height" #inputPresenterHeight class="inputs-input" type="number" 
-                    [min]="CalculatorMins.presenterHeight"
-                    [max]="CalculatorMaxes.presenterHeight"
+                    [min]="calculatorService.MINIMUMS.presenterHeight"
+                    [max]="calculatorService.MAXIMUMS.presenterHeight"
                     [value]="calculatorService.presenterHeight"
                     (change)="updateInput('presenterHeight', inputPresenterHeight)"/>
                 <span class="unit-label">
-                    {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
                 </span>
             </div>
         </div>
@@ -57,12 +57,12 @@
             </label>
             <div class="inputs-value">
                 <input id="audience-height" #inputAudienceHeight class="inputs-input" type="number" 
-                    [min]="CalculatorMins.audienceHeight"
-                    [max]="CalculatorMaxes.audienceHeight"
+                    [min]="calculatorService.MINIMUMS.audienceHeight"
+                    [max]="calculatorService.MAXIMUMS.audienceHeight"
                     [value]="calculatorService.audienceHeight"
                     (change)="updateInput('audienceHeight', inputAudienceHeight)"/>
                 <span class="unit-label">
-                    {{ calculatorService.inputs.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
                 </span>
             </div>
         </div>

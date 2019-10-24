@@ -37,7 +37,6 @@ export class CalculationTheatreComponent implements OnInit {
 
   public MeasurementUnitsEnum = MeasurementUnits;
 
-  public inputGroup: CalculationInputs = new CalculationInputs();
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   public calculationPriority: 'quality' | 'capture-area' = 'quality';
 

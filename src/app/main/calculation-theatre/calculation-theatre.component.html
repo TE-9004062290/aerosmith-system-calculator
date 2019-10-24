@@ -14,7 +14,7 @@
                     rightLabel="Feet (ft)"
                     [leftOption]="MeasurementUnitsEnum.Meters"
                     [rightOption]="MeasurementUnitsEnum.Feet"
-                    [(ngModel)]="inputGroup.measurementUnit">
+                    [(ngModel)]="calculatorService.measurementUnit">
                 </app-radio-toggle>
             </div>
             <div class="calculation-theatre-setting">
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="calculation-theatre-inputs">
-            <app-calculation-inputs [inputGroup]="inputGroup"></app-calculation-inputs>
+            <app-calculation-inputs></app-calculation-inputs>
         </div>
         <div @animateOutputArea *ngIf="showOutputs">        
             <app-calculation-outputs></app-calculation-outputs>

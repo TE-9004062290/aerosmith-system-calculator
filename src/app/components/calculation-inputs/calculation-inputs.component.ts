@@ -17,38 +17,34 @@ export class CalculationInputsComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   public MeasurementUnitsEnum = MeasurementUnits;
-  public CalculatorDefaults = CalculatorService.DEFAULTS;
-  public CalculatorMins = CalculatorService.MINIMUMS;
-  public CalculatorMaxes = CalculatorService.MAXIMUMS;
+  public CalculatorDefaults = this.calculatorService.DEFAULTS;
+  public CalculatorMins = this.calculatorService.MINIMUMS;
+  public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
-  private $inputs: BehaviorSubject<CalculationInputs>;
-  private _inputGroup: CalculationInputs = null;
-  get inputGroup() { return this._inputGroup || new CalculationInputs(); };
-  @Input() set inputGroup(val: CalculationInputs) {
-    this._inputGroup = val;
-  }
   @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   @Output() onUnitChange: EventEmitter<CalculationInputs> = new EventEmitter();
   @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   ngOnInit() {
-    this.$inputs = this.calculatorService.$getInputs();
-    this.$inputs.subscribe(inputGroup => {
-      this._inputGroup = inputGroup;
+    this.calculatorService.$recalculate.subscribe(recalc => {
+      if (recalc) {
+        this.CalculatorMins = this.calculatorService.MINIMUMS;
+        this.CalculatorMaxes = this.calculatorService.MAXIMUMS;
+      }
     });
   }
 
-  /* This makes the potentially dangerous assumption that the previous unit has
-   * actually changed
-   */
-  changeUnits(measurementUnit: MeasurementUnits) {
-    this.inputGroup.measurementUnit = measurementUnit;
-    this.onUnitChange.emit(this.inputGroup);
-  }
+  // /* This makes the potentially dangerous assumption that the previous unit has
+  //  * actually changed
+  //  */
+  // changeUnits(measurementUnit: MeasurementUnits) {
+  //   this.inputGroup.measurementUnit = measurementUnit;
+  //   this.onUnitChange.emit(this.inputGroup);
+  // }
 
-  calculate() {
-    this.onCalculate.emit(this.inputGroup);
-  }
+  // calculate() {
+  //   this.onCalculate.emit(this.inputGroup);
+  // }
 
   public updateInput(inputField, inputElement) {
     let numerical = parseFloat(inputElement.value);
