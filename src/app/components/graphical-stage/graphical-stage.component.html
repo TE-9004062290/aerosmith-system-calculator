@@ -25,7 +25,7 @@
 </div>
 
 <div class="debug-stats">
-    <div>
+    <!-- <div>
         Ratio Mode: {{ RatioModeEnum[ratioMode] }}
     </div>
     <div>Page Height: {{ pageHeight }}</div>
@@ -43,5 +43,8 @@
     </div>
     <div>
         Half Square: {{ halfSquare }}
-    </div>
+    </div> -->
+    <div>Num Microphones: {{ calculatorService.requiredMicrophones }}</div>
+    <div>Microphone Internval: {{ calculatorService.microphoneInterval }}</div>
+    <div>Extender Length: {{ calculatorService.extenderLength }}</div>
 </div>

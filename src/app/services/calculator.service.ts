@@ -7,6 +7,7 @@ import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
+import { extend } from 'webdriver-js-extender';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,7 @@ export class CalculatorService {
   public MINIMUMS = this.METER_MINIMUMS;
   public MAXIMUMS = this.METER_MAXIMUMS;
 
+  /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
@@ -64,6 +66,15 @@ export class CalculatorService {
   get lectureWidth(): number { return this.m_lectureWidth; }
   get presenterHeight(): number { return this.m_presenterHeight; }
   get audienceHeight(): number { return this.m_audienceHeight; }
+
+  /* Outputs */
+  private m_microphoneInterval: number = 0;
+  private m_requiredMicrophones: number = 0;
+  private m_extenderLength: number = 0;
+
+  get microphoneInterval(): number { return this.m_microphoneInterval; }
+  get requiredMicrophones(): number { return this.m_requiredMicrophones; }
+  get extenderLength(): number { return this.m_extenderLength; }
 
   set measurementUnit(val: MeasurementUnits) {
     if (this.m_measurementUnit === MeasurementUnits.Meters && val === MeasurementUnits.Feet) {
@@ -105,31 +116,33 @@ export class CalculatorService {
     this.$recalculate.next(true);
   }
 
-  private $inputs: BehaviorSubject<CalculationInputs>;
-  private $outputs: BehaviorSubject<CalculationOutputs>;
-
   public $recalculate: BehaviorSubject<boolean>;
-
-  public inputs: CalculationInputs;
-  public outputs: CalculationOutputs;
   constructor() { 
-    this.$inputs = new BehaviorSubject(new CalculationInputs());
-    this.$outputs = new BehaviorSubject(new CalculationOutputs());
     this.$recalculate = new BehaviorSubject(true);
-    this.inputs = new CalculationInputs();
-    this.outputs = new CalculationOutputs;
-  }
-  
-  $getInputs(): BehaviorSubject<CalculationInputs> {
-    return this.$inputs;
   }
 
-  $getOutputs(): Observable<CalculationOutputs> {
-    return this.$outputs;
+  public calculateOutputs() {
+    const captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius;
+    if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
+      this.m_extenderLength = 0;
+      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+      if (this.m_microphoneInterval === 0) {
+        this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - 0.1 - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+      }
+      this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
+    } else { // extender is required
+      this.m_extenderLength = extenderLength;
+    }
+
+    // this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+    // this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
+    // this.m_extenderLength = round(this.m_ceilingHeight - this.presenterHeight - captureRadius, 2)
   }
+
 
   updateInputs(inputModel: CalculationInputs): void {
-    this.$inputs.next(inputModel);
     // do output calcs
     // const newOutput = null;
     // this.$outputs.next(newOutput);

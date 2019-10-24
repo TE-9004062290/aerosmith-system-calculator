@@ -54,6 +54,7 @@ export class GraphicalStageComponent implements OnInit {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.calculateProportions();
+        this.calculatorService.calculateOutputs();
       }
     });
     this.snapshotPageDimensions();
