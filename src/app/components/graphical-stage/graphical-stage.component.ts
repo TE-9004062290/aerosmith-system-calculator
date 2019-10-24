@@ -26,6 +26,7 @@ export class GraphicalStageComponent implements OnInit {
 
   public stageHeight: number = 500;
   public stageWidth: number = 500;
+  public extenderLength: number = 0;
   
   private pageHeight: number = 500;
   private pageWidth: number = 500;
@@ -39,6 +40,7 @@ export class GraphicalStageComponent implements OnInit {
   public widthHeightRatio: number = 1;
   public captureWidthPercentage: number = 0;
   public capturePosition: number = 0;
+  public captureTop: number = 0;
 
   public cHeight: number = 0;
 
@@ -53,14 +55,15 @@ export class GraphicalStageComponent implements OnInit {
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
-        this.calculateProportions();
         this.calculatorService.calculateOutputs();
+        this.calculateProportions();
       }
     });
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
 
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
+    this.calculatorService.calculateOutputs();
     this.calculateProportions();
   }
 
@@ -93,14 +96,15 @@ export class GraphicalStageComponent implements OnInit {
     this.presenterWidthPercentage = this.getPresenterWidthPercentage();
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
     this.capturePosition = this.getRadiusLeftPosition(null);
+    this.captureTop = this.getRadiusTopPosition(null);
   }
 
   private calculateStageHeight(mode: RatioMode) {
     switch (mode) {
       case RatioMode.Height:
-        return this.pageHeight / 2.5;
+        return this.pageHeight / 2;
       case RatioMode.HalfSquareWidth:
-        return this.pageHeight / 2 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+        return this.pageHeight / 2;//s * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
       case RatioMode.Width:
         return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
     }
@@ -121,7 +125,7 @@ export class GraphicalStageComponent implements OnInit {
     const widthHeightRatio = cService.lectureWidth / cService.ceilingHeight;
 
     if (widthHeightRatio >= 1) {
-      return widthHeightRatio <= 2 ? RatioMode.HalfSquareWidth : RatioMode.Width;
+      return widthHeightRatio < 2 ? RatioMode.HalfSquareWidth : RatioMode.Width;
     } else {
       return RatioMode.Height;
     }
@@ -154,6 +158,15 @@ export class GraphicalStageComponent implements OnInit {
     //   return 50 - captureWidthRadiusPerc;
     // }
     return 50;
+  }
+
+  private getRadiusTopPosition(numMicrophone): number {
+    const cService = this.calculatorService;
+    this.extenderLength = cService.extenderLength / cService.ceilingHeight * this.stageHeight;
+    if (cService.extenderLength > 0) {
+      return cService.extenderLength / cService.ceilingHeight * 100;
+    }
+    return 0;
   }
 
   public updateInput(inputField, inputElement) {

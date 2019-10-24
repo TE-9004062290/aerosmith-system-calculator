@@ -9,10 +9,10 @@
         width: 100%;
     }
     &[app-display-mode='halfsquarewidth'] {
-        width: 75%;
+        width: 100%;
     }
     &[app-display-mode='height'] {
-        width: 75%;
+        width: 100%;
     }
     
     .stage-container {
@@ -27,12 +27,13 @@
             .person-wrapper {
                 position: absolute;
                 bottom: 0;
+                left: 0%;
                 transition: width .25s linear;
             }
             .microphone-wrapper {
                 position: absolute;
                 top: 0;
-                transition: width .25s linear, left .25s linear;
+                transition: width .25s linear, left .25s linear, top .25s linear;
             }
             .lecture-width-ruler.ruler-horizontal {
                 width: 100%;

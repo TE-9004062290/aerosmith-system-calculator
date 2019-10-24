@@ -9,8 +9,7 @@ export class SvgMicrophoneComponent implements OnInit {
 
   public static readonly WIDTH_HEIGHT_RATIO = 0.3463406889982537;
 
-  @Input() width: string = "100%";
-  @Input() height: string = "100%";
+  @Input() extenderLength: number = 0;
 
   constructor() { }
 

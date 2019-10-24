@@ -5,10 +5,10 @@
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
             <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
-                <app-svg-microphone></app-svg-microphone>
+                <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
             </div>
             <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
-                <app-svg-microphone></app-svg-microphone>
+                <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
             </div>
             <div class="lecture-width-ruler ruler-horizontal">
                 <div class="bar"></div>

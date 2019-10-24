@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs'
 
-import { CalculationInputs } from '@app/models/calculation-inputs.model';
-import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
-import { extend } from 'webdriver-js-extender';
 
 @Injectable({
   providedIn: 'root'
@@ -124,7 +121,8 @@ export class CalculatorService {
   public calculateOutputs() {
     const captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
-    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius;
+    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 2*topOfHeadToMouth;
+
     if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
       this.m_extenderLength = 0;
       this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
@@ -134,20 +132,8 @@ export class CalculatorService {
       this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
     } else { // extender is required
       this.m_extenderLength = extenderLength;
+      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - 2*topOfHeadToMouth ** 2), 2);
+      this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
     }
-
-    // this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
-    // this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
-    // this.m_extenderLength = round(this.m_ceilingHeight - this.presenterHeight - captureRadius, 2)
   }
-
-
-  updateInputs(inputModel: CalculationInputs): void {
-    // do output calcs
-    // const newOutput = null;
-    // this.$outputs.next(newOutput);
-  }
-
-
-
 }
