@@ -11,6 +11,20 @@ enum RatioMode {
   HalfSquareWidth
 }
 
+class MicrophonePosition {
+  public number: number = 0;
+  public positionPercentage: number = 50;
+
+  public trackingFunc() {
+    return this.number;
+  }
+
+  constructor(num, positionPerc) {
+    this.number = num;
+    this.positionPercentage = positionPerc;
+  }
+}
+
 @Component({
   selector: 'app-graphical-stage',
   templateUrl: './graphical-stage.component.html',
@@ -41,6 +55,7 @@ export class GraphicalStageComponent implements OnInit {
   public captureWidthPercentage: number = 0;
   public capturePosition: number = 0;
   public captureTop: number = 0;
+  public microphonePositions = [];
 
   public cHeight: number = 0;
 
@@ -52,11 +67,18 @@ export class GraphicalStageComponent implements OnInit {
 
   constructor(public calculatorService: CalculatorService) { }
 
+  trackByFn(index, micPosition: MicrophonePosition) {
+    return micPosition.number;
+  }
+
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.calculatorService.calculateOutputs();
         this.calculateProportions();
+        console.log(this.calculatorService.microphoneInterval);
+        this.microphonePositions = this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
+        console.log(this.microphonePositions);
       }
     });
     this.snapshotPageDimensions();
@@ -65,6 +87,7 @@ export class GraphicalStageComponent implements OnInit {
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
     this.calculatorService.calculateOutputs();
     this.calculateProportions();
+    this.microphonePositions = this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -182,5 +205,41 @@ export class GraphicalStageComponent implements OnInit {
       inputElement.value = numerical;
       cService[inputField] = numerical;
     }
+  }
+
+  private calculateMicrophonePositions(numMicrophones: number, microphoneInterval: number) {
+    let microphones: MicrophonePosition[] = [];
+    const percentageInterval = microphoneInterval / this.calculatorService.lectureWidth * 100;
+    if (numMicrophones % 2 === 0) {
+      const midpoint = Math.ceil(numMicrophones / 2);
+      const midpoints = [midpoint, midpoint + 1];
+      microphones.push(new MicrophonePosition(midpoint, 50 - (percentageInterval / 2)));
+      microphones.push(new MicrophonePosition(midpoint, 50 + (percentageInterval / 2)));
+
+      for (let mic = midpoint - 1, i = 1; mic > 0; mic--) {
+        let microphonePos = new MicrophonePosition(mic, 50 - (percentageInterval / 2) - (i++ * percentageInterval));
+        microphones.push(microphonePos);
+      }
+
+      for (let mic = midpoint + 2, i = 1; mic <= numMicrophones; mic++) {
+        let microphonePos = new MicrophonePosition(mic, 50 + (percentageInterval / 2) + (i++ * percentageInterval));
+        microphones.push(microphonePos);
+      }
+
+    } else {
+      const midpoint = Math.ceil(numMicrophones / 2);
+      microphones.push(new MicrophonePosition(midpoint, 50));
+      for (let mic = midpoint - 1, i = 1; mic > 0; mic--) {
+        let microphonePos = new MicrophonePosition(mic, 50 - (i++ * percentageInterval));
+        microphones.push(microphonePos);
+      }
+
+      for (let mic = midpoint + 1, i = 1; mic <= numMicrophones; mic++) {
+        let microphonePos = new MicrophonePosition(mic, 50 + (i++ * percentageInterval));
+        microphones.push(microphonePos);
+      }
+    }
+
+    return microphones;
   }
 }
