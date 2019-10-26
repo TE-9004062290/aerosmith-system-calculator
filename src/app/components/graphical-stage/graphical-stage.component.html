@@ -4,10 +4,9 @@
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
-            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
-                <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
-            </div>
-            <div class="microphone-wrapper" [ngStyle]="{'width': captureWidthPercentage + '%', 'left': capturePosition + '%'}">
+            <div *ngFor="let mic of microphonePositions; trackBy: trackByFn" 
+                class="microphone-wrapper" 
+                [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
                 <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
             </div>
             <div class="lecture-width-ruler ruler-horizontal">
