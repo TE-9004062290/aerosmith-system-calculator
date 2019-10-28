@@ -14,6 +14,7 @@ import { RadioToggleComponent } from './components/radio-toggle/radio-toggle.com
 import { SvgStandingPersonComponent } from './components/svg-standing-person/svg-standing-person.component';
 import { GraphicalStageComponent } from './components/graphical-stage/graphical-stage.component';
 import { SvgMicrophoneComponent } from './components/svg-microphone/svg-microphone.component';
+import { MeasuringStickComponent } from './components/measuring-stick/measuring-stick.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SvgMicrophoneComponent } from './components/svg-microphone/svg-micropho
     RadioToggleComponent,
     SvgStandingPersonComponent,
     GraphicalStageComponent,
-    SvgMicrophoneComponent
+    SvgMicrophoneComponent,
+    MeasuringStickComponent
   ],
   imports: [
     BrowserModule,

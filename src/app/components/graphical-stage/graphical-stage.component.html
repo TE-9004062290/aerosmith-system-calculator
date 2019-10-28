@@ -1,49 +1,41 @@
-<div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
-    <div #container class="stage-container">
-        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
-            <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
-                <app-svg-standing-person></app-svg-standing-person>
-            </div>
-            <div *ngFor="let mic of microphonePositions; trackBy: trackByFn" @animateOutputArea 
-                class="microphone-wrapper" 
-                [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
-                <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
-            </div>
-            <div class="lecture-width-ruler ruler-horizontal">
-                <div class="bar"></div>
-                <input id="lecture-width" #inputWidth class="inputs-input" type="number" 
-                    [min]="CalculatorMins.lectureWidth"
-                    [max]="CalculatorMaxes.lectureWidth"
-                    [value]="calculatorService.lectureWidth"
-                    (change)="updateInput('lectureWidth', inputWidth)"/>
-                <div class="bar"></div>
+<div class="stage-info-wrapper">
+    <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
+        <div #container class="stage-container">
+            <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
+                <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
+                    <app-svg-standing-person></app-svg-standing-person>
+                </div>
+                <div *ngFor="let mic of microphonePositions; trackBy: trackByFn" @animateOutputArea 
+                    class="microphone-wrapper" 
+                    [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
+                    <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
+                </div>
             </div>
         </div>
     </div>
-    <div class="vertical-bar" [ngStyle]="{'height': stageHeight + 'px'}"></div>
+    <div style="position: absolute; top: 0; left: -8%">
+        <app-measuring-stick orientation="vertical" [height]="stageHeight"
+            [isInput]="true"
+            [inputMin]="CalculatorMins.ceilingHeight"
+            [inputMax]="CalculatorMaxes.ceilingHeight"
+            [inputValue]="calculatorService.ceilingHeight"
+            (updated)="updateInput('ceilingHeight', $event)"
+        ></app-measuring-stick>
+    </div>
+    <app-measuring-stick orientation="horizontal" [width]="stageWidth"
+        [isInput]="true" 
+        [inputMin]="CalculatorMins.lectureWidth"
+        [inputMax]="CalculatorMaxes.lectureWidth"
+        [inputValue]="calculatorService.lectureWidth"
+        (updated)="updateInput('lectureWidth', $event)"
+    ></app-measuring-stick>
 </div>
 
-<div class="debug-stats">
-    <!-- <div>
+<!-- <div class="debug-stats">
+    <div>
         Ratio Mode: {{ RatioModeEnum[ratioMode] }}
     </div>
-    <div>Page Height: {{ pageHeight }}</div>
-    <div>
-        Height: {{ cHeight + 'px' }}
-    </div>
-    <div>
-        Width: {{ majorAxis === 'height' || halfSquare ? cHeight * widthHeightRatio + 'px' : '100%' }}
-    </div>
-    <div>
-        StageWidth: {{ stageWidth }}
-    </div>
-    <div>
-        Width/Height Ratio: {{ widthHeightRatio }}
-    </div>
-    <div>
-        Half Square: {{ halfSquare }}
-    </div> -->
     <div>Num Microphones: {{ calculatorService.requiredMicrophones }}</div>
     <div>Microphone Internval: {{ calculatorService.microphoneInterval }}</div>
     <div>Extender Length: {{ calculatorService.extenderLength }}</div>
-</div>
+</div> -->

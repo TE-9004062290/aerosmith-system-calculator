@@ -129,11 +129,15 @@ export class CalculatorService {
       if (this.m_microphoneInterval === 0) {
         this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - 0.9 - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
       }
-      this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
+
+      const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
+      this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
     } else { // extender is required
       this.m_extenderLength = extenderLength;
       this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (captureRadius - 15*topOfHeadToMouth)**2), 2);
-      this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
+
+      const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
+      this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
     }
   }
 }

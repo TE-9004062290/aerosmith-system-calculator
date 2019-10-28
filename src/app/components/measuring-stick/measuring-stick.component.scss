@@ -1,0 +1,112 @@
+.horizontal-measure {
+    width: 100%;
+    height: 20px;
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    position: relative;
+    bottom: -16px;
+    align-content: center;
+    margin: 0 auto;
+    transition: width .25s linear;
+
+    .stick {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        &.left {
+            justify-content: flex-end;
+            margin-right: 8px;
+            .stop {
+                margin-right: 8px;
+                width: 3px;
+            }
+        }
+        &.right {
+            justify-content: flex-start;
+            margin-left: 8px;
+            .stop {
+                margin-left: 8px;
+            }
+        }
+        .bar {
+            width: 100%;
+            height: 4px;
+            background-color: #8BC34A;
+        }
+        .arrow {
+
+        }
+        .stop {
+            height: 100%;
+            width: 2px;
+            background-color: #8BC34A;
+        }
+    }
+}
+
+.vertical-measure {
+    width: 50px;
+    transition: height .25s linear;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .stick {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 50%;
+        .arrow {
+            position: relative;
+            height: 13px;
+        }
+
+        .bar {
+            background-color: #006DB3;
+            height: 100%;
+            width: 3px;
+        }
+
+        &.top {
+            margin-bottom: 8px;
+        } 
+        &.bottom {
+            margin-top: 8px;
+            .arrow {
+                top: -3px;
+            }
+        }
+    }
+    input {
+        width: 100%;
+    }
+}
+
+.measurable-input {
+    input {
+        height: 18px;
+        line-height: 11px;
+        font-size: 11px;
+        text-align: center;
+        box-sizing: content-box;
+        border: 1px solid #E6EBEF;
+        border-radius: 3px;
+        background-color: #006DB3;
+        color: white;
+    }
+    .stick {
+        .bar {
+            background-color: #006DB3;
+        }
+        .stop {
+            background-color: #006DB3;
+        }
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
