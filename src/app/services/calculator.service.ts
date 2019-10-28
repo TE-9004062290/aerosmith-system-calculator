@@ -121,7 +121,7 @@ export class CalculatorService {
   public calculateOutputs() {
     const captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
-    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 5*topOfHeadToMouth;
+    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 15*topOfHeadToMouth;
 
     if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
       this.m_extenderLength = 0;
@@ -132,7 +132,7 @@ export class CalculatorService {
       this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
     } else { // extender is required
       this.m_extenderLength = extenderLength;
-      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (captureRadius - 5*topOfHeadToMouth)**2), 2);
+      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (captureRadius - 15*topOfHeadToMouth)**2), 2);
       this.m_requiredMicrophones = Math.ceil(this.m_lectureWidth / this.m_microphoneInterval);
     }
   }
