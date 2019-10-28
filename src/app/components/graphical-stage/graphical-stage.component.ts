@@ -5,6 +5,14 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+
+
 enum RatioMode {
   Height,
   Width,
@@ -28,7 +36,23 @@ class MicrophonePosition {
 @Component({
   selector: 'app-graphical-stage',
   templateUrl: './graphical-stage.component.html',
-  styleUrls: ['./graphical-stage.component.scss']
+  styleUrls: ['./graphical-stage.component.scss'],
+  animations: [
+    trigger('animateOutputArea', [
+      transition(':enter', [
+        style({ left: '50%'}),
+        style({ opacity: 0 }),
+        animate('.25s', style({ left: '*'})),
+        animate('.25s', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        style({ left: '*' }),
+        animate('.25s', style({ opacity: 0 })),
+        animate('.25s', style({ left: '50%' }))
+      ])
+    ])
+  ]
 })
 export class GraphicalStageComponent implements OnInit {
 

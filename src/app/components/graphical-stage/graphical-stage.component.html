@@ -4,7 +4,7 @@
             <div class="person-wrapper" [ngStyle]="{'width': presenterWidthPercentage + 'px'}">
                 <app-svg-standing-person></app-svg-standing-person>
             </div>
-            <div *ngFor="let mic of microphonePositions; trackBy: trackByFn" 
+            <div *ngFor="let mic of microphonePositions; trackBy: trackByFn" @animateOutputArea 
                 class="microphone-wrapper" 
                 [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
                 <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
