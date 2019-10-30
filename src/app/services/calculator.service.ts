@@ -121,7 +121,7 @@ export class CalculatorService {
   public calculateOutputs() {
     const captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
-    const extenderLength = this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 15*topOfHeadToMouth;
+    const extenderLength = round(this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 15*topOfHeadToMouth, 2);
 
     if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
       this.m_extenderLength = 0;
