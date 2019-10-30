@@ -10,7 +10,7 @@
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
-                [value]="inputValue"
+                [value]="inputValue | number: '0.2-2'"
                 (change)="onInputChange(inputElement)"
             />
             <div class="measurement-unit">
@@ -19,7 +19,7 @@
         </div>
         <div *ngIf="!isInput" class="inputs-output">
             <div class="output-value">
-                {{ inputValue }} {{ calculatorService.measurementUnit.toString() }}
+                {{ inputValue | number: '0.2-2' }} {{ calculatorService.measurementUnit.toString() }}
             </div>
         </div>
         <div class="stick right">
@@ -38,7 +38,7 @@
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
-                [value]="inputValue"
+                [value]="inputValue | number: '0.2-2'"
                 (change)="onInputChange(inputElement)"
             />
             <div class="measurement-unit">
@@ -47,7 +47,7 @@
         </div>
         <div *ngIf="!isInput" class="inputs-output">
             <div class="output-value">
-                {{ inputValue }} {{ calculatorService.measurementUnit.toString() }}
+                {{ inputValue | number: '0.2-2'}} {{ calculatorService.measurementUnit.toString() }}
             </div>
         </div>
         <div class="stick bottom">
