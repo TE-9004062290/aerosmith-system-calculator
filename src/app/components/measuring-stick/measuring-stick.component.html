@@ -6,11 +6,17 @@
             </div>
             <div class="bar"></div>
         </div>
-        <input *ngIf="isInput" #inputElement class="inputs-input" type="number" 
-            [min]="inputMin"
-            [max]="inputMax"
-            [value]="inputValue"
-            (change)="onInputChange(inputElement)"/>
+        <div *ngIf="isInput" class="inputs-input" type="number">
+            <input type="number" #inputElement
+                [min]="inputMin"
+                [max]="inputMax"
+                [value]="inputValue"
+                (change)="onInputChange(inputElement)"
+            />
+            <div class="measurement-unit">
+                {{ calculatorService.measurementUnit.toString() }}
+            </div>
+        </div>
         <div *ngIf="!isInput" class="inputs-output">
             <div class="output-value">
                 {{ inputValue }} {{ calculatorService.measurementUnit.toString() }}
@@ -28,11 +34,17 @@
             <div class="arrow"></div>
             <div class="bar"></div>
         </div>
-        <input *ngIf="isInput" #inputElement class="inputs-input" type="number" 
-            [min]="inputMin"
-            [max]="inputMax"
-            [value]="inputValue"
-            (change)="onInputChange(inputElement)"/>
+        <div *ngIf="isInput" class="inputs-input" type="number">
+            <input type="number" #inputElement
+                [min]="inputMin"
+                [max]="inputMax"
+                [value]="inputValue"
+                (change)="onInputChange(inputElement)"
+            />
+            <div class="measurement-unit">
+                {{ calculatorService.measurementUnit.toString() }}
+            </div>
+        </div>
         <div *ngIf="!isInput" class="inputs-output">
             <div class="output-value">
                 {{ inputValue }} {{ calculatorService.measurementUnit.toString() }}
