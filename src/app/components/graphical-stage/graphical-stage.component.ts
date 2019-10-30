@@ -42,16 +42,12 @@ class GraphicPosition {
   animations: [
     trigger('animateOutputArea', [
       transition(':enter', [
-        style({ left: '50%'}),
         style({ opacity: 0 }),
-        animate('.25s', style({ left: '*'})),
-        animate('.25s', style({ opacity: 1 }))
+        animate('.1s', style({ opacity: 1 }))
       ]),
       transition(':leave', [
         style({ opacity: 1 }),
-        style({ left: '*' }),
-        animate('.25s', style({ opacity: 0 })),
-        animate('.25s', style({ left: '50%' }))
+        animate('.1s', style({ opacity: 0 }))
       ])
     ])
   ]
