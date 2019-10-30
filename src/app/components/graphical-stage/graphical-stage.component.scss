@@ -29,9 +29,12 @@
     margin: 0 auto;
     border-bottom: solid blue 2px;
     border-top: solid blue 2px;
-    overflow-x: hidden;
     
-    .stage-container {
+    .stage-outer-container {
+        overflow-x: hidden;
+    }
+
+    .stage-inner-container {
         width: 90%;
         margin: 0 auto;
         .stage {
@@ -57,10 +60,15 @@
     }
 }
 
-.debug-stats {
-    position: absolute;
-    top: 25%;
-    left: 5%;
+.graphical-output-side {
+    margin-top: 100px;
+    height: 350px;
+    .stage-info-wrapper {
+        height: 100%;
+        .stage-wrapper {
+            height: 100%;
+        }
+    }
 }
 
 input[type=number]::-webkit-inner-spin-button, 

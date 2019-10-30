@@ -1,6 +1,8 @@
 <div class="calculation-theatre-header">Calculator for speech reinforcement</div>
 <div class="calculation-theatre-container">
-    <app-graphical-stage></app-graphical-stage>
+    <div class="graphical-stage-wrapper">
+        <app-graphical-stage></app-graphical-stage>
+    </div>
     <div class="sidebar">
         <div class="calculation-theatre-title">
             IP Mic Calculator (TBD)
@@ -37,5 +39,8 @@
             <app-calculation-outputs></app-calculation-outputs>
         </div>
         <button style="margin-top: 8px;" (click)="calculate()">Calculate</button>
+    </div>
+    <div class="output-wrapper">
+        hello world output stuff
     </div>
 </div>
