@@ -13,24 +13,23 @@
     }
 }
 
+.graphical-output {
+    // margin: 5% auto;
+    justify-self: center;
+    width: 100%;
+    // max-width: 500px;
+    box-sizing: border-box;
+    margin: 100px auto 0 auto;
+}
 
 .stage-wrapper {
     position: relative;
-    width: 100%;
+    width: 70%;
     transition: width .25s linear;
     margin: 0 auto;
     border-bottom: solid blue 2px;
     border-top: solid blue 2px;
     overflow-x: hidden;
-    &[app-display-mode='width'] {
-        width: 100%;
-    }
-    &[app-display-mode='halfsquarewidth'] {
-        width: 100%;
-    }
-    &[app-display-mode='height'] {
-        width: 100%;
-    }
     
     .stage-container {
         width: 90%;
@@ -45,12 +44,14 @@
                 position: absolute;
                 bottom: 0;
                 left: 0%;
-                transition: width .25s linear;
+                transition: width .25s linear, left .25s linear;
+                z-index: 1;
             }
             .microphone-wrapper {
                 position: absolute;
                 top: 0;
                 transition: width .25s linear, left .25s linear, top .25s linear;
+                z-index: 0;
             }
         }
     }

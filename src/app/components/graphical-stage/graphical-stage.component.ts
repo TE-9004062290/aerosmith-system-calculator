@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
+import { GraphicsService } from '@app/services/graphics.service';
+
 // import { SvgStandingPersonComponent } from '@components/svg-standing-person';
 
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
@@ -19,7 +21,7 @@ enum RatioMode {
   HalfSquareWidth
 }
 
-class MicrophonePosition {
+class GraphicPosition {
   public number: number = 0;
   public positionPercentage: number = 50;
 
@@ -79,20 +81,26 @@ export class GraphicalStageComponent implements OnInit {
   public captureWidthPercentage: number = 0;
   public capturePosition: number = 0;
   public captureTop: number = 0;
-  public microphonePositions = [];
 
-  public cHeight: number = 0;
+  public microphones = { leftMost: 0, rightMost: 0, positions: []};
+  public persons = { leftMost: 0, rightMost: 0, positions: []};
 
-  public presenterWidthPercentage: number = 0;
+  public presenterWidth: number = 0;
   
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
 
-  constructor(public calculatorService: CalculatorService) { }
+  constructor(
+    public calculatorService: CalculatorService, 
+    public graphicsService: GraphicsService) { }
 
-  trackByFn(index, micPosition: MicrophonePosition) {
+  microphoneTrackByFn(index, micPosition: GraphicPosition) {
     return micPosition.number;
+  }
+
+  personTrackByFn(index, personPosition: GraphicPosition) {
+    return personPosition.number;
   }
 
   ngOnInit() {
@@ -101,8 +109,10 @@ export class GraphicalStageComponent implements OnInit {
         this.calculatorService.calculateOutputs();
         this.calculateProportions();
         console.log(this.calculatorService.microphoneInterval);
-        this.microphonePositions = this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
-        console.log(this.microphonePositions);
+        this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
+        this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
+        console.log(this.microphones);
+        console.log(this.persons);
       }
     });
     this.snapshotPageDimensions();
@@ -111,7 +121,8 @@ export class GraphicalStageComponent implements OnInit {
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
     this.calculatorService.calculateOutputs();
     this.calculateProportions();
-    this.microphonePositions = this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
+    this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
+    this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -140,9 +151,8 @@ export class GraphicalStageComponent implements OnInit {
     this.stageHeight = this.calculateStageHeight(this.ratioMode);
     this.stageWidth = this.calculateStageWidth(this.ratioMode);
 
-    this.presenterWidthPercentage = this.getPresenterWidthPercentage();
+    this.presenterWidth= this.getPresenterWidth();
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
-    this.capturePosition = this.getRadiusLeftPosition(null);
     this.captureTop = this.getRadiusTopPosition(null);
   }
 
@@ -151,7 +161,7 @@ export class GraphicalStageComponent implements OnInit {
       case RatioMode.Height:
         return this.pageHeight / 2;
       case RatioMode.HalfSquareWidth:
-        return this.pageHeight / 2;//s * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+        return this.pageHeight / 2;
       case RatioMode.Width:
         return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
     }
@@ -182,7 +192,7 @@ export class GraphicalStageComponent implements OnInit {
     return this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
   }
 
-  private getPresenterWidthPercentage(): number {
+  private getPresenterWidth(): number {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
     return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
@@ -192,19 +202,6 @@ export class GraphicalStageComponent implements OnInit {
     const unitlessDiameter = this.calculatorService.measurementUnit === MeasurementUnits.Meters ? 4 : 4 * CalculatorService.METERS_TO_FEET;
     const captureDiameterWidthRatio = unitlessDiameter / this.calculatorService.lectureWidth;
     return captureDiameterWidthRatio * 100;
-  }
-
-  private getRadiusLeftPosition(numMicrophone): number {
-    const cService = this.calculatorService;
-    const captureDiameterWidthRatio = 4 / cService.lectureWidth;
-    const captureWidthRadiusPerc = captureDiameterWidthRatio * 100 / 2;
-
-    // if (!numMicrophone) {
-    //   return 50 - captureWidthRadiusPerc;
-    // } else {
-    //   return 50 - captureWidthRadiusPerc;
-    // }
-    return 50;
   }
 
   private getRadiusTopPosition(numMicrophone): number {
@@ -232,38 +229,97 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private calculateMicrophonePositions(numMicrophones: number, microphoneInterval: number) {
-    let microphones: MicrophonePosition[] = [];
+    let microphones: GraphicPosition[] = [];
     const percentageInterval = microphoneInterval / this.calculatorService.lectureWidth * 100;
     if (numMicrophones % 2 === 0) {
       const midpoint = Math.ceil(numMicrophones / 2);
       const midpoints = [midpoint, midpoint + 1];
-      microphones.push(new MicrophonePosition(midpoint, 50 - (percentageInterval / 2)));
-      microphones.push(new MicrophonePosition(midpoint, 50 + (percentageInterval / 2)));
+      microphones.push(new GraphicPosition(midpoint, 50 - (percentageInterval / 2)));
+      microphones.push(new GraphicPosition(midpoint, 50 + (percentageInterval / 2)));
 
-      for (let mic = midpoint - 1, i = 1; mic > 0; mic--) {
-        let microphonePos = new MicrophonePosition(mic, 50 - (percentageInterval / 2) - (i++ * percentageInterval));
+      for (let mic = midpoint - 1, i = 1; mic > 0; mic--, i++) {
+        let microphonePos = new GraphicPosition(mic, 50 - (percentageInterval / 2) - (i * percentageInterval));
+        if (mic === 1) {
+          this.microphones.leftMost = 50 - (percentageInterval / 2) - (i * percentageInterval);
+        }
         microphones.push(microphonePos);
       }
 
-      for (let mic = midpoint + 2, i = 1; mic <= numMicrophones; mic++) {
-        let microphonePos = new MicrophonePosition(mic, 50 + (percentageInterval / 2) + (i++ * percentageInterval));
+      for (let mic = midpoint + 2, i = 1; mic <= numMicrophones; mic++, i++) {
+        let microphonePos = new GraphicPosition(mic, 50 + (percentageInterval / 2) + (i * percentageInterval));
+        if (mic === numMicrophones) {
+          this.microphones.rightMost = 50 + (percentageInterval / 2) + (i * percentageInterval);
+        }
         microphones.push(microphonePos);
       }
 
     } else {
       const midpoint = Math.ceil(numMicrophones / 2);
-      microphones.push(new MicrophonePosition(midpoint, 50));
-      for (let mic = midpoint - 1, i = 1; mic > 0; mic--) {
-        let microphonePos = new MicrophonePosition(mic, 50 - (i++ * percentageInterval));
+      microphones.push(new GraphicPosition(midpoint, 50));
+      for (let mic = midpoint - 1, i = 1; mic > 0; mic--, i++) {
+        let microphonePos = new GraphicPosition(mic, 50 - (i * percentageInterval));
+        if (mic === 1) {
+          this.microphones.leftMost = 50 - (i * percentageInterval);
+        }
         microphones.push(microphonePos);
       }
 
-      for (let mic = midpoint + 1, i = 1; mic <= numMicrophones; mic++) {
-        let microphonePos = new MicrophonePosition(mic, 50 + (i++ * percentageInterval));
+      for (let mic = midpoint + 1, i = 1; mic <= numMicrophones; mic++, i++) {
+        let microphonePos = new GraphicPosition(mic, 50 + (i * percentageInterval));
+        if (mic === numMicrophones) {
+          this.microphones.rightMost = 50 + (i * percentageInterval);
+        }
         microphones.push(microphonePos);
       }
     }
 
-    return microphones;
+    this.microphones.positions = microphones;
+  }
+
+  private calculatePersonPositions(numMicrophones: number, microphoneInterval: number) {
+    const numPersons = numMicrophones + 1;
+    let persons: GraphicPosition[]= [];
+    const percentageInterval = microphoneInterval / this.calculatorService.lectureWidth * 100;
+    const midpoint = Math.ceil(numPersons / 2);
+
+    if (numPersons % 2 === 0) {
+      const midpoints = [midpoint, midpoint + 1];
+      persons.push(new GraphicPosition(midpoint, 50 - (percentageInterval / 2)));
+      persons.push(new GraphicPosition(midpoint, 50 + (percentageInterval / 2)));
+
+      for (let p = midpoint - 1, i = 1; p > 0; p--, i++) {
+        if (p === 1) {
+          persons.push(new GraphicPosition(p, 0));
+        } else {
+          persons.push(new GraphicPosition(p, 50 - (percentageInterval / 2) - (i * percentageInterval)));
+        }
+      }
+
+      for (let p = midpoint + 2, i = 1; p <= numPersons; p++, i++) {
+        if (p === numPersons) {
+          persons.push(new GraphicPosition(p, 100));
+        } else {
+          persons.push(new GraphicPosition(p, 50 + (percentageInterval / 2) + (i * percentageInterval)));
+        }
+      }
+    } else {
+      persons.push(new GraphicPosition(midpoint, 50));
+      for (let p = midpoint - 1, i = 1; p > 0; p--, i++) {
+        if (p === 1) {
+          persons.push(new GraphicPosition(p, 0));
+        } else {
+          persons.push(new GraphicPosition(p, 50 - (i * percentageInterval)));
+        }
+      }
+      for (let p = midpoint + 1, i = 1; p <= numPersons; p++, i++) {
+        if (p === numPersons) {
+          persons.push(new GraphicPosition(p, 100));
+        } else {
+          persons.push(new GraphicPosition(p, 50 + (i * percentageInterval)));
+        }
+      }
+    }
+
+    this.persons.positions = persons;
   }
 }

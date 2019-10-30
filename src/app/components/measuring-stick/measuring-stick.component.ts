@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { CalculatorService } from '@app/services/calculator.service';
+
 @Component({
   selector: 'app-measuring-stick',
   templateUrl: './measuring-stick.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MeasuringStickComponent implements OnInit {
 
-  constructor() { }
+  constructor(public calculatorService: CalculatorService) { }
 
   @Input() public orientation: 'horizontal' | 'vertical' = 'horizontal';
   @Input() public width: number = 0;
