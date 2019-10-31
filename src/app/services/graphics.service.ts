@@ -12,7 +12,7 @@ export class GraphicsService {
   }
 
   public get presenterWidthHeight() {
-    return SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
+    return SvgStandingPersonComponent.FRONT_WIDTH_HEIGHT_RATIO;
   }
   
 }

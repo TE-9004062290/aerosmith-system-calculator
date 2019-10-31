@@ -84,10 +84,25 @@
                     (updated)="updateInput('ceilingHeight', $event)"
                 ></app-measuring-stick>
             </div>
-            <div class="stage-wrapper">
+            <div #sideWrapper class="stage-wrapper">
                 <div class="stage-outer-container">
                     <div class="stage-inner-container">
-                        <div class="stage-side"></div>
+                        <div class="stage-side">
+                            <div class="person-wrapper" @animateOutputArea
+                                [ngStyle]="{'width': presenterSideWidth + 'px', 'left': (sideCapture / 2) + 'px'}">
+                                <app-svg-standing-person mode="side"></app-svg-standing-person>
+                            </div>
+                            <div class="audience-wrapper">
+                                <div *ngFor="let a of audience" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': (sideCapture / 1.9) + audienceDistance + 'px'}">
+                                    <app-svg-standing-person mode="sitting"></app-svg-standing-person>
+                                </div>
+                            </div>
+                            <div class="microphone-wrapper" @animateOutputArea                  
+                                [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': (sideCapture / 2) + 'px', 'position': 'absolute'}">
+                                <app-svg-microphone [extenderLength]="extenderSideLength"></app-svg-microphone>
+                            </div>
+                        </div>
                     </div>
                 </div>   
             </div>

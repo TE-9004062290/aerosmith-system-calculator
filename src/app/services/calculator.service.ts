@@ -68,10 +68,12 @@ export class CalculatorService {
   private m_microphoneInterval: number = 0;
   private m_requiredMicrophones: number = 0;
   private m_extenderLength: number = 0;
+  private m_audienceDistance: number = 0;
 
   get microphoneInterval(): number { return this.m_microphoneInterval; }
   get requiredMicrophones(): number { return this.m_requiredMicrophones; }
   get extenderLength(): number { return this.m_extenderLength; }
+  get audienceDistance(): number { return this.m_audienceDistance; }
 
   set measurementUnit(val: MeasurementUnits) {
     if (this.m_measurementUnit === MeasurementUnits.Meters && val === MeasurementUnits.Feet) {
@@ -139,5 +141,7 @@ export class CalculatorService {
       const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
       this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
     }
+
+    this.m_audienceDistance = Math.max(round(Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_audienceHeight - this.m_extenderLength)**2), 2), 1);
   }
 }

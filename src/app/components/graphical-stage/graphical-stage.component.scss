@@ -20,6 +20,21 @@
     // max-width: 500px;
     box-sizing: border-box;
     margin: 100px auto 0 auto;
+    .stage-info-wrapper {
+        .stage-wrapper {
+            .stage-outer-container {
+                height: 100%;
+                .stage-inner-container {
+                    height: 100%;
+                    .stage-side {
+                        position: relative;
+                        height: 100%;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .stage-wrapper {
@@ -31,7 +46,7 @@
     border-top: solid blue 2px;
     
     .stage-outer-container {
-        overflow-x: hidden;
+        overflow: hidden;
     }
 
     .stage-inner-container {
@@ -67,6 +82,14 @@
         height: 100%;
         .stage-wrapper {
             height: 100%;
+
+            .person-wrapper {
+                position: absolute;
+                bottom: 0;
+                left: 0%;
+                transition: width .25s linear, left .25s linear;
+                z-index: 1;
+            }
         }
     }
 }
