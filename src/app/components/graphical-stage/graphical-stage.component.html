@@ -1,8 +1,10 @@
 <div class="graphical-output">
     <div class="graphical-output-front">
         <div class="stage-info-wrapper">
-            <div style="position: absolute; top: 0; left: 10%;">
-                <app-measuring-stick orientation="vertical" [height]="stageHeight"
+            <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
+                <app-measuring-stick orientation="vertical" 
+                    [height]="stageHeight"
+                    thinModeDirection="left"
                     [isInput]="true"
                     [inputMin]="CalculatorMins.ceilingHeight"
                     [inputMax]="CalculatorMaxes.ceilingHeight"
@@ -10,7 +12,26 @@
                     (updated)="updateInput('ceilingHeight', $event)"
                 ></app-measuring-stick>
             </div>
-            <div style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
+            <div class="measuring-stick-overlay" style="position: absolute; bottom: 0; left: 85%">
+                <app-measuring-stick orientation="vertical" 
+                    [height]="presenterWidth / graphicsService.presenterWidthHeight"
+                    thinModeDirection="right"
+                    [isInput]="true"
+                    [inputMin]="CalculatorMins.presenterHeight"
+                    [inputMax]="CalculatorMaxes.presenterHeight"
+                    [inputValue]="calculatorService.presenterHeight"
+                    (updated)="updateInput('presenterHeight', $event)"
+                ></app-measuring-stick>
+            </div>
+            <div *ngIf="calculatorService.hasFreshOutput && extenderLength" class="measuring-stick-overlay" style="position: absolute; top: 0; left: 82.5%" @animateOutputArea>
+                <app-measuring-stick orientation="vertical" 
+                    [height]="extenderLength"
+                    thinModeDirection="right"
+                    [isInput]="false"
+                    [inputValue]="calculatorService.extenderLength"
+                ></app-measuring-stick>
+            </div>
+            <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
                 <app-measuring-stick orientation="horizontal" 
                     [width]="stageWidth"
                     thinModeDirection="bottom"
@@ -23,7 +44,7 @@
             </div>
             <ng-container *ngIf="calculatorService.hasFreshOutput">
                 <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 0">
-                    <div style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
+                    <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
                             thinModeDirection="top"
@@ -33,7 +54,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1 && microphones.positions.length > 1">
-                    <div style="position: absolute; top: -40px; width: 100%; display: flex; justify-content: center;" @animateOutputArea >
+                    <div class="measuring-stick-overlay" style="position: absolute; top: -40px; width: 100%; display: flex; justify-content: center;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
                             thinModeDirection="top"
@@ -53,21 +74,25 @@
                 <div class="stage-outer-container">
                     <div #container class="stage-inner-container">
                         <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
-                                <div style="position: absolute; bottom: 0;" [ngStyle]="{'left': 'calc(' + microphones.rightMost + 10 + '% + 75px)'}">
-                                    <app-measuring-stick orientation="vertical" [height]="presenterWidth / graphicsService.presenterWidthHeight"
+                                <!-- <div style="position: absolute; bottom: 0;" [ngStyle]="{'left': 'calc(' + microphones.rightMost + 10 + '% + 75px)'}">
+                                    <app-measuring-stick orientation="vertical" 
+                                        [height]="presenterWidth / graphicsService.presenterWidthHeight"
+                                        thinModeDirection="right"
                                         [isInput]="true"
                                         [inputMin]="CalculatorMins.presenterHeight"
                                         [inputMax]="CalculatorMaxes.presenterHeight"
                                         [inputValue]="calculatorService.presenterHeight"
                                         (updated)="updateInput('presenterHeight', $event)"
                                     ></app-measuring-stick>
-                                </div>
-                                <div *ngIf="calculatorService.hasFreshOutput && extenderLength" style="position: absolute; top: 0;" [ngStyle]="{'left': '100%'}" @animateOutputArea>
-                                    <app-measuring-stick orientation="vertical" [height]="extenderLength"
+                                </div> -->
+                                <!-- <div *ngIf="calculatorService.hasFreshOutput && extenderLength" style="position: absolute; top: 0;" [ngStyle]="{'left': '100%'}" @animateOutputArea>
+                                    <app-measuring-stick orientation="vertical" 
+                                        [height]="extenderLength"
+                                        thinModeDirection="right"
                                         [isInput]="false"
                                         [inputValue]="calculatorService.extenderLength"
                                     ></app-measuring-stick>
-                                </div>
+                                </div> -->
                             <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
                                 [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
                                 <app-svg-standing-person></app-svg-standing-person>
@@ -87,7 +112,7 @@
     </div>
     <div class="graphical-output-side">
         <div #sideInfoWrapper class="stage-info-wrapper">
-            <div style="position: absolute; top: 0; left: 10%;">
+            <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
                 <app-measuring-stick orientation="vertical" [height]="350"
                     [isInput]="true"
                     [inputMin]="CalculatorMins.ceilingHeight"
@@ -98,6 +123,7 @@
             </div>
             <div #sideWrapper class="stage-wrapper">
                 <div *ngIf="calculatorService.hasFreshOutput" @animateOutputArea
+                    class="measuring-stick-overlay" 
                     style="position: absolute; bottom: -40px; transition: left .25s linear, width .25s linear" 
                     [ngStyle]="{'left': ((sideCapture / 2) + 43.28000000000003) + 'px'}">
                     <app-measuring-stick orientation="horizontal"

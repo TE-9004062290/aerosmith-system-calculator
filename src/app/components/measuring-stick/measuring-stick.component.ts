@@ -25,7 +25,19 @@ export class MeasuringStickComponent implements OnInit {
       this.mode = 'wide';
     }
   }
-  @Input() public height: number = 0;
+
+  private _height: number = 0;
+  get height(): number {
+    return this._height;
+  }
+  @Input() set height(value: number) {
+    this._height = value;
+    if (this._height && this._height < this.shortThreshold) {
+      this.mode = 'thin';
+    } else {
+      this.mode = 'wide';
+    }
+  }
 
   @Input() public thinModeDirection: 'top' | 'right' | 'down' | 'left' = 'top';
   @Input() public isInput: boolean = false;
@@ -37,9 +49,10 @@ export class MeasuringStickComponent implements OnInit {
 
   public mode: 'wide' | 'thin' = 'wide';
   private thinThreshold = 150; // 150px
+  private shortThreshold = 60;
 
   ngOnInit() {
-    if (this._width && this._width < this.thinThreshold) {
+    if ((this._width && this._width < this.thinThreshold) || (this._height && this._height < this.shortThreshold)) {
       this.mode = 'thin';
     } else {
       this.mode = 'wide';

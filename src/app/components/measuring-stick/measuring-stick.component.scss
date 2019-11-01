@@ -143,7 +143,7 @@ input[type=number]::-webkit-outer-spin-button {
         }
         .stop {
             height: 100%;
-            width: 2px;
+            width: 3px;
         }
         &.left {
             justify-content: flex-end;
@@ -169,6 +169,36 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    // justify-content: center;
+    &[mode='thin'] {
+        .stick.top {
+            margin-bottom: 0px;
+        }
+        .stick.bottom {
+            margin-top: 0px;
+        }
+        .inputs-input, .inputs-output {
+            position: absolute;
+            transition: left .25s linear, right .25s linear, top .25s linear, bottom .25s linear;
+        }
+        &[mode-direction='left'] {
+            .inputs-output {
+                left: -45px;
+            }
+            .inputs-input {
+                left: -55px;
+            }
+        }
+        &[mode-direction='right'] {
+            .inputs-output {
+                right: -45px;
+            }
+            .inputs-input {
+                right: -55px;
+            }
+        }
+    }
+
     .stick {
         display: flex;
         flex-direction: column;

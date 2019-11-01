@@ -30,12 +30,12 @@
             <div class="stop"></div>
         </div>
     </div>
-    <div *ngSwitchCase="'vertical'" [attr.mode]="mode" class="vertical-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'height': height + 'px'}">
+    <div *ngSwitchCase="'vertical'" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
             <div class="arrow"></div>
             <div class="bar"></div>
         </div>
-        <div *ngIf="isInput" class="inputs-input" type="number">
+        <div *ngIf="isInput" class="inputs-input" type="number" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + 'px' : undefined}">
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
@@ -46,7 +46,7 @@
                 {{ calculatorService.measurementUnit.toString() }}
             </div>
         </div>
-        <div *ngIf="!isInput" class="inputs-output">
+        <div *ngIf="!isInput" class="inputs-output" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + 'px' : undefined}">
             <div class="output-value">
                 {{ inputValue | number: '0.2-2'}} {{ calculatorService.measurementUnit.toString() }}
             </div>

@@ -19,7 +19,8 @@
 
     .graphical-stage-wrapper {
         background-color: #E5E5E5;
-        padding-bottom: 120px;
+        padding-bottom: 300px;
+        height: 600px;
         overflow-y: scroll;
     }
     .sidebar {
@@ -51,7 +52,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 200;
 
 }
 
