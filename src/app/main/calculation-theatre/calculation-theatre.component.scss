@@ -10,7 +10,7 @@
 
 .calculation-theatre-container {
     display: grid;
-    grid-template-columns: 80% 1fr;
+    grid-template-columns: 75% 1fr;
     .graphical-stage-wrapper {
         background-color: #E5E5E5;
         padding-bottom: 240px;
@@ -44,12 +44,23 @@
 .output-wrapper {
     position: fixed;
     bottom: 0;
-    display: flex;
-    align-items: center;
-    height: 70px;
-    color: white;
-    background-color: #8BC34A;
     width: 100%;
     z-index: 2;
 
+}
+
+.btn {
+    &.btn-calculate {
+        width: 100%;
+        font-family: SST Pro;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: 1px;
+        color: white;
+        
+        border-radius: 3px;
+        padding: 12px 0px;
+        background-color: #006DB3;
+    }
 }

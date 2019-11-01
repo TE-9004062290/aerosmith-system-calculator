@@ -15,23 +15,7 @@ import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 @Component({
   selector: 'app-calculation-theatre',
   templateUrl: './calculation-theatre.component.html',
-  styleUrls: ['./calculation-theatre.component.scss'],
-  animations: [
-    trigger('animateOutputArea', [
-      transition(':enter', [
-        style({ height: '0px'}),
-        style({ opacity: 0 }),
-        animate('.25s', style({ height: '*'})),
-        animate('.5s', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        style({ height: '*' }),
-        animate('.075s', style({ opacity: 0 })),
-        animate('.25s', style({ height: '0px' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./calculation-theatre.component.scss']
 })
 export class CalculationTheatreComponent implements OnInit {
 
@@ -45,9 +29,11 @@ export class CalculationTheatreComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
+    this.calculatorService.calculateOutputs();
   }
 
   calculate() {
-    this.showOutputs = !this.showOutputs;
+    this.calculatorService.calculateOutputs();
+    this.calculatorService.$recalculate.next(true);
   }
 }

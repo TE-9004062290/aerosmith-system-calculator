@@ -35,12 +35,11 @@
         <div class="calculation-theatre-inputs">
             <app-calculation-inputs></app-calculation-inputs>
         </div>
-        <div @animateOutputArea *ngIf="showOutputs">        
-            <app-calculation-outputs></app-calculation-outputs>
+        <div class="btn btn-calculate" (click)="calculate()">
+            Calculate
         </div>
-        <button style="margin-top: 8px;" (click)="calculate()">Calculate</button>
     </div>
     <div class="output-wrapper">
-        hello world output stuff
+        <app-calculation-outputs></app-calculation-outputs>
     </div>
 </div>

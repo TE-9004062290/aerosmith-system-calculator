@@ -12,9 +12,22 @@ export class MeasuringStickComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   @Input() public orientation: 'horizontal' | 'vertical' = 'horizontal';
-  @Input() public width: number = 0;
+  
+  private _width: number = 0;
+  get width(): number {
+    return this._width;
+  }
+  @Input() set width(value: number) {
+    this._width = value;
+    if (this._width && this._width < this.thinThreshold) {
+      this.mode = 'thin';
+    } else {
+      this.mode = 'wide';
+    }
+  }
   @Input() public height: number = 0;
 
+  @Input() public thinModeDirection: 'top' | 'right' | 'down' | 'left' = 'top';
   @Input() public isInput: boolean = false;
   @Input() public inputMin: number = 0;
   @Input() public inputMax: number = 100;
@@ -22,7 +35,15 @@ export class MeasuringStickComponent implements OnInit {
   
   @Output() public updated: EventEmitter<any> = new EventEmitter();
 
+  public mode: 'wide' | 'thin' = 'wide';
+  private thinThreshold = 150; // 150px
+
   ngOnInit() {
+    if (this._width && this._width < this.thinThreshold) {
+      this.mode = 'thin';
+    } else {
+      this.mode = 'wide';
+    }
   }
 
   onInputChange(inputElement) {

@@ -2,8 +2,6 @@ import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
-// import { SvgStandingPersonComponent } from '@components/svg-standing-person';
-
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
@@ -74,6 +72,7 @@ export class GraphicalStageComponent implements OnInit {
   private containerHeight: number = 500;
   public sideWrapperWidth: number = 500;
   public sideWrapperHeight: number = 500;
+  public sideInfoWrapperWidth: number = 500;
 
 
   public widthHeightRatio: number = 1;
@@ -95,6 +94,7 @@ export class GraphicalStageComponent implements OnInit {
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
   @ViewChild('sideWrapper', null) sideWrapperRef: ElementRef;
+  @ViewChild('sideInfoWrapper', null) sideInfoWrapperRef: ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
@@ -111,7 +111,7 @@ export class GraphicalStageComponent implements OnInit {
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
-        this.calculatorService.calculateOutputs();
+        // this.calculatorService.calculateOutputs();
         this.calculateProportions();
         this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
         this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
@@ -119,9 +119,7 @@ export class GraphicalStageComponent implements OnInit {
     });
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
-
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
-    this.calculatorService.calculateOutputs();
     this.calculateProportions();
     this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
     this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
@@ -147,6 +145,7 @@ export class GraphicalStageComponent implements OnInit {
 
     this.sideWrapperWidth = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetWidth : this.sideWrapperWidth;
     this.sideWrapperHeight = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetHeight : this.sideWrapperHeight;
+    this.sideInfoWrapperWidth = this.sideInfoWrapperRef ? this.sideInfoWrapperRef.nativeElement.offsetWidth : this.sideInfoWrapperRef;
   }
 
   private calculateProportions() {

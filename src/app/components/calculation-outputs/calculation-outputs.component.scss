@@ -1,0 +1,41 @@
+
+.outputs-wrapper {
+    width: 100%;
+    background-color: white;
+    border-top: solid #E6EBEF 2px;
+}
+
+.outputs-container {
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+        padding-bottom: 12px;
+        border-bottom: solid #E6EBEF 2px;
+        .title {
+            font-family: SST Pro;
+            font-size: 24px;
+            line-height: 24px;
+            color: #8BC34A;
+        }
+        .actions {
+
+        }
+    }
+    .output-rows {
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        .output-row {
+            .output-description {
+                font-size: 12px;
+            }
+            .output-value {
+                font-weight: bold;
+            }
+        }
+    }
+}

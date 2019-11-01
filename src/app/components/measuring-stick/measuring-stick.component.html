@@ -1,5 +1,6 @@
 <ng-container [ngSwitch]="orientation">
-    <div *ngSwitchCase="'horizontal'" class="horizontal-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'width': width + 'px'}">
+    <div *ngSwitchCase="'horizontal'" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" 
+        class="horizontal-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'width': width + 'px'}">
         <div class="stick left">
             <div class="stop"></div>
             <div class="arrow">     
@@ -29,7 +30,7 @@
             <div class="stop"></div>
         </div>
     </div>
-    <div *ngSwitchCase="'vertical'" class="vertical-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'height': height + 'px'}">
+    <div *ngSwitchCase="'vertical'" [attr.mode]="mode" class="vertical-measure" [ngClass]="{'measurable-input': isInput}" [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
             <div class="arrow"></div>
             <div class="bar"></div>

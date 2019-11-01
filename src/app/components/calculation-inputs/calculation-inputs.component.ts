@@ -1,5 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+
 import { CalculatorService } from '@app/services/calculator.service';
 import { CalculationInputs } from '@app/models/calculation-inputs.model';
 import { CalculationOutputs } from '@app/models/calculation-outputs.model';
@@ -10,7 +17,23 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-calculation-inputs',
   templateUrl: './calculation-inputs.component.html',
-  styleUrls: ['./calculation-inputs.component.scss']
+  styleUrls: ['./calculation-inputs.component.scss'],
+  animations: [
+    trigger('animateAdvancedSettings', [
+      transition(':enter', [
+        style({ height: '0px'}),
+        style({ opacity: 0 }),
+        animate('.25s', style({ height: '*'})),
+        animate('.075s', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        style({ height: '*' }),
+        animate('.075s', style({ opacity: 0 })),
+        animate('.25s', style({ height: '0px' }))
+      ])
+    ])
+  ]
 })
 export class CalculationInputsComponent implements OnInit {
 
@@ -25,6 +48,8 @@ export class CalculationInputsComponent implements OnInit {
   @Output() onUnitChange: EventEmitter<CalculationInputs> = new EventEmitter();
   @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
+  public showAdvancedSettings: boolean = false;
+  
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
@@ -34,18 +59,10 @@ export class CalculationInputsComponent implements OnInit {
     });
   }
 
-  // /* This makes the potentially dangerous assumption that the previous unit has
-  //  * actually changed
-  //  */
-  // changeUnits(measurementUnit: MeasurementUnits) {
-  //   this.inputGroup.measurementUnit = measurementUnit;
-  //   this.onUnitChange.emit(this.inputGroup);
-  // }
-
-  // calculate() {
-  //   this.onCalculate.emit(this.inputGroup);
-  // }
-
+  public toggleAdvancedSettings() {
+    this.showAdvancedSettings = !this.showAdvancedSettings;
+  }
+  
   public updateInput(inputField, inputElement) {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;

@@ -33,37 +33,41 @@
             </div>
         </div>
     </div>
-    <div class="inputs-row">
-        <div class="inputs-group inputs-group--horizontal">
-            <label class="inputs-label" for="presenter-height">
-                Presenter height
-            </label>
-            <div class="inputs-value">
-                <input id="presenter-height" #inputPresenterHeight class="inputs-input" type="number" 
-                    [min]="calculatorService.MINIMUMS.presenterHeight"
-                    [max]="calculatorService.MAXIMUMS.presenterHeight"
-                    [value]="calculatorService.presenterHeight"
-                    (change)="updateInput('presenterHeight', inputPresenterHeight)"/>
-                <span class="unit-label">
-                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
-                </span>
+    <button style="margin-top: 8px;" (click)="toggleAdvancedSettings()">Advanced Settings</button>
+    <div *ngIf="showAdvancedSettings" class="advanced-inputs inputs-container" @animateAdvancedSettings>
+        <div>Presenter and audience height are set to cover <br/> 80% to 90% of use cases. Adjust if needed.</div>
+        <div class="inputs-row">
+            <div class="inputs-group inputs-group--horizontal">
+                <label class="inputs-label" for="presenter-height">
+                    Presenter height
+                </label>
+                <div class="inputs-value">
+                    <input id="presenter-height" #inputPresenterHeight class="inputs-input" type="number" 
+                        [min]="calculatorService.MINIMUMS.presenterHeight"
+                        [max]="calculatorService.MAXIMUMS.presenterHeight"
+                        [value]="calculatorService.presenterHeight"
+                        (change)="updateInput('presenterHeight', inputPresenterHeight)"/>
+                    <span class="unit-label">
+                        {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="inputs-row">
-        <div class="inputs-group inputs-group--horizontal">
-            <label class="inputs-label" for="audience-height">
-                Audience height
-            </label>
-            <div class="inputs-value">
-                <input id="audience-height" #inputAudienceHeight class="inputs-input" type="number" 
-                    [min]="calculatorService.MINIMUMS.audienceHeight"
-                    [max]="calculatorService.MAXIMUMS.audienceHeight"
-                    [value]="calculatorService.audienceHeight"
-                    (change)="updateInput('audienceHeight', inputAudienceHeight)"/>
-                <span class="unit-label">
-                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
-                </span>
+        <div class="inputs-row">
+            <div class="inputs-group inputs-group--horizontal">
+                <label class="inputs-label" for="audience-height">
+                    Audience height
+                </label>
+                <div class="inputs-value">
+                    <input id="audience-height" #inputAudienceHeight class="inputs-input" type="number" 
+                        [min]="calculatorService.MINIMUMS.audienceHeight"
+                        [max]="calculatorService.MAXIMUMS.audienceHeight"
+                        [value]="calculatorService.audienceHeight"
+                        (change)="updateInput('audienceHeight', inputAudienceHeight)"/>
+                    <span class="unit-label">
+                        {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    </span>
+                </div>
             </div>
         </div>
     </div>

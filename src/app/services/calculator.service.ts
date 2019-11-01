@@ -92,6 +92,7 @@ export class CalculatorService {
       this.MAXIMUMS = this.METER_MAXIMUMS;
     }
     this.m_measurementUnit = val;
+    this.calculateOutputs();
     this.$recalculate.next(true);
   }
 

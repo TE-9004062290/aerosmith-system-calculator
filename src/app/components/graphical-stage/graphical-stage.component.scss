@@ -90,6 +90,13 @@
                 transition: width .25s linear, left .25s linear;
                 z-index: 1;
             }
+
+            .microphone-wrapper {
+                position: absolute;
+                top: 0;
+                transition: width .25s linear, left .25s linear, top .25s linear;
+                z-index: 0;
+            }
         }
     }
 }
