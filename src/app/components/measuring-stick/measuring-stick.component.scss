@@ -34,18 +34,33 @@
 }
 
 .measurable-input {
-    input {
-        width: 10%;
-        min-width: 50px;
-        height: 18px;
-        line-height: 11px;
-        font-size: 11px;
-        text-align: center;
-        box-sizing: content-box;
-        border: 1px solid #E6EBEF;
+    .inputs-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 3px;
         background-color: #006DB3;
+        width: 10%;
+        min-width: 60px;
+        height: 18px;
+        padding: 2px;
+    }
+    input {
+        font-family: SST;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        box-sizing: content-box;
         color: white;
+        background-color: transparent;
+        border: none;
+        width: 34px;
+    }
+    .measurement-unit {
+        color: white;
+        font-family: SST;
+        font-size: 12px;
+        line-height: 14px;
     }
     .stick {
         .bar {
@@ -92,7 +107,27 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     margin: 0 auto;
     transition: width .25s linear;
-
+    &[mode='thin'] {
+        .stick.left {
+            margin-right: 0px;
+        }
+        .stick.right {
+            margin-left: 0px;
+        }
+        .inputs-input, .inputs-output {
+            position: absolute;
+        }
+        &[mode-direction='top'] {
+            .inputs-input, .inputs-output {
+                top: -30px;
+            }
+        }
+        &[mode-direction='bottom'] {
+            .inputs-input, .inputs-output {
+                bottom: -30px;
+            }
+        }
+    }
     .stick {
         height: 100%;
         width: 100%;
@@ -155,9 +190,6 @@ input[type=number]::-webkit-outer-spin-button {
         &.bottom {
             margin-top: 8px;
         }
-    }
-    input {
-        width: 100%;
     }
 }
 

@@ -2,8 +2,6 @@ import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
-// import { SvgStandingPersonComponent } from '@components/svg-standing-person';
-
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
@@ -63,6 +61,7 @@ export class GraphicalStageComponent implements OnInit {
   public stageHeight: number = 500;
   public stageWidth: number = 500;
   public extenderLength: number = 0;
+  public extenderSideLength: number = 0;
   
   private pageHeight: number = 500;
   private pageWidth: number = 500;
@@ -71,9 +70,13 @@ export class GraphicalStageComponent implements OnInit {
   private wrapperHeight: number = 500;
   private containerWidth: number = 500;
   private containerHeight: number = 500;
+  public sideWrapperWidth: number = 500;
+  public sideWrapperHeight: number = 500;
+  public sideInfoWrapperWidth: number = 500;
 
 
   public widthHeightRatio: number = 1;
+  public sideCapture: number = 0;
   public captureWidthPercentage: number = 0;
   public capturePosition: number = 0;
   public captureTop: number = 0;
@@ -82,10 +85,16 @@ export class GraphicalStageComponent implements OnInit {
   public persons = { leftMost: 0, rightMost: 0, positions: []};
 
   public presenterWidth: number = 0;
+  public presenterSideWidth: number = 0;
+  public audienceWidth: number = 0;
+  public audienceDistance: number = 0;
+  public audience: number[] = [1,2,3,4,5];
   
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
+  @ViewChild('sideWrapper', null) sideWrapperRef: ElementRef;
+  @ViewChild('sideInfoWrapper', null) sideInfoWrapperRef: ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
@@ -102,20 +111,15 @@ export class GraphicalStageComponent implements OnInit {
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
-        this.calculatorService.calculateOutputs();
+        // this.calculatorService.calculateOutputs();
         this.calculateProportions();
-        console.log(this.calculatorService.microphoneInterval);
         this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
         this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
-        console.log(this.microphones);
-        console.log(this.persons);
       }
     });
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
-
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
-    this.calculatorService.calculateOutputs();
     this.calculateProportions();
     this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
     this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
@@ -138,6 +142,10 @@ export class GraphicalStageComponent implements OnInit {
     this.wrapperHeight = this.wrapperRef ? this.wrapperRef.nativeElement.offsetHeight : this.wrapperHeight;
     this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
     this.containerHeight = this.containerRef ? this.containerRef.nativeElement.offsetHeight : this.containerHeight;
+
+    this.sideWrapperWidth = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetWidth : this.sideWrapperWidth;
+    this.sideWrapperHeight = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetHeight : this.sideWrapperHeight;
+    this.sideInfoWrapperWidth = this.sideInfoWrapperRef ? this.sideInfoWrapperRef.nativeElement.offsetWidth : this.sideInfoWrapperRef;
   }
 
   private calculateProportions() {
@@ -148,8 +156,13 @@ export class GraphicalStageComponent implements OnInit {
     this.stageWidth = this.calculateStageWidth(this.ratioMode);
 
     this.presenterWidth= this.getPresenterWidth();
+    this.presenterSideWidth = this.getPresenterSideWidth();
+    this.audienceWidth = this.getAudienceWidth();
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
+    this.sideCapture = this.getSideRadius();
+    this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
+    this.getAudienceArray();
   }
 
   private calculateStageHeight(mode: RatioMode) {
@@ -191,7 +204,17 @@ export class GraphicalStageComponent implements OnInit {
   private getPresenterWidth(): number {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;
-    return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.WIDTH_HEIGHT_RATIO;
+    return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.FRONT_WIDTH_HEIGHT_RATIO;
+  }
+
+  private getPresenterSideWidth(): number {
+    const presenterCeilingRatio = this.calculatorService.presenterHeight / this.calculatorService.ceilingHeight;
+    return presenterCeilingRatio * this.sideWrapperHeight * SvgStandingPersonComponent.SIDE_WIDTH_HEIGHT_RATIO;
+  }
+
+  private getAudienceWidth(): number {
+    const audienceCeilingRatio = this.calculatorService.audienceHeight / this.calculatorService.ceilingHeight;
+    return audienceCeilingRatio * this.sideWrapperHeight * SvgStandingPersonComponent.SITTING_WIDTH_HEIGHT_RATIO;
   }
 
   private getRadiusWidthPercentage(): number {
@@ -200,13 +223,31 @@ export class GraphicalStageComponent implements OnInit {
     return captureDiameterWidthRatio * 100;
   }
 
+  private getSideRadius(): number {
+    const unitlessRadius = this.calculatorService.measurementUnit === MeasurementUnits.Meters ? 2 : 2 * CalculatorService.METERS_TO_FEET;
+    const captureRadiusHeightRatio = unitlessRadius / this.calculatorService.ceilingHeight;
+    console.log(captureRadiusHeightRatio);
+    console.log(this.sideWrapperHeight);
+    return captureRadiusHeightRatio * this.sideWrapperHeight;
+  }
+
   private getRadiusTopPosition(numMicrophone): number {
     const cService = this.calculatorService;
     this.extenderLength = cService.extenderLength / cService.ceilingHeight * this.stageHeight;
+    this.extenderSideLength = cService.extenderLength / cService.ceilingHeight * this.sideWrapperHeight;
     if (cService.extenderLength > 0) {
       return cService.extenderLength / cService.ceilingHeight * 100;
     }
     return 0;
+  }
+
+  private getAudienceDistance(): number {
+    return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.sideWrapperHeight);
+  }
+
+  private getAudienceArray(): any {
+    const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
+    console.log(Math.round(effectiveStageWidth / (2 * this.audienceWidth)));
   }
 
   public updateInput(inputField, inputElement) {

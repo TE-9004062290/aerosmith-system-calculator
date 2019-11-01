@@ -1,12 +1,14 @@
 <div class="calculation-theatre-header">Calculator for speech reinforcement</div>
 <div class="calculation-theatre-container">
-    <app-graphical-stage></app-graphical-stage>
+    <div class="graphical-stage-wrapper">
+        <app-graphical-stage></app-graphical-stage>
+    </div>
     <div class="sidebar">
         <div class="calculation-theatre-title">
-            IP Mic Calculator (TBD)
+            Beamforming Microphone <br/> Array MAS-A100
         </div>
         <div class="calculation-theatre-misc">
-            <strong>Note: Any loudspeakers should be <br/> placed at least 3 meters away from <br/> the microphone array.</strong>
+            <strong>Note</strong>: Any loudspeakers should be <br/> placed at least 3 meters away from <br/> the microphone array.
         </div>
         <div class="calculation-theatre-settings">
             <div class="calculation-theatre-setting">
@@ -33,9 +35,11 @@
         <div class="calculation-theatre-inputs">
             <app-calculation-inputs></app-calculation-inputs>
         </div>
-        <div @animateOutputArea *ngIf="showOutputs">        
-            <app-calculation-outputs></app-calculation-outputs>
+        <div class="btn btn-calculate" (click)="calculate()">
+            Calculate
         </div>
-        <button style="margin-top: 8px;" (click)="calculate()">Calculate</button>
+    </div>
+    <div class="output-wrapper">
+        <app-calculation-outputs></app-calculation-outputs>
     </div>
 </div>

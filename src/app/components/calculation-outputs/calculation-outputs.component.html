@@ -1,11 +1,35 @@
-<div class="outputs-container">
-    <div class="output-row">
-        <strong class="output-quantity" id="microphones-required">{{ calculatorService.requiredMicrophones }}</strong> microphones required
-    </div>
-    <div class="output-row">
-        <strong class="output-quantity" id="distance-between-microphones">{{ calculatorService.microphoneInterval }}</strong> between microphones
-    </div>
-    <div class="output-row">
-        <strong class="output-quantity" id="microphone-audience-distance">1.73 meters (m)</strong> between line of microphones and front of audience
+<div class="outputs-wrapper">
+    <div class="outputs-container">
+        <div class="header">
+            <div class="title">
+                Calculation Results
+            </div>
+            <div class="actions">
+                Print Share
+            </div>
+        </div>
+        <div class="output-rows">
+            <div class="output-row">
+                <div class="output-description">Number of microphones</div>
+                <div class="output-value">{{ calculatorService.requiredMicrophones }} units</div>
+            </div>
+            <div class="output-row">
+                <div class="output-description">Distance between each microphone</div>
+                <div class="output-value">{{ calculatorService.microphoneInterval }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}</div>
+            </div>
+            <div class="output-row">
+                <div class="output-description">Distance between line of microphones and front <br/> of audience</div>
+                <div class="output-value">{{ calculatorService.audienceDistance }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}</div>
+            </div>
+            <div class="output-row">
+                <div class="output-description">Ceiling extender length (if required)</div>
+                <div *ngIf="calculatorService.extenderLength === 0" class="output-value">
+                    Not required
+                </div>
+                <div *ngIf="calculatorService.extenderLength > 0" class="output-value">
+                    {{ calculatorService.extenderLength }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>

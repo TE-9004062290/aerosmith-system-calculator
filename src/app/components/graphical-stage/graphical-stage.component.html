@@ -1,71 +1,127 @@
 <div class="graphical-output">
-    <div class="stage-info-wrapper">
-        <div style="position: absolute; top: 0; left: 10%;">
-            <app-measuring-stick orientation="vertical" [height]="stageHeight"
-                [isInput]="true"
-                [inputMin]="CalculatorMins.ceilingHeight"
-                [inputMax]="CalculatorMaxes.ceilingHeight"
-                [inputValue]="calculatorService.ceilingHeight"
-                (updated)="updateInput('ceilingHeight', $event)"
-            ></app-measuring-stick>
-        </div>
-        <div style="position: absolute; bottom: 0; right: 10%;">
-            <app-measuring-stick orientation="vertical" [height]="presenterWidth / graphicsService.presenterWidthHeight"
-                [isInput]="true"
-                [inputMin]="CalculatorMins.presenterHeight"
-                [inputMax]="CalculatorMaxes.presenterHeight"
-                [inputValue]="calculatorService.presenterHeight"
-                (updated)="updateInput('presenterHeight', $event)"
-            ></app-measuring-stick>
-        </div>
-        <div style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
-            <app-measuring-stick orientation="horizontal" [width]="stageWidth"
-                [isInput]="true" 
-                [inputMin]="CalculatorMins.lectureWidth"
-                [inputMax]="CalculatorMaxes.lectureWidth"
-                [inputValue]="calculatorService.lectureWidth"
-                (updated)="updateInput('lectureWidth', $event)"
-            ></app-measuring-stick>
-        </div>
-        <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 0">
-            <div style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
-                <app-measuring-stick orientation="horizontal" [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
-                    [isInput]="false" 
-                    [inputValue]="calculatorService.microphoneInterval"
+    <div class="graphical-output-front">
+        <div class="stage-info-wrapper">
+            <div style="position: absolute; top: 0; left: 10%;">
+                <app-measuring-stick orientation="vertical" [height]="stageHeight"
+                    [isInput]="true"
+                    [inputMin]="CalculatorMins.ceilingHeight"
+                    [inputMax]="CalculatorMaxes.ceilingHeight"
+                    [inputValue]="calculatorService.ceilingHeight"
+                    (updated)="updateInput('ceilingHeight', $event)"
                 ></app-measuring-stick>
             </div>
-        </ng-container>
-        <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1">
-            <div style="position: absolute; top: -40px; width: 100%; display: flex; justify-content: center;" @animateOutputArea >
-                <app-measuring-stick orientation="horizontal" [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
-                [isInput]="false" 
-                [inputValue]="calculatorService.microphoneInterval"
-                ></app-measuring-stick>
-                <app-measuring-stick orientation="horizontal" [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
-                    [isInput]="false" 
-                    [inputValue]="calculatorService.microphoneInterval"
+            <div style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
+                <app-measuring-stick orientation="horizontal" 
+                    [width]="stageWidth"
+                    thinModeDirection="bottom"
+                    [isInput]="true" 
+                    [inputMin]="CalculatorMins.lectureWidth"
+                    [inputMax]="CalculatorMaxes.lectureWidth"
+                    [inputValue]="calculatorService.lectureWidth"
+                    (updated)="updateInput('lectureWidth', $event)"
                 ></app-measuring-stick>
             </div>
-        </ng-container>
-        <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
-            <div #container class="stage-container">
-                <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
-                        <div *ngIf="extenderLength" style="position: absolute; top: 0;" [ngStyle]="{'left': '100%'}" @animateOutputArea>
-                            <app-measuring-stick orientation="vertical" [height]="extenderLength"
-                                [isInput]="false"
-                                [inputValue]="calculatorService.extenderLength"
-                            ></app-measuring-stick>
+            <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 0">
+                <div style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
+                    <app-measuring-stick orientation="horizontal" 
+                        [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                        thinModeDirection="top"
+                        [isInput]="false" 
+                        [inputValue]="calculatorService.microphoneInterval"
+                    ></app-measuring-stick>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1 && microphones.positions.length > 1">
+                <div style="position: absolute; top: -40px; width: 100%; display: flex; justify-content: center;" @animateOutputArea >
+                    <app-measuring-stick orientation="horizontal" 
+                        [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                        thinModeDirection="top"
+                        [isInput]="false" 
+                        [inputValue]="calculatorService.microphoneInterval"
+                    ></app-measuring-stick>
+                    <app-measuring-stick orientation="horizontal" 
+                        [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                        thinModeDirection="top"
+                        [isInput]="false" 
+                        [inputValue]="calculatorService.microphoneInterval"
+                    ></app-measuring-stick>
+                </div>
+            </ng-container>
+            <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
+                <div class="stage-outer-container">
+                    <div #container class="stage-inner-container">
+                        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
+                                <div style="position: absolute; bottom: 0;" [ngStyle]="{'left': 'calc(' + microphones.rightMost + 10 + '% + 75px)'}">
+                                    <app-measuring-stick orientation="vertical" [height]="presenterWidth / graphicsService.presenterWidthHeight"
+                                        [isInput]="true"
+                                        [inputMin]="CalculatorMins.presenterHeight"
+                                        [inputMax]="CalculatorMaxes.presenterHeight"
+                                        [inputValue]="calculatorService.presenterHeight"
+                                        (updated)="updateInput('presenterHeight', $event)"
+                                    ></app-measuring-stick>
+                                </div>
+                                <div *ngIf="extenderLength" style="position: absolute; top: 0;" [ngStyle]="{'left': '100%'}" @animateOutputArea>
+                                    <app-measuring-stick orientation="vertical" [height]="extenderLength"
+                                        [isInput]="false"
+                                        [inputValue]="calculatorService.extenderLength"
+                                    ></app-measuring-stick>
+                                </div>
+                            <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
+                                [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
+                                <app-svg-standing-person></app-svg-standing-person>
+                            </div>
+                            <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
+                                class="microphone-wrapper" 
+                                [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
+                                <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
+                            </div>
                         </div>
-                    <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
-                        [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
-                        <app-svg-standing-person></app-svg-standing-person>
-                    </div>
-                    <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
-                        class="microphone-wrapper" 
-                        [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
-                        <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="graphical-output-side">
+        <div #sideInfoWrapper class="stage-info-wrapper">
+            <div style="position: absolute; top: 0; left: 10%;">
+                <app-measuring-stick orientation="vertical" [height]="350"
+                    [isInput]="true"
+                    [inputMin]="CalculatorMins.ceilingHeight"
+                    [inputMax]="CalculatorMaxes.ceilingHeight"
+                    [inputValue]="calculatorService.ceilingHeight"
+                    (updated)="updateInput('ceilingHeight', $event)"
+                ></app-measuring-stick>
+            </div>
+            <div #sideWrapper class="stage-wrapper">
+                <div style="position: absolute; bottom: -40px; transition: left .25s linear, width .25s linear" @animateOutputArea
+                    [ngStyle]="{'left': ((sideCapture / 2) + 43.28000000000003) + 'px'}">
+                    <app-measuring-stick orientation="horizontal"
+                        [width]="audienceDistance"
+                        thinModeDirection="bottom"
+                        [isInput]="false" 
+                        [inputValue]="calculatorService.audienceDistance"
+                    ></app-measuring-stick>
+                </div>
+                <div class="stage-outer-container">
+                    <div class="stage-inner-container">
+                        <div class="stage-side">
+                            <div class="person-wrapper" @animateOutputArea
+                                [ngStyle]="{'width': presenterSideWidth + 'px', 'left': (sideCapture / 2) + 'px'}">
+                                <app-svg-standing-person mode="side"></app-svg-standing-person>
+                            </div>
+                            <div class="audience-wrapper">
+                                <div *ngFor="let a of audience" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': (sideCapture / 1.9) + audienceDistance + 'px'}">
+                                    <app-svg-standing-person mode="sitting"></app-svg-standing-person>
+                                </div>
+                            </div>
+                            <div class="microphone-wrapper" @animateOutputArea                  
+                                [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': (sideCapture / 2) + 'px', 'position': 'absolute'}">
+                                <app-svg-microphone [extenderLength]="extenderSideLength"></app-svg-microphone>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
             </div>
         </div>
     </div>
