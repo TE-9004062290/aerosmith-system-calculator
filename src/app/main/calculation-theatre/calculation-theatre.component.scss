@@ -11,6 +11,12 @@
 .calculation-theatre-container {
     display: grid;
     grid-template-columns: 75% 1fr;
+    grid-template-rows: 100% 1fr;
+
+    &.has-output {
+        grid-template-rows: 85% 1fr;
+    }
+
     .graphical-stage-wrapper {
         background-color: #E5E5E5;
         padding-bottom: 120px;
@@ -50,17 +56,19 @@
 }
 
 .btn {
+    width: 100%;
+    font-family: SST Pro;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: white;
+    border-radius: 3px;
+    padding: 12px 0px;
     &.btn-calculate {
-        width: 100%;
-        font-family: SST Pro;
-        font-size: 12px;
-        line-height: 16px;
-        text-align: center;
-        letter-spacing: 1px;
-        color: white;
-        
-        border-radius: 3px;
-        padding: 12px 0px;
         background-color: #006DB3;
+    }
+    &.btn-disabled {
+        background-color: #E6EBEF;
     }
 }

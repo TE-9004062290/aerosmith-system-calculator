@@ -51,6 +51,23 @@ export class CalculatorService {
   public MINIMUMS = this.METER_MINIMUMS;
   public MAXIMUMS = this.METER_MAXIMUMS;
 
+  private m_pristine: boolean = false;
+  private m_has_output: boolean = false;
+  
+  get isPristine() {
+    return this.m_pristine;
+  }
+
+  get isDirty() {
+    return !this.m_pristine;
+  }
+
+  get hasFreshOutput() {
+    return this.m_has_output;
+  }
+
+
+
   /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
@@ -81,6 +98,9 @@ export class CalculatorService {
       this.m_lectureWidth = round(this.m_lectureWidth * CalculatorService.METERS_TO_FEET, 2);
       this.m_presenterHeight = round(this.m_presenterHeight * CalculatorService.METERS_TO_FEET, 2);
       this.m_audienceHeight = round(this.m_audienceHeight * CalculatorService.METERS_TO_FEET, 2);
+      this.m_microphoneInterval = round(this.m_microphoneInterval * CalculatorService.METERS_TO_FEET, 2);
+      this.m_extenderLength = round(this.m_extenderLength * CalculatorService.METERS_TO_FEET, 2);
+      this.m_audienceDistance = round(this.m_audienceDistance * CalculatorService.METERS_TO_FEET, 2);
       this.MINIMUMS = this.FEET_MINIMUMS;
       this.MAXIMUMS = this.FEET_MAXIMUMS;
     } else if (this.m_measurementUnit === MeasurementUnits.Feet && val === MeasurementUnits.Meters) {
@@ -88,31 +108,41 @@ export class CalculatorService {
       this.m_lectureWidth = round(this.m_lectureWidth / CalculatorService.METERS_TO_FEET, 2);
       this.m_presenterHeight = round(this.m_presenterHeight / CalculatorService.METERS_TO_FEET, 2);
       this.m_audienceHeight = round(this.m_audienceHeight / CalculatorService.METERS_TO_FEET, 2);
+      this.m_microphoneInterval = round(this.m_microphoneInterval / CalculatorService.METERS_TO_FEET, 2);
+      this.m_extenderLength = round(this.m_extenderLength / CalculatorService.METERS_TO_FEET, 2);
+      this.m_audienceDistance = round(this.m_audienceDistance / CalculatorService.METERS_TO_FEET, 2);
       this.MINIMUMS = this.METER_MINIMUMS;
       this.MAXIMUMS = this.METER_MAXIMUMS;
     }
     this.m_measurementUnit = val;
-    this.calculateOutputs();
     this.$recalculate.next(true);
   }
 
   set ceilingHeight(val: number) {
     this.m_ceilingHeight = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
     this.$recalculate.next(true);
   }
 
   set lectureWidth(val: number) {
     this.m_lectureWidth = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
     this.$recalculate.next(true);
   }
 
   set presenterHeight(val: number) {
     this.m_presenterHeight = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
     this.$recalculate.next(true);
   }
 
   set audienceHeight(val: number) {
     this.m_audienceHeight = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
     this.$recalculate.next(true);
   }
 
@@ -144,5 +174,7 @@ export class CalculatorService {
     }
 
     this.m_audienceDistance = Math.max(round(Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_audienceHeight - this.m_extenderLength)**2), 2), 1);
+    this.m_pristine = true;
+    this.m_has_output = true;
   }
 }

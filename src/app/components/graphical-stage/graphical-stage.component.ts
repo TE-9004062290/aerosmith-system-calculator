@@ -111,7 +111,6 @@ export class GraphicalStageComponent implements OnInit {
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
-        // this.calculatorService.calculateOutputs();
         this.calculateProportions();
         this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
         this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);

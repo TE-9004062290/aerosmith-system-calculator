@@ -29,7 +29,6 @@ export class CalculationTheatreComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
-    this.calculatorService.calculateOutputs();
   }
 
   calculate() {
