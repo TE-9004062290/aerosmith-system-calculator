@@ -78,6 +78,8 @@ export class CalculatorService {
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_presenterHeight: number = this.DEFAULTS.presenterHeight;
   private m_audienceHeight: number = this.DEFAULTS.audienceHeight;
+  private m_input_extenderLength: number = 0;
+  private m_extenderProvided: boolean = false
 
   get measurementUnit(): MeasurementUnits { return this.m_measurementUnit; }
   get calculationPriority(): CalculationPriority { return this.m_calculationPriority; }
@@ -87,6 +89,8 @@ export class CalculatorService {
   get presenterHeight(): number { return this.m_presenterHeight; }
   get audienceHeight(): number { return this.m_audienceHeight; }
   get captureRadius(): number { return this.m_captureRadius; }
+  get inputExtenderLength(): number { return this.m_input_extenderLength; }
+  get extenderProvided(): boolean { return this.m_extenderProvided; }
 
   /* Outputs */
   private m_microphoneInterval: number = 0;
@@ -167,6 +171,14 @@ export class CalculatorService {
     this.$recalculate.next(true);
   }
 
+  set inputExtenderLength(val: number) {
+    this.m_input_extenderLength = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
+    this.m_extenderProvided = val > 0;
+    this.$recalculate.next(true);
+  }
+
   public $recalculate: BehaviorSubject<boolean>;
   constructor() { 
     this.$recalculate = new BehaviorSubject(true);
@@ -174,29 +186,45 @@ export class CalculatorService {
 
   public calculateOutputs() {
     const captureRadius = this.m_captureRadius;
-    console.log(captureRadius);
-    console.log(this.m_calculationPriority);
     const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    const unitConversion = this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET;
     const extenderLength = round(this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 15*topOfHeadToMouth, 2);
 
-    if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
-      this.m_extenderLength = 0;
-      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
-      if (this.m_microphoneInterval === 0) {
-        this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - 0.9 - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+    if (this.extenderProvided) {
+      if (this.m_ceilingHeight - this.inputExtenderLength - this.m_presenterHeight < captureRadius) {
+        this.m_extenderLength = 0;
+        this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.inputExtenderLength - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+        if (this.m_microphoneInterval === 0) {
+          this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.inputExtenderLength - 0.9 - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+        }
+  
+        const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
+        this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
       }
-
-      const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
-      this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
-    } else { // extender is required
-      this.m_extenderLength = extenderLength;
-      this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (captureRadius - 15*topOfHeadToMouth)**2), 2);
-
-      const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
-      this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
+      this.m_audienceDistance = Math.max(round(Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_audienceHeight - this.inputExtenderLength)**2), 2), 1 * unitConversion);
+      if (isNaN(this.m_audienceDistance)) {
+        this.m_audienceDistance = 1 * unitConversion;
+      }
+    } else {
+      if (this.m_ceilingHeight - this.m_presenterHeight < captureRadius) {
+        this.m_extenderLength = 0;
+        this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+        if (this.m_microphoneInterval === 0) {
+          this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - 0.9 - this.m_presenterHeight + topOfHeadToMouth)**2), 2);
+        }
+  
+        const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
+        this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
+      } else { // extender is required
+        this.m_extenderLength = extenderLength;
+        this.m_microphoneInterval = round(2 * Math.sqrt((captureRadius ** 2) - (captureRadius - 15*topOfHeadToMouth)**2), 2);
+  
+        const reqMicrophones = this.m_lectureWidth / this.m_microphoneInterval;
+        this.m_requiredMicrophones = reqMicrophones % 1 > 0.1 ? Math.ceil(reqMicrophones) : Math.floor(reqMicrophones);
+      }
+      this.m_audienceDistance = Math.max(round(Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_audienceHeight - this.m_extenderLength)**2), 2), 1 * unitConversion);
     }
 
-    this.m_audienceDistance = Math.max(round(Math.sqrt((captureRadius ** 2) - (this.m_ceilingHeight - this.m_audienceHeight - this.m_extenderLength)**2), 2), 1);
     this.m_pristine = true;
     this.m_has_output = true;
   }

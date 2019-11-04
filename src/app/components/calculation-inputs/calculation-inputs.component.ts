@@ -75,6 +75,12 @@ export class CalculationInputsComponent implements OnInit {
       }
       inputElement.value = numerical;
       cService[inputField] = numerical;
+    } else if (inputField === 'inputExtenderLength') {
+      numerical = numerical < 0 ? 0 
+        : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 
+        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 : numerical;
+      inputElement.value = numerical;
+      cService.inputExtenderLength = numerical;
     }
   }
 }

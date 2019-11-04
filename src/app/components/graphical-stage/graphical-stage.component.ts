@@ -230,11 +230,12 @@ export class GraphicalStageComponent implements OnInit {
 
   private getRadiusTopPosition(numMicrophone): number {
     const cService = this.calculatorService;
-    this.extenderLength = cService.extenderLength / cService.ceilingHeight * this.stageHeight;
-    this.extenderSideLength = cService.extenderLength / cService.ceilingHeight * this.sideWrapperHeight;
-    if (cService.extenderLength > 0) {
-      return cService.extenderLength / cService.ceilingHeight * 100;
-    }
+    const extenderLength = cService.extenderProvided ? cService.inputExtenderLength : cService.extenderLength;
+    this.extenderLength = extenderLength / cService.ceilingHeight * this.stageHeight;
+    this.extenderSideLength = extenderLength / cService.ceilingHeight * this.sideWrapperHeight;
+    // if (cService.extenderLength > 0) {
+    //   return cService.extenderLength / cService.ceilingHeight * 100;
+    // }
     return 0;
   }
 
@@ -259,6 +260,12 @@ export class GraphicalStageComponent implements OnInit {
       }
       inputElement.value = numerical;
       cService[inputField] = numerical;
+    } else if (inputField === 'inputExtenderLength') {
+      numerical = numerical < 0 ? 0 
+        : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 
+        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 : numerical;
+      inputElement.value = numerical;
+      cService.inputExtenderLength = numerical;
     }
   }
 

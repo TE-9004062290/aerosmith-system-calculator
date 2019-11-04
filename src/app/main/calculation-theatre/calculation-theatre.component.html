@@ -40,8 +40,7 @@
         </div>
         <div *ngIf="calculatorService.isPristine && calculatorService.hasFreshOutput" class="btn btn-disabled">
             Calculate
-        </div>
-        <div>{{calculatorService.calculationPriority}}</div>
+        </div>  
     </div>
     <div *ngIf="calculatorService.hasFreshOutput" class="output-wrapper">
         <app-calculation-outputs></app-calculation-outputs>

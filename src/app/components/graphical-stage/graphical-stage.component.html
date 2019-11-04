@@ -27,8 +27,11 @@
                 <app-measuring-stick orientation="vertical" 
                     [height]="extenderLength"
                     thinModeDirection="right"
-                    [isInput]="false"
-                    [inputValue]="calculatorService.extenderLength"
+                    [isInput]="calculatorService.extenderProvided"
+                    [inputMin]="0"
+                    [inputMax]="calculatorService.ceilingHeight - calculatorService.captureRadius / 2"
+                    [inputValue]="calculatorService.extenderProvided ? calculatorService.inputExtenderLength : calculatorService.extenderLength"
+                    (updated)="updateInput('inputExtenderLength', $event)"
                 ></app-measuring-stick>
             </div>
             <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
@@ -93,10 +96,23 @@
                                         [inputValue]="calculatorService.extenderLength"
                                     ></app-measuring-stick>
                                 </div> -->
-                            <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
-                                [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
-                                <app-svg-standing-person></app-svg-standing-person>
-                            </div>
+                            <ng-container *ngIf="!calculatorService.hasFreshOutput">
+                                <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 0%;" @animateOutputArea>
+                                    <app-svg-standing-person></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper center-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 50%;" @animateOutputArea>
+                                    <app-svg-standing-person></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper right-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 100%;" @animateOutputArea>
+                                    <app-svg-standing-person></app-svg-standing-person>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                                <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
+                                    <app-svg-standing-person></app-svg-standing-person>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="calculatorService.hasFreshOutput">
                                 <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
                                     class="microphone-wrapper" 
