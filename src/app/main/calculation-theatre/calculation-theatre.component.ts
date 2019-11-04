@@ -9,8 +9,7 @@ import {
 } from '@angular/animations';
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { CalculationInputs } from '@app/models/calculation-inputs.model';
-import { CalculationOutputs } from '@app/models/calculation-outputs.model';
+import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
 
 @Component({
   selector: 'app-calculation-theatre',
@@ -20,9 +19,10 @@ import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 export class CalculationTheatreComponent implements OnInit {
 
   public MeasurementUnitsEnum = MeasurementUnits;
+  public CalculationPriorityEnum = CalculationPriority;
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  public calculationPriority: 'quality' | 'capture-area' = 'quality';
+  public calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
 
   public showOutputs = false;
 

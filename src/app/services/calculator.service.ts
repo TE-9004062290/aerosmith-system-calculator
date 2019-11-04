@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs'
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
+import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
 
 import { round } from '@app/helpers/arithmetic.helper';
 
@@ -68,18 +69,24 @@ export class CalculatorService {
 
 
 
+  private m_captureRadius = 2;
   /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
+  private m_calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
+
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_presenterHeight: number = this.DEFAULTS.presenterHeight;
   private m_audienceHeight: number = this.DEFAULTS.audienceHeight;
 
   get measurementUnit(): MeasurementUnits { return this.m_measurementUnit; }
+  get calculationPriority(): CalculationPriority { return this.m_calculationPriority; }
+
   get ceilingHeight(): number { return this.m_ceilingHeight; }
   get lectureWidth(): number { return this.m_lectureWidth; }
   get presenterHeight(): number { return this.m_presenterHeight; }
   get audienceHeight(): number { return this.m_audienceHeight; }
+  get captureRadius(): number { return this.m_captureRadius; }
 
   /* Outputs */
   private m_microphoneInterval: number = 0;
@@ -101,6 +108,7 @@ export class CalculatorService {
       this.m_microphoneInterval = round(this.m_microphoneInterval * CalculatorService.METERS_TO_FEET, 2);
       this.m_extenderLength = round(this.m_extenderLength * CalculatorService.METERS_TO_FEET, 2);
       this.m_audienceDistance = round(this.m_audienceDistance * CalculatorService.METERS_TO_FEET, 2);
+      this.m_captureRadius = round(this.m_captureRadius * CalculatorService.METERS_TO_FEET, 2);
       this.MINIMUMS = this.FEET_MINIMUMS;
       this.MAXIMUMS = this.FEET_MAXIMUMS;
     } else if (this.m_measurementUnit === MeasurementUnits.Feet && val === MeasurementUnits.Meters) {
@@ -111,10 +119,23 @@ export class CalculatorService {
       this.m_microphoneInterval = round(this.m_microphoneInterval / CalculatorService.METERS_TO_FEET, 2);
       this.m_extenderLength = round(this.m_extenderLength / CalculatorService.METERS_TO_FEET, 2);
       this.m_audienceDistance = round(this.m_audienceDistance / CalculatorService.METERS_TO_FEET, 2);
+      this.m_captureRadius = round(this.m_captureRadius / CalculatorService.METERS_TO_FEET, 2);
       this.MINIMUMS = this.METER_MINIMUMS;
       this.MAXIMUMS = this.METER_MAXIMUMS;
     }
     this.m_measurementUnit = val;
+    this.$recalculate.next(true);
+  }
+
+  set calculationPriority(val: CalculationPriority) {
+    this.m_calculationPriority = val;
+    this.m_pristine = false;
+    this.m_has_output = false;
+    if (this.m_calculationPriority === CalculationPriority.AudioQuality) {
+      this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    } else {
+      this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    }
     this.$recalculate.next(true);
   }
 
@@ -152,7 +173,9 @@ export class CalculatorService {
   }
 
   public calculateOutputs() {
-    const captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    const captureRadius = this.m_captureRadius;
+    console.log(captureRadius);
+    console.log(this.m_calculationPriority);
     const topOfHeadToMouth = 0.1 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     const extenderLength = round(this.m_ceilingHeight - this.m_presenterHeight - captureRadius + 15*topOfHeadToMouth, 2);
 

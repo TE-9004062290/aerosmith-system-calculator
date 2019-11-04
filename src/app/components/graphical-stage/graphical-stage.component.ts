@@ -217,16 +217,14 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private getRadiusWidthPercentage(): number {
-    const unitlessDiameter = this.calculatorService.measurementUnit === MeasurementUnits.Meters ? 4 : 4 * CalculatorService.METERS_TO_FEET;
-    const captureDiameterWidthRatio = unitlessDiameter / this.calculatorService.lectureWidth;
+    const diameter = this.calculatorService.captureRadius * 2;
+    const captureDiameterWidthRatio = diameter / this.calculatorService.lectureWidth;
     return captureDiameterWidthRatio * 100;
   }
 
   private getSideRadius(): number {
-    const unitlessRadius = this.calculatorService.measurementUnit === MeasurementUnits.Meters ? 2 : 2 * CalculatorService.METERS_TO_FEET;
-    const captureRadiusHeightRatio = unitlessRadius / this.calculatorService.ceilingHeight;
-    console.log(captureRadiusHeightRatio);
-    console.log(this.sideWrapperHeight);
+    const radius = this.calculatorService.captureRadius;
+    const captureRadiusHeightRatio = radius / this.calculatorService.ceilingHeight;
     return captureRadiusHeightRatio * this.sideWrapperHeight;
   }
 
@@ -246,7 +244,7 @@ export class GraphicalStageComponent implements OnInit {
 
   private getAudienceArray(): any {
     const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
-    console.log(Math.round(effectiveStageWidth / (2 * this.audienceWidth)));
+    // console.log(Math.round(effectiveStageWidth / (2 * this.audienceWidth)));
   }
 
   public updateInput(inputField, inputElement) {
