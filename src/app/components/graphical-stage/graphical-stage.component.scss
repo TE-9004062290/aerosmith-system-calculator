@@ -20,6 +20,15 @@
     margin: 100px auto 0 auto;
     .stage-info-wrapper {
         .stage-wrapper {
+            .stage-label {
+                position: absolute;
+                top: -28px;
+                font-family: SST Pro;
+                font-size: 12px;
+                text-transform: uppercase;
+                color: #494949;
+                line-height: 22px;
+            }
             .stage-outer-container {
                 height: 100%;
                 .stage-inner-container {
@@ -74,7 +83,7 @@
 }
 
 .graphical-output-side {
-    margin-top: 100px;
+    margin-top: 120px;
     height: 350px;
     .stage-info-wrapper {
         height: 100%;

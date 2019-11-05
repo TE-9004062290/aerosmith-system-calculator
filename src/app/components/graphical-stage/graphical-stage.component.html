@@ -86,28 +86,10 @@
                 </ng-container>
             </ng-container>
             <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
+                <div class="stage-label">Front view</div>
                 <div class="stage-outer-container">
                     <div #container class="stage-inner-container">
                         <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
-                                <!-- <div style="position: absolute; bottom: 0;" [ngStyle]="{'left': 'calc(' + microphones.rightMost + 10 + '% + 75px)'}">
-                                    <app-measuring-stick orientation="vertical" 
-                                        [height]="presenterWidth / graphicsService.presenterWidthHeight"
-                                        thinModeDirection="right"
-                                        [isInput]="true"
-                                        [inputMin]="CalculatorMins.presenterHeight"
-                                        [inputMax]="CalculatorMaxes.presenterHeight"
-                                        [inputValue]="calculatorService.presenterHeight"
-                                        (updated)="updateInput('presenterHeight', $event)"
-                                    ></app-measuring-stick>
-                                </div> -->
-                                <!-- <div *ngIf="calculatorService.hasFreshOutput && extenderLength" style="position: absolute; top: 0;" [ngStyle]="{'left': '100%'}" @animateOutputArea>
-                                    <app-measuring-stick orientation="vertical" 
-                                        [height]="extenderLength"
-                                        thinModeDirection="right"
-                                        [isInput]="false"
-                                        [inputValue]="calculatorService.extenderLength"
-                                    ></app-measuring-stick>
-                                </div> -->
                             <ng-container *ngIf="!calculatorService.hasFreshOutput">
                                 <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 0%;" @animateOutputArea>
                                     <app-svg-standing-person></app-svg-standing-person>
@@ -165,6 +147,7 @@
                     </div>
                 </div>
                 <div class="stage-outer-container">
+                    <div class="stage-label">Side view</div>
                     <div class="stage-inner-container">
                         <div class="stage-side">
                             <div class="person-wrapper" @animateOutputArea
