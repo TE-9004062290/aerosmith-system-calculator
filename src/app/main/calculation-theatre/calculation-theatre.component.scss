@@ -10,7 +10,7 @@
 
 .calculation-theatre-container {
     display: grid;
-    grid-template-columns: 75% 1fr;
+    grid-template-columns: 80% 1fr;
     grid-template-rows: 100% 1fr;
 
     &.has-output {
@@ -24,7 +24,7 @@
         overflow-y: scroll;
     }
     .sidebar {
-        width: 25%;
+        width: 20%;
         min-width: 320px;
         padding-left: 24px;
     }

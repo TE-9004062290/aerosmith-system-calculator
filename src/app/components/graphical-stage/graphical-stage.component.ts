@@ -89,7 +89,7 @@ export class GraphicalStageComponent implements OnInit {
   public presenterSideWidth: number = 0;
   public audienceWidth: number = 0;
   public audienceDistance: number = 0;
-  public audience: number[] = [1,2,3,4,5];
+  public audience: number[] = [];
   
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
@@ -162,7 +162,7 @@ export class GraphicalStageComponent implements OnInit {
     this.sideCapture = this.getSideRadius();
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
-    this.getAudienceArray();
+    this.audience = this.getAudienceArray();
   }
 
   private calculateStageHeight(mode: RatioMode) {
@@ -246,8 +246,14 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private getAudienceArray(): any {
+    let audienceArray = [];
+    const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
     const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
-    // console.log(Math.round(effectiveStageWidth / (2 * this.audienceWidth)));
+    const numAudience = Math.round(effectiveStageWidth / (2 * this.audienceWidth));
+    for (let i = 0; i < numAudience; i++) {
+      audienceArray.push(leftOffset + 2 * i * this.audienceWidth);
+    }
+    return audienceArray;
   }
 
   public updateInput(inputField, inputElement) {

@@ -155,8 +155,8 @@
                                 <app-svg-standing-person mode="side"></app-svg-standing-person>
                             </div>
                             <div *ngIf="calculatorService.hasFreshOutput" class="audience-wrapper">
-                                <div *ngFor="let a of audience" class="person-wrapper" @animateOutputArea
-                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': (sideCapture / 1.9) + audienceDistance + 'px'}">
+                                <div *ngFor="let audienceLeft of audience" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': audienceLeft + 'px'}">
                                     <app-svg-standing-person mode="sitting"></app-svg-standing-person>
                                 </div>
                             </div>
