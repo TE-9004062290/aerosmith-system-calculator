@@ -36,6 +36,12 @@
         color: #006DB3;
         margin: 60px 0px 16px 0px;
     }
+    .calculation-theatre-misc {
+        margin-bottom: 16px;
+        strong {
+            color: #006DB3;
+        }
+    }
     .calculation-theatre-settings {
         box-sizing: border-box;
         border-top: 1px solid #E6EBEF;
@@ -67,9 +73,11 @@
     border-radius: 3px;
     padding: 12px 0px;
     &.btn-calculate {
+        text-transform: uppercase;
         background-color: #006DB3;
     }
     &.btn-disabled {
+        text-transform: uppercase;
         background-color: #E6EBEF;
     }
 }

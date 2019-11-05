@@ -33,7 +33,10 @@
             </div>
         </div>
     </div>
-    <button style="margin-top: 8px;" (click)="toggleAdvancedSettings()">Advanced Settings</button>
+    <div class="advanced-inputs-toggle" (click)="toggleAdvancedSettings()">
+        <app-svg-icons iconType="toggle" [transformString]="showAdvancedSettings ? 'rotate(0deg)' : 'rotate(-90deg)'"></app-svg-icons>
+        <div class="advanced-inputs-label">Advanced Settings</div>
+    </div>
     <div *ngIf="showAdvancedSettings" class="advanced-inputs inputs-container" @animateAdvancedSettings>
         <div>Presenter and audience height are set to cover <br/> 80% to 90% of use cases. Adjust if needed.</div>
         <div class="inputs-row">

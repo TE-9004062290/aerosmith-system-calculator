@@ -5,8 +5,7 @@
     padding-top: 8px;
     padding-bottom: 8px;
     border-top: 1px solid #E6EBEF;
-    border-bottom: 1px solid #E6EBEF;
-
+    
     .inputs-row {
         display: inline-block;
         .inputs-group {
@@ -35,6 +34,22 @@
                 }
             }
         }
+    }
+
+    .advanced-inputs-toggle {
+        display: flex;
+        padding: 12px 0px;
+        border-top: 1px solid #E6EBEF;
+        border-bottom: 1px solid #E6EBEF;
+        cursor: pointer;
+        .advanced-inputs-label {
+            margin-left: 8px;
+        }
+    }
+
+    .advanced-inputs {
+        border-bottom: 1px solid #E6EBEF;
+        margin-bottom: 16px;
     }
 }
 
