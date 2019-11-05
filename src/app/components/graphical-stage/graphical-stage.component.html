@@ -26,12 +26,12 @@
             <div *ngIf="calculatorService.hasFreshOutput && extenderLength && calculatorService.extenderProvided" class="measuring-stick-overlay" 
                 style="position: absolute; top: 0; left: 82.5%" @animateOutputArea>
                 <app-measuring-stick orientation="vertical" 
-                    [height]="inputExtenderLength"
+                    [height]="inputExtenderLength < extenderLength ? inputExtenderLength : extenderLength"
                     thinModeDirection="right"
-                    [isInput]="true"
+                    [isInput]="inputExtenderLength < extenderLength"
                     [inputMin]="0"
                     [inputMax]="calculatorService.ceilingHeight - calculatorService.captureRadius / 2"
-                    [inputValue]="calculatorService.extenderProvided ? calculatorService.inputExtenderLength : calculatorService.extenderLength"
+                    [inputValue]="calculatorService.extenderProvided && inputExtenderLength < extenderLength ? calculatorService.inputExtenderLength : calculatorService.extenderLength"
                     (updated)="updateInput('inputExtenderLength', $event)"
                 ></app-measuring-stick>
             </div>
