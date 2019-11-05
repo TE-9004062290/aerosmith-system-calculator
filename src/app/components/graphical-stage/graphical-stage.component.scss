@@ -14,10 +14,8 @@
 }
 
 .graphical-output {
-    // margin: 5% auto;
     justify-self: center;
     width: 100%;
-    // max-width: 500px;
     box-sizing: border-box;
     margin: 100px auto 0 auto;
     .stage-info-wrapper {
@@ -103,6 +101,23 @@
 
 .measuring-stick-overlay {
     z-index: 100;
+    &.audience-distance-side {
+        display: flex;
+        position: absolute; 
+        bottom: -40px; 
+        transition: left .25s linear, width .25s linear;
+        .warning {
+            display: flex;
+            margin-left: 6px;
+            .warning-text {
+                margin-left: 4px;
+                font-family: SST Pro;
+                font-size: 12px;
+                line-height: 18px;
+                color: #494949;
+            }
+        }
+    }
 }
 
 input[type=number]::-webkit-inner-spin-button, 

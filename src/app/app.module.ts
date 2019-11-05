@@ -15,6 +15,7 @@ import { SvgStandingPersonComponent } from './components/svg-standing-person/svg
 import { GraphicalStageComponent } from './components/graphical-stage/graphical-stage.component';
 import { SvgMicrophoneComponent } from './components/svg-microphone/svg-microphone.component';
 import { MeasuringStickComponent } from './components/measuring-stick/measuring-stick.component';
+import { SvgIconsComponent } from './components/svg-icons/svg-icons.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MeasuringStickComponent } from './components/measuring-stick/measuring-
     SvgStandingPersonComponent,
     GraphicalStageComponent,
     SvgMicrophoneComponent,
-    MeasuringStickComponent
+    MeasuringStickComponent,
+    SvgIconsComponent
   ],
   imports: [
     BrowserModule,
