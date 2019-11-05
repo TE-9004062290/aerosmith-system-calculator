@@ -60,6 +60,7 @@ export class GraphicalStageComponent implements OnInit {
 
   public stageHeight: number = 500;
   public stageWidth: number = 500;
+  public inputExtenderLength: number = 0;
   public extenderLength: number = 0;
   public extenderSideLength: number = 0;
   
@@ -230,7 +231,8 @@ export class GraphicalStageComponent implements OnInit {
 
   private getRadiusTopPosition(numMicrophone): number {
     const cService = this.calculatorService;
-    const extenderLength = cService.extenderProvided ? cService.inputExtenderLength : cService.extenderLength;
+    const extenderLength = cService.extenderLength;
+    this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;
     this.extenderLength = extenderLength / cService.ceilingHeight * this.stageHeight;
     this.extenderSideLength = extenderLength / cService.ceilingHeight * this.sideWrapperHeight;
     // if (cService.extenderLength > 0) {

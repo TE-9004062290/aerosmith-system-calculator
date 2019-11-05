@@ -21,13 +21,22 @@
                 <div class="output-description">Distance between line of microphones and front <br/> of audience</div>
                 <div class="output-value">{{ calculatorService.audienceDistance }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}</div>
             </div>
-            <div class="output-row">
+            <div class="output-row" *ngIf="!calculatorService.extenderProvided">
                 <div class="output-description">Ceiling extender length (if required)</div>
                 <div *ngIf="calculatorService.extenderLength === 0" class="output-value">
                     Not required
                 </div>
                 <div *ngIf="calculatorService.extenderLength > 0" class="output-value">
                     {{ calculatorService.extenderLength }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+                </div>
+            </div>
+            <div class="output-row" *ngIf="calculatorService.extenderProvided">
+                <div class="output-description">Additional ceiling extender length (if required)</div>
+                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength <= 0" class="output-value">
+                    Not required
+                </div>
+                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength > 0" class="output-value">
+                    ({{ calculatorService.extenderLength | number: '0.2-2' }} - {{ calculatorService.inputExtenderLength | number: '0.2-2' }}) {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} = {{ calculatorService.extenderLength - calculatorService.inputExtenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
             </div>
         </div>
