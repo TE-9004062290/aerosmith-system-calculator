@@ -270,8 +270,8 @@ export class GraphicalStageComponent implements OnInit {
       cService[inputField] = numerical;
     } else if (inputField === 'inputExtenderLength') {
       numerical = numerical < 0 ? 0 
-        : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 
-        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius / 2 : numerical;
+        : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius
+        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius : numerical;
       inputElement.value = numerical;
       cService.inputExtenderLength = numerical;
     }

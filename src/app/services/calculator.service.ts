@@ -54,6 +54,11 @@ export class CalculatorService {
   public MINIMUMS = this.METER_MINIMUMS;
   public MAXIMUMS = this.METER_MAXIMUMS;
 
+  private readonly VERTICAL_THRESHOLD_0 = 1.41; // Meters
+  private readonly VERTICAL_THRESHOLD_1 = 1.71; // Meters
+  private readonly INTERVAL_THRESHOLD_0 = 2.83; // Meters
+  private readonly INTERVAL_THRESHOLD_1 = 4.24; // Meters
+
   private m_pristine: boolean = false;
   private m_has_output: boolean = false;
   
@@ -190,19 +195,30 @@ export class CalculatorService {
     return this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET;
   }
 
+  private get verticalThreshold(): number {
+    return (this.calculationPriority === CalculationPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
+  }
+
+  private get intervalThreshold(): number {
+    return 0;
+  }
+
+
   private get topOfHeadToMouth(): number {
     return 0.1 * this.unitConversion;
   }
 
   private isExtenderRequired(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0) {
-    const effectiveCeilingHeight = ceilingHeight - inputExtenderLength;
-    return captureRadius <= effectiveCeilingHeight - presenterHeight + this.topOfHeadToMouth;
+    const effectiveCeilingHeight = ceilingHeight - inputExtenderLength; 
+    const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth; 
+    return effectiveCeilingHeight - effectivePersonHeight > this.verticalThreshold;
   }
 
   private calculateExtenderLength(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0): number {
     const extenderRequired = this.isExtenderRequired(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
     if (extenderRequired) {
-        return ceilingHeight - presenterHeight - captureRadius + 15*this.topOfHeadToMouth;
+        const effectivePresenterHeight = presenterHeight - this.topOfHeadToMouth;
+        return ceilingHeight - effectivePresenterHeight - this.verticalThreshold;
     } else {
       if (inputExtenderLength > 0) {
         return inputExtenderLength;
@@ -219,15 +235,17 @@ export class CalculatorService {
 
   private calculateMicrophoneInterval(captureRadius: number, ceilingHeight: number, presenterHeight: number, extenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - extenderLength;
-    const heightDifference = effectiveCeilingHeight - presenterHeight + this.topOfHeadToMouth;
+    const effectivePresenterHeight = presenterHeight - this.topOfHeadToMouth;
+    const heightDifference = effectiveCeilingHeight - effectivePresenterHeight;
 
     let halfChord = 0;
     if (heightDifference < captureRadius) {
       halfChord = Math.sqrt( (captureRadius ** 2) - (heightDifference**2) );
     } else { // height difference is too big; we need a bigger extender
-      halfChord = Math.sqrt( (captureRadius ** 2) - ((captureRadius - 15*this.topOfHeadToMouth)**2) );
+      halfChord = Math.sqrt( (captureRadius ** 2) - (this.verticalThreshold**2) );
     }
 
+    const threshold = (this.calculationPriority === CalculationPriority.AudioQuality ? this.INTERVAL_THRESHOLD_0 : this.INTERVAL_THRESHOLD_1) * this.unitConversion;
     return Math.max(1 * this.unitConversion, 2 * halfChord);
   }
 
