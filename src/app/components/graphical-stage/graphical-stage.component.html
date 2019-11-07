@@ -19,6 +19,7 @@
                     [isInput]="true"
                     [inputMin]="CalculatorMins.presenterHeight"
                     [inputMax]="CalculatorMaxes.presenterHeight"
+                    step="0.1"
                     [inputValue]="calculatorService.presenterHeight"
                     (updated)="updateInput('presenterHeight', $event)"
                 ></app-measuring-stick>
@@ -29,6 +30,7 @@
                     [height]="extenderLength"
                     thinModeDirection="right"
                     [isInput]="!calculatorService.extenderRequired"
+                    step="0.5"
                     [inputValue]="calculatorService.extenderLength"
                     (updated)="updateInput('inputExtenderLength', $event)"
                 ></app-measuring-stick>
@@ -124,6 +126,7 @@
                     thinModeDirection="right"
                     [inputMin]="CalculatorMins.audienceHeight"
                     [inputMax]="CalculatorMaxes.audienceHeight"
+                    step="0.1"
                     [inputValue]="calculatorService.audienceHeight"
                     (updated)="updateInput('audienceHeight', $event)"
                 ></app-measuring-stick>

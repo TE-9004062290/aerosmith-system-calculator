@@ -282,6 +282,7 @@ export class GraphicalStageComponent implements OnInit {
         ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius : numerical;
       inputElement.value = numerical;
       cService.inputExtenderLength = numerical;
+      cService.calculateOutputs();  
     }
   }
 

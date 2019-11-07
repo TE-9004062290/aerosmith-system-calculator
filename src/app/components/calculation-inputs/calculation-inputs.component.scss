@@ -16,12 +16,22 @@
                 align-items: center;
                 margin: 8px 0 8px 0;
             }
+            .inputs-label {
+                font-family: SST;
+                font-size: 14px;
+                line-height: 24px;
+                color: #494949;
+                font-weight: bold;
+            }
             .inputs-value {
                 display: flex;
                 align-items: center;
                 .inputs-input {
-                    line-height: 18px;
+                    font-family: SST Pro;
+                    font-size: 14px;
+                    line-height: 24px;
                     text-align: center;
+                    color: #757575;
                     width: 48px;
                     height: 32px;
                     box-sizing: border-box;
@@ -30,6 +40,10 @@
                     margin-right: 8px;
                 }
                 .unit-label {
+                    font-family: SST Pro;
+                    font-size: 14px;
+                    line-height: 24px;
+                    color: #494949;
                     width: 70px;
                 }
             }
@@ -38,11 +52,17 @@
 
     .advanced-inputs-toggle {
         display: flex;
+        align-items: center;
         padding: 12px 0px;
         border-top: 1px solid #E6EBEF;
         border-bottom: 1px solid #E6EBEF;
         cursor: pointer;
         .advanced-inputs-label {
+            font-family: SST;
+            font-size: 14px;
+            line-height: 24px;
+            color: #494949;
+            font-weight: bold;
             margin-left: 8px;
         }
     }
@@ -50,6 +70,12 @@
     .advanced-inputs {
         border-bottom: 1px solid #E6EBEF;
         margin-bottom: 16px;
+        .advanced-inputs-info {
+            font-family: SST;
+            font-size: 12px;
+            line-height: 16px;
+            color: #494949;
+        }
     }
 }
 

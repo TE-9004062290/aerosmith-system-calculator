@@ -11,6 +11,7 @@
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
+                [step]="step"
                 [value]="inputValue | number: '0.2-2'"
                 (change)="onInputChange(inputElement)"
             />
@@ -39,6 +40,7 @@
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
+                [step]="step"
                 [value]="inputValue | number: '0.2-2'"
                 (change)="onInputChange(inputElement)"
             />

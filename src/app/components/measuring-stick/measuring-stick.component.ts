@@ -12,6 +12,7 @@ export class MeasuringStickComponent implements OnInit {
   constructor(public calculatorService: CalculatorService) { }
 
   @Input() public orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() public step = 1;
   
   private _width: number = 0;
   get width(): number {

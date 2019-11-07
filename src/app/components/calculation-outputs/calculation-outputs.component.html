@@ -33,7 +33,7 @@
             <div class="output-row" *ngIf="calculatorService.extenderProvided">
                 <div class="output-description">Minimum extender length (if required)</div>
                 <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength <= 0" class="output-value">
-                    Not required
+                    {{ calculatorService.extenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
                 <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength > 0" class="output-value">
                     {{ calculatorService.extenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}

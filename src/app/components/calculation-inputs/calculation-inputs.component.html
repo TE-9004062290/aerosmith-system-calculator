@@ -11,7 +11,7 @@
                     [value]="calculatorService.ceilingHeight"
                     (change)="updateInput('ceilingHeight', inputCeilingHeight)"/>
                 <span class="unit-label">
-                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                 </span>
             </div>
         </div>
@@ -28,7 +28,7 @@
                     [value]="calculatorService.lectureWidth"
                     (change)="updateInput('lectureWidth', inputWidth)"/>
                 <span class="unit-label">
-                    {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                 </span>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="advanced-inputs-label">Advanced Settings</div>
     </div>
     <div *ngIf="showAdvancedSettings" class="advanced-inputs inputs-container" @animateAdvancedSettings>
-        <div>Presenter and audience height are set to cover <br/> 80% to 90% of use cases. Adjust if needed.</div>
+        <div class="advanced-inputs-info">Presenter and audience height are set to cover 80% to 90% of use cases. Adjust if needed.</div>
         <div class="inputs-row">
             <div class="inputs-group inputs-group--horizontal">
                 <label class="inputs-label" for="presenter-height">
@@ -48,10 +48,11 @@
                     <input id="presenter-height" #inputPresenterHeight class="inputs-input" type="number" 
                         [min]="calculatorService.MINIMUMS.presenterHeight"
                         [max]="calculatorService.MAXIMUMS.presenterHeight"
+                        step="0.1"
                         [value]="calculatorService.presenterHeight"
                         (change)="updateInput('presenterHeight', inputPresenterHeight)"/>
                     <span class="unit-label">
-                        {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }}  
+                        {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}  
                     </span>
                 </div>
             </div>
@@ -65,10 +66,11 @@
                     <input id="audience-height" #inputAudienceHeight class="inputs-input" type="number" 
                         [min]="calculatorService.MINIMUMS.audienceHeight"
                         [max]="calculatorService.MAXIMUMS.audienceHeight"
+                        step="0.1"
                         [value]="calculatorService.audienceHeight"
                         (change)="updateInput('audienceHeight', inputAudienceHeight)"/>
                     <span class="unit-label">
-                        {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                     </span>
                 </div>
             </div>
@@ -82,10 +84,11 @@
                     <input id="input-extender-length" #inputExtenderLength class="inputs-input" type="number" 
                         [min]="0"
                         [max]="calculatorService.ceilingHeight - calculatorService.captureRadius / 2"
+                        step="0.5"
                         [value]="calculatorService.inputExtenderLength"
                         (change)="updateInput('inputExtenderLength', inputExtenderLength)"/>
                     <span class="unit-label">
-                        {{ calculatorService.measurementUnit === 'm' ? 'meters (m)' : 'feet (ft)' }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                     </span>
                 </div>
             </div>
