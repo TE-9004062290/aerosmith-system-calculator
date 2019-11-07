@@ -211,7 +211,11 @@ export class CalculatorService {
   private isExtenderRequired(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - inputExtenderLength; 
     const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth; 
-    return effectiveCeilingHeight - effectivePersonHeight > this.verticalThreshold;
+    if (inputExtenderLength > 0) {
+      return effectiveCeilingHeight - effectivePersonHeight >= captureRadius;
+    } else {
+      return effectiveCeilingHeight - effectivePersonHeight > this.verticalThreshold;
+    }
   }
 
   private calculateExtenderLength(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0): number {
