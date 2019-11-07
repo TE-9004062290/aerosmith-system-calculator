@@ -109,6 +109,10 @@ export class GraphicalStageComponent implements OnInit {
     return personPosition.number;
   }
 
+  audienceTrackByFn(index, audiencePosition: GraphicPosition) {
+    return audiencePosition.number;
+  }
+
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
@@ -163,6 +167,7 @@ export class GraphicalStageComponent implements OnInit {
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
     this.audience = this.getAudienceArray();
+    console.log(this.audience);
   }
 
   private calculateStageHeight(mode: RatioMode) {
@@ -242,6 +247,9 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private getAudienceDistance(): number {
+    if (!this.calculatorService.hasFreshOutput) {
+      return this.sideWrapperHeight * (1 * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
+    }
     return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.sideWrapperHeight);
   }
 
@@ -249,9 +257,9 @@ export class GraphicalStageComponent implements OnInit {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
     const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
-    const numAudience = Math.round(effectiveStageWidth / (2 * this.audienceWidth));
+    const numAudience = Math.floor(effectiveStageWidth / (2 * this.audienceWidth));
     for (let i = 0; i < numAudience; i++) {
-      audienceArray.push(leftOffset + 2 * i * this.audienceWidth);
+      audienceArray.push(new GraphicPosition(i, leftOffset + 2 * i * this.audienceWidth));
     }
     return audienceArray;
   }

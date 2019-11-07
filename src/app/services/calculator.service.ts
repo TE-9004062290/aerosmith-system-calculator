@@ -191,7 +191,7 @@ export class CalculatorService {
     this.$recalculate = new BehaviorSubject(true);
   }
 
-  private get unitConversion(): number {
+  public get unitConversion(): number {
     return this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET;
   }
 

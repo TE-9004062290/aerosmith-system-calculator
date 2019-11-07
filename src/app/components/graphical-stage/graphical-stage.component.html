@@ -121,6 +121,7 @@
             <div class="measuring-stick-overlay" style="position: absolute; bottom: 0; left: 85%;">
                 <app-measuring-stick orientation="vertical" [height]="350 * calculatorService.audienceHeight / calculatorService.ceilingHeight"
                     [isInput]="true"
+                    thinModeDirection="right"
                     [inputMin]="CalculatorMins.audienceHeight"
                     [inputMax]="CalculatorMaxes.audienceHeight"
                     [inputValue]="calculatorService.audienceHeight"
@@ -150,9 +151,9 @@
                                 [ngStyle]="{'width': presenterSideWidth + 'px', 'left': (sideCapture / 2) + 'px'}">
                                 <app-svg-standing-person mode="side"></app-svg-standing-person>
                             </div>
-                            <div *ngIf="calculatorService.hasFreshOutput" class="audience-wrapper">
-                                <div *ngFor="let audienceLeft of audience" class="person-wrapper" @animateOutputArea
-                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': audienceLeft + 'px'}">
+                            <div class="audience-wrapper">
+                                <div *ngFor="let a of audience; trackBy: audienceTrackByFn" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': audienceWidth + 'px', 'left': a.positionPercentage + 'px'}">
                                     <app-svg-standing-person mode="sitting"></app-svg-standing-person>
                                 </div>
                             </div>
