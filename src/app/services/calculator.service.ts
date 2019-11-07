@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs'
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
@@ -13,6 +12,7 @@ import { round } from '@app/helpers/arithmetic.helper';
 export class CalculatorService {
 
   public static readonly METERS_TO_FEET: number = 3.28084;
+  public static readonly FEET_TO_METERS: number = 0.3048;
 
   public readonly DEFAULTS = {
     ceilingHeight: 3,
@@ -108,31 +108,27 @@ export class CalculatorService {
   get extenderRequired(): boolean { return this.m_extenderRequired; }
 
   set measurementUnit(val: MeasurementUnits) {
+    let conversionFactor = CalculatorService.METERS_TO_FEET;
     if (this.m_measurementUnit === MeasurementUnits.Meters && val === MeasurementUnits.Feet) {
-      this.m_ceilingHeight = round(this.m_ceilingHeight * CalculatorService.METERS_TO_FEET, 2);
-      this.m_lectureWidth = round(this.m_lectureWidth * CalculatorService.METERS_TO_FEET, 2);
-      this.m_presenterHeight = round(this.m_presenterHeight * CalculatorService.METERS_TO_FEET, 2);
-      this.m_audienceHeight = round(this.m_audienceHeight * CalculatorService.METERS_TO_FEET, 2);
-      this.m_microphoneInterval = round(this.m_microphoneInterval * CalculatorService.METERS_TO_FEET, 2);
-      this.m_extenderLength = round(this.m_extenderLength * CalculatorService.METERS_TO_FEET, 2);
-      this.m_inputExtenderLength = round(this.m_inputExtenderLength * CalculatorService.METERS_TO_FEET, 2);
-      this.m_audienceDistance = round(this.m_audienceDistance * CalculatorService.METERS_TO_FEET, 2);
-      this.m_captureRadius = round(this.m_captureRadius * CalculatorService.METERS_TO_FEET, 2);
+      conversionFactor = CalculatorService.METERS_TO_FEET;
       this.MINIMUMS = this.FEET_MINIMUMS;
       this.MAXIMUMS = this.FEET_MAXIMUMS;
     } else if (this.m_measurementUnit === MeasurementUnits.Feet && val === MeasurementUnits.Meters) {
-      this.m_ceilingHeight = round(this.m_ceilingHeight / CalculatorService.METERS_TO_FEET, 2);
-      this.m_lectureWidth = round(this.m_lectureWidth / CalculatorService.METERS_TO_FEET, 2);
-      this.m_presenterHeight = round(this.m_presenterHeight / CalculatorService.METERS_TO_FEET, 2);
-      this.m_audienceHeight = round(this.m_audienceHeight / CalculatorService.METERS_TO_FEET, 2);
-      this.m_microphoneInterval = round(this.m_microphoneInterval / CalculatorService.METERS_TO_FEET, 2);
-      this.m_extenderLength = round(this.m_extenderLength / CalculatorService.METERS_TO_FEET, 2);
-      this.m_inputExtenderLength = round(this.m_inputExtenderLength / CalculatorService.METERS_TO_FEET, 2);
-      this.m_audienceDistance = round(this.m_audienceDistance / CalculatorService.METERS_TO_FEET, 2);
-      this.m_captureRadius = round(this.m_captureRadius / CalculatorService.METERS_TO_FEET, 2);
+      conversionFactor = CalculatorService.FEET_TO_METERS;
       this.MINIMUMS = this.METER_MINIMUMS;
       this.MAXIMUMS = this.METER_MAXIMUMS;
     }
+
+    this.m_ceilingHeight = round(this.m_ceilingHeight * conversionFactor, 2);
+    this.m_lectureWidth = round(this.m_lectureWidth * conversionFactor, 2);
+    this.m_presenterHeight = round(this.m_presenterHeight * conversionFactor, 2);
+    this.m_audienceHeight = round(this.m_audienceHeight * conversionFactor, 2);
+    this.m_microphoneInterval = round(this.m_microphoneInterval * conversionFactor, 2);
+    this.m_extenderLength = round(this.m_extenderLength * conversionFactor, 2);
+    this.m_inputExtenderLength = round(this.m_inputExtenderLength * conversionFactor, 2);
+    this.m_audienceDistance = round(this.m_audienceDistance * conversionFactor, 2);
+    this.m_captureRadius = round(this.m_captureRadius * conversionFactor, 2);
+
     this.m_measurementUnit = val;
     this.$recalculate.next(true);
   }
