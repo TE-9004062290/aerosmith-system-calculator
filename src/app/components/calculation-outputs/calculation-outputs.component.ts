@@ -11,6 +11,14 @@ export class CalculationOutputsComponent implements OnInit {
 
   constructor(public calculatorService: CalculatorService) { }
 
+  public printOutput() {
+    alert("Not yet implemented.");
+  }
+
+  public shareOutput() {
+    alert("Not yet implemented.");
+  }
+
   ngOnInit() {
   }
 
