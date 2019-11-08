@@ -8,10 +8,7 @@ import {
 } from '@angular/animations';
 
 import { CalculatorService } from '@app/services/calculator.service';
-import { CalculationInputs } from '@app/models/calculation-inputs.model';
-import { CalculationOutputs } from '@app/models/calculation-outputs.model';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -45,8 +42,6 @@ export class CalculationInputsComponent implements OnInit {
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
   @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  @Output() onUnitChange: EventEmitter<CalculationInputs> = new EventEmitter();
-  @Output() onCalculate: EventEmitter<CalculationInputs> = new EventEmitter();
 
   public showAdvancedSettings: boolean = false;
   
@@ -76,9 +71,14 @@ export class CalculationInputsComponent implements OnInit {
       inputElement.value = numerical;
       cService[inputField] = numerical;
     } else if (inputField === 'inputExtenderLength') {
-      numerical = numerical < 0 ? 0 
+      if (!isNaN(numerical)) {
+        numerical = numerical < 0 ? 0 
         : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius
-        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius: numerical;
+        ? Math.max(0, this.calculatorService.ceilingHeight - this.calculatorService.captureRadius) : numerical;
+      } else {
+        numerical =0;
+      }
+
       inputElement.value = numerical;
       cService.inputExtenderLength = numerical;
     }

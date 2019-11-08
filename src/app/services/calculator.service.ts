@@ -147,11 +147,17 @@ export class CalculatorService {
     } else {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
+    if (this.m_inputExtenderLength >= this.m_ceilingHeight) {
+      this.m_inputExtenderLength = 0;
+    }
     this.$recalculate.next(true);
   }
 
   set ceilingHeight(val: number) {
     this.m_ceilingHeight = val;
+    if (this.m_inputExtenderLength >= this.m_ceilingHeight) {
+      this.m_inputExtenderLength = 0;
+    }
     this.m_pristine = false;
     this.m_has_output = false;
     this.$recalculate.next(true);
