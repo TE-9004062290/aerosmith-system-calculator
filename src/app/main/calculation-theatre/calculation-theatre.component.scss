@@ -1,5 +1,4 @@
 .calculation-theatre-header {
-    font-family: SST Pro;
     font-size: 24px;
     line-height: 32px;
     text-align: center;
@@ -29,7 +28,6 @@
         padding-right: 24px;
     }
     .calculation-theatre-title {
-        font-family: SST Pro;
         font-size: 18px;
         line-height: 24px;
 
@@ -38,8 +36,7 @@
     }
     .calculation-theatre-misc {
         margin-bottom: 16px;
-        font-family: SST Pro;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 24px;
         strong {
             color: #006DB3;
@@ -50,7 +47,6 @@
         border-top: 1px solid #E6EBEF;
         border-bottom: 1px solid #E6EBEF;
         .calculation-theatre-setting {
-            font-family: SST Pro;
             font-size: 14px;
             line-height: 24px;
             width: 100%;
@@ -70,7 +66,6 @@
 
 .btn {
     width: 100%;
-    font-family: SST Pro;
     font-size: 12px;
     line-height: 16px;
     text-align: center;
@@ -81,9 +76,11 @@
     &.btn-calculate {
         text-transform: uppercase;
         background-color: #006DB3;
+        cursor: pointer;
     }
     &.btn-disabled {
         text-transform: uppercase;
         background-color: #E6EBEF;
+        cursor: not-allowed;
     }
 }

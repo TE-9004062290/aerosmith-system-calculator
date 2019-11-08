@@ -2,7 +2,8 @@
 
 @import '~styles/fonts.scss';
 
-html {
+*, html, pre, code, kbd, samp, button, input, optgroup, select, textarea, popover, tooltip {
+    font-family: "Open Sans",Arial,Sans-Serif;
     font-size: 14px;
 }
 
