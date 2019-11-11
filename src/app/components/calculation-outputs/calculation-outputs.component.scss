@@ -23,6 +23,7 @@
         .actions {
             display: flex;
             .btn {
+                position: relative;
                 cursor: pointer;
                 &:last-child {
                     margin-left: 8px;
@@ -38,6 +39,43 @@
                 border: 1px solid #8BC34A;
                 padding: 4px 16px;
                 border-radius: 3px;
+
+                &:hover {
+                    background-color: #F2F5F7;
+                    .tooltip-text {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+                .tooltip-text {
+                    position: absolute;
+                    visibility: hidden;
+                    color: #fff;
+                    font-size: 14px;
+                    text-transform: none;
+                    width: 140px;
+                    background-color: #8BC34A;
+                    text-align: center;
+                    border-radius: 3px;
+                    padding: 8px;
+                    z-index: 1;
+                    bottom: 150%;
+                    left: 50%;
+                    margin-left: -75px;
+                    opacity: 0;
+                    transition: opacity 0.25s;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -5px;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: #8BC34A transparent transparent transparent;        
+                    }
+                }
             }
         }
     }
