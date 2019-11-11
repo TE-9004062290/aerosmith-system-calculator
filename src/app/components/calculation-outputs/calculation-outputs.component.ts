@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CalculatorService } from '@app/services/calculator.service';
+import { ClipboardService } from '@app/services/clipboard.service';
 
 @Component({
   selector: 'app-calculation-outputs',
@@ -9,14 +10,17 @@ import { CalculatorService } from '@app/services/calculator.service';
 })
 export class CalculationOutputsComponent implements OnInit {
 
-  constructor(public calculatorService: CalculatorService) { }
+  constructor(
+    private clipboardService: ClipboardService,
+    public calculatorService: CalculatorService
+  ) { }
 
   public printOutput() {
     alert("Not yet implemented.");
   }
 
   public shareOutput() {
-    alert("Not yet implemented.");
+    this.clipboardService.copyToClipboard(this.calculatorService.serializeToUrl());
   }
 
   ngOnInit() {
