@@ -6,7 +6,7 @@ import { CalculationTheatreComponent } from '@main/calculation-theatre/calculati
 
 const routes: Routes = [
   {
-    path: '',
+    path: '**',
     component: CalculationTheatreComponent
   }
 ];
