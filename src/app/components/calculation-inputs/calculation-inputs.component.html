@@ -83,7 +83,7 @@
                 <div class="inputs-value">
                     <input id="input-extender-length" #inputExtenderLength class="inputs-input" type="number" 
                         [min]="0"
-                        [max]="calculatorService.ceilingHeight - calculatorService.captureRadius / 2"
+                        [max]="calculatorService.ceilingHeight - calculatorService.captureRadius"
                         step="0.5"
                         [value]="calculatorService.inputExtenderLength"
                         (change)="updateInput('inputExtenderLength', inputExtenderLength)"/>

@@ -267,22 +267,13 @@ export class GraphicalStageComponent implements OnInit {
   public updateInput(inputField, inputElement) {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
-    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null}) {
-      if (!isNaN(numerical)) {
-        numerical = numerical < this.CalculatorMins[inputField] ? this.CalculatorMins[inputField] 
-          : numerical > this.CalculatorMaxes[inputField] ? this.CalculatorMaxes[inputField] : numerical;
-      } else {
-        numerical= this.CalculatorMins[inputField];
-      }
-      inputElement.value = numerical;
-      cService[inputField] = numerical;
-    } else if (inputField === 'inputExtenderLength') {
-      numerical = numerical < 0 ? 0 
-        : numerical > this.calculatorService.ceilingHeight - this.calculatorService.captureRadius
-        ? this.calculatorService.ceilingHeight - this.calculatorService.captureRadius : numerical;
-      inputElement.value = numerical;
-      cService.inputExtenderLength = numerical;
-      cService.calculateOutputs();  
+    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null }) {
+      cService[inputField] = numerical; // Rely on model logic implemented in setter
+      inputElement.value = cService[inputField];
+    }
+
+    if (inputField === 'inputExtenderLength') {
+      cService.calculateOutputs();
     }
   }
 

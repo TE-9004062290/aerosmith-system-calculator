@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// import { ActivatedRoute } from '@angular/router';
+
 import { CalculatorService } from '@app/services/calculator.service';
 
 import {
@@ -18,18 +20,54 @@ import { CalculationPriority } from '@app/models/enums/calculation-priority.enum
 })
 export class CalculationTheatreComponent implements OnInit {
 
+  private initialized = false;
+
   public MeasurementUnitsEnum = MeasurementUnits;
   public CalculationPriorityEnum = CalculationPriority;
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   public calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
 
-  public showOutputs = false;
-
   constructor(public calculatorService: CalculatorService) { }
 
   ngOnInit() {
+    // this.activatedRoute.queryParams
+    // .subscribe(params => {
+    //   if (!this.initialized) {
+    //     this.parseParams(params);
+    //     this.initialized = true;
+    //   }
+    // });
   }
+
+  // private parseParams(params) {
+  //   const { ceilingHeight, lectureWidth, presenterHeight, audienceHeight, inputExtenderLength, measurementUnit, priority } = params;
+
+  //   switch (measurementUnit) {
+  //     case 'ft':
+  //       this.calculatorService.measurementUnit = MeasurementUnits.Feet;
+  //       break;
+  //     case 'm':
+  //       this.calculatorService.measurementUnit = MeasurementUnits.Meters;
+  //   }
+
+  //   if (ceilingHeight) this.calculatorService.ceilingHeight = ceilingHeight;
+  //   if (lectureWidth) this.calculatorService.lectureWidth = lectureWidth;
+  //   if (presenterHeight) this.calculatorService.presenterHeight = presenterHeight;
+  //   if (audienceHeight) this.calculatorService.audienceHeight = audienceHeight;
+  //   if (inputExtenderLength) this.calculatorService.inputExtenderLength = inputExtenderLength;
+
+  //   switch (priority) {
+  //     case 0:
+  //     case '0':
+  //       this.calculatorService.calculationPriority = CalculationPriority.AudioQuality;
+  //       break;
+  //     case 1:
+  //     case '1':
+  //       this.calculatorService.calculationPriority = CalculationPriority.CaptureArea;
+  //       break;
+  //   }
+  // }
 
   calculate() {
     this.calculatorService.calculateOutputs();
