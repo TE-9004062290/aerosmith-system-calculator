@@ -9,18 +9,16 @@
 
 .calculation-theatre-container {
     display: flex;
-
     &.has-output {
-        grid-template-rows: 85% 1fr;
+        .graphical-stage-wrapper {
+        }
     }
 
     .graphical-stage-wrapper {
         width: 80%;
         background-color: #F2F5F7;
-        padding-bottom: 300px;
-        height: 600px;
-        overflow-y: scroll;
     }
+
     .sidebar {
         width: 20%;
         min-width: 240px;

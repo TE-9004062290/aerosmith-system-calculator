@@ -1,5 +1,5 @@
 <div class="calculation-theatre-header">Calculator for speech reinforcement</div>
-<div class="calculation-theatre-container">
+<div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput}">
     <div class="graphical-stage-wrapper">
         <app-graphical-stage></app-graphical-stage>
     </div>
