@@ -9,7 +9,8 @@
                     [min]="calculatorService.MINIMUMS.ceilingHeight"
                     [max]="calculatorService.MAXIMUMS.ceilingHeight"
                     [value]="calculatorService.ceilingHeight"
-                    (change)="updateInput('ceilingHeight', inputCeilingHeight)"/>
+                    (change)="updateInput('ceilingHeight', inputCeilingHeight)"
+                    (keyup)="calculatorService.forceDirty()"/>
                 <span class="unit-label">
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                 </span>
@@ -26,7 +27,8 @@
                     [min]="calculatorService.MINIMUMS.lectureWidth"
                     [max]="calculatorService.MAXIMUMS.lectureWidth"
                     [value]="calculatorService.lectureWidth"
-                    (change)="updateInput('lectureWidth', inputWidth)"/>
+                    (change)="updateInput('lectureWidth', inputWidth)"
+                    (keyup)="calculatorService.forceDirty()"/>
                 <span class="unit-label">
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                 </span>
@@ -50,7 +52,8 @@
                         [max]="calculatorService.MAXIMUMS.presenterHeight"
                         step="0.1"
                         [value]="calculatorService.presenterHeight"
-                        (change)="updateInput('presenterHeight', inputPresenterHeight)"/>
+                        (change)="updateInput('presenterHeight', inputPresenterHeight)"
+                        (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">
                         {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}  
                     </span>
@@ -68,7 +71,8 @@
                         [max]="calculatorService.MAXIMUMS.audienceHeight"
                         step="0.1"
                         [value]="calculatorService.audienceHeight"
-                        (change)="updateInput('audienceHeight', inputAudienceHeight)"/>
+                        (change)="updateInput('audienceHeight', inputAudienceHeight)"
+                        (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">
                         {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                     </span>
@@ -86,7 +90,8 @@
                         [max]="calculatorService.ceilingHeight - calculatorService.captureRadius"
                         step="0.5"
                         [value]="calculatorService.inputExtenderLength"
-                        (change)="updateInput('inputExtenderLength', inputExtenderLength)"/>
+                        (change)="updateInput('inputExtenderLength', inputExtenderLength)"
+                        (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">
                         {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
                     </span>

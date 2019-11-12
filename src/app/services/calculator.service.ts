@@ -75,8 +75,6 @@ export class CalculatorService {
     return this.m_has_output;
   }
 
-
-
   private m_captureRadius = 2;
   /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
@@ -250,6 +248,10 @@ export class CalculatorService {
     });
   }
 
+  public forceDirty() {
+    this.m_pristine = false;
+  }
+  
   public get unitConversion(): number {
     return this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET;
   }
