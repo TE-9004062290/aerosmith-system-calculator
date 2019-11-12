@@ -9,4 +9,15 @@
     &.svg-icon-toggle {
 
     }
+    &.svg-icon-radio {
+        circle {
+            opacity: 0;
+            transition: opacity 0.15s linear;
+        }
+        &.svg-icon-radio-on {
+            circle {
+                opacity: 1;
+            }
+        }
+    }
 }

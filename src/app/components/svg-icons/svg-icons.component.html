@@ -8,5 +8,11 @@
     </svg>
     <svg *ngSwitchCase="'toggle'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-toggle" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.42967 5.33301L3.33301 6.47471L7.99967 11.333L12.6663 6.47471L11.5697 5.33301L7.99967 9.04151L4.42967 5.33301Z" fill="#757575"/>
-    </svg>    
+    </svg>
 </ng-container>
+<svg *ngIf="iconType === 'radio-on' || iconType === 'radio-off'" class="svg-icon svg-icon-radio" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+    [ngStyle]="{'transform': transformString }"
+    [ngClass]="{'svg-icon-radio-on': iconType === 'radio-on', 'svg-icon-radio-off': iconType === 'radio-off'}">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12ZM7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14Z" fill="#039BE5"/>
+    <circle cx="7" cy="7" r="3" fill="#039BE5"/>
+</svg>

@@ -37,7 +37,9 @@ export class CalculationTheatreComponent implements OnInit {
     .subscribe(params => {
       if (!this.initialized) {
         const hasParam = this.parseParams(params);
-        if (hasParam) this.calculate();
+        if (hasParam) {
+          this.calculate();
+        }
         this.initialized = true;
       }
     });

@@ -9,7 +9,7 @@ export class SvgIconsComponent implements OnInit {
 
   constructor() { }
 
-  @Input() iconType: 'warning' | 'info' | 'toggle' = 'warning';
+  @Input() iconType: 'warning' | 'info' | 'toggle' | 'radio-on' | 'radio-off' = 'warning';
   @Input() transformString: string = undefined;
   ngOnInit() {
   }

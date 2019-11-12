@@ -297,8 +297,13 @@ export class CalculatorService {
   }
 
   private calculateAudienceDistance(captureRadius: number, ceilingHeight: number, audienceHeight: number, extenderLength: number = 0) {
-    const effectiveCeilingHeight = ceilingHeight - audienceHeight - extenderLength;
-    const audienceDistance = Math.sqrt( (captureRadius ** 2) - (effectiveCeilingHeight)**2);
+    const effectiveCeilingHeight = ceilingHeight - extenderLength;
+    const effectiveAudienceHeight = audienceHeight - this.topOfHeadToMouth;
+    const heightDifference = effectiveCeilingHeight - effectiveAudienceHeight;
+    const audienceDistance = Math.sqrt( (captureRadius ** 2) - (heightDifference)**2);
+    if (isNaN(audienceDistance)) {
+      return 1 * this.unitConversion;
+    }
     return Math.max(1 * this.unitConversion, audienceDistance);
   }
 

@@ -1,6 +1,7 @@
 .radio-toggle-container {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 
     .radio-toggle-label {
         font-size: 14px;
@@ -23,6 +24,9 @@
         }
         .radio-option {
             margin: .5ex 7px .5ex 0px;
+        }
+        app-svg-icons {
+            display: flex;
         }
         .radio-option-label {
             font-size: 12px;
