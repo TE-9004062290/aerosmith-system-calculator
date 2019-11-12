@@ -36,8 +36,8 @@ export class CalculationTheatreComponent implements OnInit {
     this.activatedRoute.queryParams
     .subscribe(params => {
       if (!this.initialized) {
-        this.parseParams(params);
-        this.calculate();
+        const hasParam = this.parseParams(params);
+        if (hasParam) this.calculate();
         this.initialized = true;
       }
     });
@@ -45,31 +45,53 @@ export class CalculationTheatreComponent implements OnInit {
 
   private parseParams(params) {
     const { ceilingHeight, lectureWidth, presenterHeight, audienceHeight, inputExtenderLength, measurementUnit, priority } = params;
-
+    let hasParam: boolean = false;
     switch (measurementUnit) {
       case 'ft':
         this.calculatorService.measurementUnit = MeasurementUnits.Feet;
+        hasParam = true;
         break;
       case 'm':
         this.calculatorService.measurementUnit = MeasurementUnits.Meters;
+        hasParam = true;
+        break;
     }
 
-    if (ceilingHeight) this.calculatorService.ceilingHeight = ceilingHeight;
-    if (lectureWidth) this.calculatorService.lectureWidth = lectureWidth;
-    if (presenterHeight) this.calculatorService.presenterHeight = presenterHeight;
-    if (audienceHeight) this.calculatorService.audienceHeight = audienceHeight;
-    if (inputExtenderLength) this.calculatorService.inputExtenderLength = inputExtenderLength;
+    if (ceilingHeight) {
+      this.calculatorService.ceilingHeight = ceilingHeight;
+      hasParam = true;
+    }
+    if (lectureWidth) {
+      this.calculatorService.lectureWidth = lectureWidth;
+      hasParam = true;
+    }
+    if (presenterHeight) {
+      this.calculatorService.presenterHeight = presenterHeight;
+      hasParam = true;
+    }
+    if (audienceHeight) {
+      this.calculatorService.audienceHeight = audienceHeight;
+      hasParam = true;
+    }
+    if (inputExtenderLength) {
+      this.calculatorService.inputExtenderLength = inputExtenderLength;
+      hasParam = true;
+    }
 
     switch (priority) {
       case 0:
       case '0':
         this.calculatorService.calculationPriority = CalculationPriority.AudioQuality;
+        hasParam = true;
         break;
       case 1:
       case '1':
         this.calculatorService.calculationPriority = CalculationPriority.CaptureArea;
+        hasParam = true;
         break;
     }
+
+    return hasParam;
   }
 
   calculate() {
