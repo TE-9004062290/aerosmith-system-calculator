@@ -152,9 +152,7 @@ export class CalculatorService {
     } else {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
-    if (this.m_inputExtenderLength >= this.m_ceilingHeight) {
-      this.m_inputExtenderLength = 0;
-    }
+    this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
     this.$recalculate.next(true);
     this.updateRouteParams();
   }
@@ -163,9 +161,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_ceilingHeight = Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight);
-      if (this.m_inputExtenderLength >= this.m_ceilingHeight) {
-        this.m_inputExtenderLength = 0;
-      }
+      this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
       this.m_pristine = false;
       this.m_has_output = false;
       this.$recalculate.next(true);
@@ -258,10 +254,6 @@ export class CalculatorService {
 
   private get verticalThreshold(): number {
     return (this.calculationPriority === CalculationPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
-  }
-
-  private get intervalThreshold(): number {
-    return 0;
   }
 
   private get inputExtenderMaximum(): number {
