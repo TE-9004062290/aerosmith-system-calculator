@@ -2,15 +2,6 @@
     position: relative;
     width: 100%;
     margin: 0 auto;
-
-    .vertical-bar {
-        width: 3px;
-        background-color: #006DB3;
-        transition: height .25s linear;
-        position: absolute;
-        top: 0;
-        left: -32px;
-    }
 }
 
 .graphical-output {
@@ -49,8 +40,8 @@
     width: 70%;
     transition: width .25s linear;
     margin: 0 auto;
-    border-bottom: solid blue 2px;
-    border-top: solid blue 2px;
+    border-bottom: solid #006DB3 1px;
+    border-top: solid #006DB3 1px;
     
     .stage-outer-container {
         overflow: hidden;
