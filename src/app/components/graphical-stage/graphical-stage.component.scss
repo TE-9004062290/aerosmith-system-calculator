@@ -85,7 +85,7 @@
 .graphical-output-side {
     margin-top: 120px;
     padding-bottom: 240px;
-    background-color: #F2F5F7;
+    background-color: #F2F5F7;  
     .stage-info-wrapper {
         transition: height 0.25s linear;
         .stage-wrapper {
@@ -114,7 +114,7 @@
     &.audience-distance-side {
         display: flex;
         position: absolute; 
-        bottom: -40px; 
+        top: calc(100% + 20px);
         transition: left .25s linear, width .25s linear;
         .warning {
             display: flex;

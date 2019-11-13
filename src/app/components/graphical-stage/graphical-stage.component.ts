@@ -73,7 +73,7 @@ export class GraphicalStageComponent implements OnInit {
   private containerHeight: number = 500;
   public sideWrapperWidth: number = 500;
   public sideWrapperHeight: number = 500;
-  public sideInfoWrapperWidth: number = 500;
+  public sideInnerContainerWidth: number = 500;
 
 
   public widthHeightRatio: number = 1;
@@ -95,7 +95,7 @@ export class GraphicalStageComponent implements OnInit {
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
   @ViewChild('sideWrapper', null) sideWrapperRef: ElementRef;
-  @ViewChild('sideInfoWrapper', null) sideInfoWrapperRef: ElementRef;
+  @ViewChild('sideInnerContainer', null) sideInnerContainerRef: ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
@@ -149,7 +149,7 @@ export class GraphicalStageComponent implements OnInit {
 
     this.sideWrapperWidth = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetWidth : this.sideWrapperWidth;
     this.sideWrapperHeight = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetHeight : this.sideWrapperHeight;
-    this.sideInfoWrapperWidth = this.sideInfoWrapperRef ? this.sideInfoWrapperRef.nativeElement.offsetWidth : this.sideInfoWrapperRef;
+    this.sideInnerContainerWidth = this.sideInnerContainerRef ? this.sideInnerContainerRef.nativeElement.offsetWidth : this.sideInnerContainerWidth;
   }
 
   private calculateProportions() {
@@ -239,7 +239,6 @@ export class GraphicalStageComponent implements OnInit {
     const extenderLength = cService.extenderLength;
     this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;
     this.extenderLength = extenderLength / cService.ceilingHeight * this.stageHeight;
-    this.extenderSideLength = extenderLength / cService.ceilingHeight * this.sideWrapperHeight;
     // if (cService.extenderLength > 0) {
     //   return cService.extenderLength / cService.ceilingHeight * 100;
     // }
