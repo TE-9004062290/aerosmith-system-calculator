@@ -167,10 +167,10 @@ export class GraphicalStageComponent implements OnInit {
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
     this.audience = this.getAudienceArray();
-    console.log(this.audience);
   }
 
   private calculateStageHeight(mode: RatioMode) {
+    console.log(mode);
     switch (mode) {
       case RatioMode.Height:
         return this.pageHeight / 2;
@@ -214,12 +214,12 @@ export class GraphicalStageComponent implements OnInit {
 
   private getPresenterSideWidth(): number {
     const presenterCeilingRatio = this.calculatorService.presenterHeight / this.calculatorService.ceilingHeight;
-    return presenterCeilingRatio * this.sideWrapperHeight * SvgStandingPersonComponent.SIDE_WIDTH_HEIGHT_RATIO;
+    return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.SIDE_WIDTH_HEIGHT_RATIO;
   }
 
   private getAudienceWidth(): number {
     const audienceCeilingRatio = this.calculatorService.audienceHeight / this.calculatorService.ceilingHeight;
-    return audienceCeilingRatio * this.sideWrapperHeight * SvgStandingPersonComponent.SITTING_WIDTH_HEIGHT_RATIO;
+    return audienceCeilingRatio * this.stageHeight * SvgStandingPersonComponent.SITTING_WIDTH_HEIGHT_RATIO;
   }
 
   private getRadiusWidthPercentage(): number {
@@ -231,7 +231,7 @@ export class GraphicalStageComponent implements OnInit {
   private getSideRadius(): number {
     const radius = this.calculatorService.captureRadius;
     const captureRadiusHeightRatio = radius / this.calculatorService.ceilingHeight;
-    return captureRadiusHeightRatio * this.sideWrapperHeight;
+    return captureRadiusHeightRatio * this.stageHeight;
   }
 
   private getRadiusTopPosition(numMicrophone): number {
@@ -248,9 +248,9 @@ export class GraphicalStageComponent implements OnInit {
 
   private getAudienceDistance(): number {
     if (!this.calculatorService.hasFreshOutput) {
-      return this.sideWrapperHeight * (1 * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
+      return this.stageHeight * (1 * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
     }
-    return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.sideWrapperHeight);
+    return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.stageHeight);
   }
 
   private getAudienceArray(): any {
