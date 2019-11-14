@@ -1,3 +1,12 @@
+@media print {
+    .stage-outer-container {
+    }
+    .stage {
+    }
+    .graphical-output-side {
+        page-break-before: always; /* page-break-after works, as well */
+    }
+}
 .stage-info-wrapper {
     position: relative;
     width: 100%;

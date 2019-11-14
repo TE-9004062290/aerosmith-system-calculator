@@ -136,6 +136,13 @@ export class GraphicalStageComponent implements OnInit {
     this.calculateProportions();
   }
 
+  @HostListener('window:beforeprint',['$event'])
+  onBeforePrint(event) {
+    this.snapshotPageDimensions();
+    this.snapshotContainerDimensions();
+    this.calculateProportions();
+  }
+
   private snapshotPageDimensions() {
     this.pageWidth = window.innerWidth;
     this.pageHeight = window.innerHeight;
@@ -158,8 +165,7 @@ export class GraphicalStageComponent implements OnInit {
 
     this.stageHeight = this.calculateStageHeight(this.ratioMode);
     this.stageWidth = this.calculateStageWidth(this.ratioMode);
-
-    this.presenterWidth= this.getPresenterWidth();
+    this.presenterWidth = this.getPresenterWidth();
     this.presenterSideWidth = this.getPresenterSideWidth();
     this.audienceWidth = this.getAudienceWidth();
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
@@ -187,7 +193,7 @@ export class GraphicalStageComponent implements OnInit {
         return this.containerWidth;
       case RatioMode.Height:
       case RatioMode.HalfSquareWidth:
-        return this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
+        return Math.min(0.9 * this.containerWidth, this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight);
     }
   }
 
