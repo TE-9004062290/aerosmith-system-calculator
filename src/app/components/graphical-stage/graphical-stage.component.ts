@@ -162,11 +162,12 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private calculateProportions() {
-    this.ratioMode = this.calculateRatioMode();
+    //this.ratioMode = this.calculateRatioMode();
+    this.calculateRatioMode();
     this.widthHeightRatio = this.calculateWidthHeightRatio();
 
-    this.stageHeight = this.calculateStageHeight(this.ratioMode);
-    this.stageWidth = this.calculateStageWidth(this.ratioMode);
+    // this.stageHeight = this.calculateStageHeight(this.ratioMode);
+    // this.stageWidth = this.calculateStageWidth(this.ratioMode);
     this.presenterWidth = this.getPresenterWidth();
     this.presenterSideWidth = this.getPresenterSideWidth();
     this.audienceWidth = this.getAudienceWidth();
@@ -177,36 +178,67 @@ export class GraphicalStageComponent implements OnInit {
     this.audience = this.getAudienceArray();
   }
 
-  private calculateStageHeight(mode: RatioMode) {
-    switch (mode) {
-      case RatioMode.Height:
-        return this.pageHeight / 2;
-      case RatioMode.HalfSquareWidth:
-        return this.pageHeight / 2;
-      case RatioMode.Width:
-        return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
-    }
-  }
-
-  private calculateStageWidth(mode: RatioMode) {
-    switch (mode) {
-      case RatioMode.Width:
-        return 0.9 * this.containerWidth;
-      case RatioMode.Height:
-      case RatioMode.HalfSquareWidth:
-        return Math.min(0.9 * this.containerWidth, this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight);
-    }
-  }
 
   private calculateRatioMode() {
     const cService = this.calculatorService;
     const widthHeightRatio = cService.lectureWidth / cService.ceilingHeight;
 
-    if (widthHeightRatio >= 1) {
-      return widthHeightRatio < 2 ? RatioMode.HalfSquareWidth : RatioMode.Width;
+    if (widthHeightRatio > 1) {
+      this.ratioMode = RatioMode.Width;
+      this.stageWidth = 60;
+      this.stageHeight = this.stageWidth * (cService.ceilingHeight / cService.lectureWidth);
+      //return widthHeightRatio < 2 ? RatioMode.HalfSquareWidth : RatioMode.Width;
     } else {
-      return RatioMode.Height;
+      this.ratioMode = RatioMode.Height;
+      this.stageHeight = 50;
+      this.stageWidth = this.stageHeight * (widthHeightRatio);
+      //return RatioMode.Height;
     }
+  }
+
+  private calculateStageHeight(mode: RatioMode) {
+    // switch (mode) {
+    //   case RatioMode.Height:
+    //     return this.pageHeight / 2;
+    //   case RatioMode.HalfSquareWidth:
+    //     return this.pageHeight / 2;
+    //   case RatioMode.Width:
+    //     return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+    // }
+    const height = 100 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
+    if (height <= 40) {
+      this.ratioMode = RatioMode.Width;
+      return height;
+    } else {
+      this.ratioMode = RatioMode.Height;
+      return 40;
+    }
+    // return Math.min(35, 100 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth);
+    // switch (mode) {
+    //   case RatioMode.Height:
+    //   case RatioMode.HalfSquareWidth:
+    //       return 35;
+    //   case RatioMode.Width:
+    //     return Math.min(35, 100 * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth);
+    // }
+  }
+
+  private calculateStageWidth(mode: RatioMode) {
+    const width = this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
+    return width;
+    switch (mode) {
+      case RatioMode.Width:
+        return 50.4; // 80vw
+      case RatioMode.Height:
+        return width;
+    }
+    // switch (mode) {
+    //   case RatioMode.Width:
+    //     return 0.9 * this.containerWidth;
+    //   case RatioMode.Height:
+    //   case RatioMode.HalfSquareWidth:
+    //     return Math.min(0.9 * this.containerWidth, this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight);
+    // }
   }
 
   private calculateWidthHeightRatio(): number {

@@ -78,7 +78,7 @@
                 <div class="stage-label">Front view</div>
                 <div class="stage-outer-container">
                     <div #container class="stage-inner-container">
-                        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
+                        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'vh', 'width': stageWidth + 'vh'}">
                             <ng-container *ngIf="!calculatorService.hasFreshOutput">
                                 <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 0%;" @animateOutputArea>
                                     <app-svg-standing-person></app-svg-standing-person>
