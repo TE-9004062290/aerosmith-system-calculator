@@ -246,9 +246,7 @@ export class GraphicalStageComponent implements OnInit {
     const extenderLength = cService.extenderLength;
     this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;
     this.extenderLength = extenderLength / cService.ceilingHeight * this.stageHeight;
-    // if (cService.extenderLength > 0) {
-    //   return cService.extenderLength / cService.ceilingHeight * 100;
-    // }
+    
     return 0;
   }
 

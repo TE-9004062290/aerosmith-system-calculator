@@ -49,10 +49,15 @@
 
     .advanced-inputs-toggle {
         display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #E6EBEF;
+        margin-bottom: 16px;
+    }
+    .advanced-inputs-toggle-group {
+        display: flex;
         align-items: center;
         padding: 12px 0px;
         border-top: 1px solid #E6EBEF;
-        border-bottom: 1px solid #E6EBEF;
         cursor: pointer;
         .advanced-inputs-label {
             font-size: 14px;
@@ -64,8 +69,7 @@
     }
 
     .advanced-inputs {
-        border-bottom: 1px solid #E6EBEF;
-        margin-bottom: 16px;
+        border-top: 0;
         .advanced-inputs-info {
             font-size: 12px;
             line-height: 16px;
