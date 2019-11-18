@@ -191,7 +191,7 @@ export class GraphicalStageComponent implements OnInit {
   private calculateStageWidth(mode: RatioMode) {
     switch (mode) {
       case RatioMode.Width:
-        return this.containerWidth;
+        return 0.9 * this.containerWidth;
       case RatioMode.Height:
       case RatioMode.HalfSquareWidth:
         return Math.min(0.9 * this.containerWidth, this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight);

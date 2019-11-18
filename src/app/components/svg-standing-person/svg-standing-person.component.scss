@@ -1,7 +1,5 @@
 .svg-standing-person, .svg-standing-person-side, .svg-sitting-person {
     display: inline-block;
-    position: absolute;
-    bottom: 0;
     transition: width .25s linear, left .25s linear;
     svg {
         transition: width .25s linear, left .25s linear;

@@ -66,7 +66,7 @@
             transition: height .25s linear, width .25s linear;
             .person-wrapper {
                 position: absolute;
-                bottom: 0;
+                bottom: -5px;
                 left: 0%;
                 transition: width .25s linear, left .25s linear;
                 z-index: 1;
@@ -92,7 +92,7 @@
 
             .person-wrapper {
                 position: absolute;
-                bottom: 0;
+                bottom: -4px;
                 left: 0%;
                 transition: width .25s linear, left .25s linear;
                 z-index: 1;
