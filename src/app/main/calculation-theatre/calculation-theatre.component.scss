@@ -24,14 +24,16 @@
     display: flex;
     &.has-output {
         .graphical-stage-wrapper {
+            padding-bottom: 0px;
         }
         .sidebar {
-            height: 110vh;
+            padding-bottom: 240px;
         }
     }
 
     .graphical-stage-wrapper {
         width: 80%;
+        padding-bottom: 240px;
         background-color: #F2F5F7;
     }
 
@@ -75,7 +77,6 @@
     bottom: 0;
     width: 100%;
     z-index: 200;
-
 }
 
 .btn {

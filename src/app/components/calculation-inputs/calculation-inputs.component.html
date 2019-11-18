@@ -8,7 +8,7 @@
                 <input #inputCeilingHeight id="ceiling-height" class="inputs-input" type="number" 
                     [min]="calculatorService.MINIMUMS.ceilingHeight"
                     [max]="calculatorService.MAXIMUMS.ceilingHeight"
-                    [value]="calculatorService.ceilingHeight"
+                    [value]="calculatorService.ceilingHeight | number: '0.2-2'"
                     (change)="updateInput('ceilingHeight', inputCeilingHeight)"
                     (keyup)="calculatorService.forceDirty()"/>
                 <span class="unit-label">
@@ -26,7 +26,7 @@
                 <input id="lecture-width" #inputWidth class="inputs-input" type="number" 
                     [min]="calculatorService.MINIMUMS.lectureWidth"
                     [max]="calculatorService.MAXIMUMS.lectureWidth"
-                    [value]="calculatorService.lectureWidth"
+                    [value]="calculatorService.lectureWidth | number: '0.2-2'"
                     (change)="updateInput('lectureWidth', inputWidth)"
                     (keyup)="calculatorService.forceDirty()"/>
                 <span class="unit-label">
@@ -51,7 +51,7 @@
                         [min]="calculatorService.MINIMUMS.presenterHeight"
                         [max]="calculatorService.MAXIMUMS.presenterHeight"
                         step="0.1"
-                        [value]="calculatorService.presenterHeight"
+                        [value]="calculatorService.presenterHeight | number: '0.2-2'"
                         (change)="updateInput('presenterHeight', inputPresenterHeight)"
                         (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">
@@ -70,7 +70,7 @@
                         [min]="calculatorService.MINIMUMS.audienceHeight"
                         [max]="calculatorService.MAXIMUMS.audienceHeight"
                         step="0.1"
-                        [value]="calculatorService.audienceHeight"
+                        [value]="calculatorService.audienceHeight | number: '0.2-2'"
                         (change)="updateInput('audienceHeight', inputAudienceHeight)"
                         (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">
@@ -87,9 +87,9 @@
                 <div class="inputs-value">
                     <input id="input-extender-length" #inputExtenderLength class="inputs-input" type="number" 
                         [min]="0"
-                        [max]="calculatorService.ceilingHeight - calculatorService.captureRadius"
+                        [max]="calculatorService.ceilingHeight - calculatorService.captureRadius > 0 ? calculatorService.ceilingHeight - calculatorService.captureRadius : 0"
                         step="0.5"
-                        [value]="calculatorService.inputExtenderLength"
+                        [value]="calculatorService.inputExtenderLength | number: '0.2-2'"
                         (change)="updateInput('inputExtenderLength', inputExtenderLength)"
                         (keyup)="calculatorService.forceDirty()"/>
                     <span class="unit-label">

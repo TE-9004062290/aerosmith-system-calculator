@@ -27,7 +27,7 @@ export class CalculationTheatreComponent implements OnInit {
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   public calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
-
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     public calculatorService: CalculatorService) {} 

@@ -38,18 +38,18 @@ export class CalculatorService {
   };
 
   public readonly FEET_MINIMUMS = {
-    ceilingHeight: this.METER_MINIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET,
-    lectureWidth: this.METER_MINIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET,
-    presenterHeight: this.METER_MINIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET,
-    audienceHeight: this.METER_MINIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET,
+    ceilingHeight: round(this.METER_MINIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET, 0),
+    lectureWidth: round(this.METER_MINIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
+    presenterHeight: round(this.METER_MINIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
+    audienceHeight: round(this.METER_MINIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1),
     microphoneInterval: this.METER_MINIMUMS.microphoneInterval * CalculatorService.METERS_TO_FEET
   }
 
   public readonly FEET_MAXIMUMS = {
-    ceilingHeight: this.METER_MAXIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET,
-    lectureWidth: this.METER_MAXIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET,
-    presenterHeight: this.METER_MAXIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET,
-    audienceHeight: this.METER_MAXIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET
+    ceilingHeight: round(this.METER_MAXIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET, 0),
+    lectureWidth: round(this.METER_MAXIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
+    presenterHeight: round(this.METER_MAXIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
+    audienceHeight: round(this.METER_MAXIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1)
   }
 
   public MINIMUMS = this.METER_MINIMUMS;
@@ -160,7 +160,7 @@ export class CalculatorService {
   set ceilingHeight(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      this.m_ceilingHeight = Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight);
+      this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
       this.m_pristine = false;
       this.m_has_output = false;
@@ -172,7 +172,7 @@ export class CalculatorService {
   set lectureWidth(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      this.m_lectureWidth = Math.min(Math.max(this.MINIMUMS.lectureWidth, val), this.MAXIMUMS.lectureWidth);
+      this.m_lectureWidth = round(Math.min(Math.max(this.MINIMUMS.lectureWidth, val), this.MAXIMUMS.lectureWidth), 2);
       this.m_pristine = false;
       this.m_has_output = false;
       this.$recalculate.next(true);
@@ -183,7 +183,7 @@ export class CalculatorService {
   set presenterHeight(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      this.m_presenterHeight = Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight);
+      this.m_presenterHeight = round(Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
       this.$recalculate.next(true);
@@ -194,7 +194,7 @@ export class CalculatorService {
   set audienceHeight(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      this.m_audienceHeight = Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight);
+      this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
       this.$recalculate.next(true);
@@ -207,7 +207,7 @@ export class CalculatorService {
     if (!isNaN(val)) {
       const extenderMin = 0;
       const extenderMax = this.inputExtenderMaximum;
-      this.m_inputExtenderLength = Math.min(Math.max(extenderMin, val), extenderMax);
+      this.m_inputExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
     } else {
       this.m_inputExtenderLength = 0;
     }
@@ -257,7 +257,7 @@ export class CalculatorService {
   }
 
   private get inputExtenderMaximum(): number {
-    return this.ceilingHeight - this.captureRadius;
+    return Math.max(0, this.ceilingHeight - this.captureRadius);
   }
 
 

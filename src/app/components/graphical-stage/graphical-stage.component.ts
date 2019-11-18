@@ -116,6 +116,8 @@ export class GraphicalStageComponent implements OnInit {
   ngOnInit() {
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
+        this.CalculatorMins = this.calculatorService.MINIMUMS;
+        this.CalculatorMaxes = this.calculatorService.MAXIMUMS;
         this.calculateProportions();
         this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
         this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
@@ -176,7 +178,6 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private calculateStageHeight(mode: RatioMode) {
-    console.log(mode);
     switch (mode) {
       case RatioMode.Height:
         return this.pageHeight / 2;

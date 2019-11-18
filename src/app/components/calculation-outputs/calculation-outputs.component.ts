@@ -16,7 +16,7 @@ export class CalculationOutputsComponent implements OnInit {
   ) { }
 
   public printOutput() {
-    alert("Not yet implemented.");
+    window.print();
   }
 
   public shareOutput() {
