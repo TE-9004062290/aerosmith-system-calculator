@@ -1,4 +1,10 @@
 
+@media print {
+    .actions {
+        display: none !important;
+    }
+}
+
 .outputs-wrapper {
     width: 100%;
     background-color: white;
