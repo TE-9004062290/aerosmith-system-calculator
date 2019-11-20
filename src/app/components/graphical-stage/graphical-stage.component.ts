@@ -52,6 +52,7 @@ class GraphicPosition {
 })
 export class GraphicalStageComponent implements OnInit {
 
+  private STAGE_PAGE_HEIGHT_RATIO = 0.20;
   public CalculatorMins = this.calculatorService.MINIMUMS;
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
@@ -162,11 +163,8 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private calculateProportions() {
-    this.ratioMode = this.calculateRatioMode();
-    this.widthHeightRatio = this.calculateWidthHeightRatio();
+    [this.stageHeight, this.stageWidth, this.ratioMode] = this.calculateStageRatios();
 
-    this.stageHeight = this.calculateStageHeight(this.ratioMode);
-    this.stageWidth = this.calculateStageWidth(this.ratioMode);
     this.presenterWidth = this.getPresenterWidth();
     this.presenterSideWidth = this.getPresenterSideWidth();
     this.audienceWidth = this.getAudienceWidth();
@@ -177,42 +175,30 @@ export class GraphicalStageComponent implements OnInit {
     this.audience = this.getAudienceArray();
   }
 
-  private calculateStageHeight(mode: RatioMode) {
-    switch (mode) {
-      case RatioMode.Height:
-        return this.pageHeight / 2;
-      case RatioMode.HalfSquareWidth:
-        return this.pageHeight / 2;
-      case RatioMode.Width:
-        return this.containerWidth * this.calculatorService.ceilingHeight / this.calculatorService.lectureWidth;
-    }
-  }
-
-  private calculateStageWidth(mode: RatioMode) {
-    switch (mode) {
-      case RatioMode.Width:
-        return 0.9 * this.containerWidth;
-      case RatioMode.Height:
-      case RatioMode.HalfSquareWidth:
-        return Math.min(0.9 * this.containerWidth, this.stageHeight * this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight);
-    }
-  }
-
-  private calculateRatioMode() {
+  private calculateStageRatios() {
     const cService = this.calculatorService;
-    const widthHeightRatio = cService.lectureWidth / cService.ceilingHeight;
+    const heightWidthRatio = cService.ceilingHeight / cService.lectureWidth;
+    let stageHeight = 0;
+    let stageWidth = 0;
+    let ratioMode: RatioMode;
 
-    if (widthHeightRatio >= 1) {
-      return widthHeightRatio < 2 ? RatioMode.HalfSquareWidth : RatioMode.Width;
+    if (heightWidthRatio >= 1) {
+      ratioMode = RatioMode.Height;
+      stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
+      stageWidth = Math.min(0.9 * this.containerWidth, stageHeight * (1 / heightWidthRatio));
     } else {
-      return RatioMode.Height;
+      ratioMode = RatioMode.Width;
+      stageWidth = 0.9 * this.containerWidth;
+      stageHeight = stageWidth * heightWidthRatio;
+      if (stageHeight / this.pageHeight > this.STAGE_PAGE_HEIGHT_RATIO) {
+        stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
+        stageWidth = stageHeight * (1 / heightWidthRatio);
+      }
     }
-  }
 
-  private calculateWidthHeightRatio(): number {
-    return this.calculatorService.lectureWidth / this.calculatorService.ceilingHeight;
+    return [stageHeight, stageWidth, ratioMode];
   }
-
+  
   private getPresenterWidth(): number {
     const cService = this.calculatorService;
     const presenterCeilingRatio = cService.presenterHeight / cService.ceilingHeight;

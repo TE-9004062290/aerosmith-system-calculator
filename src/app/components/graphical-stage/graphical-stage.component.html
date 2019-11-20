@@ -38,6 +38,7 @@
             <div class="measuring-stick-overlay lectureWidth" style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
                 <app-measuring-stick orientation="horizontal" 
                     [width]="stageWidth"
+                    maxWidth='56.7%'
                     thinModeDirection="bottom"
                     [isInput]="true" 
                     [inputMin]="CalculatorMins.lectureWidth"
@@ -51,6 +52,7 @@
                     <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                            [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"
                             thinModeDirection="top"
                             [isInput]="false" 
                             [inputValue]="calculatorService.microphoneInterval"
@@ -58,15 +60,11 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1 && microphones.positions.length > 1">
-                    <div class="measuring-stick-overlay" style="position: absolute; top: -40px; width: 100%; display: flex; justify-content: center;" @animateOutputArea >
+                    <div class="measuring-stick-overlay" style="position: absolute; top: -40px; width: 100%;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
-                            thinModeDirection="top"
-                            [isInput]="false" 
-                            [inputValue]="calculatorService.microphoneInterval"
-                        ></app-measuring-stick>
-                        <app-measuring-stick orientation="horizontal" 
-                            [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                            [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"
+                            [twinned]="true"
                             thinModeDirection="top"
                             [isInput]="false" 
                             [inputValue]="calculatorService.microphoneInterval"

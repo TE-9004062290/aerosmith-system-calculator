@@ -1,6 +1,21 @@
 <ng-container [ngSwitch]="orientation">
-    <div *ngSwitchCase="'horizontal'" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" 
-        class="horizontal-measure" [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" [ngStyle]="{'width': width + 'px'}">
+    <ng-container *ngSwitchCase="'horizontal'">
+        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}">
+            <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
+            <ng-container *ngIf="twinned" [ngTemplateOutlet]="horizontal"></ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'vertical'">
+        <div class="vertical-wrapper">
+            <ng-container [ngTemplateOutlet]="vertical"></ng-container>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-template #horizontal>
+    <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection"
+    class="horizontal-measure" [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
+        [ngStyle]="{'width': width + 'px', 'max-width': maxWidth}">
         <div class="stick left">
             <div class="stop"></div>
             <div class="arrow">     
@@ -31,7 +46,10 @@
             <div class="stop"></div>
         </div>
     </div>
-    <div *ngSwitchCase="'vertical'" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
+</ng-template>
+
+<ng-template #vertical>
+    <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
         [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
         [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
@@ -60,4 +78,4 @@
             <div class="arrow"></div>
         </div>
     </div>
-</ng-container>
+</ng-template>
