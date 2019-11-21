@@ -1,4 +1,15 @@
+@media print {
+    * {
+        transition: none;
+    }
+}
+
 @media print and (max-width: 40em) /* portrait. For some reason @media print and (orientation: portrait) doesn't work as expected*/ {
+    .graphical-output-front {
+        .stage {
+            // max-height: 18vw !important;
+        }
+    }
     .graphical-output-side {
         page-break-before: avoid !important;
     }

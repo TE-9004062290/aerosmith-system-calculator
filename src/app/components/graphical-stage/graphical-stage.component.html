@@ -97,7 +97,7 @@
                             <ng-container *ngIf="calculatorService.hasFreshOutput">
                                 <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
                                     class="microphone-wrapper" 
-                                    [ngStyle]="{'width': captureWidthPercentage + '%', 'left': mic.positionPercentage + '%'}">
+                                    [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
                                     <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
                                 </div>
                             </ng-container>

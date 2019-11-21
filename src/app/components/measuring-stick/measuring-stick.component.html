@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="orientation">
     <ng-container *ngSwitchCase="'horizontal'">
-        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}">
+        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
             <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
             <ng-container *ngIf="twinned" [ngTemplateOutlet]="horizontal"></ng-container>
         </div>

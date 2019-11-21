@@ -11,6 +11,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { round } from '@app/helpers/arithmetic.helper';
 
 
 enum RatioMode {
@@ -53,6 +54,7 @@ class GraphicPosition {
 export class GraphicalStageComponent implements OnInit {
 
   private STAGE_PAGE_HEIGHT_RATIO = 0.20;
+  public isPrinting = false;
   public CalculatorMins = this.calculatorService.MINIMUMS;
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
@@ -141,6 +143,17 @@ export class GraphicalStageComponent implements OnInit {
 
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
+    this.isPrinting = true;
+    this.STAGE_PAGE_HEIGHT_RATIO = .20;
+    this.snapshotPageDimensions();
+    this.snapshotContainerDimensions();
+    this.calculateProportions();
+  }
+
+  @HostListener('window:afterprint',['$event'])
+  onAfterPrint(event) {
+    this.isPrinting = false;
+    this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
@@ -217,7 +230,7 @@ export class GraphicalStageComponent implements OnInit {
 
   private getRadiusWidthPercentage(): number {
     const diameter = this.calculatorService.captureRadius * 2;
-    const captureDiameterWidthRatio = diameter / this.calculatorService.lectureWidth;
+    let captureDiameterWidthRatio = diameter / this.calculatorService.lectureWidth;
     return captureDiameterWidthRatio * 100;
   }
 
@@ -232,7 +245,7 @@ export class GraphicalStageComponent implements OnInit {
     const extenderLength = cService.extenderLength;
     this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;
     this.extenderLength = extenderLength / cService.ceilingHeight * this.stageHeight;
-    
+
     return 0;
   }
 

@@ -1,3 +1,9 @@
+@media print {
+    * {
+        transition: none;
+    }
+}
+
 .svg-standing-person, .svg-standing-person-side, .svg-sitting-person {
     display: inline-block;
     transition: width .25s linear, left .25s linear;

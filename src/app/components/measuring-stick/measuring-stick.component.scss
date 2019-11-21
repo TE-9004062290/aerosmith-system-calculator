@@ -134,17 +134,28 @@
 
         .horizontal-measure {
             margin: 0;
-            &:first-child {
-                .stick.right {
-                    .stop {
-                        display: none;
+        }
+
+        &[mode='thin'] {
+            position: relative;
+            top: -20px;
+            .horizontal-measure {
+                margin: 0;
+                &:first-child {
+                    .stick.right{
+                        .stop {
+                            display: none;
+                        }
                     }
                 }
-            }
-            &:last-child {
-                .stick.left {
-                    .stop {
-                        width: 4px;
+                &:last-child {
+                    .stick.left {
+                        .stop {
+                            width: 4px;
+                        }
+                    }
+                    .inputs-output {
+                        top: 30px;
                     }
                 }
             }

@@ -51,7 +51,7 @@ export class MeasuringStickComponent implements OnInit {
   @Output() public updated: EventEmitter<any> = new EventEmitter();
 
   public mode: 'wide' | 'thin' = 'wide';
-  private thinThreshold = 150; // 150px
+  private thinThreshold = 100; // 150px
   private shortThreshold = 60;
 
   ngOnInit() {

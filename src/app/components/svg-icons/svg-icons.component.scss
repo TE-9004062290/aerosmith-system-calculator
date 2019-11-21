@@ -1,3 +1,9 @@
+@media print {
+    * {
+        transition: none;
+    }
+}
+
 .svg-icon {
     transition: transform .25s linear;
     &.svg-icon-warning {
