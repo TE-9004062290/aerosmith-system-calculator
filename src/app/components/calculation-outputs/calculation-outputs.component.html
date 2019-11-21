@@ -1,3 +1,53 @@
+<div class="inputs-wrapper">
+    <div class="inputs-container">
+        <div class="header">
+            <div class="title">
+                Calculation Settings
+            </div>
+        </div>
+        <div class="data-rows">
+            <div class="data-row">
+                <div class="data-description">Calculation Priority</div>
+                <div class="data-value">{{calculatorService.calculationPriority === 0 ? 'Audio quality' : 'Detection range' }}</div>
+            </div>
+            <div class="data-row">
+                <div class="data-description">Ceiling height</div>
+                <div class="data-value">
+                    {{ calculatorService.ceilingHeight }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.ceilingHeight === 1 ? '' : 's') : (calculatorService.ceilingHeight === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-description">Presentation area width</div>
+                <div class="data-value">
+                    {{ calculatorService.lectureWidth}} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.lectureWidth === 1 ? '' : 's') : (calculatorService.lectureWidth === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-description">Presenter height</div>
+                <div class="data-value">
+                    {{ calculatorService.presenterHeight }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.presenterHeight === 1 ? '' : 's') : (calculatorService.presenterHeight === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-description">Audience height</div>
+                <div class="data-value">
+                    {{ calculatorService.audienceHeight }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceHeight === 1 ? '' : 's') : (calculatorService.audienceHeight === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+            <div class="data-row" *ngIf="calculatorService.inputExtenderLength > 0">
+                <div class="data-description">Extender length</div>
+                <div class="data-value">
+                    {{ calculatorService.inputExtenderLength}} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.inputExtenderLength === 1 ? '' : 's') : (calculatorService.inputExtenderLength === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="outputs-wrapper">
     <div class="outputs-container">
         <div class="header">
@@ -12,35 +62,47 @@
                 </div>
             </div>
         </div>
-        <div class="output-rows">
-            <div class="output-row">
-                <div class="output-description">Number of microphones</div>
-                <div class="output-value">{{ calculatorService.requiredMicrophones }} units</div>
+        <div class="data-rows">
+            <div class="data-row">
+                <div class="data-description">Number of microphones</div>
+                <div class="data-value">
+                    {{ calculatorService.requiredMicrophones }} 
+                    unit{{calculatorService.requiredMicrophones > 1 ? 's' : ''}}
+                </div>
             </div>
-            <div class="output-row">
-                <div class="output-description">Distance between each microphone</div>
-                <div class="output-value">{{ calculatorService.microphoneInterval }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}</div>
+            <div class="data-row">
+                <div class="data-description">Distance between each microphone</div>
+                <div class="data-value">
+                    {{ calculatorService.microphoneInterval }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.microphoneInterval === 1 ? '' : 's') : (calculatorService.microphoneInterval === 1 ? 'foot' : 'feet') }}
+                </div>
             </div>
-            <div class="output-row">
-                <div class="output-description">Distance between line of microphones and front <br/> of audience</div>
-                <div class="output-value">{{ calculatorService.audienceDistance }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}</div>
+            <div class="data-row">
+                <div class="data-description">Distance between line of microphones and front <br/> of audience</div>
+                <div class="data-value">
+                    {{ calculatorService.audienceDistance }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceDistance === 1 ? '' : 's') : (calculatorService.audienceDistance === 1 ? 'foot' : 'feet') }}
+                </div>
             </div>
-            <div class="output-row" *ngIf="!calculatorService.extenderProvided">
-                <div class="output-description">Minimum extender length (if required)</div>
-                <div *ngIf="calculatorService.extenderLength === 0" class="output-value">
+            <div class="data-row" *ngIf="!calculatorService.extenderProvided">
+                <div class="data-description">Minimum extender length (if required)</div>
+                <div *ngIf="calculatorService.extenderLength === 0" class="data-value">
                     Not required
                 </div>
-                <div *ngIf="calculatorService.extenderLength > 0" class="output-value">
-                    {{ calculatorService.extenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+                <div *ngIf="calculatorService.extenderLength > 0" class="data-value">
+                    {{ calculatorService.extenderLength | number: '0.2-2' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength  === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
-            <div class="output-row" *ngIf="calculatorService.extenderProvided">
-                <div class="output-description">Minimum extender length (if required)</div>
-                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength <= 0" class="output-value">
-                    {{ calculatorService.extenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+            <div class="data-row" *ngIf="calculatorService.extenderProvided">
+                <div class="data-description">Minimum extender length (if required)</div>
+                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength <= 0" class="data-value">
+                    {{ calculatorService.extenderLength | number: '0.2-2' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength === 1 ? 'foot' : 'feet') }}
                 </div>
-                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength > 0" class="output-value">
-                    {{ calculatorService.extenderLength | number: '0.2-2' }} {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength > 0" class="data-value">
+                    {{ calculatorService.extenderLength | number: '0.2-2' }} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
         </div>

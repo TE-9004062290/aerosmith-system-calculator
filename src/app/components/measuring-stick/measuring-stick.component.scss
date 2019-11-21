@@ -141,15 +141,15 @@
             top: -20px;
             .horizontal-measure {
                 margin: 0;
-                &:first-child {
-                    .stick.right{
+                &:last-child {
+                    .stick.left{
                         .stop {
                             display: none;
                         }
                     }
                 }
-                &:last-child {
-                    .stick.left {
+                &:first-child {
+                    .stick.right {
                         .stop {
                             width: 4px;
                         }

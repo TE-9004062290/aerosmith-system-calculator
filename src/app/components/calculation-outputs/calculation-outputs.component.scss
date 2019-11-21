@@ -1,7 +1,33 @@
 
 @media print {
+    .inputs-container {
+        display: block !important;
+    }
     .actions {
         display: none !important;
+    }
+}
+
+.inputs-wrapper {
+    width: 100%;
+    background-color: white;
+    border-top: solid #E6EBEF 2px;
+}
+
+.inputs-container {
+    display: none;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-bottom: 16px;
+    .header {
+        .title {
+            padding-bottom: 12px;
+            border-bottom: solid #E6EBEF 1px;
+            font-size: 18px;
+            line-height: 24px;
+            color: #006DB3;
+        }
     }
 }
 
@@ -85,17 +111,18 @@
             }
         }
     }
-    .output-rows {
-        margin-top: 16px;
-        display: flex;
-        justify-content: space-between;
-        .output-row {
-            .output-description {
-                font-size: 12px;
-            }
-            .output-value {
-                font-weight: bold;
-            }
+}
+
+.data-rows {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    .data-row {
+        .data-description {
+            font-size: 12px;
+        }
+        .data-value {
+            font-weight: bold;
         }
     }
 }
