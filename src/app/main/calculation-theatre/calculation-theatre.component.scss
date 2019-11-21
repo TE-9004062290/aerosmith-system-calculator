@@ -11,6 +11,22 @@
     }
 }
 
+@media screen and (max-width: 767px) {
+    .calculation-theatre-container {
+        .graphical-stage-wrapper {
+            width: 100% !important;
+        }
+        .sidebar {
+            position: absolute;
+            z-index: 100;
+            background-color: white;
+            right: -100%;
+            right: 0;
+            width: 0%;
+        }
+    }
+}
+
 .calculation-theatre-header {
     width: 100%;
     font-size: 24px;
@@ -34,6 +50,7 @@
 
     .graphical-stage-wrapper {
         width: 80%;
+        transition: width .25s linear;
         padding-bottom: 240px;
         background-color: #F2F5F7;
     }
@@ -44,6 +61,7 @@
         max-width: 300px;
         padding-left: 24px;
         padding-right: 24px;
+        transition: right .25s linear;
     }
     .calculation-theatre-title {
         font-size: 18px;
