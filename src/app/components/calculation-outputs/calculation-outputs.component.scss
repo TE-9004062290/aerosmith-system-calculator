@@ -1,6 +1,6 @@
 
 @media print {
-    .inputs-container {
+    .inputs-wrapper {
         display: block !important;
     }
     .actions {
@@ -9,13 +9,13 @@
 }
 
 .inputs-wrapper {
+    display: none;
     width: 100%;
     background-color: white;
     border-top: solid #E6EBEF 2px;
 }
 
 .inputs-container {
-    display: none;
     width: 80%;
     margin: 0 auto;
     margin-top: 20px;
