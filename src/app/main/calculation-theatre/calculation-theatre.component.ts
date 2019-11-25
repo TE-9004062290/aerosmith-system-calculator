@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { CalculatorService } from '@app/services/calculator.service';
@@ -27,6 +27,8 @@ export class CalculationTheatreComponent implements OnInit {
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   public calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
+
+  public sideBarOut = false;
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,11 @@ export class CalculationTheatreComponent implements OnInit {
         this.initialized = true;
       }
     });
+  }
+
+  @HostListener('click', ['$event'])
+  toggleSideBar() {
+    this.sideBarOut = !this.sideBarOut;
   }
 
   private parseParams(params) {

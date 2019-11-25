@@ -12,22 +12,44 @@
 }
 
 @media screen and (max-width: 767px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        .calculation-theatre-header {
+            width: unset;
+        }
+    }
     .calculation-theatre-container {
         .graphical-stage-wrapper {
             width: 100% !important;
         }
         .sidebar {
-            position: absolute;
-            z-index: 100;
+            transition: transform .25s linear;
+            position: fixed;
+            top: 0px;
+            z-index: 101;
+            height: 100vh;
             background-color: white;
-            right: -100%;
             right: 0;
-            width: 0%;
+            transform: translateX(100%);
+            box-shadow: 2px 0px 10px 0px #757575;
+        }
+        &.has-output {
+            padding-bottom: 120px;
+        }
+        &.pulled-out {
+            .sidebar {
+                transform: translateX(0%);
+                overflow: scroll;
+                .btn {
+                    margin-bottom: 24px;
+                }
+            }
         }
     }
 }
 
-.calculation-theatre-header {
+.calculation-theatre-header {   
     width: 100%;
     font-size: 24px;
     line-height: 32px;
@@ -61,7 +83,6 @@
         max-width: 300px;
         padding-left: 24px;
         padding-right: 24px;
-        transition: right .25s linear;
     }
     .calculation-theatre-title {
         font-size: 18px;
@@ -96,7 +117,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 200;
+    z-index: 100;
 }
 
 .btn {

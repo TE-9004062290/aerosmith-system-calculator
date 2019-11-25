@@ -164,6 +164,7 @@
 }
 
 .horizontal-measure {
+    position: relative;
     height: 20px;
     display: flex;
     justify-content: center;
@@ -281,19 +282,39 @@
             transition: left .25s linear, right .25s linear, top .25s linear, bottom .25s linear;
         }
         &[mode-direction='left'] {
-            .inputs-output {
-                left: -45px;
+            @media screen and (max-width: 1024px) {
+                .inputs-output {
+                    right: -45px;
+                }
+                .inputs-input {
+                    right: -55px;
+                }
             }
-            .inputs-input {
-                left: -55px;
+            @media screen and (min-width: 1025px) {
+                .inputs-output {
+                    left: -45px;
+                }
+                .inputs-input {
+                    left: -55px;
+                }
             }
         }
         &[mode-direction='right'] {
-            .inputs-output {
-                right: -45px;
+            @media screen and (max-width: 1024px) {
+                .inputs-output {
+                    left: -45px;
+                }
+                .inputs-input {
+                    left: -55px;
+                }
             }
-            .inputs-input {
-                right: -55px;
+            @media screen and (min-width: 1025px) {
+                .inputs-output {
+                    right: -45px;
+                }
+                .inputs-input {
+                    right: -55px;
+                }
             }
         }
     }

@@ -38,6 +38,11 @@
 }
 
 .outputs-container {
+    @media screen and (max-width: 767px) {
+        .btn {
+            padding: 4px 10px !important;
+        }
+    }
     width: 80%;
     margin: 0 auto;
     padding-bottom: 16px;
@@ -123,6 +128,16 @@
         }
         .data-value {
             font-weight: bold;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        display: block;
+        .data-row {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            margin-bottom: 12px;
         }
     }
 }

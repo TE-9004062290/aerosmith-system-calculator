@@ -138,6 +138,19 @@
             }
         }
     }
+    &.presenter-height, &.audience-height, &.extender-length {
+        position: absolute;
+        left: 80%;
+    }
+    &.presenter-height {
+        bottom: 0;
+    }
+    &.audience-height {
+        bottom: 0;
+    }
+    &.extender-length {
+        top: 0;
+    }
 }
 
 input[type=number]::-webkit-inner-spin-button, 
