@@ -48,7 +48,7 @@
             </div>
             <ng-container *ngIf="calculatorService.hasFreshOutput">
                 <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 0">
-                    <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; top: -40px; width: 100%;" @animateOutputArea >
+                    <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; top: -30px; width: 100%;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
                             [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"
@@ -59,7 +59,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1 && microphones.positions.length > 1">
-                    <div class="measuring-stick-overlay" style="position: absolute; top: -40px; width: 100%;" @animateOutputArea >
+                    <div class="measuring-stick-overlay" style="position: absolute; top: -30px; width: 100%;" @animateOutputArea >
                         <app-measuring-stick orientation="horizontal" 
                             [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
                             [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"

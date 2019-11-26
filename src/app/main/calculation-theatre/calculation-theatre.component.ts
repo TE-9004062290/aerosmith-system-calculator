@@ -50,6 +50,7 @@ export class CalculationTheatreComponent implements OnInit {
   public calculate() {
     this.calculatorService.calculateOutputs();
     this.calculatorService.$recalculate.next(true);
+    this.hideSideBar();
   }
 
   public toggleSideBar() {

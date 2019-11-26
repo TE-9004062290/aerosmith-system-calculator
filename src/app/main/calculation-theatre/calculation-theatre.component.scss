@@ -22,6 +22,8 @@
     .calculation-theatre-container {
         .graphical-stage-wrapper {
             width: 100% !important;
+            height: 100vh;
+            padding-bottom: 24px !important;
         }
         .sidebar {
             .sidebar-pullout {
@@ -86,9 +88,6 @@
         .graphical-stage-wrapper {
             padding-bottom: 0px;
         }
-        .sidebar {
-            padding-bottom: 240px;
-        }
     }
 
     .graphical-stage-wrapper {
@@ -100,10 +99,12 @@
 
     .sidebar {
         width: 20%;
+        height: 100vh;
         min-width: 240px;
         max-width: 300px;
         padding-left: 24px;
         padding-right: 24px;
+        background-color: white;
         .sidebar-pullout {
             display: none;
         }
@@ -153,6 +154,7 @@
     color: white;
     border-radius: 3px;
     padding: 12px 0px;
+    margin-bottom: 24px;
     &.btn-calculate {
         text-transform: uppercase;
         background-color: #006DB3;

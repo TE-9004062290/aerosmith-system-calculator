@@ -138,7 +138,8 @@
 
         &[mode='thin'] {
             position: relative;
-            top: -20px;
+            top: -10px;
+
             .horizontal-measure {
                 margin: 0;
                 &:last-child {
@@ -155,7 +156,10 @@
                         }
                     }
                     .inputs-output {
-                        top: 30px;
+                        top: 15px;
+                        @media screen and (max-width: 767px) {
+                            top: 15px;
+                        }
                     }
                 }
             }
@@ -206,12 +210,12 @@
         }
         &[mode-direction='top'] {
             .inputs-input, .inputs-output {
-                top: -30px;
+                top: -24px;
             }
         }
         &[mode-direction='bottom'] {
             .inputs-input, .inputs-output {
-                bottom: -30px;
+                bottom: -24px;
             }
         }
     }
