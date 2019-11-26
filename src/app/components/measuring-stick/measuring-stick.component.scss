@@ -134,7 +134,15 @@
 
         .horizontal-measure {
             margin: 0;
+            &:first-child {
+                .stick.right {
+                    .stop {
+                        width: 0px;
+                    }
+                }
+            }
         }
+
 
         &[mode='thin'] {
             position: relative;
@@ -145,14 +153,14 @@
                 &:last-child {
                     .stick.left{
                         .stop {
-                            display: none;
+                            width: 0px;
                         }
                     }
                 }
                 &:first-child {
                     .stick.right {
                         .stop {
-                            width: 4px;
+                            width: 3px;
                         }
                     }
                     .inputs-output {
