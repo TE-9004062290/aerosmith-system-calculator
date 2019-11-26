@@ -24,11 +24,30 @@
             width: 100% !important;
         }
         .sidebar {
+            .sidebar-pullout {
+                cursor: pointer;
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+
+                border-right: 0;
+                background-color: #00375E;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+
+                position: absolute;
+                top: 50vh;
+                left: -40px;
+                width: 40px;
+                height: 64px;
+            }
+            .sidebar-main {
+                height: 100vh;
+            }
             transition: transform .25s linear;
             position: fixed;
             top: 0px;
             z-index: 101;
-            height: 100vh;
             background-color: white;
             right: 0;
             transform: translateX(100%);
@@ -40,9 +59,11 @@
         &.pulled-out {
             .sidebar {
                 transform: translateX(0%);
-                overflow: scroll;
-                .btn {
-                    margin-bottom: 24px;
+                .sidebar-main {
+                    overflow: scroll;
+                    .btn {
+                        margin-bottom: 24px;
+                    }
                 }
             }
         }
@@ -83,6 +104,9 @@
         max-width: 300px;
         padding-left: 24px;
         padding-right: 24px;
+        .sidebar-pullout {
+            display: none;
+        }
     }
     .calculation-theatre-title {
         font-size: 18px;

@@ -1,16 +1,16 @@
 
 <ng-container [ngSwitch]="iconType">
-    <svg *ngSwitchCase="'warning'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-warning" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'warning'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-warning" [attr.width]="width || 18" [attr.height]="height || 18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 9C2.25 5.27208 5.27208 2.25 9 2.25C12.7279 2.25 15.75 5.27208 15.75 9C15.75 12.7279 12.7279 15.75 9 15.75C5.27208 15.75 2.25 12.7279 2.25 9ZM9.75 12C9.75 11.5858 9.41421 11.25 9 11.25C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75C9.41421 12.75 9.75 12.4142 9.75 12ZM8.25 5.25V10.5H9.75V5.25H8.25Z" fill="#F0A91C"/>
     </svg>
-    <svg *ngSwitchCase="'info'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-info" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'info'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-info" [attr.width]="width || 18" [attr.height]="height || 18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 9C2.25 5.27208 5.27208 2.25 9 2.25C12.7279 2.25 15.75 5.27208 15.75 9C15.75 12.7279 12.7279 15.75 9 15.75C5.27208 15.75 2.25 12.7279 2.25 9ZM8.96805 8.57086L9.61445 7.95018C9.77256 7.80481 9.86538 7.60461 9.86538 7.38435C9.86538 6.94727 9.48362 6.57477 9 6.57477C8.51638 6.57477 8.13462 6.94727 8.13462 7.38435V7.5H6.75V7.38435C6.75 6.19736 7.76497 5.25 9 5.25C10.235 5.25 11.25 6.19736 11.25 7.38435C11.25 7.86598 11.0415 8.30225 10.7141 8.61202L10.247 9.06326C10.0627 9.23978 9.92912 9.386 9.83785 9.56862C9.74993 9.7445 9.74994 9.77414 9.75 10.099L9.75 10.125V10.5H8.25V10.125C8.25 9.53467 8.56346 8.95849 8.96805 8.57086ZM9.75 12.75V11.25H8.25V12.75H9.75Z" fill="#00375E"/>
     </svg>
-    <svg *ngSwitchCase="'toggle'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-toggle" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.42967 5.33301L3.33301 6.47471L7.99967 11.333L12.6663 6.47471L11.5697 5.33301L7.99967 9.04151L4.42967 5.33301Z" fill="#757575"/>
+    <svg *ngSwitchCase="'toggle'" [ngStyle]="{'transform': transformString }" class="svg-icon svg-icon-toggle" [attr.width]="width || 16" [attr.height]="height || 16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.42967 5.33301L3.33301 6.47471L7.99967 11.333L12.6663 6.47471L11.5697 5.33301L7.99967 9.04151L4.42967 5.33301Z" [attr.fill]="primaryFill"/>
     </svg>
 </ng-container>
-<svg *ngIf="iconType === 'radio-on' || iconType === 'radio-off'" class="svg-icon svg-icon-radio" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+<svg *ngIf="iconType === 'radio-on' || iconType === 'radio-off'" class="svg-icon svg-icon-radio" [attr.width]="width || 14" [attr.height]="height || 14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
     [ngStyle]="{'transform': transformString }"
     [ngClass]="{'svg-icon-radio-on': iconType === 'radio-on', 'svg-icon-radio-off': iconType === 'radio-off'}">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12ZM7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14Z" fill="#039BE5"/>

@@ -140,7 +140,10 @@
     }
     &.presenter-height, &.audience-height, &.extender-length {
         position: absolute;
-        left: 80%;
+        left: 84%;
+        @media screen and (max-width: 767px) {
+            left: 80%;
+        }
     }
     &.presenter-height {
         bottom: 0;

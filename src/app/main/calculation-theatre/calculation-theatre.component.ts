@@ -47,9 +47,17 @@ export class CalculationTheatreComponent implements OnInit {
     });
   }
 
-  @HostListener('click', ['$event'])
-  toggleSideBar() {
+  public calculate() {
+    this.calculatorService.calculateOutputs();
+    this.calculatorService.$recalculate.next(true);
+  }
+
+  public toggleSideBar() {
     this.sideBarOut = !this.sideBarOut;
+  }
+
+  public hideSideBar() {
+    this.sideBarOut = false;
   }
 
   private parseParams(params) {
@@ -101,10 +109,5 @@ export class CalculationTheatreComponent implements OnInit {
     }
 
     return hasParam;
-  }
-
-  calculate() {
-    this.calculatorService.calculateOutputs();
-    this.calculatorService.$recalculate.next(true);
   }
 }
