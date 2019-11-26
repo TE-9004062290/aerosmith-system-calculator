@@ -7,6 +7,9 @@
         margin-bottom: 12px;
         text-align: center;
     }
+    .calculation-theatre-header {
+        width: 100%;
+    }
     .graphical-stage-wrapper {
         width: 100% !important;
     }
@@ -20,9 +23,6 @@
     .main {
         display: flex;
         flex-direction: column;
-        .calculation-theatre-header {
-            width: unset;
-        }
     }
     .calculation-theatre-container {
         .graphical-stage-wrapper {
@@ -82,7 +82,6 @@
 }
 
 .calculation-theatre-header {   
-    width: 100%;
     font-size: 24px;
     line-height: 32px;
     text-align: center;
