@@ -38,7 +38,7 @@
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceHeight === 1 ? '' : 's') : (calculatorService.audienceHeight === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
-            <div class="data-row" *ngIf="calculatorService.inputExtenderLength > 0">
+            <div class="data-row" *ngIf="calculatorService.inputExtenderLength > 0 && !calculatorService.extenderRequired">
                 <div class="data-description">Extender length</div>
                 <div class="data-value">
                     {{ calculatorService.inputExtenderLength}} 
