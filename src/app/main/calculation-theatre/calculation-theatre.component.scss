@@ -2,6 +2,11 @@
     * {
         -webkit-print-color-adjust: exact;
     }
+    .calculation-theatre-print-header {
+        display: block !important;
+        margin-bottom: 12px;
+        text-align: center;
+    }
     .graphical-stage-wrapper {
         width: 100% !important;
     }
@@ -70,6 +75,10 @@
             }
         }
     }
+}
+
+.calculation-theatre-print-header {
+    display: none;
 }
 
 .calculation-theatre-header {   
