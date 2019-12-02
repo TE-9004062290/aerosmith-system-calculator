@@ -144,6 +144,14 @@
             margin-bottom: 20px;
         }
     }
+    .version-stamp {
+        position: fixed;
+        bottom: 0;
+
+        padding-left: 8px;
+        padding-bottom: 8px;
+        color: #E0E0E0;
+    }
 }
 
 .output-wrapper {
@@ -151,6 +159,13 @@
     bottom: 0;
     width: 100%;
     z-index: 100;
+
+    .version-stamp {
+        position: unset;
+        padding-left: 8px;
+        padding-bottom: 8px;
+        color: #E0E0E0;
+    }
 }
 
 .btn {

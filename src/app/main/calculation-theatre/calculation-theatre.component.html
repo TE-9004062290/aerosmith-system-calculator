@@ -50,7 +50,13 @@
             </div>
         </div>
         <div *ngIf="calculatorService.hasFreshOutput" class="output-wrapper">
+            <div class="version-stamp">
+                <app-version-stamp></app-version-stamp>
+            </div>
             <app-calculation-outputs></app-calculation-outputs>
+        </div>
+        <div class="version-stamp">
+            <app-version-stamp *ngIf="!calculatorService.hasFreshOutput"></app-version-stamp>
         </div>
     </div>
 </div>
