@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { CalculatorService } from '@app/services/calculator.service';
+import { MixpanelService } from '@app/services/mixpanel.service';
 
 import {
   trigger,
@@ -32,7 +33,8 @@ export class CalculationTheatreComponent implements OnInit {
   
   constructor(
     private activatedRoute: ActivatedRoute,
-    public calculatorService: CalculatorService) {} 
+    public calculatorService: CalculatorService,
+    public mixpanelService: MixpanelService) {} 
 
   ngOnInit() {
     this.activatedRoute.queryParams
@@ -51,6 +53,7 @@ export class CalculationTheatreComponent implements OnInit {
     this.calculatorService.calculateOutputs();
     this.calculatorService.$recalculate.next(true);
     this.hideSideBar();
+    this.mixpanelService.trackCalculation();  
   }
 
   public toggleSideBar() {
