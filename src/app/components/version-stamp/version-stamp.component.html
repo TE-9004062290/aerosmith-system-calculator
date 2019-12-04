@@ -1,1 +1,8 @@
-<div class="version-stamp">{{ commitSHA }}</div>
+<div class="version-stamp">
+    <div class="date">
+        {{ now | date: 'medium' }}
+    </div>
+    <div class="sha">
+        {{ commitSHA }}
+    </div>
+</div>

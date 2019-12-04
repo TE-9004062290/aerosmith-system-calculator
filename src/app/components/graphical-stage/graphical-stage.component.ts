@@ -13,7 +13,6 @@ import {
 } from '@angular/animations';
 import { round } from '@app/helpers/arithmetic.helper';
 
-
 enum RatioMode {
   Height,
   Width,
