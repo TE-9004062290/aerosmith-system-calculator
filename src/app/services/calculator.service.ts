@@ -55,6 +55,7 @@ export class CalculatorService {
   public MINIMUMS = this.METER_MINIMUMS;
   public MAXIMUMS = this.METER_MAXIMUMS;
 
+  private readonly VERTICAL_MINIMUM = 0.5; // Meters
   private readonly VERTICAL_THRESHOLD_0 = 1.41; // Meters
   private readonly VERTICAL_THRESHOLD_1 = 1.71; // Meters
   private readonly INTERVAL_THRESHOLD_0 = 2.83; // Meters
@@ -256,8 +257,12 @@ export class CalculatorService {
     return (this.calculationPriority === CalculationPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
   }
 
+  private get verticalMinimum(): number {
+    return this.VERTICAL_MINIMUM * this.unitConversion;
+  }
+
   private get inputExtenderMaximum(): number {
-    return Math.max(0, this.ceilingHeight - this.captureRadius);
+    return Math.max(0, this.ceilingHeight - this.captureRadius - this.verticalMinimum);
   }
 
 
