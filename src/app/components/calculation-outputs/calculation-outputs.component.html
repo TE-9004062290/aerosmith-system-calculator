@@ -84,8 +84,8 @@
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceDistance === 1 ? '' : 's') : (calculatorService.audienceDistance === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
-            <div class="data-row" *ngIf="!calculatorService.extenderProvided">
-                <div class="data-description">Minimum extender length (if required)</div>
+            <div class="data-row">
+                <div class="data-description">Extender length (if required)</div>
                 <div *ngIf="calculatorService.extenderLength === 0" class="data-value">
                     Not required
                 </div>
@@ -94,15 +94,11 @@
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength  === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
-            <div class="data-row" *ngIf="calculatorService.extenderProvided">
-                <div class="data-description">Minimum extender length (if required)</div>
-                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength <= 0" class="data-value">
-                    {{ calculatorService.extenderLength | number: '0.2-2' }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength === 1 ? 'foot' : 'feet') }}
-                </div>
-                <div *ngIf="calculatorService.extenderLength - calculatorService.inputExtenderLength > 0" class="data-value">
-                    {{ calculatorService.extenderLength | number: '0.2-2' }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength === 1 ? 'foot' : 'feet') }}
+            <div class="data-row" *ngIf="calculatorService.extenderLength > 0">
+                <div class="data-description">Acceptable extender lengths</div>
+                <div *ngIf="calculatorService.extenderLength > 0" class="data-value">
+                    ({{ calculatorService.inputExtenderMinimum | number: '0.2-2' }}, {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }})
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
             </div>
         </div>

@@ -261,10 +261,13 @@ export class CalculatorService {
     return this.VERTICAL_MINIMUM * this.unitConversion;
   }
 
-  private get inputExtenderMaximum(): number {
-    return Math.max(0, this.ceilingHeight - this.captureRadius - this.verticalMinimum);
+  public get inputExtenderMaximum(): number {
+    return Math.max(0, this.ceilingHeight - (this.presenterHeight - this.topOfHeadToMouth) - this.verticalMinimum - (0.1 * this.unitConversion));
   }
 
+  public get inputExtenderMinimum(): number {
+    return Math.max(0, this.ceilingHeight - (this.presenterHeight - this.topOfHeadToMouth) - this.verticalThreshold);
+  }
 
   private get topOfHeadToMouth(): number {
     return 0.1 * this.unitConversion;
@@ -274,7 +277,7 @@ export class CalculatorService {
     const effectiveCeilingHeight = ceilingHeight - inputExtenderLength; 
     const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth; 
     if (inputExtenderLength > 0) {
-      return effectiveCeilingHeight - effectivePersonHeight >= captureRadius;
+      return inputExtenderLength < this.inputExtenderMinimum;
     } else {
       return effectiveCeilingHeight - effectivePersonHeight > this.verticalThreshold;
     }
@@ -326,6 +329,10 @@ export class CalculatorService {
     return mantissa > 0.1 ? Math.ceil(rawNumber) : Math.floor(rawNumber);
   }
 
+  private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones) {
+    return presentationWidth / firstApproxNumMicrophones;
+  }
+
   private setOutputs(extenderLength: number, audienceDistance: number, microphoneInterval: number, numMicrophones: number) {
     this.m_extenderLength = round(extenderLength, 2);
     this.m_audienceDistance = round(audienceDistance, 2);
@@ -340,8 +347,11 @@ export class CalculatorService {
     
     const extenderRequired = this.isExtenderRequired(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
     const extenderLength  = this.calculateExtenderLength(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
-    const microphoneInterval = this.calculateMicrophoneInterval(captureRadius, ceilingHeight, presenterHeight, extenderLength);
+
+    let microphoneInterval = this.calculateMicrophoneInterval(captureRadius, ceilingHeight, presenterHeight, extenderLength);
     const numMicrophones = this.calculateNumMicrophones(lectureWidth, microphoneInterval);
+    microphoneInterval = this.refineMicrophoneInterval(lectureWidth, numMicrophones);
+    
     const audienceDistance = this.calculateAudienceDistance(captureRadius, ceilingHeight, audienceHeight, extenderLength);
     
     this.setOutputs(extenderLength, audienceDistance, microphoneInterval, numMicrophones);
