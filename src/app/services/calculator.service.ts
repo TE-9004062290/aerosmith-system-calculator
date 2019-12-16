@@ -352,7 +352,7 @@ export class CalculatorService {
     const numMicrophones = this.calculateNumMicrophones(lectureWidth, microphoneInterval);
     microphoneInterval = this.refineMicrophoneInterval(lectureWidth, numMicrophones);
     
-    const audienceDistance = this.calculateAudienceDistance(captureRadius, ceilingHeight, audienceHeight, extenderLength);
+    const audienceDistance = this.calculateAudienceDistance(3 * this.unitConversion, ceilingHeight, audienceHeight, extenderLength);
     
     this.setOutputs(extenderLength, audienceDistance, microphoneInterval, numMicrophones);
     this.m_extenderRequired = extenderRequired;
