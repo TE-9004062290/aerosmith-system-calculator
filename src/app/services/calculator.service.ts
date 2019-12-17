@@ -319,14 +319,12 @@ export class CalculatorService {
       halfChord = Math.sqrt( (captureRadius ** 2) - (this.verticalThreshold**2) );
     }
 
-    const threshold = (this.calculationPriority === CalculationPriority.AudioQuality ? this.INTERVAL_THRESHOLD_0 : this.INTERVAL_THRESHOLD_1) * this.unitConversion;
     return Math.max(1 * this.unitConversion, 2 * halfChord);
   }
 
   private calculateNumMicrophones(presentationWidth: number, microphoneInterval: number) {
     const rawNumber = presentationWidth / microphoneInterval;
-    const mantissa = rawNumber % 1;
-    return mantissa > 0.1 ? Math.ceil(rawNumber) : Math.floor(rawNumber);
+    return Math.ceil(rawNumber)
   }
 
   private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones) {
