@@ -206,11 +206,11 @@ export class CalculatorService {
   set inputExtenderLength(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      const extenderMin = 0;
+      const extenderMin = this.inputExtenderMinimum;
       const extenderMax = this.inputExtenderMaximum;
       this.m_inputExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
     } else {
-      this.m_inputExtenderLength = 0;
+      this.m_inputExtenderLength = this.inputExtenderMinimum;
     }
     
     this.m_pristine = false;

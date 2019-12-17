@@ -87,10 +87,10 @@
                     </label>
                     <div class="inputs-value">
                         <input id="input-extender-length" #inputExtenderLength class="inputs-input" type="number" 
-                            [min]="0"
-                            [max]="calculatorService.inputExtenderMaximum"
-                            step="0.1"
-                            [value]="calculatorService.inputExtenderLength | number: '0.2-2'"
+                            [min]="calculatorService.inputExtenderMinimum | number: '0.2-2'"
+                            [max]="calculatorService.inputExtenderMaximum | number: '0.2-2'"
+                            [step]="((calculatorService.inputExtenderMaximum - calculatorService.inputExtenderMinimum) / 10) | number: '0.2-2'"
+                            [value]="(calculatorService.inputExtenderLength ? calculatorService.inputExtenderLength : calculatorService.inputExtenderMinimum) | number: '0.2-2'"
                             (change)="updateInput('inputExtenderLength', inputExtenderLength)"
                             (keyup)="calculatorService.forceDirty()"/>
                         <span class="unit-label">
