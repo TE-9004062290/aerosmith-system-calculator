@@ -42,18 +42,20 @@ export class CalculationTheatreComponent implements OnInit {
       if (!this.initialized) {
         const hasParam = this.parseParams(params);
         if (hasParam) {
-          this.calculate();
+          this.calculate(false);
         }
         this.initialized = true;
       }
     });
   }
 
-  public calculate() {
+  public calculate(track: boolean = false) {
     this.calculatorService.calculateOutputs();
     this.calculatorService.$recalculate.next(true);
     this.hideSideBar();
-    this.mixpanelService.trackCalculation();  
+    if (track) {
+      this.mixpanelService.trackCalculation();     
+    }
   }
 
   public toggleSideBar() {
