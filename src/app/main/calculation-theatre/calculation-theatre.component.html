@@ -1,5 +1,5 @@
 <div class="main">
-    <div class="calculation-theatre-print-header">Beamforming Microphone Array MAS-A100</div>
+    <div class="calculation-theatre-print-header">Beamforming Microphone MAS-A100</div>
     <div class="calculation-theatre-header">Calculator for speech reinforcement</div>
     <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}">
         <div class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
@@ -11,10 +11,10 @@
             </div>
             <div class="sidebar-main">
                 <div class="calculation-theatre-title">
-                        Beamforming Microphone <br/> Array MAS-A100
+                        Beamforming Microphone <br/> MAS-A100
                 </div>
                 <div class="calculation-theatre-misc">
-                    <strong>Note</strong>: Any loudspeakers should be <br/> placed at least {{ calculatorService.measurementUnit === 'm' ? '3 meters' : '9.84 feet' }}  away from <br/> the microphone array.
+                    <strong>Note</strong>: Any loudspeakers should be <br/> placed at least {{ calculatorService.measurementUnit === 'm' ? '3 meters' : '9.84 feet' }}  away from <br/> the microphone.
                 </div>
                 <div class="calculation-theatre-settings">
                     <div class="calculation-theatre-setting">
