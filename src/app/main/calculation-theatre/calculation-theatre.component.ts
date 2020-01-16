@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CalculatorService } from '@app/services/calculator.service';
 import { MixpanelService } from '@app/services/mixpanel.service';
 
+import { environment } from 'environments/environment';
+
 import {
   trigger,
   style,
@@ -53,8 +55,9 @@ export class CalculationTheatreComponent implements OnInit {
     this.calculatorService.calculateOutputs();
     this.calculatorService.$recalculate.next(true);
     this.hideSideBar();
-    if (track) {
-      this.mixpanelService.trackCalculation();     
+    
+    if (environment.production && track) {
+      this.mixpanelService.trackCalculation();
     }
   }
 
