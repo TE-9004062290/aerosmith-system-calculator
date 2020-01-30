@@ -6,7 +6,12 @@ import { CalculationTheatreComponent } from '@main/calculation-theatre/calculati
 
 const routes: Routes = [
   {
-    path: '**',
+    path: '',
+    redirectTo: '/calculator',
+    pathMatch: 'full'
+  },
+  {
+    path: 'calculator',
     component: CalculationTheatreComponent
   }
 ];
