@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "baseHref": "/mas-a100/calculator/",
+            "deployUrl": "/aerosmith-system-calculator/"
           },
           "configurations": {
             "production": {
