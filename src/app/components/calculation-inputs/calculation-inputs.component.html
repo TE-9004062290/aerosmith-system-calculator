@@ -35,6 +35,24 @@
             </div>
         </div>
     </div>
+    <div class="inputs-row">
+        <div class="inputs-group inputs-group--horizontal">
+            <label class="inputs-label" for="audience-depth">
+                Audience depth
+            </label>
+            <div class="inputs-value">
+                <input id="audienceDepth" #inputAudienceDepth class="inputs-input" type="number" 
+                    [min]="calculatorService.MINIMUMS.audienceDepth"
+                    [max]="calculatorService.MAXIMUMS.audienceDepth"
+                    [value]="calculatorService.audienceDepth | number: '0.2-2'"
+                    (change)="updateInput('audienceDepth', inputAudienceDepth)"
+                    (keyup)="calculatorService.forceDirty()"/>
+                <span class="unit-label">
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
+                </span>
+            </div>
+        </div>
+    </div>
     <div class="advanced-inputs-toggle">
         <div class="advanced-inputs-toggle-group" (click)="toggleAdvancedSettings()">
             <app-svg-icons iconType="toggle" [transformString]="showAdvancedSettings ? 'rotate(0deg)' : 'rotate(-90deg)'"></app-svg-icons>

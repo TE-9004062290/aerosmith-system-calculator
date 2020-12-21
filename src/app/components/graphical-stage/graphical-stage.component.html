@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    <div class="graphical-output-side">
+    <div class="graphical-output-side" >
         <div class="stage-info-wrapper" [ngStyle]="{'height': stageHeight + 'px'}">
             <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
                 <app-measuring-stick orientation="vertical" [height]="stageHeight"
@@ -168,4 +168,119 @@
             </div>
         </div>
     </div>
+    <app-graphical-stage-top></app-graphical-stage-top>
+    <!-- <div class="graphical-output-top" >
+        <div class="stage-info-wrapper" [ngStyle]="{'height': stageWidth + 'px'}">
+            <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
+            </div>
+            <div #topWrapper class="stage-wrapper" [ngStyle]="{'height': '100%'}">
+                <div *ngIf="calculatorService.hasFreshOutput" @animateOutputArea
+                    class="measuring-stick-overlay audience-distance-side" 
+                    [ngStyle]="{'left': ((sideCapture / 2) + ((sideWrapperWidth - sideInnerContainerWidth)/2)) + 'px'}">
+                    <app-measuring-stick orientation="horizontal"
+                        [width]="audienceDistance"
+                        thinModeDirection="bottom"
+                        [isInput]="false" 
+                        [inputValue]="calculatorService.audienceDistance"
+                    ></app-measuring-stick>
+                    <div class="warning">
+                        <span class="warning-icon"><app-svg-icons iconType="warning"></app-svg-icons></span>
+                        <span class="warning-text">Loud audience sounds may be recorded if closer than this distance</span>
+                    </div>
+                </div>
+                <div class="stage-outer-container">
+                    <div class="stage-label">Top view</div>
+                    <div #topInnerContainer class="stage-inner-container">
+                        <div class="stage-side">
+                            <ng-container *ngIf="!calculatorService.hasFreshOutput || true">
+                                <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterTopWidth + 'px'}" style="left: 5%; top: 0%; position: absolute;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper center-anchor" [ngStyle]="{'width': presenterTopWidth + 'px'}" style="left: 5%; top: calc(50% - 18px); position: absolute;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper right-anchor" [ngStyle]="{'width': presenterTopWidth + 'px'}" style="left: 5%; bottom: 0%; position: absolute;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="graphical-output-top">
+        <div class="stage-info-wrapper">
+            <div class="measuring-stick-overlay lectureWidth" style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
+                <app-measuring-stick orientation="horizontal" 
+                    [width]="stageWidth"
+                    maxWidth='56.7%'
+                    thinModeDirection="bottom"
+                    [isInput]="true" 
+                    [inputMin]="CalculatorMins.lectureWidth"
+                    [inputMax]="CalculatorMaxes.lectureWidth"
+                    [inputValue]="calculatorService.lectureWidth"
+                    (updated)="updateInput('lectureWidth', $event)"
+                ></app-measuring-stick>
+            </div>
+            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 0">
+                    <div class="measuring-stick-overlay" style="position: absolute; margin: 0 auto; top: -30px; width: 100%;" @animateOutputArea >
+                        <app-measuring-stick orientation="horizontal" 
+                            [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                            [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"
+                            thinModeDirection="top"
+                            [isInput]="false" 
+                            [inputValue]="calculatorService.microphoneInterval"
+                        ></app-measuring-stick>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="microphones.positions && microphones.positions.length % 2 === 1 && microphones.positions.length > 1">
+                    <div class="measuring-stick-overlay" style="position: absolute; top: -30px; width: 100%;" @animateOutputArea >
+                        <app-measuring-stick orientation="horizontal" 
+                            [width]="calculatorService.microphoneInterval * stageWidth / calculatorService.lectureWidth"
+                            [maxWidth]="(calculatorService.microphoneInterval * 56.7 / calculatorService.lectureWidth) + '%'"
+                            [twinned]="true"
+                            thinModeDirection="top"
+                            [isInput]="false" 
+                            [inputValue]="calculatorService.microphoneInterval"
+                        ></app-measuring-stick>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
+                <div class="stage-label">Top view</div>
+                <div class="stage-outer-container">
+                    <div #container class="stage-inner-container">
+                        <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
+                            <ng-container *ngIf="!calculatorService.hasFreshOutput || true">
+                                <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 0%; top: 0%;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper center-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 50%; top: 0%;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                                <div class="person-wrapper right-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 100%; top: 0%;" @animateOutputArea>
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                                <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
+                                    [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
+                                    <app-svg-standing-person></app-svg-standing-person>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                                <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
+                                    class="microphone-wrapper" 
+                                    [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
+                                    <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>

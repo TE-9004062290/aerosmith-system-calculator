@@ -101,7 +101,8 @@
     display: flex;
     &.has-output {
         .graphical-stage-wrapper {
-            padding-bottom: 0px;
+            // padding-bottom: 0px;
+            padding-bottom: 1200px;
         }
     }
 

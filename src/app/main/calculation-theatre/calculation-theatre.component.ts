@@ -70,7 +70,9 @@ export class CalculationTheatreComponent implements OnInit {
   }
 
   private parseParams(params) {
-    const { ceilingHeight, lectureWidth, presenterHeight, audienceHeight, inputExtenderLength, measurementUnit, priority } = params;
+    const { 
+      ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
+      inputExtenderLength, measurementUnit, priority } = params;
     let hasParam: boolean = false;
     switch (measurementUnit) {
       case 'ft':
@@ -98,6 +100,9 @@ export class CalculationTheatreComponent implements OnInit {
     if (audienceHeight) {
       this.calculatorService.audienceHeight = audienceHeight;
       hasParam = true;
+    }
+    if (audienceDepth) {
+      this.calculatorService.audienceDepth = audienceDepth;
     }
     if (inputExtenderLength) {
       this.calculatorService.inputExtenderLength = inputExtenderLength;
