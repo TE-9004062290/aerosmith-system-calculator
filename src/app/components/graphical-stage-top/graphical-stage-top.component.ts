@@ -1,4 +1,11 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
@@ -8,12 +15,6 @@ import { RatioMode } from '@app/models/enums/stage-ratio-mode.enums';
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
-import {
-  trigger,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
 import { round } from '@app/helpers/arithmetic.helper';
 
 
@@ -67,6 +68,8 @@ export class GraphicalStageTopComponent implements OnInit {
   public microphones = { leftMost: 0, rightMost: 0, positions: []};
   public persons = { leftMost: 0, rightMost: 0, positions: []};
 
+  public audienceDepth: number = 0;
+  public depthOffset: number = 0;
   public presenterWidth: number = 0;
   public audienceWidth: number = 0;
   public audienceDistance: number = 0;
@@ -148,9 +151,8 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private calculateProportions() {
-    [this.stageHeight, this.stageWidth, this.ratioMode] = this.calculateStageRatios();
+    [this.stageHeight, this.stageWidth, this.ratioMode, this.depthOffset, this.audienceDepth] = this.calculateStageRatios();
 
-    // [this.stageHeightTop, this.stageWidthTop, this.ratioModeTop] = this.calculateStageRatiosTop();
 
     this.presenterWidth = this.getPresenterWidth();
     this.audienceWidth = this.getAudienceWidth();
@@ -163,9 +165,18 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private calculateStageRatios() {
     const cService = this.calculatorService;
-    const heightWidthRatio = cService.audienceDepth / cService.lectureWidth;
+    const presenterBodyDepth = 0.589; // Meters;
+    const effectiveHeight = cService.audienceDepth + (presenterBodyDepth * 5);
+
+    const depthOffsetToHeightRatio = (presenterBodyDepth * 5) / effectiveHeight;
+    const depthToHeightRatio = cService.audienceDepth / effectiveHeight;
+    const heightWidthRatio = effectiveHeight / cService.lectureWidth;
+
     let stageHeight = 0;
     let stageWidth = 0;
+
+    let depthOffset = 0;
+    let stageDepth = 0;
     let ratioMode: RatioMode;
 
     if (heightWidthRatio >= 1) {
@@ -181,8 +192,10 @@ export class GraphicalStageTopComponent implements OnInit {
         stageWidth = stageHeight * (1 / heightWidthRatio);
       }
     }
+    stageDepth = depthToHeightRatio * stageHeight;
+    depthOffset = depthOffsetToHeightRatio * stageHeight;
 
-    return [stageHeight, stageWidth, ratioMode];
+    return [stageHeight, stageWidth, ratioMode, depthOffset, stageDepth];
   }
   
   private getPresenterWidth(): number {
@@ -226,24 +239,25 @@ export class GraphicalStageTopComponent implements OnInit {
       // const x = this.stageHeight * (this.calculatorService.audienceDepth * this.calculatorService.unitConversion) / this.calculatorService.audienceDepth;
       // console.log(x);
       // return x;
-      const x = 0.9 * this.stageHeight;
-      console.log(x);
-      return x;
+      console.log(this.presenterWidth / SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO );
+      const depth = this.stageHeight - ((this.presenterWidth / SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO) * 5);
+      //console.log(`stageHeight: ${this.stageHeight} - (presenterWidth * 5 : ${this.presenterWidth * 10}) = ${x}`);
+      return depth;
   }
 
   private getAudienceArray(): any {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
     const rowOffsetVertical = this.presenterWidth * 5; // fudged number
-    const rowOffsetHorizontal = this.audienceWidth / 2; //(.1 * this.stageWidth) + this.audienceWidth;
-    const audienceDepth = this.getAudienceDepth();
+    const rowOffsetHorizontal = this.audienceWidth / 1.5; //(.1 * this.stageWidth) + this.audienceWidth;
+    const audienceDepth = this.audienceDepth;
 
     const audienceRowWidth = this.stageWidth; //.8 * this.stageWidth;
     const interRowInterval = this.audienceWidth; // 1 width of audience
     const intraRowInterval = this.audienceWidth * 2; // 2 widths/depth (height of icon) of audience
 
-    const audiencePerRow = Math.ceil(audienceRowWidth / (this.audienceWidth + interRowInterval)); 
-    const numRows = Math.floor(audienceDepth / (this.audienceWidth + intraRowInterval));
+    const audiencePerRow = round(audienceRowWidth / (this.audienceWidth + interRowInterval), 0); 
+    const numRows = round(audienceDepth / (this.audienceWidth + intraRowInterval), 2);
 
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < audiencePerRow; j++) {

@@ -1,8 +1,8 @@
 <div class="graphical-output-top">
     <div class="stage-info-wrapper">
-        <div class="measuring-stick-overlay audience-depth" style="position: absolute; top: 0; left: 10%;">
+        <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'top': depthOffset + 'px'}" style="position: absolute; left: 10%;">
             <app-measuring-stick orientation="vertical" 
-                [height]="stageHeight"
+                [height]="audienceDepth"
                 thinModeDirection="left"
                 [isInput]="true"
                 [inputMin]="CalculatorMins.audienceDepth"
