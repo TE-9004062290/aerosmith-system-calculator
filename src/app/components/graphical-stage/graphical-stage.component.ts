@@ -78,8 +78,8 @@ export class GraphicalStageComponent implements OnInit {
   public sideWrapperWidth: number = 500;
   public sideWrapperHeight: number = 500;
   public sideInnerContainerWidth: number = 500;
-  public topWrapperWidth: number = 50;;
-  public topWrapperHeight: number = 50;;
+  public topWrapperWidth: number = 50;
+  public topWrapperHeight: number = 50;
   public topInnerContainerWidth: number = 500;
 
 
