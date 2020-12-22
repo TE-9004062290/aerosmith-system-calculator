@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs'
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
 
+import { environment } from 'environments/environment';
+
 import { round } from '@app/helpers/arithmetic.helper';
 
 @Injectable({
@@ -145,10 +147,9 @@ export class CalculatorService {
       this.m_inputExtenderLength = round(this.m_inputExtenderLength * conversionFactor, 2);
       this.m_audienceDistance = round(this.m_audienceDistance * conversionFactor, 2);
       this.m_captureRadius = round(this.m_captureRadius * conversionFactor, 2);
-  
       this.m_measurementUnit = val;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -162,8 +163,8 @@ export class CalculatorService {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
     this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
-    this.$recalculate.next(true);
-    this.updateRouteParams();
+
+    this.updateAndEmit();
   }
 
   set ceilingHeight(val: number) {
@@ -173,8 +174,8 @@ export class CalculatorService {
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -184,8 +185,8 @@ export class CalculatorService {
       this.m_lectureWidth = round(Math.min(Math.max(this.MINIMUMS.lectureWidth, val), this.MAXIMUMS.lectureWidth), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -195,8 +196,8 @@ export class CalculatorService {
       this.m_presenterHeight = round(Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -206,8 +207,8 @@ export class CalculatorService {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -217,8 +218,8 @@ export class CalculatorService {
       this.m_audienceDepth = round(Math.min(Math.max(this.MINIMUMS.audienceDepth, val), this.MAXIMUMS.audienceDepth), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -235,8 +236,8 @@ export class CalculatorService {
     this.m_pristine = false;
     this.m_has_output = false;
     this.m_extenderProvided = val > 0;
-    this.$recalculate.next(true);
-    this.updateRouteParams();
+
+    this.updateAndEmit();
   }
 
   public $recalculate: BehaviorSubject<boolean>;
@@ -358,6 +359,14 @@ export class CalculatorService {
     this.m_requiredMicrophones = round(numMicrophones, 2);
     this.m_pristine = true;
     this.m_has_output = true;
+  }
+
+  private updateAndEmit() {
+    if (!environment.production) {
+      this.calculateOutputs();
+    }
+    this.$recalculate.next(true);
+    this.updateRouteParams();
   }
 
   public calculateOutputs() {

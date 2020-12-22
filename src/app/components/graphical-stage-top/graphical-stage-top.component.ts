@@ -70,7 +70,7 @@ export class GraphicalStageTopComponent implements OnInit {
   public presenterWidth: number = 0;
   public audienceWidth: number = 0;
   public audienceDistance: number = 0;
-  public audience: number[] = [];
+  public audienceArray: number[] = [];
   
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
@@ -158,7 +158,7 @@ export class GraphicalStageTopComponent implements OnInit {
     this.sideCapture = this.getSideRadius();
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
-    this.audience = this.getAudienceArray();
+    this.audienceArray = this.getAudienceArray();
   }
 
   private calculateStageRatios() {
@@ -193,8 +193,9 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getAudienceWidth(): number {
-    const audienceCeilingRatio = this.calculatorService.audienceHeight / this.calculatorService.audienceDepth;
-    return audienceCeilingRatio * this.stageHeight * SvgStandingPersonComponent.SITTING_WIDTH_HEIGHT_RATIO;
+    const audienceBodyDepth = 0.589; // meters
+    const audienceDepthRatio = audienceBodyDepth / this.calculatorService.audienceDepth;
+    return audienceDepthRatio * this.stageHeight * SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
   }
 
   private getRadiusWidthPercentage(): number {
@@ -221,18 +222,37 @@ export class GraphicalStageTopComponent implements OnInit {
     return (this.calculatorService.audienceDistance / this.calculatorService.audienceDepth * this.stageHeight);
   }
 
-  private getAudienceDepthSide(): number {
-      return this.stageHeight * (this.calculatorService.audienceDepth * this.calculatorService.unitConversion) / this.calculatorService.audienceDepth;
+  private getAudienceDepth(): number {
+      // const x = this.stageHeight * (this.calculatorService.audienceDepth * this.calculatorService.unitConversion) / this.calculatorService.audienceDepth;
+      // console.log(x);
+      // return x;
+      const x = 0.9 * this.stageHeight;
+      console.log(x);
+      return x;
   }
 
   private getAudienceArray(): any {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
-    // const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
-    const effectiveStageWidth = this.getAudienceDepthSide() - (1 * this.calculatorService.unitConversion);
-    const numAudience = Math.floor(effectiveStageWidth / (2 * this.audienceWidth));
-    for (let i = 0; i < numAudience; i++) {
-      audienceArray.push(new GraphicPosition(i, leftOffset + 2 * i * this.audienceWidth));
+    const rowOffsetVertical = this.presenterWidth * 5; // fudged number
+    const rowOffsetHorizontal = this.audienceWidth / 2; //(.1 * this.stageWidth) + this.audienceWidth;
+    const audienceDepth = this.getAudienceDepth();
+
+    const audienceRowWidth = this.stageWidth; //.8 * this.stageWidth;
+    const interRowInterval = this.audienceWidth; // 1 width of audience
+    const intraRowInterval = this.audienceWidth * 2; // 2 widths/depth (height of icon) of audience
+
+    const audiencePerRow = Math.ceil(audienceRowWidth / (this.audienceWidth + interRowInterval)); 
+    const numRows = Math.floor(audienceDepth / (this.audienceWidth + intraRowInterval));
+
+    for (let i = 0; i < numRows; i++) {
+      for (let j = 0; j < audiencePerRow; j++) {
+        const audiencePosition = new GraphicPosition(i + j, 
+          rowOffsetHorizontal + (j * (this.audienceWidth + interRowInterval)), 
+          rowOffsetVertical + (i * (this.audienceWidth + intraRowInterval))
+        )
+        audienceArray.push(audiencePosition);
+      }
     }
     return audienceArray;
   }

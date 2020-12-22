@@ -198,3 +198,17 @@
         cursor: not-allowed;
     }
 }
+
+::ng-deep {
+    .mat-checkbox {
+        .mat-checkbox-frame {
+            border-color: #469B99;
+        }
+        &.mat-checkbox-checked .mat-checkbox-background {
+            background-color: #469B99;
+        }
+        .mat-checkbox-checkmark-path {
+            stroke: white !important;
+        }
+    }
+}

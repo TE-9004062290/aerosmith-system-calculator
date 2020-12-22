@@ -64,6 +64,12 @@
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
                         </ng-container>
+                        <div class="audience-wrapper">
+                            <div *ngFor="let a of audienceArray; trackBy: audienceTrackByFn" class="person-wrapper" @animateOutputArea
+                                [ngStyle]="{'width': audienceWidth + 'px', 'left': a.positionPercentage + 'px', 'top': a.positionPercentageVertical + 'px'}">
+                                <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
+                            </div>
+                        </div>
                         <!-- <ng-container *ngIf="calculatorService.hasFreshOutput">
                             <div *ngFor="let p of persons.positions; trackBy: personTrackByFn" class="person-wrapper" @animateOutputArea
                                 [ngStyle]="{'width': presenterWidth + 'px', 'left': p.positionPercentage + '%'}">
