@@ -101,7 +101,8 @@
     display: flex;
     &.has-output {
         .graphical-stage-wrapper {
-            padding-bottom: 0px;
+            // padding-bottom: 0px;
+            padding-bottom: 1200px;
         }
     }
 
@@ -195,5 +196,19 @@
         text-transform: uppercase;
         background-color: #E6EBEF;
         cursor: not-allowed;
+    }
+}
+
+::ng-deep {
+    .mat-checkbox {
+        .mat-checkbox-frame {
+            border-color: #469B99;
+        }
+        &.mat-checkbox-checked .mat-checkbox-background {
+            background-color: #469B99;
+        }
+        .mat-checkbox-checkmark-path {
+            stroke: white !important;
+        }
     }
 }

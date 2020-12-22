@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs'
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
 
+import { environment } from 'environments/environment';
+
 import { round } from '@app/helpers/arithmetic.helper';
 
 @Injectable({
@@ -19,7 +21,8 @@ export class CalculatorService {
     ceilingHeight: 3,
     lectureWidth: 9.13,
     presenterHeight: 1.7,
-    audienceHeight: 1.2
+    audienceHeight: 1.2,
+    audienceDepth: 6,
   };
 
   public readonly METER_MINIMUMS = {
@@ -27,6 +30,7 @@ export class CalculatorService {
     lectureWidth: 4,
     presenterHeight: 1.5,
     audienceHeight: 1,
+    audienceDepth: 4, 
     microphoneInterval: 1
   };
 
@@ -34,7 +38,8 @@ export class CalculatorService {
     ceilingHeight: 30,
     lectureWidth: 62,
     presenterHeight: 2.5,
-    audienceHeight: 2
+    audienceHeight: 2,
+    audienceDepth: 200,
   };
 
   public readonly FEET_MINIMUMS = {
@@ -42,6 +47,7 @@ export class CalculatorService {
     lectureWidth: round(this.METER_MINIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
     presenterHeight: round(this.METER_MINIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
     audienceHeight: round(this.METER_MINIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1),
+    audienceDepth: round(this.METER_MINIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 1),
     microphoneInterval: this.METER_MINIMUMS.microphoneInterval * CalculatorService.METERS_TO_FEET
   }
 
@@ -49,7 +55,8 @@ export class CalculatorService {
     ceilingHeight: round(this.METER_MAXIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET, 0),
     lectureWidth: round(this.METER_MAXIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
     presenterHeight: round(this.METER_MAXIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
-    audienceHeight: round(this.METER_MAXIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1)
+    audienceHeight: round(this.METER_MAXIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1),
+    audienceDepth: round(this.METER_MAXIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 1),
   }
 
   public MINIMUMS = this.METER_MINIMUMS;
@@ -85,6 +92,7 @@ export class CalculatorService {
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_presenterHeight: number = this.DEFAULTS.presenterHeight;
   private m_audienceHeight: number = this.DEFAULTS.audienceHeight;
+  private m_audienceDepth: number = this.DEFAULTS.audienceDepth;
   private m_inputExtenderLength: number = 0;
   private m_extenderProvided: boolean = false
 
@@ -95,6 +103,7 @@ export class CalculatorService {
   get lectureWidth(): number { return this.m_lectureWidth; }
   get presenterHeight(): number { return this.m_presenterHeight; }
   get audienceHeight(): number { return this.m_audienceHeight; }
+  get audienceDepth(): number { return this.m_audienceDepth; }
   get captureRadius(): number { return this.m_captureRadius; }
   get inputExtenderLength(): number { return this.m_inputExtenderLength; }
   get extenderProvided(): boolean { return this.m_extenderProvided; }
@@ -132,15 +141,15 @@ export class CalculatorService {
       this.m_lectureWidth = round(this.m_lectureWidth * conversionFactor, 2);
       this.m_presenterHeight = round(this.m_presenterHeight * conversionFactor, 2);
       this.m_audienceHeight = round(this.m_audienceHeight * conversionFactor, 2);
+      this.m_audienceDepth = round(this.m_audienceDepth * conversionFactor, 2);
       this.m_microphoneInterval = round(this.m_microphoneInterval * conversionFactor, 2);
       this.m_extenderLength = round(this.m_extenderLength * conversionFactor, 2);
       this.m_inputExtenderLength = round(this.m_inputExtenderLength * conversionFactor, 2);
       this.m_audienceDistance = round(this.m_audienceDistance * conversionFactor, 2);
       this.m_captureRadius = round(this.m_captureRadius * conversionFactor, 2);
-  
       this.m_measurementUnit = val;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -154,8 +163,8 @@ export class CalculatorService {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
     this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
-    this.$recalculate.next(true);
-    this.updateRouteParams();
+
+    this.updateAndEmit();
   }
 
   set ceilingHeight(val: number) {
@@ -165,8 +174,8 @@ export class CalculatorService {
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -176,8 +185,8 @@ export class CalculatorService {
       this.m_lectureWidth = round(Math.min(Math.max(this.MINIMUMS.lectureWidth, val), this.MAXIMUMS.lectureWidth), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -187,8 +196,8 @@ export class CalculatorService {
       this.m_presenterHeight = round(Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
     }
   }
 
@@ -198,8 +207,19 @@ export class CalculatorService {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
       this.m_pristine = false;
       this.m_has_output = false;
-      this.$recalculate.next(true);
-      this.updateRouteParams();
+
+      this.updateAndEmit();
+    }
+  }
+
+  set audienceDepth(val: number) {
+    val = parseFloat(<any>val);
+    if (!isNaN(val)) {
+      this.m_audienceDepth = round(Math.min(Math.max(this.MINIMUMS.audienceDepth, val), this.MAXIMUMS.audienceDepth), 2);
+      this.m_pristine = false;
+      this.m_has_output = false;
+
+      this.updateAndEmit();
     }
   }
 
@@ -216,8 +236,8 @@ export class CalculatorService {
     this.m_pristine = false;
     this.m_has_output = false;
     this.m_extenderProvided = val > 0;
-    this.$recalculate.next(true);
-    this.updateRouteParams();
+
+    this.updateAndEmit();
   }
 
   public $recalculate: BehaviorSubject<boolean>;
@@ -238,6 +258,7 @@ export class CalculatorService {
         lectureWidth: this.m_lectureWidth,
         presenterHeight: this.m_presenterHeight,
         audienceHeight: this.m_audienceHeight,
+        audienceDepth: this.m_audienceDepth,
         inputExtenderLength: this.m_inputExtenderLength,
       },
       queryParamsHandling: 'merge',
@@ -340,6 +361,14 @@ export class CalculatorService {
     this.m_has_output = true;
   }
 
+  private updateAndEmit() {
+    if (!environment.production) {
+      this.calculateOutputs();
+    }
+    this.$recalculate.next(true);
+    this.updateRouteParams();
+  }
+
   public calculateOutputs() {
     const { captureRadius, ceilingHeight, presenterHeight, audienceHeight, lectureWidth, inputExtenderLength } = this;
     
@@ -366,6 +395,7 @@ export class CalculatorService {
     inputs.push(`lectureWidth=${this.m_lectureWidth}`);
     inputs.push(`presenterHeight=${this.m_presenterHeight}`);
     inputs.push(`audienceHeight=${this.m_audienceHeight}`);
+    inputs.push(`audienceDepth=${this.m_audienceDepth}`);
     if (this.m_inputExtenderLength) {
       inputs.push(`inputExtenderLength=${this.m_inputExtenderLength}`);
     }

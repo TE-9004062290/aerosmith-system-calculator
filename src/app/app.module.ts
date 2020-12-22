@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
 
@@ -17,6 +19,8 @@ import { SvgMicrophoneComponent } from './components/svg-microphone/svg-micropho
 import { MeasuringStickComponent } from './components/measuring-stick/measuring-stick.component';
 import { SvgIconsComponent } from './components/svg-icons/svg-icons.component';
 import { VersionStampComponent } from './components/version-stamp/version-stamp.component';
+import { GraphicalStageTopComponent } from './components/graphical-stage-top/graphical-stage-top.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +34,16 @@ import { VersionStampComponent } from './components/version-stamp/version-stamp.
     SvgMicrophoneComponent,
     MeasuringStickComponent,
     SvgIconsComponent,
-    VersionStampComponent
+    VersionStampComponent,
+    GraphicalStageTopComponent,
+    CheckboxComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

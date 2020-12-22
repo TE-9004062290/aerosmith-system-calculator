@@ -88,9 +88,12 @@
     }
 }
 
+.graphical-output-front {
+
+}
+
 .graphical-output-side {
     margin-top: 120px;
-    padding-bottom: 240px;
     background-color: #F2F5F7;  
     .stage-info-wrapper {
         transition: height 0.25s linear;
@@ -113,6 +116,10 @@
             }
         }
     }
+}
+
+.graphical-output-top {
+    margin-top: 160px;
 }
 
 .measuring-stick-overlay {

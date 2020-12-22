@@ -62,6 +62,8 @@ export class GraphicalStageComponent implements OnInit {
 
   public stageHeight: number = 500;
   public stageWidth: number = 500;
+  public stageHeightTop: number = 500;
+  public stageWidthTop: number = 500;
   public inputExtenderLength: number = 0;
   public extenderLength: number = 0;
   public extenderSideLength: number = 0;
@@ -76,6 +78,9 @@ export class GraphicalStageComponent implements OnInit {
   public sideWrapperWidth: number = 500;
   public sideWrapperHeight: number = 500;
   public sideInnerContainerWidth: number = 500;
+  public topWrapperWidth: number = 50;;
+  public topWrapperHeight: number = 50;;
+  public topInnerContainerWidth: number = 500;
 
 
   public widthHeightRatio: number = 1;
@@ -89,7 +94,9 @@ export class GraphicalStageComponent implements OnInit {
 
   public presenterWidth: number = 0;
   public presenterSideWidth: number = 0;
+  public presenterTopWidth: number = 0;
   public audienceWidth: number = 0;
+  public audienceTopWidth: number = 0;
   public audienceDistance: number = 0;
   public audience: number[] = [];
   
@@ -177,8 +184,11 @@ export class GraphicalStageComponent implements OnInit {
   private calculateProportions() {
     [this.stageHeight, this.stageWidth, this.ratioMode] = this.calculateStageRatios();
 
+    // [this.stageHeightTop, this.stageWidthTop, this.ratioModeTop] = this.calculateStageRatiosTop();
+
     this.presenterWidth = this.getPresenterWidth();
     this.presenterSideWidth = this.getPresenterSideWidth();
+    this.presenterTopWidth = this.getPresenterTopWidth();
     this.audienceWidth = this.getAudienceWidth();
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
     this.sideCapture = this.getSideRadius();
@@ -210,6 +220,30 @@ export class GraphicalStageComponent implements OnInit {
 
     return [stageHeight, stageWidth, ratioMode];
   }
+
+  private calculateStageRatiosTop() {
+    const cService = this.calculatorService;
+    const heightWidthRatio = cService.lectureWidth / cService.audienceDepth;
+    let stageHeight = 0;
+    let stageWidth = 0;
+    let ratioMode: RatioMode;
+
+    if (heightWidthRatio >= 1) {
+      ratioMode = RatioMode.Height;
+      stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
+      stageWidth = Math.min(0.9 * this.containerWidth, stageHeight * (1 / heightWidthRatio));
+    } else {
+      ratioMode = RatioMode.Width;
+      stageWidth = 0.9 * this.containerWidth;
+      stageHeight = stageWidth * heightWidthRatio;
+      if (stageHeight / this.pageHeight > this.STAGE_PAGE_HEIGHT_RATIO) {
+        stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
+        stageWidth = stageHeight * (1 / heightWidthRatio);
+      }
+    }
+
+    return [stageHeight, stageWidth, ratioMode];
+  }
   
   private getPresenterWidth(): number {
     const cService = this.calculatorService;
@@ -220,6 +254,12 @@ export class GraphicalStageComponent implements OnInit {
   private getPresenterSideWidth(): number {
     const presenterCeilingRatio = this.calculatorService.presenterHeight / this.calculatorService.ceilingHeight;
     return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.SIDE_WIDTH_HEIGHT_RATIO;
+  }
+
+  private getPresenterTopWidth(): number {
+    // Height doesn't really matter here. Just choose something reasonable. Later, use this.stageHeight / num micradius intersections
+    const topIconHeight = this.calculatorService.lectureWidth * 0.14725678156;
+    return topIconHeight * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO;
   }
 
   private getAudienceWidth(): number {
@@ -255,10 +295,15 @@ export class GraphicalStageComponent implements OnInit {
     return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.stageHeight);
   }
 
+  private getAudienceDepthSide(): number {
+      return this.stageHeight * (this.calculatorService.audienceDepth * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
+  }
+
   private getAudienceArray(): any {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
-    const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
+    // const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
+    const effectiveStageWidth = this.getAudienceDepthSide() - (1 * this.calculatorService.unitConversion);
     const numAudience = Math.floor(effectiveStageWidth / (2 * this.audienceWidth));
     for (let i = 0; i < numAudience; i++) {
       audienceArray.push(new GraphicPosition(i, leftOffset + 2 * i * this.audienceWidth));
@@ -269,7 +314,7 @@ export class GraphicalStageComponent implements OnInit {
   public updateInput(inputField, inputElement) {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
-    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null }) {
+    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
       cService[inputField] = numerical; // Rely on model logic implemented in setter
       inputElement.value = cService[inputField];
     }
@@ -328,6 +373,7 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private calculatePersonPositions(numMicrophones: number, microphoneInterval: number) {
+
     const numPersons = numMicrophones + 1;
     let persons: GraphicPosition[]= [];
     const percentageInterval = microphoneInterval / this.calculatorService.lectureWidth * 100;

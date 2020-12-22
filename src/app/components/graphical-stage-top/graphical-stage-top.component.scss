@@ -1,0 +1,161 @@
+@media print {
+    * {
+        transition: none;
+    }
+}
+
+@media print and (max-width: 40em) /* portrait. For some reason @media print and (orientation: portrait) doesn't work as expected*/ {
+    .graphical-output-side {
+        page-break-before: avoid !important;
+    }
+}
+@media print /* landscape */  {
+    .graphical-output-side {
+        page-break-before: always;
+    }
+}
+
+.stage-info-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.stage-info-wrapper {
+    .stage-wrapper {
+        .stage-label {
+            position: absolute;
+            top: -28px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #494949;
+            line-height: 22px;
+        }
+        .stage-outer-container {
+            height: 100%;
+            .stage-inner-container {
+                height: 100%;
+                .stage-side {
+                    position: relative;
+                    height: 100%;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}
+
+.stage-wrapper {
+    position: relative;
+    width: 70%;
+    transition: width .25s linear;
+    margin: 0 auto;
+    border-bottom: solid #006DB3 1px;
+    border-top: solid #006DB3 1px;
+    
+    .stage-outer-container {
+        overflow: hidden;
+    }
+
+    .stage-inner-container {
+        width: 90%;
+        margin: 0 auto;
+        .stage {
+            position: relative;
+            max-width: 90%;
+            margin: 0 auto;
+            transition: height .25s linear, width .25s linear;
+            .person-wrapper {
+                position: absolute;
+                bottom: -5px;
+                left: 0%;
+                transition: width .25s linear, left .25s linear;
+                z-index: 1;
+            }
+            .microphone-wrapper {
+                position: absolute;
+                top: 0;
+                transition: width .25s linear, left .25s linear, top .25s linear;
+                z-index: 0;
+            }
+        }
+    }
+}
+
+.graphical-output-front {
+
+}
+
+.graphical-output-side {
+    margin-top: 120px;
+    background-color: #F2F5F7;  
+    .stage-info-wrapper {
+        transition: height 0.25s linear;
+        .stage-wrapper {
+            height: 100%;
+
+            .person-wrapper {
+                position: absolute;
+                bottom: -4px;
+                left: 0%;
+                transition: width .25s linear, left .25s linear;
+                z-index: 1;
+            }
+
+            .microphone-wrapper {
+                position: absolute;
+                top: 0;
+                transition: width .25s linear, left .25s linear, top .25s linear;
+                z-index: 0;
+            }
+        }
+    }
+}
+
+.graphical-output-top {
+    margin-top: 120px;
+}
+
+.measuring-stick-overlay {
+    z-index: 100;
+    &.audience-distance-side {
+        display: flex;
+        position: absolute; 
+        top: calc(100% + 20px);
+        transition: left .25s linear, width .25s linear;
+        .warning {
+            display: flex;
+            margin-left: 6px;
+            .warning-text {
+                margin-left: 4px;
+                font-size: 12px;
+                line-height: 18px;
+                color: #494949;
+            }
+        }
+    }
+    &.presenter-height, &.audience-height, &.extender-length {
+        position: absolute;
+        left: 84%;
+        @media screen and (max-width: 767px) {
+            left: 80%;
+        }
+    }
+    &.presenter-height {
+        bottom: 0;
+    }
+    &.audience-height {
+        bottom: 0;
+    }
+    &.extender-length {
+        top: 0;
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}

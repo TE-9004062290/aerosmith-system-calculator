@@ -61,7 +61,7 @@ export class CalculationInputsComponent implements OnInit {
   public updateInput(inputField, inputElement) {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
-    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null }) {
+    if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'audienceDepth': null, 'inputExtenderLength': null }) {
       cService[inputField] = numerical; // Rely on model logic implemented in setter
       inputElement.value = cService[inputField];
     }
