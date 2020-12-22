@@ -249,20 +249,22 @@ export class GraphicalStageTopComponent implements OnInit {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
     const rowOffsetVertical = this.presenterWidth * 5; // fudged number
-    const rowOffsetHorizontal = this.audienceWidth / 1.5; //(.1 * this.stageWidth) + this.audienceWidth;
+    //const rowOffsetHorizontal = this.audienceWidth; //(.1 * this.stageWidth) + this.audienceWidth;
     const audienceDepth = this.audienceDepth;
 
     const audienceRowWidth = this.stageWidth; //.8 * this.stageWidth;
-    const interRowInterval = this.audienceWidth; // 1 width of audience
+    const interRowInterval = this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO; // 1 width of audience
     const intraRowInterval = this.audienceWidth * 2; // 2 widths/depth (height of icon) of audience
 
-    const audiencePerRow = round(audienceRowWidth / (this.audienceWidth + interRowInterval), 0); 
+    const audiencePerRow = round(audienceRowWidth / ((this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO) + interRowInterval), 0); 
+    const aRw = (audiencePerRow * ((this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO) + interRowInterval)) - interRowInterval;
+    const rowOffsetHorizontal = (this.stageWidth - aRw) / 1.5; //(.1 * this.stageWidth) + this.audienceWidth;
     const numRows = round(audienceDepth / (this.audienceWidth + intraRowInterval), 2);
 
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < audiencePerRow; j++) {
         const audiencePosition = new GraphicPosition(i + j, 
-          rowOffsetHorizontal + (j * (this.audienceWidth + interRowInterval)), 
+          rowOffsetHorizontal + (j * ((this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO) + interRowInterval)), 
           rowOffsetVertical + (i * (this.audienceWidth + intraRowInterval))
         )
         audienceArray.push(audiencePosition);
