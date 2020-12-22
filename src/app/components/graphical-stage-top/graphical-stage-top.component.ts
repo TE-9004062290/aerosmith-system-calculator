@@ -187,9 +187,9 @@ export class GraphicalStageTopComponent implements OnInit {
   
   private getPresenterWidth(): number {
     const cService = this.calculatorService;
-    const presenterBodyDepth = 0.25; // meters
-    const presenterDepthRatio = presenterBodyDepth / cService.audienceDepth;
-    return presenterDepthRatio * this.stageHeight * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO
+    const presenterBodyWidth = 0.589; // meters
+    const presenterWidthRatio = presenterBodyWidth / cService.audienceDepth;
+    return presenterWidthRatio * this.stageHeight * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO
   }
 
   private getAudienceWidth(): number {

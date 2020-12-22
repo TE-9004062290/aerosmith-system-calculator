@@ -53,15 +53,15 @@
             <div class="stage-outer-container">
                 <div #container class="stage-inner-container">
                     <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width': stageWidth + 'px'}">
-                        <ng-container *ngIf="!calculatorService.hasFreshOutput">
-                            <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 0%;" @animateOutputArea>
-                                <app-svg-standing-person></app-svg-standing-person>
+                        <ng-container *ngIf="true || !calculatorService.hasFreshOutput">
+                            <div class="person-wrapper left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 0%; left: 0%;" @animateOutputArea>
+                                <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
-                            <div class="person-wrapper center-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 50%;" @animateOutputArea>
-                                <app-svg-standing-person></app-svg-standing-person>
+                            <div class="person-wrapper center-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 0%; left: 50%;" @animateOutputArea>
+                                <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
-                            <div class="person-wrapper right-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="left: 100%;" @animateOutputArea>
-                                <app-svg-standing-person></app-svg-standing-person>
+                            <div class="person-wrapper right-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 0%; left: 100%;" @animateOutputArea>
+                                <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
                         </ng-container>
                         <!-- <ng-container *ngIf="calculatorService.hasFreshOutput">
