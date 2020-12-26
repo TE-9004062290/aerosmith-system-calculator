@@ -11,3 +11,11 @@
         transition: width .25s linear, left .25s linear;
     }
 }
+
+.svg-standing-person-top, .svg-sitting-person-top {
+    display: block;
+    transition: width .25s linear, left .25s linear;
+    svg {
+        transition: width .25s linear, left .25s linear;
+    }
+}

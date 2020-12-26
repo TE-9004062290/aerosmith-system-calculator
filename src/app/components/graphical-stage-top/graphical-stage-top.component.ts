@@ -37,7 +37,7 @@ import { round } from '@app/helpers/arithmetic.helper';
 })
 export class GraphicalStageTopComponent implements OnInit {
 
-  private STAGE_PAGE_HEIGHT_RATIO = 0.20;
+  private STAGE_PAGE_HEIGHT_RATIO = 0.33;
   public isPrinting = false;
   public CalculatorMins = this.calculatorService.MINIMUMS;
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
@@ -45,7 +45,6 @@ export class GraphicalStageTopComponent implements OnInit {
   public ratioMode: RatioMode = RatioMode.Width;
   public RatioModeEnum = RatioMode;
 
-  
   private pageHeight: number = 500;
   private pageWidth: number = 500;
 
@@ -72,8 +71,12 @@ export class GraphicalStageTopComponent implements OnInit {
   public depthOffset: number = 0;
   public presenterWidth: number = 0;
   public audienceWidth: number = 0;
+  public audienceHeight: number = 0;
+  public interRowInterval: number = 0;
+  public intraRowInterval: number = 0;
   public audienceDistance: number = 0;
-  public audienceArray: number[] = [];
+  public audiencePerRow: number[] = [];
+  public audienceRows: number[] = [];
   
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
@@ -91,8 +94,12 @@ export class GraphicalStageTopComponent implements OnInit {
     return personPosition.number;
   }
 
-  audienceTrackByFn(index, audiencePosition: GraphicPosition) {
-    return audiencePosition.number;
+  audienceRowTrackByFn(index, audiencePosition: number) {
+    return index;
+  }
+
+  audienceTrackByFn(index, audiencePosition: number) {
+    return index;
   }
 
   ngOnInit() {
@@ -156,27 +163,34 @@ export class GraphicalStageTopComponent implements OnInit {
 
     this.presenterWidth = this.getPresenterWidth();
     this.audienceWidth = this.getAudienceWidth();
+    this.audienceHeight = this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
     this.sideCapture = this.getSideRadius();
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
-    this.audienceArray = this.getAudienceArray();
+    const { interRowInterval, intraRowInterval, audiencePerRow, audienceRows } = this.getAudienceArray();
+    this.interRowInterval = interRowInterval;
+    this.intraRowInterval = intraRowInterval;
+    this.audiencePerRow = audiencePerRow;
+    this.audienceRows = audienceRows;
   }
 
   private calculateStageRatios() {
     const cService = this.calculatorService;
-    const presenterBodyDepth = 0.589; // Meters;
-    const effectiveHeight = cService.audienceDepth + (presenterBodyDepth * 5);
+    const presenterBodyWidth = cService.presenterWidth; // Confusing. The presenter's width is the height of the SVG.
+    const presenterBodyDepth = presenterBodyWidth * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO;
+    const effectiveHeight = cService.lectureWidth;
+    const effectiveWidth = cService.audienceDepth + (presenterBodyDepth * 5);
 
-    const depthOffsetToHeightRatio = (presenterBodyDepth * 5) / effectiveHeight;
-    const depthToHeightRatio = cService.audienceDepth / effectiveHeight;
-    const heightWidthRatio = effectiveHeight / cService.lectureWidth;
+    const depthOffsetToWidthRatio = (presenterBodyDepth * 5) / effectiveWidth;
+    const depthToWidthRatio = cService.audienceDepth / effectiveWidth;
+    const heightWidthRatio = effectiveHeight / effectiveWidth;
 
     let stageHeight = 0;
     let stageWidth = 0;
 
     let depthOffset = 0;
-    let stageDepth = 0;
+    let audienceDepth = 0;
     let ratioMode: RatioMode;
 
     if (heightWidthRatio >= 1) {
@@ -192,23 +206,23 @@ export class GraphicalStageTopComponent implements OnInit {
         stageWidth = stageHeight * (1 / heightWidthRatio);
       }
     }
-    stageDepth = depthToHeightRatio * stageHeight;
-    depthOffset = depthOffsetToHeightRatio * stageHeight;
 
-    return [stageHeight, stageWidth, ratioMode, depthOffset, stageDepth];
+    audienceDepth = depthToWidthRatio * stageWidth;
+    depthOffset = depthOffsetToWidthRatio * stageWidth;
+
+    return [stageHeight, stageWidth, ratioMode, depthOffset, audienceDepth];
   }
   
   private getPresenterWidth(): number {
-    const cService = this.calculatorService;
-    const presenterBodyWidth = 0.589; // meters
-    const presenterWidthRatio = presenterBodyWidth / cService.audienceDepth;
-    return presenterWidthRatio * this.stageHeight * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO
+    const presenterBodyWidth = this.calculatorService.presenterWidth * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO;
+    const presenterWidthRatio = presenterBodyWidth / this.calculatorService.lectureWidth;
+    return presenterWidthRatio * this.stageHeight;
   }
 
   private getAudienceWidth(): number {
-    const audienceBodyDepth = 0.589; // meters
-    const audienceDepthRatio = audienceBodyDepth / this.calculatorService.audienceDepth;
-    return audienceDepthRatio * this.stageHeight * SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
+    const audienceBodyWidth = (0.9 * this.calculatorService.presenterWidth) * SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
+    const widthRatio = audienceBodyWidth / this.calculatorService.lectureWidth;
+    return widthRatio * this.stageHeight;
   }
 
   private getRadiusWidthPercentage(): number {
@@ -246,6 +260,26 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getAudienceArray(): any {
+    let audienceArray = [];
+    const audienceOffset = this.presenterWidth * 5;
+    const audienceDepth = this.audienceDepth;
+
+    const interRowInterval = this.audienceWidth * 2;
+    const intraRowInterval = this.audienceWidth;
+
+    const audiencePerRow = round(audienceDepth / (this.audienceWidth + interRowInterval), 0);
+    const numRows = round((0.8 * this.stageHeight)  / (this.audienceWidth + intraRowInterval), 0);
+
+    return {
+      interRowInterval: interRowInterval,
+      intraRowInterval: intraRowInterval,
+      audiencePerRow: Array(audiencePerRow).fill(0).map((x, i) => i),
+      audienceRows: Array(numRows).fill(0).map((x, i) => i)
+    };
+  }
+
+
+  private getAudienceArray2(): any {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
     const rowOffsetVertical = this.presenterWidth * 5; // fudged number
