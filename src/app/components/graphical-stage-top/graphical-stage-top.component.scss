@@ -15,105 +15,83 @@
     }
 }
 
-.stage-info-wrapper {
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-}
+.graphical-output-top {
+    margin-top: 120px;
+    .stage-info-wrapper {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
 
-.stage-info-wrapper {
-    .stage-wrapper {
-        .stage-label {
-            position: absolute;
-            top: -28px;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #494949;
-            line-height: 22px;
+        .measuring-stick-overlay {
+
         }
-        .stage-outer-container {
-            height: 100%;
-            .stage-inner-container {
+        .stage-wrapper {
+            position: relative;
+            width: 70%;
+            transition: width .25s linear;
+            margin: 0 auto;
+            border-bottom: solid #006DB3 1px;
+            border-top: solid #006DB3 1px;
+            .stage-outer-container {
                 height: 100%;
-                .stage-side {
+                .stage-label {
+                    position: absolute;
+                    top: -28px;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    color: #494949;
+                    line-height: 22px;
+                }
+                .stage-inner-container {
                     position: relative;
+                    width: 90%;
                     height: 100%;
-                    overflow: hidden;
+                    margin: 0 auto;
+                    .measuring-stick-overlay {
+
+                    }
+                    .stage {
+                        position: relative;
+                        transition: height .25s linear, width .25s linear;
+                        .presenter-container {
+                            .presenter-icon {
+                                position: absolute;
+                                bottom: -5px;
+                                left: 0%;
+                                transition: width .25s linear, left .25s linear;
+                                z-index: 1;
+                            }
+                        }
+                        .audience-container {
+                            position: relative; 
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            height: 100%;
+                            .audience-row {
+                                display: flex;
+                                justify-content: flex-start;
+                            }
+                            .audience-icon {
+
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-.stage-wrapper {
-    position: relative;
-    width: 70%;
-    transition: width .25s linear;
-    margin: 0 auto;
-    border-bottom: solid #006DB3 1px;
-    border-top: solid #006DB3 1px;
-    
-    .stage-outer-container {
-        overflow: hidden;
-    }
-
-    .stage-inner-container {
-        width: 90%;
-        margin: 0 auto;
-        .stage {
-            position: relative;
-            max-width: 90%;
-            margin: 0 auto;
-            transition: height .25s linear, width .25s linear;
-            .person-wrapper {
-                position: absolute;
-                bottom: -5px;
-                left: 0%;
-                transition: width .25s linear, left .25s linear;
-                z-index: 1;
-            }
-            .microphone-wrapper {
-                position: absolute;
-                top: 0;
-                transition: width .25s linear, left .25s linear, top .25s linear;
-                z-index: 0;
-            }
-        }
-    }
-}
-
-.graphical-output-front {
-
-}
-
-.graphical-output-side {
-    margin-top: 120px;
-    background-color: #F2F5F7;  
-    .stage-info-wrapper {
-        transition: height 0.25s linear;
-        .stage-wrapper {
-            height: 100%;
-
-            .person-wrapper {
-                position: absolute;
-                bottom: -4px;
-                left: 0%;
-                transition: width .25s linear, left .25s linear;
-                z-index: 1;
-            }
-
-            .microphone-wrapper {
-                position: absolute;
-                top: 0;
-                transition: width .25s linear, left .25s linear, top .25s linear;
-                z-index: 0;
-            }
-        }
-    }
-}
-
 .graphical-output-top {
-    margin-top: 120px;
+
+}
+
+.microphone-wrapper {
+    position: absolute;
+    top: 0;
+    transition: width .25s linear, left .25s linear, top .25s linear;
+    z-index: 0;
 }
 
 .measuring-stick-overlay {

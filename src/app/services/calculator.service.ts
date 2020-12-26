@@ -21,6 +21,7 @@ export class CalculatorService {
     ceilingHeight: 3,
     lectureWidth: 9.13,
     presenterHeight: 1.7,
+    presenterWidth: 0.589,
     audienceHeight: 1.2,
     audienceDepth: 6,
   };
@@ -91,6 +92,7 @@ export class CalculatorService {
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_presenterHeight: number = this.DEFAULTS.presenterHeight;
+  private m_presenterWidth: number = this.DEFAULTS.presenterWidth;
   private m_audienceHeight: number = this.DEFAULTS.audienceHeight;
   private m_audienceDepth: number = this.DEFAULTS.audienceDepth;
   private m_inputExtenderLength: number = 0;
@@ -102,6 +104,7 @@ export class CalculatorService {
   get ceilingHeight(): number { return this.m_ceilingHeight; }
   get lectureWidth(): number { return this.m_lectureWidth; }
   get presenterHeight(): number { return this.m_presenterHeight; }
+  get presenterWidth(): number { return this.m_presenterWidth; }
   get audienceHeight(): number { return this.m_audienceHeight; }
   get audienceDepth(): number { return this.m_audienceDepth; }
   get captureRadius(): number { return this.m_captureRadius; }
@@ -140,6 +143,7 @@ export class CalculatorService {
       this.m_ceilingHeight = round(this.m_ceilingHeight * conversionFactor, 2);
       this.m_lectureWidth = round(this.m_lectureWidth * conversionFactor, 2);
       this.m_presenterHeight = round(this.m_presenterHeight * conversionFactor, 2);
+      this.m_presenterWidth = round(this.m_presenterWidth * conversionFactor, 2);
       this.m_audienceHeight = round(this.m_audienceHeight * conversionFactor, 2);
       this.m_audienceDepth = round(this.m_audienceDepth * conversionFactor, 2);
       this.m_microphoneInterval = round(this.m_microphoneInterval * conversionFactor, 2);
