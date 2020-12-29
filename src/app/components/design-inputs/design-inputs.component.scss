@@ -21,5 +21,68 @@
             line-height: 16px;
             color: #494949;
         }
+
+        .design-input-radiogroup {
+            display: flex;
+            flex-direction: row;
+            .design-input-radiogroup-label {
+                &.reinforcement-priority {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .microphone-modes {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+::ng-deep {
+    .mat-checkbox {
+        .mat-checkbox-frame {
+            border-color: #469B99;
+        }
+        &.mat-checkbox-checked .mat-checkbox-background {
+            background-color: #469B99;
+        }
+        .mat-checkbox-checkmark-path {
+            stroke: white !important;
+        }
+        .mat-checkbox-inner-container {
+            margin-right: 5px !important;
+        }
+    }
+
+    .mat-radio-button {
+        .mat-radio-label-content {
+            font-size: 12px;
+            padding-left: 0px !important;
+            margin-left: 5px;
+        }
+        .mat-radio-container {
+            width: 14px;
+            height: 14px;
+            .mat-radio-outer-circle {
+                border-color: #469B99;
+                width: 14px;
+                height: 14px;
+            }
+            .mat-radio-inner-circle {
+                width: 14px;
+                height: 14px;
+            }
+        }
+        &.mat-radio-checked {
+            .mat-radio-container {
+                .mat-radio-outer-circle {
+                    border-color: #469B99 !important;
+                }
+                .mat-radio-inner-circle {
+                    background-color: #469B99 !important;
+                }
+            }
+        }
     }
 }

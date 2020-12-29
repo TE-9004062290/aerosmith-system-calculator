@@ -8,29 +8,39 @@
             [rightOption]="MeasurementUnitsEnum.Feet"
             [(ngModel)]="calculatorService.measurementUnit">
         </app-radio-toggle>
+        <div class="design-input-label">Select measurement units:</div>
+        <mat-radio-group 
+            aria-label="Select measurement units"
+            name="measurementUnits"
+            [(ngModel)]="calculatorService.measurementUnit">
+            <mat-radio-button name="meters" [value]="MeasurementUnitsEnum.Meters">Meters</mat-radio-button>
+            <mat-radio-button name="feet" [value]="MeasurementUnitsEnum.Feet">Feet</mat-radio-button>
+        </mat-radio-group>
     </div>
     <div class="design-input">
         <div class="design-input-label">
             Design for:
         </div>
-        <mat-checkbox [checked]="calculatorService.reinforcePresenter" [(ngModel)]="calculatorService.reinforcePresenter">
-            <div class="design-input-option">Presenter sound reinforcement</div>
-        </mat-checkbox>
-        <mat-checkbox [checked]="calculatorService.recordPresenter" [(ngModel)]="calculatorService.recordPresenter">
-            <div class="design-input-option">Presenter recording</div>
-        </mat-checkbox>
-        <mat-checkbox [checked]="calculatorService.recordAudience" [(ngModel)]="calculatorService.recordAudience">
-            <div class="design-input-option">Audience recording</div>
-        </mat-checkbox>
-    </div>
-    <div class="design-input">
-        <app-radio-toggle
-            toggleLabel="Design for:"
-            leftLabel="Audio quality"
-            rightLabel="Detection range"
-            [leftOption]="SoundReinforcementPriorityEnum.AudioQuality"
-            [rightOption]="SoundReinforcementPriorityEnum.DetectionRange"
-            [(ngModel)]="calculatorService.soundReinforcementPriority">
-        </app-radio-toggle>
+        <div class="microphone-modes">
+            <mat-checkbox [checked]="calculatorService.reinforcePresenter" [(ngModel)]="calculatorService.reinforcePresenter">
+                <div class="design-input-option">Presenter sound reinforcement</div>
+            </mat-checkbox>
+            <div *ngIf="calculatorService.reinforcePresenter" @animateReinforcementPriorities class="design-input-radiogroup">
+                <div class="design-input-radiogroup-label reinforcement-priority">Priority: </div>
+                <mat-radio-group 
+                    aria-label="Select presenter reinforcement priority"
+                    name="reinforcementPriority"
+                    [(ngModel)]="calculatorService.soundReinforcementPriority">
+                    <mat-radio-button name="AudioQuality" [value]="SoundReinforcementPriorityEnum.AudioQuality">Audio quality</mat-radio-button>
+                    <mat-radio-button name="DetectionRange" [value]="SoundReinforcementPriorityEnum.DetectionRange">Detection range</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <mat-checkbox [checked]="calculatorService.recordPresenter" [(ngModel)]="calculatorService.recordPresenter">
+                <div class="design-input-option">Presenter recording</div>
+            </mat-checkbox>
+            <mat-checkbox [checked]="calculatorService.recordAudience" [(ngModel)]="calculatorService.recordAudience">
+                <div class="design-input-option">Audience recording</div>
+            </mat-checkbox>
+        </div>
     </div>
 </div>

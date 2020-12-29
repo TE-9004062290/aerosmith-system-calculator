@@ -140,25 +140,7 @@
             color: #006DB3;
         }
     }
-    .calculation-theatre-settings {
-        box-sizing: border-box;
-        border-top: 1px solid #E6EBEF;
-
-        .calculation-theatre-setting {
-            font-size: 14px;
-            line-height: 24px;
-            width: 100%;
-            margin-top: 8px;
-            margin-bottom: 20px;
-
-            .calculation-theatre-setting-label {
-                font-size: 14px;
-                line-height: 24px;
-                font-weight: bold;
-                color: #494949;
-            }
-        }
-    }
+    
     .version-stamp {
         position: fixed;
         bottom: 0;
@@ -203,19 +185,5 @@
         text-transform: uppercase;
         background-color: #E6EBEF;
         cursor: not-allowed;
-    }
-}
-
-::ng-deep {
-    .mat-checkbox {
-        .mat-checkbox-frame {
-            border-color: #469B99;
-        }
-        &.mat-checkbox-checked .mat-checkbox-background {
-            background-color: #469B99;
-        }
-        .mat-checkbox-checkmark-path {
-            stroke: white !important;
-        }
     }
 }
