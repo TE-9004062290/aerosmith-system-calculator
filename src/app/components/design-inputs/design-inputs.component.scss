@@ -1,0 +1,25 @@
+.design-inputs {
+    box-sizing: border-box;
+    border-top: 1px solid #E6EBEF;
+
+    .design-input {
+        font-size: 14px;
+        line-height: 24px;
+        width: 100%;
+        margin-top: 8px;
+        margin-bottom: 20px;
+
+        .design-input-label {
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: bold;
+            color: #494949;
+        }
+
+        .design-input-option {
+            font-size: 12px;
+            line-height: 16px;
+            color: #494949;
+        }
+    }
+}

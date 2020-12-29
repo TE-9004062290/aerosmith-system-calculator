@@ -1,0 +1,36 @@
+<div class="design-inputs">
+    <div class="design-input">
+        <app-radio-toggle
+            toggleLabel="Select measurement units:"
+            leftLabel="Meters"
+            rightLabel="Feet"
+            [leftOption]="MeasurementUnitsEnum.Meters"
+            [rightOption]="MeasurementUnitsEnum.Feet"
+            [(ngModel)]="calculatorService.measurementUnit">
+        </app-radio-toggle>
+    </div>
+    <div class="design-input">
+        <div class="design-input-label">
+            Design for:
+        </div>
+        <mat-checkbox [checked]="calculatorService.reinforcePresenter" [(ngModel)]="calculatorService.reinforcePresenter">
+            <div class="design-input-option">Presenter sound reinforcement</div>
+        </mat-checkbox>
+        <mat-checkbox [checked]="calculatorService.recordPresenter" [(ngModel)]="calculatorService.recordPresenter">
+            <div class="design-input-option">Presenter recording</div>
+        </mat-checkbox>
+        <mat-checkbox [checked]="calculatorService.recordAudience" [(ngModel)]="calculatorService.recordAudience">
+            <div class="design-input-option">Audience recording</div>
+        </mat-checkbox>
+    </div>
+    <div class="design-input">
+        <app-radio-toggle
+            toggleLabel="Design for:"
+            leftLabel="Audio quality"
+            rightLabel="Detection range"
+            [leftOption]="SoundReinforcementPriorityEnum.AudioQuality"
+            [rightOption]="SoundReinforcementPriorityEnum.DetectionRange"
+            [(ngModel)]="calculatorService.soundReinforcementPriority">
+        </app-radio-toggle>
+    </div>
+</div>

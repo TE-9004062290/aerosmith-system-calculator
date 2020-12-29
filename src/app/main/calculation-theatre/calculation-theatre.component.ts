@@ -15,7 +15,7 @@ import {
 } from '@angular/animations';
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
+import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
   selector: 'app-calculation-theatre',
@@ -27,10 +27,10 @@ export class CalculationTheatreComponent implements OnInit {
   private initialized = false;
 
   public MeasurementUnitsEnum = MeasurementUnits;
-  public CalculationPriorityEnum = CalculationPriority;
+  public SoundReinforcementPriorityEnum = SoundReinforcementPriority;
 
   public measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  public calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
+  public soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
   public sideBarOut = false;
   
@@ -73,7 +73,9 @@ export class CalculationTheatreComponent implements OnInit {
   private parseParams(params) {
     const { 
       ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
-      inputExtenderLength, measurementUnit, priority } = params;
+      inputExtenderLength, measurementUnit, 
+      reinforcePresenter, recordPresenter, recordAudience, reinforcementPriority } = params;
+
     let hasParam: boolean = false;
     switch (measurementUnit) {
       case 'ft':
@@ -104,21 +106,37 @@ export class CalculationTheatreComponent implements OnInit {
     }
     if (audienceDepth) {
       this.calculatorService.audienceDepth = audienceDepth;
+      hasParam = true;
     }
     if (inputExtenderLength) {
       this.calculatorService.inputExtenderLength = inputExtenderLength;
       hasParam = true;
     }
 
-    switch (priority) {
+    if (reinforcePresenter) {
+      this.calculatorService.reinforcePresenter = !!(+reinforcePresenter);
+      hasParam = true;
+    }
+
+    if (recordPresenter) {
+      this.calculatorService.recordPresenter = !!(+recordPresenter);
+      hasParam = true;
+    }
+
+    if (recordAudience) {
+      this.calculatorService.recordAudience = !!(+recordAudience);
+      hasParam = true;
+    }
+
+    switch (reinforcementPriority) {
       case 0:
       case '0':
-        this.calculatorService.calculationPriority = CalculationPriority.AudioQuality;
+        this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
         hasParam = true;
         break;
       case 1:
       case '1':
-        this.calculatorService.calculationPriority = CalculationPriority.CaptureArea;
+        this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.DetectionRange;
         hasParam = true;
         break;
     }

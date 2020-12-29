@@ -20,6 +20,7 @@ import { MeasuringStickComponent } from './components/measuring-stick/measuring-
 import { SvgIconsComponent } from './components/svg-icons/svg-icons.component';
 import { VersionStampComponent } from './components/version-stamp/version-stamp.component';
 import { GraphicalStageTopComponent } from './components/graphical-stage-top/graphical-stage-top.component';
+import { DesignInputsComponent } from './components/design-inputs/design-inputs.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { GraphicalStageTopComponent } from './components/graphical-stage-top/gra
     SvgIconsComponent,
     VersionStampComponent,
     GraphicalStageTopComponent,
+    DesignInputsComponent,
   ],
   imports: [
     BrowserModule,

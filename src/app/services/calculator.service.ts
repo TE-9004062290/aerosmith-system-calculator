@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs'
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
+import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 import { environment } from 'environments/environment';
 
@@ -87,7 +87,11 @@ export class CalculatorService {
   private m_captureRadius = 2;
   /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-  private m_calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
+
+  private m_reinforcePresenter: boolean = false;
+  private m_soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
+  private m_recordPresenter: boolean = false;
+  private m_recordAudience: boolean = false;
 
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
@@ -99,7 +103,7 @@ export class CalculatorService {
   private m_extenderProvided: boolean = false
 
   get measurementUnit(): MeasurementUnits { return this.m_measurementUnit; }
-  get calculationPriority(): CalculationPriority { return this.m_calculationPriority; }
+  get soundReinforcementPriority(): SoundReinforcementPriority { return this.m_soundReinforcementPriority; }
 
   get ceilingHeight(): number { return this.m_ceilingHeight; }
   get lectureWidth(): number { return this.m_lectureWidth; }
@@ -107,6 +111,9 @@ export class CalculatorService {
   get presenterWidth(): number { return this.m_presenterWidth; }
   get audienceHeight(): number { return this.m_audienceHeight; }
   get audienceDepth(): number { return this.m_audienceDepth; }
+  get reinforcePresenter(): boolean { return this.m_reinforcePresenter; }
+  get recordPresenter(): boolean { return this.m_recordPresenter; }
+  get recordAudience(): boolean { return this.m_recordAudience; }
   get captureRadius(): number { return this.m_captureRadius; }
   get inputExtenderLength(): number { return this.m_inputExtenderLength; }
   get extenderProvided(): boolean { return this.m_extenderProvided; }
@@ -157,14 +164,16 @@ export class CalculatorService {
     }
   }
 
-  set calculationPriority(val: CalculationPriority) {
-    this.m_calculationPriority = val;
+  set soundReinforcementPriority(val: SoundReinforcementPriority) {
+    this.m_soundReinforcementPriority = val;
     this.m_pristine = false;
     this.m_has_output = false;
-    if (this.m_calculationPriority === CalculationPriority.AudioQuality) {
+    if (this.m_soundReinforcementPriority === SoundReinforcementPriority.AudioQuality) {
       this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
-    } else {
+    } else if (this.m_soundReinforcementPriority === SoundReinforcementPriority.DetectionRange ) {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
+    } else {
+      this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
     this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
 
@@ -227,6 +236,21 @@ export class CalculatorService {
     }
   }
 
+  set reinforcePresenter(val: boolean) {
+    this.m_reinforcePresenter = val;
+    this.updateAndEmit();
+  }
+
+  set recordPresenter(val: boolean) {
+    this.m_recordPresenter = val;
+    this.updateAndEmit();
+  }
+
+  set recordAudience(val: boolean) {
+    this.m_recordAudience = val;
+    this.updateAndEmit();
+  }
+
   set inputExtenderLength(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
@@ -257,7 +281,10 @@ export class CalculatorService {
       relativeTo: this.activatedRoute,
       queryParams: {
         measurementUnit: this.m_measurementUnit,
-        priority: this.m_calculationPriority,
+        reinforcePresenter: +this.m_reinforcePresenter, // converts to 0 or 1
+        recordPresenter: +this.m_recordPresenter,
+        recordAudience: +this.m_recordAudience,
+        reinforcementPriority: this.m_soundReinforcementPriority,
         ceilingHeight: this.m_ceilingHeight,
         lectureWidth: this.m_lectureWidth,
         presenterHeight: this.m_presenterHeight,
@@ -279,7 +306,7 @@ export class CalculatorService {
   }
 
   private get verticalThreshold(): number {
-    return (this.calculationPriority === CalculationPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
+    return (this.soundReinforcementPriority === SoundReinforcementPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
   }
 
   private get verticalMinimum(): number {
@@ -394,7 +421,7 @@ export class CalculatorService {
     const inputs: string[] = [];
 
     inputs.push(`measurementUnit=${this.m_measurementUnit}`);
-    inputs.push(`priority=${this.m_calculationPriority}`);
+    inputs.push(`reinforcementPriority=${this.m_soundReinforcementPriority}`);
     inputs.push(`ceilingHeight=${this.m_ceilingHeight}`);
     inputs.push(`lectureWidth=${this.m_lectureWidth}`);
     inputs.push(`presenterHeight=${this.m_presenterHeight}`);

@@ -160,7 +160,7 @@
                             </div>
                             <div *ngIf="calculatorService.hasFreshOutput" class="microphone-wrapper" @animateOutputArea                  
                                 [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': (sideCapture / 2) + 'px', 'position': 'absolute'}">
-                                <app-svg-microphone [calculationPriority]="calculatorService.calculationPriority" [extenderLength]="extenderLength"></app-svg-microphone>
+                                <app-svg-microphone [soundReinforcementPriority]="calculatorService.soundReinforcementPriority" [extenderLength]="extenderLength"></app-svg-microphone>
                             </div>
                         </div>
                     </div>

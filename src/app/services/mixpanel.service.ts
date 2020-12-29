@@ -19,7 +19,7 @@ export class MixpanelService {
     const cService = this.calculatorService;
     let toTrack = {
       'Measurement Units': cService.measurementUnit.toString(),
-      "Calculation Priority": cService.calculationPriority.toString(),
+      "Calculation Priority": cService.soundReinforcementPriority.toString(),
       "Ceiling Height": cService.ceilingHeight,
       "Presentation Area Width": cService.lectureWidth,
       "Presenter Height": cService.presenterHeight,

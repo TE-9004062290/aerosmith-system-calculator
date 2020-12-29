@@ -17,33 +17,7 @@
                     <strong>Note</strong>: Any loudspeakers should be <br/> placed at least {{ calculatorService.measurementUnit === 'm' ? '2 meters' : '6.56 feet' }}  away from <br/> the microphone.
                     <strong>({{ calculatorService.measurementUnit === 'm' ? '3 meters' : '9.84 feet' }} or more is recommended)</strong>
                 </div>
-                <div class="calculation-theatre-settings">
-                    <div class="calculation-theatre-setting">
-                        <app-radio-toggle
-                            toggleLabel="Select measurement units"
-                            leftLabel="Meters"
-                            rightLabel="Feet"
-                            [leftOption]="MeasurementUnitsEnum.Meters"
-                            [rightOption]="MeasurementUnitsEnum.Feet"
-                            [(ngModel)]="calculatorService.measurementUnit">
-                        </app-radio-toggle>
-                    </div>
-                    <div class="calculation-theatre-setting">
-                        <mat-checkbox>
-                            Presenter sound reinforcement
-                        </mat-checkbox>
-                    </div>
-                    <div class="calculation-theatre-setting">
-                        <app-radio-toggle
-                            toggleLabel="Design for:"
-                            leftLabel="Audio quality"
-                            rightLabel="Detection range"
-                            [leftOption]="CalculationPriorityEnum.AudioQuality"
-                            [rightOption]="CalculationPriorityEnum.CaptureArea"
-                            [(ngModel)]="calculatorService.calculationPriority">
-                        </app-radio-toggle>
-                    </div>
-                </div>
+                <app-design-inputs></app-design-inputs>
                 <div class="calculation-theatre-inputs">
                     <app-calculation-inputs></app-calculation-inputs>
                 </div>

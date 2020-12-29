@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CalculationPriority } from '@app/models/enums/calculation-priority.enums';
+import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
   selector: 'app-svg-microphone',
@@ -9,10 +9,10 @@ import { CalculationPriority } from '@app/models/enums/calculation-priority.enum
 export class SvgMicrophoneComponent implements OnInit {
 
   public static readonly WIDTH_HEIGHT_RATIO = 0.3463406889982537;
-  public CalculationPriorityEnum = CalculationPriority;
+  public SoundReinforcementPriorityEnum = SoundReinforcementPriority;
 
   @Input() extenderLength: number = 0;
-  @Input() calculationPriority: CalculationPriority = CalculationPriority.AudioQuality;
+  @Input() soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
   constructor() { }
 
