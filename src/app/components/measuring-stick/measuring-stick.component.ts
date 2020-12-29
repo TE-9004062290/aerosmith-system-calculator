@@ -40,6 +40,17 @@ export class MeasuringStickComponent implements OnInit {
     }
   }
 
+  private _forcedMode: 'thin' | 'wide' = 'wide';
+  private _modeIsForced = false;
+  get forcedMode(): 'thin' | 'wide' {
+    return this._forcedMode;
+  }
+  @Input() set forcedMode(value: 'thin' | 'wide') {
+    this.mode = value;
+    this._forcedMode = value;
+    this._modeIsForced = true;
+  }
+
   @Input() public twinned: boolean = false; /* I realize this is a hack, fight me */
   @Input() public maxWidth: string = undefined;
   @Input() public thinModeDirection: 'top' | 'right' | 'down' | 'left' = 'top';
@@ -50,7 +61,7 @@ export class MeasuringStickComponent implements OnInit {
   
   @Output() public updated: EventEmitter<any> = new EventEmitter();
 
-  public mode: 'wide' | 'thin' = 'wide';
+  public mode: string = 'wide';
   private thinThreshold = 100; // 150px
   private shortThreshold = 60;
 
@@ -59,6 +70,10 @@ export class MeasuringStickComponent implements OnInit {
       this.mode = 'thin';
     } else {
       this.mode = 'wide';
+    }
+
+    if (this._modeIsForced) {
+      this.mode = this._forcedMode;
     }
   }
 
