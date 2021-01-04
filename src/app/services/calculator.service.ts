@@ -85,6 +85,8 @@ export class CalculatorService {
   }
 
   private m_captureRadius = 2;
+  private m_audienceCaptureRadius = 7;
+
   /* Inputs */
   private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
 
@@ -115,6 +117,7 @@ export class CalculatorService {
   get recordPresenter(): boolean { return this.m_recordPresenter; }
   get recordAudience(): boolean { return this.m_recordAudience; }
   get captureRadius(): number { return this.m_captureRadius; }
+  get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get inputExtenderLength(): number { return this.m_inputExtenderLength; }
   get extenderProvided(): boolean { return this.m_extenderProvided; }
 
@@ -124,12 +127,24 @@ export class CalculatorService {
   private m_extenderRequired: boolean = false;
   private m_extenderLength: number = 0;
   private m_audienceDistance: number = 0;
+  private m_audienceMicrophoneInterval: number = 0;
+  private m_requiredAudienceMicrophonesWidth: number = 0;
+  private m_requiredAudienceMicrophonesDepth: number = 0;
+  private m_audienceExtenderRequired: boolean = false;
+  private m_audienceExtenderLength: number = 0;
+  private m_distanceBetweenAudienceAndMicrophone: number = 0; // The vertical distance between top of audience head and the audience microphone
 
   get microphoneInterval(): number { return this.m_microphoneInterval; }
   get requiredMicrophones(): number { return this.m_requiredMicrophones; }
-  get extenderLength(): number { return this.m_extenderLength; }
-  get audienceDistance(): number { return this.m_audienceDistance; }
   get extenderRequired(): boolean { return this.m_extenderRequired; }
+  get extenderLength(): number { return this.m_extenderLength; }
+
+  get audienceDistance(): number { return this.m_audienceDistance; }
+  get audienceMicrophoneInterval(): number { return this.m_audienceMicrophoneInterval; }
+  get requiredAudienceMicrophonesWidth(): number { return this.m_requiredAudienceMicrophonesWidth; }
+  get requiredAudienceMicrophonesDepth(): number { return this.m_requiredAudienceMicrophonesDepth; }
+  get audienceExtenderRequired(): boolean { return this.m_audienceExtenderRequired; }
+  get audienceExtenderLength(): number { return this.audienceExtenderLength; }
 
   set measurementUnit(val: MeasurementUnits) {
     let conversionFactor = CalculatorService.METERS_TO_FEET;
@@ -157,7 +172,9 @@ export class CalculatorService {
       this.m_extenderLength = round(this.m_extenderLength * conversionFactor, 2);
       this.m_inputExtenderLength = round(this.m_inputExtenderLength * conversionFactor, 2);
       this.m_audienceDistance = round(this.m_audienceDistance * conversionFactor, 2);
+      this.m_distanceBetweenAudienceAndMicrophone = round(this.m_distanceBetweenAudienceAndMicrophone * conversionFactor, 2);
       this.m_captureRadius = round(this.m_captureRadius * conversionFactor, 2);
+      this.m_audienceCaptureRadius = round(this.m_audienceCaptureRadius * conversionFactor, 2);
       this.m_measurementUnit = val;
 
       this.updateAndEmit();
@@ -218,6 +235,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
+      this.m_distanceBetweenAudienceAndMicrophone = 1.1 * (this.m_audienceHeight - this.topOfHeadToMouth);
       this.m_pristine = false;
       this.m_has_output = false;
 
@@ -383,11 +401,35 @@ export class CalculatorService {
     return presentationWidth / firstApproxNumMicrophones;
   }
 
-  private setOutputs(extenderLength: number, audienceDistance: number, microphoneInterval: number, numMicrophones: number) {
+  /* Calculates the interval between audience microphones. Should be the same for both room width and depth */
+  private calculateAudienceMicrophoneInterval(audienceHeight: number, ceilingHeight: number) {
+    const captureRadius = this.m_audienceCaptureRadius;
+    // const effectiveAudienceHeight = audienceHeight - this.topOfHeadToMouth;
+    // const verticalAudienceMicrophoneDistance = 1.1 * (effectiveAudienceHeight);
+    // this.m_distanceBetweenAudienceAndMicrophone = verticalAudienceMicrophoneDistance;
+
+    let halfChord = Math.sqrt( (captureRadius ** 2) - (this.m_distanceBetweenAudienceAndMicrophone ** 2) );
+    return Math.max(1 * this.unitConversion, 2 * halfChord);
+  }
+
+  private calculateNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, audienceMicrophoneInterval: number) {
+    const widthRaw = presentationWidth / audienceMicrophoneInterval;
+    const depthRaw = audienceDepth / audienceMicrophoneInterval;
+
+    return [Math.ceil(widthRaw), Math.ceil(depthRaw)];
+  }
+
+  private setOutputs(extenderLength: number, audienceDistance: number, 
+    microphoneInterval: number, audienceMicrophoneInterval: number, 
+    numMicrophones: number, numAudienceMicrophones: number[]) {
     this.m_extenderLength = round(extenderLength, 2);
     this.m_audienceDistance = round(audienceDistance, 2);
     this.m_microphoneInterval = round(microphoneInterval, 2);
+    this.m_audienceMicrophoneInterval = round(audienceMicrophoneInterval, 2);
     this.m_requiredMicrophones = round(numMicrophones, 2);
+    this.m_requiredAudienceMicrophonesWidth = round(numAudienceMicrophones[0], 2);
+    this.m_requiredAudienceMicrophonesDepth = round(numAudienceMicrophones[1], 2);
+
     this.m_pristine = true;
     this.m_has_output = true;
   }
@@ -401,7 +443,7 @@ export class CalculatorService {
   }
 
   public calculateOutputs() {
-    const { captureRadius, ceilingHeight, presenterHeight, audienceHeight, lectureWidth, inputExtenderLength } = this;
+    const { captureRadius, ceilingHeight, presenterHeight, audienceHeight, lectureWidth, audienceDepth, inputExtenderLength } = this;
     
     const extenderRequired = this.isExtenderRequired(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
     const extenderLength  = this.calculateExtenderLength(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
@@ -409,10 +451,15 @@ export class CalculatorService {
     let microphoneInterval = this.calculateMicrophoneInterval(captureRadius, ceilingHeight, presenterHeight, extenderLength);
     const numMicrophones = this.calculateNumMicrophones(lectureWidth, microphoneInterval);
     microphoneInterval = this.refineMicrophoneInterval(lectureWidth, numMicrophones);
-    
+
+    let audienceMicrophoneInterval = this.calculateAudienceMicrophoneInterval(audienceHeight, ceilingHeight);
+    let numAudienceMicrophones: number[] = this.calculateNumAudienceMicrophones(lectureWidth, audienceDepth, audienceMicrophoneInterval);
+    // console.log(audienceMicrophoneInterval, numAudienceMicrophones);
+
     const audienceDistance = this.calculateAudienceDistance(3 * this.unitConversion, ceilingHeight, audienceHeight, extenderLength);
-    
-    this.setOutputs(extenderLength, audienceDistance, microphoneInterval, numMicrophones);
+
+
+    this.setOutputs(extenderLength, audienceDistance, microphoneInterval, audienceMicrophoneInterval, numMicrophones, numAudienceMicrophones);
     this.m_extenderRequired = extenderRequired;
   }
 

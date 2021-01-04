@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
+import { GraphicPosition } from '@app/models/graphic-position.model';
+
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
@@ -17,20 +19,6 @@ enum RatioMode {
   Height,
   Width,
   HalfSquareWidth
-}
-
-class GraphicPosition {
-  public number: number = 0;
-  public positionPercentage: number = 50;
-
-  public trackingFunc() {
-    return this.number;
-  }
-
-  constructor(num, positionPerc) {
-    this.number = num;
-    this.positionPercentage = positionPerc;
-  }
 }
 
 @Component({
@@ -184,8 +172,6 @@ export class GraphicalStageComponent implements OnInit {
   private calculateProportions() {
     [this.stageHeight, this.stageWidth, this.ratioMode] = this.calculateStageRatios();
 
-    // [this.stageHeightTop, this.stageWidthTop, this.ratioModeTop] = this.calculateStageRatiosTop();
-
     this.presenterWidth = this.getPresenterWidth();
     this.presenterSideWidth = this.getPresenterSideWidth();
     this.presenterTopWidth = this.getPresenterTopWidth();
@@ -200,30 +186,6 @@ export class GraphicalStageComponent implements OnInit {
   private calculateStageRatios() {
     const cService = this.calculatorService;
     const heightWidthRatio = cService.ceilingHeight / cService.lectureWidth;
-    let stageHeight = 0;
-    let stageWidth = 0;
-    let ratioMode: RatioMode;
-
-    if (heightWidthRatio >= 1) {
-      ratioMode = RatioMode.Height;
-      stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
-      stageWidth = Math.min(0.9 * this.containerWidth, stageHeight * (1 / heightWidthRatio));
-    } else {
-      ratioMode = RatioMode.Width;
-      stageWidth = 0.9 * this.containerWidth;
-      stageHeight = stageWidth * heightWidthRatio;
-      if (stageHeight / this.pageHeight > this.STAGE_PAGE_HEIGHT_RATIO) {
-        stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
-        stageWidth = stageHeight * (1 / heightWidthRatio);
-      }
-    }
-
-    return [stageHeight, stageWidth, ratioMode];
-  }
-
-  private calculateStageRatiosTop() {
-    const cService = this.calculatorService;
-    const heightWidthRatio = cService.lectureWidth / cService.audienceDepth;
     let stageHeight = 0;
     let stageWidth = 0;
     let ratioMode: RatioMode;

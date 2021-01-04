@@ -37,7 +37,7 @@ void draw()
   float radius_square_y = (float)room_depth / ny_square / 2; // tighter spacing using the integer fit
   int total_square = nx_square * ny_square; // total number needed
 
-  /// calculate layout using square grid
+  /// calculate layout using hex grid
   float radius_hex = cos(radians(30)) * radius_full; // adjust down radius for hex grid with max spacing
   // x
   int nx_hex_even = max(ceil(room_width / (radius_hex * 2)), 1); // how many needed for even rows (0, 2, 4, ...)
