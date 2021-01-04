@@ -332,11 +332,11 @@ export class GraphicalStageTopComponent implements OnInit {
     let depthMidpoints = [0, 0];
     let widthMidpoint = 0;
     let widthMidpoints = [0, 0];
-    
+
     if (numMicrophonesDepth % 2 === 0) { // 2 "midpoints" about the true geometric middle
       depthMidpoint = Math.ceil(numMicrophonesDepth / 2);
       depthMidpoints = [depthMidpoint, depthMidpoint + 1];
-    }
+    } 
     if (numMicrophonesWidth % 2 === 0) { // 2 "midpoints" about the true geometric middle
       widthMidpoint = Math.ceil(numMicrophonesWidth / 2);
       widthMidpoints = [widthMidpoint, widthMidpoint + 1];
