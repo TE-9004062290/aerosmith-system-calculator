@@ -9,6 +9,14 @@ import { environment } from 'environments/environment';
 
 import { round } from '@app/helpers/arithmetic.helper';
 
+/* Private member naming conventions:
+ * 'm_' prefix is reserved for measurable quantities using SI (preferrably) units or Imperial
+ * 'c_' prefix is reserved for countable quantities. Positive integers, typically.
+ * 'b_' prefix is reserved for booleans
+ * 'e_' prefix is reserved for enums
+ * 's_' prefix is reserved for strings
+ * If there's some other prefix below that's not called out here, a note should be added for it
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -69,92 +77,103 @@ export class CalculatorService {
   private readonly INTERVAL_THRESHOLD_0 = 2.83; // Meters
   private readonly INTERVAL_THRESHOLD_1 = 4.24; // Meters
 
-  private m_pristine: boolean = false;
-  private m_has_output: boolean = false;
+  private b_pristine: boolean = false;
+  private b_has_output: boolean = false;
   
-  get isPristine() {
-    return this.m_pristine;
-  }
-
-  get isDirty() {
-    return !this.m_pristine;
-  }
-
-  get hasFreshOutput() {
-    return this.m_has_output;
-  }
-
-  private m_captureRadius = 2;
-  private m_audienceCaptureRadius = 7;
+  get isPristine() { return this.b_pristine; }
+  get isDirty() { return !this.b_pristine; }
+  get hasFreshOutput() { return this.b_has_output; }
 
   /* Inputs */
-  private m_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
+  /* Enum Inputs */
+  private e_measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
+  private e_soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
-  private m_reinforcePresenter: boolean = false;
-  private m_soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
-  private m_recordPresenter: boolean = false;
-  private m_recordAudience: boolean = false;
+  /* Boolean Inputs */
+  private b_reinforcePresenter: boolean = false;
+  private b_recordPresenter: boolean = false;
+  private b_recordAudience: boolean = false;
+  private b_extenderProvided: boolean = false
 
-  private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
+  /* Measurable Quantity Inputs */
+  private m_captureRadius = 2;
+  private m_audienceCaptureRadius = 7;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
+  private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
+  private m_audienceDepth: number = this.DEFAULTS.audienceDepth;
   private m_presenterHeight: number = this.DEFAULTS.presenterHeight;
   private m_presenterWidth: number = this.DEFAULTS.presenterWidth;
   private m_audienceHeight: number = this.DEFAULTS.audienceHeight;
-  private m_audienceDepth: number = this.DEFAULTS.audienceDepth;
   private m_inputExtenderLength: number = 0;
-  private m_extenderProvided: boolean = false
 
-  get measurementUnit(): MeasurementUnits { return this.m_measurementUnit; }
-  get soundReinforcementPriority(): SoundReinforcementPriority { return this.m_soundReinforcementPriority; }
 
-  get ceilingHeight(): number { return this.m_ceilingHeight; }
+  /* Input Getters */
+  get measurementUnit(): MeasurementUnits { return this.e_measurementUnit; }
+  get soundReinforcementPriority(): SoundReinforcementPriority { return this.e_soundReinforcementPriority; }
+
+  get reinforcePresenter(): boolean { return this.b_reinforcePresenter; }
+  get recordPresenter(): boolean { return this.b_recordPresenter; }
+  get recordAudience(): boolean { return this.b_recordAudience; }
+  get extenderProvided(): boolean { return this.b_extenderProvided; }
+
+  get captureRadius(): number { return this.m_captureRadius; }
+  get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get lectureWidth(): number { return this.m_lectureWidth; }
+  get ceilingHeight(): number { return this.m_ceilingHeight; }
+  get audienceDepth(): number { return this.m_audienceDepth; }
   get presenterHeight(): number { return this.m_presenterHeight; }
   get presenterWidth(): number { return this.m_presenterWidth; }
   get audienceHeight(): number { return this.m_audienceHeight; }
-  get audienceDepth(): number { return this.m_audienceDepth; }
-  get reinforcePresenter(): boolean { return this.m_reinforcePresenter; }
-  get recordPresenter(): boolean { return this.m_recordPresenter; }
-  get recordAudience(): boolean { return this.m_recordAudience; }
-  get captureRadius(): number { return this.m_captureRadius; }
-  get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get inputExtenderLength(): number { return this.m_inputExtenderLength; }
-  get extenderProvided(): boolean { return this.m_extenderProvided; }
+
 
   /* Outputs */
+  /* Boolean Outputs */
+  private b_extenderRequired: boolean = false;
+  private b_audienceExtenderRequired: boolean = false;
+
+  /* Measurable Quantity Outputs */
   private m_microphoneInterval: number = 0;
-  private m_requiredMicrophones: number = 0;
-  private m_extenderRequired: boolean = false;
-  private m_extenderLength: number = 0;
   private m_audienceDistance: number = 0;
   private m_audienceMicrophoneInterval: number = 0;
-  private m_requiredAudienceMicrophonesWidth: number = 0;
-  private m_requiredAudienceMicrophonesDepth: number = 0;
-  private m_audienceExtenderRequired: boolean = false;
+  private m_audienceMicrophoneIntervalWidth: number = 0;
+  private m_audienceMicrophoneIntervalDepth: number = 0;
+  private m_extenderLength: number = 0;
   private m_audienceExtenderLength: number = 0;
   private m_distanceBetweenAudienceAndMicrophone: number = 0; // The vertical distance between top of audience head and the audience microphone
 
-  get microphoneInterval(): number { return this.m_microphoneInterval; }
-  get requiredMicrophones(): number { return this.m_requiredMicrophones; }
-  get extenderRequired(): boolean { return this.m_extenderRequired; }
-  get extenderLength(): number { return this.m_extenderLength; }
+  /* Countable Quantity Outputs */
+  private c_requiredMicrophones: number = 0;
+  private c_requiredAudienceMicrophonesWidth: number = 0;
+  private c_requiredAudienceMicrophonesDepth: number = 0;
 
+
+  /* Output Getters */
+  get extenderRequired(): boolean { return this.b_extenderRequired; }
+  get audienceExtenderRequired(): boolean { return this.b_audienceExtenderRequired; }
+
+  get microphoneInterval(): number { return this.m_microphoneInterval; }
   get audienceDistance(): number { return this.m_audienceDistance; }
   get audienceMicrophoneInterval(): number { return this.m_audienceMicrophoneInterval; }
-  get requiredAudienceMicrophonesWidth(): number { return this.m_requiredAudienceMicrophonesWidth; }
-  get requiredAudienceMicrophonesDepth(): number { return this.m_requiredAudienceMicrophonesDepth; }
-  get audienceExtenderRequired(): boolean { return this.m_audienceExtenderRequired; }
+  get audienceMicrophoneIntervalWidth(): number { return this.m_audienceMicrophoneIntervalWidth; }
+  get audienceMicrophoneIntervalDepth(): number { return this.m_audienceMicrophoneIntervalDepth; }
+  get extenderLength(): number { return this.m_extenderLength; }
   get audienceExtenderLength(): number { return this.audienceExtenderLength; }
 
+  get requiredMicrophones(): number { return this.c_requiredMicrophones; }
+  get requiredAudienceMicrophonesWidth(): number { return this.c_requiredAudienceMicrophonesWidth; }
+  get requiredAudienceMicrophonesDepth(): number { return this.c_requiredAudienceMicrophonesDepth; }
+
+  /* Input Setters */
   set measurementUnit(val: MeasurementUnits) {
     let conversionFactor = CalculatorService.METERS_TO_FEET;
     let conversionRequired = false;
-    if (this.m_measurementUnit === MeasurementUnits.Meters && val === MeasurementUnits.Feet) {
+    if (this.e_measurementUnit === MeasurementUnits.Meters && val === MeasurementUnits.Feet) {
       conversionRequired = true;
       conversionFactor = CalculatorService.METERS_TO_FEET;
       this.MINIMUMS = this.FEET_MINIMUMS;
       this.MAXIMUMS = this.FEET_MAXIMUMS;
-    } else if (this.m_measurementUnit === MeasurementUnits.Feet && val === MeasurementUnits.Meters) {
+    } else if (this.e_measurementUnit === MeasurementUnits.Feet && val === MeasurementUnits.Meters) {
       conversionRequired = true;
       conversionFactor = CalculatorService.FEET_TO_METERS;
       this.MINIMUMS = this.METER_MINIMUMS;
@@ -162,32 +181,23 @@ export class CalculatorService {
     }
 
     if (conversionRequired) {
-      this.m_ceilingHeight = round(this.m_ceilingHeight * conversionFactor, 2);
-      this.m_lectureWidth = round(this.m_lectureWidth * conversionFactor, 2);
-      this.m_presenterHeight = round(this.m_presenterHeight * conversionFactor, 2);
-      this.m_presenterWidth = round(this.m_presenterWidth * conversionFactor, 2);
-      this.m_audienceHeight = round(this.m_audienceHeight * conversionFactor, 2);
-      this.m_audienceDepth = round(this.m_audienceDepth * conversionFactor, 2);
-      this.m_microphoneInterval = round(this.m_microphoneInterval * conversionFactor, 2);
-      this.m_extenderLength = round(this.m_extenderLength * conversionFactor, 2);
-      this.m_inputExtenderLength = round(this.m_inputExtenderLength * conversionFactor, 2);
-      this.m_audienceDistance = round(this.m_audienceDistance * conversionFactor, 2);
-      this.m_distanceBetweenAudienceAndMicrophone = round(this.m_distanceBetweenAudienceAndMicrophone * conversionFactor, 2);
-      this.m_captureRadius = round(this.m_captureRadius * conversionFactor, 2);
-      this.m_audienceCaptureRadius = round(this.m_audienceCaptureRadius * conversionFactor, 2);
-      this.m_measurementUnit = val;
+      this.e_measurementUnit = val;
+      let convertibles = Object.keys(this).filter((classMember) => classMember.startsWith('m_'));
+      convertibles.forEach((classMember) => {
+        this[classMember] = round(this[classMember] * conversionFactor, 2);
+      });
 
       this.updateAndEmit();
     }
   }
 
   set soundReinforcementPriority(val: SoundReinforcementPriority) {
-    this.m_soundReinforcementPriority = val;
-    this.m_pristine = false;
-    this.m_has_output = false;
-    if (this.m_soundReinforcementPriority === SoundReinforcementPriority.AudioQuality) {
+    this.e_soundReinforcementPriority = val;
+    this.b_pristine = false;
+    this.b_has_output = false;
+    if (this.e_soundReinforcementPriority === SoundReinforcementPriority.AudioQuality) {
       this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
-    } else if (this.m_soundReinforcementPriority === SoundReinforcementPriority.DetectionRange ) {
+    } else if (this.e_soundReinforcementPriority === SoundReinforcementPriority.DetectionRange ) {
       this.m_captureRadius = 3 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     } else {
       this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
@@ -202,8 +212,8 @@ export class CalculatorService {
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
-      this.m_pristine = false;
-      this.m_has_output = false;
+      this.b_pristine = false;
+      this.b_has_output = false;
 
       this.updateAndEmit();
     }
@@ -213,8 +223,8 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_lectureWidth = round(Math.min(Math.max(this.MINIMUMS.lectureWidth, val), this.MAXIMUMS.lectureWidth), 2);
-      this.m_pristine = false;
-      this.m_has_output = false;
+      this.b_pristine = false;
+      this.b_has_output = false;
 
       this.updateAndEmit();
     }
@@ -224,8 +234,8 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_presenterHeight = round(Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight), 2);
-      this.m_pristine = false;
-      this.m_has_output = false;
+      this.b_pristine = false;
+      this.b_has_output = false;
 
       this.updateAndEmit();
     }
@@ -235,9 +245,9 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
-      this.m_distanceBetweenAudienceAndMicrophone = 1.1 * (this.m_audienceHeight - this.topOfHeadToMouth);
-      this.m_pristine = false;
-      this.m_has_output = false;
+      this.m_distanceBetweenAudienceAndMicrophone = 4 * (this.m_audienceHeight - this.topOfHeadToMouth);
+      this.b_pristine = false;
+      this.b_has_output = false;
 
       this.updateAndEmit();
     }
@@ -247,25 +257,25 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceDepth = round(Math.min(Math.max(this.MINIMUMS.audienceDepth, val), this.MAXIMUMS.audienceDepth), 2);
-      this.m_pristine = false;
-      this.m_has_output = false;
+      this.b_pristine = false;
+      this.b_has_output = false;
 
       this.updateAndEmit();
     }
   }
 
   set reinforcePresenter(val: boolean) {
-    this.m_reinforcePresenter = val;
+    this.b_reinforcePresenter = val;
     this.updateAndEmit();
   }
 
   set recordPresenter(val: boolean) {
-    this.m_recordPresenter = val;
+    this.b_recordPresenter = val;
     this.updateAndEmit();
   }
 
   set recordAudience(val: boolean) {
-    this.m_recordAudience = val;
+    this.b_recordAudience = val;
     this.updateAndEmit();
   }
 
@@ -279,9 +289,9 @@ export class CalculatorService {
       this.m_inputExtenderLength = this.inputExtenderMinimum;
     }
     
-    this.m_pristine = false;
-    this.m_has_output = false;
-    this.m_extenderProvided = val > 0;
+    this.b_pristine = false;
+    this.b_has_output = false;
+    this.b_extenderProvided = val > 0;
 
     this.updateAndEmit();
   }
@@ -298,11 +308,11 @@ export class CalculatorService {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
-        measurementUnit: this.m_measurementUnit,
-        reinforcePresenter: +this.m_reinforcePresenter, // converts to 0 or 1
-        recordPresenter: +this.m_recordPresenter,
-        recordAudience: +this.m_recordAudience,
-        reinforcementPriority: this.m_soundReinforcementPriority,
+        measurementUnit: this.e_measurementUnit,
+        reinforcePresenter: +this.b_reinforcePresenter, // converts to 0 or 1
+        recordPresenter: +this.b_recordPresenter,
+        recordAudience: +this.b_recordAudience,
+        reinforcementPriority: this.e_soundReinforcementPriority,
         ceilingHeight: this.m_ceilingHeight,
         lectureWidth: this.m_lectureWidth,
         presenterHeight: this.m_presenterHeight,
@@ -316,7 +326,7 @@ export class CalculatorService {
   }
 
   public forceDirty() {
-    this.m_pristine = false;
+    this.b_pristine = false;
   }
   
   public get unitConversion(): number {
@@ -409,6 +419,8 @@ export class CalculatorService {
     // this.m_distanceBetweenAudienceAndMicrophone = verticalAudienceMicrophoneDistance;
 
     let halfChord = Math.sqrt( (captureRadius ** 2) - (this.m_distanceBetweenAudienceAndMicrophone ** 2) );
+    halfChord = Math.cos(Math.PI / 4) * captureRadius;
+    console.log(`audInt: ${2 * halfChord} meters`);
     return Math.max(1 * this.unitConversion, 2 * halfChord);
   }
 
@@ -416,7 +428,13 @@ export class CalculatorService {
     const widthRaw = presentationWidth / audienceMicrophoneInterval;
     const depthRaw = audienceDepth / audienceMicrophoneInterval;
 
-    return [Math.ceil(widthRaw), Math.ceil(depthRaw)];
+    return [round(widthRaw, 0), round(depthRaw, 0)];
+  }
+
+  private refineAudienceMicrophoneInterval(lectureWidth: number, audienceDepth: number, numAudienceMicrophones: number[]) {
+    const smallestDimension = Math.max(audienceDepth, lectureWidth);
+    console.log(`Refined: Depth: ${audienceDepth / numAudienceMicrophones[1]}. Wiidth: ${lectureWidth/numAudienceMicrophones[0]} `)
+    return smallestDimension / numAudienceMicrophones[0];
   }
 
   private setOutputs(extenderLength: number, audienceDistance: number, 
@@ -426,12 +444,12 @@ export class CalculatorService {
     this.m_audienceDistance = round(audienceDistance, 2);
     this.m_microphoneInterval = round(microphoneInterval, 2);
     this.m_audienceMicrophoneInterval = round(audienceMicrophoneInterval, 2);
-    this.m_requiredMicrophones = round(numMicrophones, 2);
-    this.m_requiredAudienceMicrophonesWidth = round(numAudienceMicrophones[0], 2);
-    this.m_requiredAudienceMicrophonesDepth = round(numAudienceMicrophones[1], 2);
+    this.c_requiredMicrophones = round(numMicrophones, 2);
+    this.c_requiredAudienceMicrophonesWidth = round(numAudienceMicrophones[0], 0);
+    this.c_requiredAudienceMicrophonesDepth = round(numAudienceMicrophones[1], 0);
 
-    this.m_pristine = true;
-    this.m_has_output = true;
+    this.b_pristine = true;
+    this.b_has_output = true;
   }
 
   private updateAndEmit() {
@@ -454,21 +472,26 @@ export class CalculatorService {
 
     let audienceMicrophoneInterval = this.calculateAudienceMicrophoneInterval(audienceHeight, ceilingHeight);
     let numAudienceMicrophones: number[] = this.calculateNumAudienceMicrophones(lectureWidth, audienceDepth, audienceMicrophoneInterval);
+    let refinedAudienceMicrophoneInterval = this.refineAudienceMicrophoneInterval(lectureWidth, audienceDepth, numAudienceMicrophones);
+    // if (refinedAudienceMicrophoneInterval < audienceMicrophoneInterval) {
+    //   audienceMicrophoneInterval = refinedAudienceMicrophoneInterval;
+    // }
+    //numAudienceMicrophones = this.calculateNumAudienceMicrophones(lectureWidth, audienceDepth, audienceMicrophoneInterval);
     // console.log(audienceMicrophoneInterval, numAudienceMicrophones);
 
     const audienceDistance = this.calculateAudienceDistance(3 * this.unitConversion, ceilingHeight, audienceHeight, extenderLength);
 
 
     this.setOutputs(extenderLength, audienceDistance, microphoneInterval, audienceMicrophoneInterval, numMicrophones, numAudienceMicrophones);
-    this.m_extenderRequired = extenderRequired;
+    this.b_extenderRequired = extenderRequired;
   }
 
   public serializeToUrl() {
     const url: string = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
     const inputs: string[] = [];
 
-    inputs.push(`measurementUnit=${this.m_measurementUnit}`);
-    inputs.push(`reinforcementPriority=${this.m_soundReinforcementPriority}`);
+    inputs.push(`measurementUnit=${this.e_measurementUnit}`);
+    inputs.push(`reinforcementPriority=${this.e_soundReinforcementPriority}`);
     inputs.push(`ceilingHeight=${this.m_ceilingHeight}`);
     inputs.push(`lectureWidth=${this.m_lectureWidth}`);
     inputs.push(`presenterHeight=${this.m_presenterHeight}`);

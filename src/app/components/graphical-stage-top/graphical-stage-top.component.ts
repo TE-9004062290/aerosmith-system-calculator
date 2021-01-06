@@ -60,6 +60,7 @@ export class GraphicalStageTopComponent implements OnInit {
 
   public widthHeightRatio: number = 1;
   public captureRadiusPx: number = 0;
+  public audienceCaptureRadiusPx: number = 0;
   public captureTop: number = 0;
 
   public microphones = { leftMost: 0, rightMost: 0, positions: []};
@@ -93,6 +94,11 @@ export class GraphicalStageTopComponent implements OnInit {
   microphoneTrackByFn(index, micPosition: GraphicPosition) {
     return micPosition.number;
   }
+
+  audienceMicrophoneTrackByFn(index, audienceMicPosition: GraphicPosition) {
+    return audienceMicPosition.number;
+  }
+
 
   personTrackByFn(index, personPosition: GraphicPosition) {
     return personPosition.number;
@@ -168,22 +174,16 @@ export class GraphicalStageTopComponent implements OnInit {
     this.presenterWidth = this.getPresenterWidth();
     this.audienceWidth = this.getAudienceWidth();
     this.audienceHeight = this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
-    this.captureRadiusPx = this.getCaptureRadius();
+    this.audienceCaptureRadiusPx = this.getAudienceCaptureRadius();
     this.audienceDistance = this.getAudienceDistance();
     this.captureTop = this.getRadiusTopPosition(null);
 
-    const { interRowInterval, intraRowInterval, audiencePerRow, audienceRows } = this.getAudienceArray();
-    const { leftMicrophoneOffset, microphoneIntervalPx, microphonesPerRow, microphoneRows } = this.getMicrophoneArray();
+    const { interRowInterval, intraRowInterval, audiencePerRow, audienceRows } = this.getAudiencePositions();
 
     this.interRowInterval = interRowInterval;
     this.intraRowInterval = intraRowInterval;
     this.audiencePerRow = audiencePerRow;
     this.audienceRows = audienceRows;
-
-    this.leftMicrophoneOffset = leftMicrophoneOffset;
-    this.microphoneIntervalPx = microphoneIntervalPx;
-    this.microphonesPerRow = microphonesPerRow;
-    this.microphoneRows = microphoneRows;
   }
 
   private calculateStageRatios() {
@@ -236,8 +236,9 @@ export class GraphicalStageTopComponent implements OnInit {
     return widthRatio * this.stageHeight;
   }
 
-  private getCaptureRadius(): number {
+  private getAudienceCaptureRadius(): number {
     const radius = this.calculatorService.audienceCaptureRadius;
+    //const radius = this.calculatorService.audienceMicrophoneInterval / 2;
     const radiusStageHeightRatio = radius / this.calculatorService.lectureWidth;
     return radiusStageHeightRatio * this.stageHeight;
   }
@@ -257,8 +258,7 @@ export class GraphicalStageTopComponent implements OnInit {
     return this.stageHeight * distanceRatio;
   }
 
-  private getAudienceArray(): any {
-    let audienceArray = [];
+  private getAudiencePositions(): any {
     const audienceOffset = this.audienceDistance;
     const audienceDepth = this.audienceDepth;
 
@@ -267,7 +267,6 @@ export class GraphicalStageTopComponent implements OnInit {
 
     const audiencePerRow = round(audienceDepth / (this.audienceWidth + interRowInterval), 0);
     const numRows = round((0.8 * this.stageHeight)  / (this.audienceWidth + intraRowInterval), 0);
-    this.getMicrophoneArray();
 
     return {
       interRowInterval: interRowInterval,
@@ -275,20 +274,6 @@ export class GraphicalStageTopComponent implements OnInit {
       audiencePerRow: Array(audiencePerRow).fill(0).map((x, i) => i),
       audienceRows: Array(numRows).fill(0).map((x, i) => i)
     };
-  }
-
-  private getMicrophoneArray(): any {
-    let microphoneArray = [];
-    const sizeRatio = this.calculatorService.audienceMicrophoneInterval / this.calculatorService.lectureWidth;
-    const intervalSize = sizeRatio * this.stageHeight;
-    const microphoneLeftOffset = (this.presenterWidth * 5) + (intervalSize / 2); // The offset should be based on half the interval size instead
-
-    return {
-      leftMicrophoneOffset: microphoneLeftOffset,
-      microphoneIntervalPx: intervalSize,
-      microphonesPerRow: Array(this.calculatorService.requiredAudienceMicrophonesDepth),
-      microphoneRows: Array(this.calculatorService.requiredAudienceMicrophonesWidth),
-    }
   }
 
   public updateInput(inputField, inputElement) {
@@ -306,93 +291,137 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudienceMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneInterval: number): GraphicPosition[] {
     let microphones: GraphicPosition[] = [];
+
+    //microphoneInterval /= 1.5;
+    console.log(microphoneInterval);
+    const percentageIntervalDepth = (microphoneInterval / this.calculatorService.audienceDepth) * 100;
+    const percentageIntervalWidth = (microphoneInterval / this.calculatorService.lectureWidth) * 100;
+    console.log(`Depth: ${numMicrophonesDepth}. Wiidth: ${numMicrophonesWidth}`);
+    console.log(`microInterval: ${microphoneInterval} / audienceDepth: ${this.calculatorService.audienceDepth} * 100 = ${percentageIntervalDepth}`);
+    console.log(`microInterval: ${microphoneInterval} / lectureWidth: ${this.calculatorService.lectureWidth} * 100 = ${percentageIntervalWidth}`);
     const intervalPx = (microphoneInterval / this.calculatorService.lectureWidth) * this.stageHeight;
-    const rowOffsetPx = this.audienceDistance + this.captureRadiusPx;
-    const topOffsetPx = (0.1 * this.stageHeight) + this.captureRadiusPx;
+    const rowOffsetPx = this.audienceDistance + this.audienceCaptureRadiusPx;
+    const topOffsetPx = (0.1 * this.stageHeight) + this.audienceCaptureRadiusPx;
 
-    for (let i = 0; i < numMicrophonesWidth; i++) {
-      for (let j = 0; j < numMicrophonesDepth; j++) {
-        const columnPosition = topOffsetPx + (i * intervalPx);
-        const rowPosition = rowOffsetPx + (j * intervalPx);
-        microphones.push(new GraphicPosition(i + j, rowPosition, columnPosition));
-      }
-    }
-
-    // console.log(microphones);
-    return microphones;
-  }
-
-  private getAudienceMicrophonePositions2(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneInterval: number): GraphicPosition[] {
-    let microphones: GraphicPosition[] = [];
-    const intervalPx = (microphoneInterval / this.calculatorService.lectureWidth) * this.stageHeight;
-    const rowOffsetPx = this.audienceDistance + this.captureRadiusPx;
-    const topOffsetPx = (0.1 * this.stageHeight) + this.captureRadiusPx;
-
+    const numDepthEven = numMicrophonesDepth % 2 === 0;
+    const numWidthEven = numMicrophonesWidth % 2 === 0;
     let depthMidpoint = 0;
-    let depthMidpoints = [0, 0];
+    let depthMidpoints: number[] = null;
     let widthMidpoint = 0;
-    let widthMidpoints = [0, 0];
+    let widthMidpoints: number[] = null;
 
-    if (numMicrophonesDepth % 2 === 0) { // 2 "midpoints" about the true geometric middle
-      depthMidpoint = Math.ceil(numMicrophonesDepth / 2);
+    depthMidpoint = Math.ceil(numMicrophonesDepth / 2);
+    if (numDepthEven) { // 2 "midpoints" about the true geometric middle
       depthMidpoints = [depthMidpoint, depthMidpoint + 1];
     } 
-    if (numMicrophonesWidth % 2 === 0) { // 2 "midpoints" about the true geometric middle
-      widthMidpoint = Math.ceil(numMicrophonesWidth / 2);
+    widthMidpoint = Math.ceil(numMicrophonesWidth / 2);
+    if (numWidthEven) { // 2 "midpoints" about the true geometric middle
       widthMidpoints = [widthMidpoint, widthMidpoint + 1];
     }
-    return [];
-  }
 
-  private calculateMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneInterval: number) {
-    let microphones: GraphicPosition[] = [];
-    const percentageInterval = microphoneInterval;
+    if (!numDepthEven && !numWidthEven) { // Both odd, one true geometric center. Simplest combination
+      const centerMic = new GraphicPosition(depthMidpoint + widthMidpoint, 50, 50);
+      microphones.push(centerMic);
+      for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, 50, 50 - (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+      for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, 50, 50 + (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
 
-    // let microphones: GraphicPosition[] = [];
-    // const percentageInterval = microphoneInterval / this.calculatorService.lectureWidth * 100;
-    // if (numMicrophones % 2 === 0) {
-    //   const midpoint = Math.ceil(numMicrophones / 2);
-    //   const midpoints = [midpoint, midpoint + 1];
-    //   microphones.push(new GraphicPosition(midpoint, 50 - (percentageInterval / 2)));
-    //   microphones.push(new GraphicPosition(midpoint, 50 + (percentageInterval / 2)));
+      for (let depthMic = depthMidpoint - 1, i = 1; depthMic > 0; depthMic--, i++) {
+        let dMid = 50 - (i * percentageIntervalDepth);
+        console.log(dMid);
+        console.log(percentageIntervalDepth);
+        const dMidMic = new GraphicPosition(depthMic, dMid, 50);
+        microphones.push(dMidMic);
+        for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 - (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+        for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 + (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+      }
+      for (let depthMic = depthMidpoint + 1, i = 1; depthMic <= numMicrophonesDepth; depthMic++, i++) {
+        let dMid = 50 + (i * percentageIntervalDepth);
+        const dMidMic = new GraphicPosition(depthMic, dMid, 50);
+        microphones.push(dMidMic);
+        for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 - (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+        for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 + (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+      }
+    } else if (numDepthEven && !numWidthEven) {
+      const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
+      const centerRightInterval = 50 + (percentageIntervalDepth / 2);
+      console.log(`microInterval: ${microphoneInterval} / lectureWidth: ${this.calculatorService.lectureWidth} * 100 = ${percentageIntervalWidth}`);
+      console.log(`cLI: ${centerLeftInterval}. cRI: ${centerRightInterval}`);
+      const centerMicLeft = new GraphicPosition(depthMidpoint + widthMidpoint, centerLeftInterval, 50);
+      const centerMicRight = new GraphicPosition(depthMidpoint + widthMidpoint, centerRightInterval, 50);
+      microphones.push(centerMicLeft, centerMicRight);
 
-    //   for (let mic = midpoint - 1, i = 1; mic > 0; mic--, i++) {
-    //     let microphonePos = new GraphicPosition(mic, 50 - (percentageInterval / 2) - (i * percentageInterval));
-    //     if (mic === 1) {
-    //       this.microphones.leftMost = 50 - (percentageInterval / 2) - (i * percentageInterval);
-    //     }
-    //     microphones.push(microphonePos);
-    //   }
+      // Left side 
+      for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, centerLeftInterval, 50 - (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+      for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, centerLeftInterval, 50 + (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+      for (let depthMic = depthMidpoint - 1, i = 1; depthMic > 0; depthMic--, i++) {
+        let dMid = centerLeftInterval - (i * percentageIntervalDepth);
+        const dMidMic = new GraphicPosition(depthMic, dMid, 50);
+        microphones.push(dMidMic);
+        for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 - (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+        for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 + (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+      }
 
-    //   for (let mic = midpoint + 2, i = 1; mic <= numMicrophones; mic++, i++) {
-    //     let microphonePos = new GraphicPosition(mic, 50 + (percentageInterval / 2) + (i * percentageInterval));
-    //     if (mic === numMicrophones) {
-    //       this.microphones.rightMost = 50 + (percentageInterval / 2) + (i * percentageInterval);
-    //     }
-    //     microphones.push(microphonePos);
-    //   }
+      // Right side
+      for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, centerRightInterval, 50 - (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+      for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+        let widthMicPos = new GraphicPosition(widthMic, centerRightInterval, 50 + (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+      for (let depthMic = depthMidpoint + 1, i = 1; depthMic <= numMicrophonesDepth; depthMic++, i++) {
+        let dMid = centerRightInterval + (i * percentageIntervalDepth);
+        const dMidMic = new GraphicPosition(depthMic, dMid, 50);
+        microphones.push(dMidMic);
+        for (let widthMic = widthMidpoint - 1, j = 1; widthMic > 0; widthMic--, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 - (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+        for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
+          let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 + (j * percentageIntervalWidth));
+          microphones.push(widthMicPos);
+        }
+      }
+    } else if (!numDepthEven && numWidthEven) {
+      console.error('Not yet implemented');
+    } else if (numDepthEven && numWidthEven) {
+      console.error('Not yet implemented');
+    }
 
-    // } else {
-    //   const midpoint = Math.ceil(numMicrophones / 2);
-    //   microphones.push(new GraphicPosition(midpoint, 50));
-    //   for (let mic = midpoint - 1, i = 1; mic > 0; mic--, i++) {
-    //     let microphonePos = new GraphicPosition(mic, 50 - (i * percentageInterval));
-    //     if (mic === 1) {
-    //       this.microphones.leftMost = 50 - (i * percentageInterval);
-    //     }
-    //     microphones.push(microphonePos);
-    //   }
 
-    //   for (let mic = midpoint + 1, i = 1; mic <= numMicrophones; mic++, i++) {
-    //     let microphonePos = new GraphicPosition(mic, 50 + (i * percentageInterval));
-    //     if (mic === numMicrophones) {
-    //       this.microphones.rightMost = 50 + (i * percentageInterval);
-    //     }
-    //     microphones.push(microphonePos);
-    //   }
-    // }
-
-    // this.microphones.positions = microphones;
+    console.log(microphones);
+    return microphones;
   }
 
   private calculatePersonPositions(numMicrophones: number, microphoneInterval: number) {

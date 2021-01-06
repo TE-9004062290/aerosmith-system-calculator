@@ -22,6 +22,7 @@ import { SvgIconsComponent } from './components/svg-icons/svg-icons.component';
 import { VersionStampComponent } from './components/version-stamp/version-stamp.component';
 import { GraphicalStageTopComponent } from './components/graphical-stage-top/graphical-stage-top.component';
 import { DesignInputsComponent } from './components/design-inputs/design-inputs.component';
+import { SvgCaptureRadiusComponent } from './components/svg-capture-radius/svg-capture-radius.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DesignInputsComponent } from './components/design-inputs/design-inputs.
     VersionStampComponent,
     GraphicalStageTopComponent,
     DesignInputsComponent,
+    SvgCaptureRadiusComponent,
   ],
   imports: [
     BrowserModule,

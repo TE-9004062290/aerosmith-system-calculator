@@ -128,11 +128,17 @@
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
                         </div>
-                        <div class="audience-container" [ngStyle]="{'left': audienceDistance + 'px' }">
+                        <div class="audience-container" [ngStyle]="{'left': audienceDistance + 'px', 'width': audienceDepth + 'px' }">
                             <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (intraRowInterval / 2) + 'px', 'margin-top': (intraRowInterval / 2) + 'px'}">
                                 <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
                                     [ngStyle]="{'width': audienceWidth + 'px', 'margin-left': interRowInterval / 2 + 'px', 'margin-right': interRowInterval / 2 + 'px'}">
                                     <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
+                                </div>
+                            </div>
+                            <div class="audience-microphones">
+                                <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
+                                    [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
+                                    <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2"></app-svg-capture-radius>
                                 </div>
                             </div>
                         </div>
