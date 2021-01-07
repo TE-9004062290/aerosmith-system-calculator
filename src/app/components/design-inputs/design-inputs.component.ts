@@ -50,7 +50,6 @@ export class DesignInputsComponent implements OnInit {
   }
 
   clicky() {
-    console.log('shit');
   }
 
 }

@@ -343,12 +343,9 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudienceMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneIntervalWidth: number, microphoneIntervalDepth: number): GraphicPosition[] {
     let microphones: GraphicPosition[] = [];
-    console.log(arguments);
+    console.log(`numWidth: ${numMicrophonesWidth}, numDepth: ${numMicrophonesDepth}, intervalWidth: ${microphoneIntervalWidth}, intervalDepth: ${microphoneIntervalDepth}`);
     const percentageIntervalDepth = (microphoneIntervalDepth / this.calculatorService.audienceDepth) * 100;
     const percentageIntervalWidth = (microphoneIntervalWidth / this.calculatorService.lectureWidth) * 100;
-    // const intervalPx = (microphoneInterval / this.calculatorService.lectureWidth) * this.stageHeight;
-    // const rowOffsetPx = this.audienceDistance + this.audienceCaptureRadiusPx;
-    // const topOffsetPx = (0.1 * this.stageHeight) + this.audienceCaptureRadiusPx;
 
     const numDepthEven = numMicrophonesDepth % 2 === 0;
     const numWidthEven = numMicrophonesWidth % 2 === 0;
@@ -371,9 +368,9 @@ export class GraphicalStageTopComponent implements OnInit {
     } else if (!numWidthEven&& numDepthEven) {
       return this._audMicWidthOddDepthEven(parameterObject);
     } else if (numWidthEven && !numDepthEven) {
-      console.error('Not yet implemented');
+      return this._audMicWidthEvenDepthOdd(parameterObject);
     } else if (numWidthEven && numDepthEven) {
-      console.error('Not yet implemented');
+      return this._audMicWidthEvenDepthEven(parameterObject);
     }
 
     return microphones;
@@ -428,7 +425,7 @@ export class GraphicalStageTopComponent implements OnInit {
 
     const centerRightInterval = 50 + (percentageIntervalDepth / 2);
     const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
-    
+
     // Right side
     for (let depthMic = depthMidpoint, i = 0; depthMic < numMicrophonesDepth; depthMic++, i++) {
       let dMid = centerRightInterval + (i * percentageIntervalDepth);
@@ -455,6 +452,99 @@ export class GraphicalStageTopComponent implements OnInit {
       }
       for (let widthMic = widthMidpoint + 1, j = 1; widthMic <= numMicrophonesWidth; widthMic++, j++) {
         let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, 50 + (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+    }
+
+    return microphones;
+  }
+
+  private _audMicWidthEvenDepthOdd(parameterObject: any): GraphicPosition[] {
+    let microphones: GraphicPosition[] = [];
+    const { numMicrophonesWidth, numMicrophonesDepth, 
+      percentageIntervalWidth, percentageIntervalDepth, 
+      widthMidpoint, depthMidpoint 
+    } = parameterObject;
+
+    const centerTopInterval = 50 - (percentageIntervalWidth / 2);
+    const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
+
+    // Top side
+    for (let widthMic = widthMidpoint, i = 0; widthMic < numMicrophonesWidth; widthMic++, i++) {
+      const wMid = centerTopInterval - (i * percentageIntervalWidth);
+      const wMidMic = new GraphicPosition(widthMic, 50, wMid);
+      microphones.push(wMidMic);
+      for (let depthMic = depthMidpoint - 1, j = 1; depthMic > 0; depthMic--, j++) { // iterate left
+        let depthMicPos = new GraphicPosition(depthMic + widthMic, 50 - (j * percentageIntervalDepth), wMid)
+        microphones.push(depthMicPos);
+      }
+      for (let depthMic = depthMidpoint + 1, j = 1; depthMic <= numMicrophonesDepth; depthMic++, j++) { // iterate right
+        let depthMicPos = new GraphicPosition(depthMic + widthMic, 50 + (j * percentageIntervalDepth), wMid)
+        microphones.push(depthMicPos);
+      }
+    }
+
+    // Bottom side
+    for (let widthMic = widthMidpoint, i = 0; widthMic > 0; widthMic--, i++) {
+      const wMid = centerBottomInterval + (i * percentageIntervalWidth);
+      const wMidMic = new GraphicPosition(widthMic, 50, wMid);
+      microphones.push(wMidMic);
+      for (let depthMic = depthMidpoint - 1, j = 1; depthMic > 0; depthMic--, j++) { // iterate left
+        let depthMicPos = new GraphicPosition(depthMic + widthMic, 50 - (j * percentageIntervalDepth), wMid)
+        microphones.push(depthMicPos);
+      }
+      for (let depthMic = depthMidpoint + 1, j = 1; depthMic <= numMicrophonesDepth; depthMic++, j++) { // iterate right
+        let depthMicPos = new GraphicPosition(depthMic + widthMic, 50 + (j * percentageIntervalDepth), wMid)
+        microphones.push(depthMicPos);
+      }
+    }
+
+    return microphones;
+  }
+
+  /* Instead of just one "special" off-axis, there are now two. So 4 special origin nodes instead of just 2. */
+  private _audMicWidthEvenDepthEven(parameterObject: any): GraphicPosition[] {
+    let microphones: GraphicPosition[] = [];
+    const { numMicrophonesWidth, numMicrophonesDepth, 
+      percentageIntervalWidth, percentageIntervalDepth, 
+      widthMidpoint, depthMidpoint 
+    } = parameterObject;
+
+    const centerRightInterval = 50 + (percentageIntervalDepth / 2);
+    const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
+    const centerTopInterval = 50 - (percentageIntervalWidth / 2);
+    const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
+
+    // Inner Upper-Right corner
+    for (let depthMic = depthMidpoint, i = 0; depthMic < numMicrophonesDepth; depthMic++, i++) {
+      const dMid = centerRightInterval + (i * percentageIntervalDepth);
+      for (let widthMic = widthMidpoint, j = 0; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, centerTopInterval - (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+    }
+    // Inner Upper-Left corner
+    for (let depthMic = depthMidpoint, i = 0; depthMic > 0; depthMic--, i++) {
+      const dMid = centerLeftInterval - (i * percentageIntervalDepth);
+      for (let widthMic = widthMidpoint, j = 0; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, centerTopInterval - (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+    }
+
+    // Inner Bottom-Right corner
+    for (let depthMic = depthMidpoint, i = 0; depthMic < numMicrophonesDepth; depthMic++, i++) {
+      const dMid = centerRightInterval + (i * percentageIntervalDepth);
+      for (let widthMic = widthMidpoint, j = 0; widthMic < numMicrophonesWidth; widthMic++, j++) {
+        let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, centerBottomInterval + (j * percentageIntervalWidth));
+        microphones.push(widthMicPos);
+      }
+    }
+    // Inner Bottom-Left corner
+    for (let depthMic = depthMidpoint, i = 0; depthMic > 0; depthMic--, i++) {
+      const dMid = centerLeftInterval - (i * percentageIntervalDepth);
+      for (let widthMic = widthMidpoint, j = 0; widthMic > 0; widthMic--, j++) {
+        let widthMicPos = new GraphicPosition(depthMic + widthMic, dMid, centerBottomInterval + (j * percentageIntervalWidth));
         microphones.push(widthMicPos);
       }
     }

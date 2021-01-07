@@ -245,7 +245,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
-      this.m_distanceBetweenAudienceAndMicrophone = 4 * (this.m_audienceHeight - this.topOfHeadToMouth);
+      this.m_distanceBetweenAudienceAndMicrophone = 1.1 * (this.m_audienceHeight - this.topOfHeadToMouth);
       this.b_pristine = false;
       this.b_has_output = false;
 
@@ -419,29 +419,28 @@ export class CalculatorService {
     // this.m_distanceBetweenAudienceAndMicrophone = verticalAudienceMicrophoneDistance;
 
     let halfChord = Math.sqrt( (captureRadius ** 2) - (this.m_distanceBetweenAudienceAndMicrophone ** 2) );
-    halfChord = Math.cos(Math.PI / 4) * captureRadius;
-    //console.log(`audInt: ${2 * halfChord} meters`);
-    return Math.max(1 * this.unitConversion, 2 * halfChord);
+    //halfChord = Math.cos(Math.PI / 3.9) * captureRadius;
+    return Math.max(1 * this.unitConversion, 1.25 * halfChord);
   }
 
   private calculateNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, audienceMicrophoneInterval: number) {
     const widthRaw = presentationWidth / audienceMicrophoneInterval;
     const depthRaw = audienceDepth / audienceMicrophoneInterval;
-
     return {
-      width: round(widthRaw, 0),
-      depth: round(depthRaw, 0)
+      width: Math.max(round(widthRaw, 0), 1),
+      depth: Math.max(round(depthRaw, 0), 1)
     };
   }
 
-  private refineAudienceMicrophoneInterval(lectureWidth: number, audienceDepth: number, numAudienceMicrophones: any): any {
+  private refineAudienceMicrophoneInterval(lectureWidth: number, audienceDepth: number, audienceMicrophoneInterval: number, numAudienceMicrophones: any): any {
     const widthCount = numAudienceMicrophones.width;
     const depthCount = numAudienceMicrophones.depth;
 
+    /* Return the smaller of the original and refined intervals and largest between that and 1. */
     return {
-      width: round(1 * lectureWidth / widthCount, 2),
-      depth: round(1 * audienceDepth / depthCount, 2)
-    };
+      width: Math.max(Math.min(audienceMicrophoneInterval, round(1 * lectureWidth / widthCount, 2)), 1),
+      depth: Math.max(Math.min(audienceMicrophoneInterval, round(1 * audienceDepth / depthCount, 2)), 1)
+    }
   }
 
   private setOutputs(extenderLength: number, audienceDistance: number, 
@@ -480,12 +479,7 @@ export class CalculatorService {
 
     let audienceMicrophoneInterval = this.calculateAudienceMicrophoneInterval(audienceHeight, ceilingHeight);
     let numAudienceMicrophones: Object = this.calculateNumAudienceMicrophones(lectureWidth, audienceDepth, audienceMicrophoneInterval);
-    let refinedAudienceMicrophoneIntervals = this.refineAudienceMicrophoneInterval(lectureWidth, audienceDepth, numAudienceMicrophones);
-    // if (refinedAudienceMicrophoneInterval < audienceMicrophoneInterval) {
-    //   audienceMicrophoneInterval = refinedAudienceMicrophoneInterval;
-    // }
-    //numAudienceMicrophones = this.calculateNumAudienceMicrophones(lectureWidth, audienceDepth, audienceMicrophoneInterval);
-    // console.log(audienceMicrophoneInterval, numAudienceMicrophones);
+    let refinedAudienceMicrophoneIntervals = this.refineAudienceMicrophoneInterval(lectureWidth, audienceDepth, audienceMicrophoneInterval, numAudienceMicrophones);
 
     const audienceDistance = this.calculateAudienceDistance(3 * this.unitConversion, ceilingHeight, audienceHeight, extenderLength);
 
