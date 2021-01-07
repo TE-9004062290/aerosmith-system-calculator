@@ -105,17 +105,6 @@
             <div #container class="stage-outer-container">
                 <div class="stage-label">Top view</div>
                 <div class="stage-inner-container">
-                    <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'left': audienceDistance + 'px' }" style="position: absolute; bottom: -40px;">
-                        <app-measuring-stick orientation="horizontal" 
-                            [width]="audienceDepth"
-                            thinModeDirection="bottom"
-                            [isInput]="true" 
-                            [inputMin]="CalculatorMins.audienceDepth"
-                            [inputMax]="CalculatorMaxes.audienceDepth"
-                            [inputValue]="calculatorService.audienceDepth"
-                            (updated)="updateInput('audienceDepth', $event)"
-                        ></app-measuring-stick>
-                    </div>
                     <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width' : '100%'}">
                         <div class="presenter-container">
                             <div class="presenter-icon left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 0%; left: 0%;" @animateOutputArea>
@@ -128,17 +117,19 @@
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
                         </div>
-                        <div class="audience-container" [ngStyle]="{'left': audienceDistance + 'px', 'width': audienceDepth + 'px' }">
-                            <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (intraRowInterval / 2) + 'px', 'margin-top': (intraRowInterval / 2) + 'px'}">
-                                <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
-                                    [ngStyle]="{'width': audienceWidth + 'px', 'margin-left': interRowInterval / 2 + 'px', 'margin-right': interRowInterval / 2 + 'px'}">
-                                    <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
+                        <div class="audience-wrapper">
+                            <div class="audience-container" [ngStyle]="{'left': audienceDistance + 'px', 'width': audienceDepth + 'px' }">
+                                <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (intraRowInterval / 2) + 'px', 'margin-top': (intraRowInterval / 2) + 'px'}">
+                                    <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
+                                        [ngStyle]="{'width': audienceWidth + 'px', 'margin-left': interRowInterval / 2 + 'px', 'margin-right': interRowInterval / 2 + 'px'}">
+                                        <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="audience-microphones">
-                                <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
-                                    [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
-                                    <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                <div class="audience-microphones">
+                                    <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
+                                        [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
+                                        <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +148,17 @@
                             <app-svg-microphone [calculationPriority]="calculatorService.calculationPriority" [extenderLength]="extenderLength"></app-svg-microphone>
                         </div> -->
                     </div>
+                </div>
+                <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'left': 'calc(5% + ' + audienceDistance + 'px)' }" style="position: absolute; bottom: -40px;">
+                    <app-measuring-stick orientation="horizontal" 
+                        [width]="audienceDepth"
+                        thinModeDirection="bottom"
+                        [isInput]="true" 
+                        [inputMin]="CalculatorMins.audienceDepth"
+                        [inputMax]="CalculatorMaxes.audienceDepth"
+                        [inputValue]="calculatorService.audienceDepth"
+                        (updated)="updateInput('audienceDepth', $event)"
+                    ></app-measuring-stick>
                 </div>
             </div>   
         </div>

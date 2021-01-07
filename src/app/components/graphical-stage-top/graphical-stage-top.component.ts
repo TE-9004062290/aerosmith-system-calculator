@@ -343,7 +343,6 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudienceMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneIntervalWidth: number, microphoneIntervalDepth: number): GraphicPosition[] {
     let microphones: GraphicPosition[] = [];
-    console.log(`numWidth: ${numMicrophonesWidth}, numDepth: ${numMicrophonesDepth}, intervalWidth: ${microphoneIntervalWidth}, intervalDepth: ${microphoneIntervalDepth}`);
     const percentageIntervalDepth = (microphoneIntervalDepth / this.calculatorService.audienceDepth) * 100;
     const percentageIntervalWidth = (microphoneIntervalWidth / this.calculatorService.lectureWidth) * 100;
 
