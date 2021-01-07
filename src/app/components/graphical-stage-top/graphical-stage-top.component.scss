@@ -64,6 +64,9 @@
                         }
                         .audience-container {
                             position: relative; 
+                            // padding-top: 5%;
+                            // padding-bottom: 5%;
+                            box-sizing: border-box;
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
