@@ -1,0 +1,63 @@
+
+<div class="graphical-output-side" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput }">
+    <div class="stage-info-wrapper" [ngStyle]="{'height': stageHeight + 'px'}">
+        <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
+            <app-measuring-stick orientation="vertical" [height]="stageHeight"
+                [isInput]="true"
+                thinModeDirection="left"
+                [inputMin]="CalculatorMins.ceilingHeight"
+                [inputMax]="CalculatorMaxes.ceilingHeight"
+                [inputValue]="calculatorService.ceilingHeight"
+                (updated)="updateInput('ceilingHeight', $event)"
+            ></app-measuring-stick>
+        </div>
+        <div class="measuring-stick-overlay audience-height">
+            <app-measuring-stick orientation="vertical" [height]="stageHeight * calculatorService.audienceHeight / calculatorService.ceilingHeight"
+                [isInput]="true"
+                thinModeDirection="right"
+                [inputMin]="CalculatorMins.audienceHeight"
+                [inputMax]="CalculatorMaxes.audienceHeight"
+                step="0.1"
+                [inputValue]="calculatorService.audienceHeight"
+                (updated)="updateInput('audienceHeight', $event)"
+            ></app-measuring-stick>
+        </div>
+        <div #wrapper class="stage-wrapper">
+            <div #container class="stage-outer-container">
+                <div class="stage-label">Side view</div>
+                <div class="stage-inner-container">
+                    <div *ngIf="calculatorService.hasFreshOutput" @animateOutputArea
+                        class="measuring-stick-overlay audience-distance" 
+                        [ngStyle]="{'left': (presenterCaptureRadiusPx / 2) + 'px'}">
+                        <app-measuring-stick orientation="horizontal"
+                            [width]="audienceDistance"
+                            thinModeDirection="bottom"
+                            [isInput]="false" 
+                            [inputValue]="calculatorService.audienceDistance"
+                        ></app-measuring-stick>
+                        <div class="warning">
+                            <span class="warning-icon"><app-svg-icons iconType="warning"></app-svg-icons></span>
+                            <span class="warning-text">Loud audience sounds may be recorded if closer than this distance</span>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <div class="person-wrapper" @animateOutputArea
+                            [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2) + 'px'}">
+                            <app-svg-standing-person mode="side"></app-svg-standing-person>
+                        </div>
+                        <div class="audience-wrapper" [ngStyle]="{'left': audienceDistance + (presenterCaptureRadiusPx / 2) + 'px', 'width': audienceDepthPx + 'px'}">
+                            <div *ngFor="let a of numAudience; trackBy: audienceTrackByFn" class="audience-icon" 
+                                [ngStyle]="{'width': audienceWidthPx + 'px', 'margin-right': audienceIntervalPx + 'px'}" @animateOutputArea>
+                            <app-svg-standing-person mode="sitting"></app-svg-standing-person>
+                        </div>
+                        </div>
+                        <div *ngIf="calculatorService.hasFreshOutput" class="microphone-wrapper" @animateOutputArea                  
+                            [ngStyle]="{'width': (2 * presenterCaptureRadiusPx) + 'px', 'left': (presenterCaptureRadiusPx / 2) + 'px', 'position': 'absolute'}">
+                            <app-svg-microphone [soundReinforcementPriority]="calculatorService.soundReinforcementPriority" [extenderLength]="extenderLength"></app-svg-microphone>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>

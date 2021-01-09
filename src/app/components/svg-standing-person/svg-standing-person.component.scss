@@ -4,7 +4,7 @@
     }
 }
 
-.svg-standing-person, .svg-standing-person-side, .svg-sitting-person {
+.svg-standing-person, .svg-sitting-person {
     display: inline-block;
     transition: width .25s linear, left .25s linear;
     svg {
@@ -12,7 +12,7 @@
     }
 }
 
-.svg-standing-person-top, .svg-sitting-person-top {
+.svg-standing-person-top, .svg-sitting-person-top, .svg-sitting-person-side {
     display: block;
     transition: width .25s linear, left .25s linear;
     svg {

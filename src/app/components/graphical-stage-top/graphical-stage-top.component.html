@@ -89,7 +89,7 @@
         </div>
     </div>
 </div> -->
-<div class="graphical-output-top" >
+<div class="graphical-output-top" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput }">
     <div class="stage-info-wrapper">
         <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
             <app-measuring-stick orientation="vertical" [height]="stageHeight"
@@ -107,21 +107,21 @@
                 <div class="stage-inner-container">
                     <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width' : '100%'}">
                         <div class="presenter-container">
-                            <div class="presenter-icon left-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 0%; left: 0%;" @animateOutputArea>
+                            <div class="presenter-icon left-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2) + 'px'}" style="top: 0%; left: 0%;" @animateOutputArea>
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
-                            <div class="presenter-icon center-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="top: 45%; left: 0%;" @animateOutputArea>
+                            <div class="presenter-icon center-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2)  + 'px'}" style="top: 45%; left: 0%;" @animateOutputArea>
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
-                            <div class="presenter-icon right-anchor" [ngStyle]="{'width': presenterWidth + 'px'}" style="bottom: 0%; left: 0%;" @animateOutputArea>
+                            <div class="presenter-icon right-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2)  + 'px'}" style="bottom: 0%; left: 0%;" @animateOutputArea>
                                 <app-svg-standing-person mode="top"></app-svg-standing-person>
                             </div>
                         </div>
                         <div class="audience-wrapper">
-                            <div class="audience-container" [ngStyle]="{'left': audienceDistance + 'px', 'width': audienceDepth + 'px' }">
-                                <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (intraRowInterval / 2) + 'px', 'margin-top': (intraRowInterval / 2) + 'px'}">
+                            <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterCaptureRadiusPx / 2)  + 'px', 'width': audienceDepthPx + 'px' }">
+                                <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (interRowInterval / 2) + 'px', 'margin-top': (interRowInterval / 2) + 'px'}">
                                     <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
-                                        [ngStyle]="{'width': audienceWidth + 'px', 'margin-left': interRowInterval / 2 + 'px', 'margin-right': interRowInterval / 2 + 'px'}">
+                                        [ngStyle]="{'width': audienceWidth + 'px', 'margin-right': intraRowInterval + 'px'}">
                                         <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'left': 'calc(5% + ' + audienceDistance + 'px)' }" style="position: absolute; bottom: -40px;">
                     <app-measuring-stick orientation="horizontal" 
-                        [width]="audienceDepth"
+                        [width]="audienceDepthPx"
                         thinModeDirection="bottom"
                         [isInput]="true" 
                         [inputMin]="CalculatorMins.audienceDepth"

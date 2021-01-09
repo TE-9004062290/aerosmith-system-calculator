@@ -82,6 +82,9 @@
                                     // &:first-child {
                                     //     margin-left: 0 !important;
                                     // }
+                                    &:last-child {
+                                        margin-right: 0px !important;
+                                    }
     
                                 }
                                 .audience-microphones {
@@ -97,6 +100,11 @@
                     }
                 }
             }
+        }
+    }
+    &.has-output {
+        .audience-row {
+            opacity: .3;
         }
     }
 }

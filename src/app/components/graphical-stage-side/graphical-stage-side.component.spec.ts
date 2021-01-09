@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { GraphicalStageSideComponent } from './graphical-stage-side.component';
+
+describe('GraphicalStageSideComponent', () => {
+  let component: GraphicalStageSideComponent;
+  let fixture: ComponentFixture<GraphicalStageSideComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ GraphicalStageSideComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(GraphicalStageSideComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

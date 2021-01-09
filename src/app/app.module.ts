@@ -23,6 +23,7 @@ import { VersionStampComponent } from './components/version-stamp/version-stamp.
 import { GraphicalStageTopComponent } from './components/graphical-stage-top/graphical-stage-top.component';
 import { DesignInputsComponent } from './components/design-inputs/design-inputs.component';
 import { SvgCaptureRadiusComponent } from './components/svg-capture-radius/svg-capture-radius.component';
+import { GraphicalStageSideComponent } from './components/graphical-stage-side/graphical-stage-side.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SvgCaptureRadiusComponent } from './components/svg-capture-radius/svg-c
     GraphicalStageTopComponent,
     DesignInputsComponent,
     SvgCaptureRadiusComponent,
+    GraphicalStageSideComponent,
   ],
   imports: [
     BrowserModule,

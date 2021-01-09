@@ -40,6 +40,13 @@ export class CalculationTheatreComponent implements OnInit {
     public mixpanelService: MixpanelService) {} 
 
   ngOnInit() {
+    
+    window.addEventListener('keypress', (e) => {
+      if (e.key === '*') {
+        this.calculatorService.autoCalculateOutput = !this.calculatorService.autoCalculateOutput;
+      }
+    });
+
     this.activatedRoute.queryParams
     .subscribe(params => {
       if (!this.initialized) {

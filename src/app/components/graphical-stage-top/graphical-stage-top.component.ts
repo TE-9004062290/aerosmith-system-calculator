@@ -59,15 +59,14 @@ export class GraphicalStageTopComponent implements OnInit {
 
 
   public widthHeightRatio: number = 1;
-  public captureRadiusPx: number = 0;
+  public presenterCaptureRadiusPx: number = 0;
   public audienceCaptureRadiusPx: number = 0;
-  public captureTop: number = 0;
 
   public microphones = { leftMost: 0, rightMost: 0, positions: []};
   public audienceMicrophones: GraphicPosition[] = [];
   public persons = { leftMost: 0, rightMost: 0, positions: []};
 
-  public audienceDepth: number = 0;
+  public audienceDepthPx: number = 0;
   public depthOffset: number = 0;
   public presenterWidth: number = 0;
   public audienceWidth: number = 0;
@@ -172,18 +171,18 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private calculateProportions() {
-    [this.stageHeight, this.stageWidth, this.ratioMode, this.depthOffset, this.audienceDepth] = this.calculateStageRatios();
+    [this.stageHeight, this.stageWidth, this.ratioMode, this.depthOffset, this.audienceDepthPx] = this.calculateStageRatios();
 
 
     this.presenterWidth = this.getPresenterWidth();
     this.audienceWidth = this.getAudienceWidth();
     this.audienceHeight = this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
+    this.presenterCaptureRadiusPx = this.getPresenterCaptureRadius();
     this.audienceCaptureRadiusPx = this.getAudienceCaptureRadius();
     this.audienceDistance = this.getAudienceDistance();
-    this.captureTop = this.getRadiusTopPosition(null);
 
     const { interRowInterval, intraRowInterval, audiencePerRow, audienceRows } = this.getAudiencePositions();
-
+    console.log(`Top: ${audiencePerRow} per row`);
     this.interRowInterval = interRowInterval;
     this.intraRowInterval = intraRowInterval;
     this.audiencePerRow = audiencePerRow;
@@ -205,7 +204,7 @@ export class GraphicalStageTopComponent implements OnInit {
     let stageWidth = 0;
 
     let depthOffset = 0;
-    let audienceDepth = 0;
+    let audienceDepthPx = 0;
     let ratioMode: RatioMode;
 
     if (heightWidthRatio >= 1) {
@@ -222,10 +221,10 @@ export class GraphicalStageTopComponent implements OnInit {
       }
     }
 
-    audienceDepth = depthToWidthRatio * stageWidth;
+    audienceDepthPx = depthToWidthRatio * stageWidth;
     depthOffset = depthOffsetToWidthRatio * stageWidth;
 
-    return [stageHeight, stageWidth, ratioMode, depthOffset, audienceDepth];
+    return [stageHeight, stageWidth, ratioMode, depthOffset, audienceDepthPx];
   }
   
   private getPresenterWidth(): number {
@@ -236,8 +235,14 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudienceWidth(): number {
     const audienceBodyWidth = (0.9 * this.calculatorService.presenterWidth) * SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
-    const widthRatio = audienceBodyWidth / this.calculatorService.lectureWidth;
-    return widthRatio * this.stageHeight;
+    const widthRatio = audienceBodyWidth / this.calculatorService.audienceDepth;
+    return widthRatio * this.audienceDepthPx;
+  }
+
+  private getPresenterCaptureRadius(): number {
+    const radius = this.calculatorService.captureRadius;
+    const captureRadiusHeightRatio = radius / this.calculatorService.lectureWidth;
+    return captureRadiusHeightRatio * this.stageHeight;
   }
 
   private getAudienceCaptureRadius(): number {
@@ -245,11 +250,6 @@ export class GraphicalStageTopComponent implements OnInit {
     //const radius = this.calculatorService.audienceMicrophoneInterval / 2;
     const radiusStageHeightRatio = radius / this.calculatorService.lectureWidth;
     return radiusStageHeightRatio * this.stageHeight;
-  }
-
-  private getRadiusTopPosition(numMicrophone): number {
-
-    return 0;
   }
 
   private getAudienceDistance(): number {
@@ -264,13 +264,13 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudiencePositions(): any {
     const audienceOffset = this.audienceDistance;
-    const audienceDepth = this.audienceDepth;
+    const audienceDepthPx = this.audienceDepthPx;
 
-    const interRowInterval = this.audienceWidth * 2;
-    const intraRowInterval = this.audienceWidth;
+    const intraRowInterval = this.audienceWidth; // back to front
+    const interRowInterval = this.audienceWidth * 2; // side to side
 
-    const audiencePerRow = round(audienceDepth / (this.audienceWidth + interRowInterval), 0);
-    const numRows = round((.8 * this.stageHeight)  / (this.audienceWidth + intraRowInterval), 0);
+    const audiencePerRow = round(audienceDepthPx / (this.audienceWidth + intraRowInterval), 0);
+    const numRows = round((.8 * this.stageHeight)  / (this.audienceWidth + interRowInterval), 0);
 
     return {
       interRowInterval: interRowInterval,
