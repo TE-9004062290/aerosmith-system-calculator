@@ -34,7 +34,6 @@
             border-top: solid #006DB3 1px;
             .stage-outer-container {
                 height: 100%;
-                overflow: hidden;
                 .stage-label {
                     position: absolute;
                     top: -28px;
@@ -45,15 +44,16 @@
                 }
                 .stage-inner-container {
                     position: relative;
-                    width: 90%;
+                    width: 95%;
                     height: 100%;
-                    margin: 0 auto;
+                    margin-left: 5%;
                     .measuring-stick-overlay {
 
                     }
                     .stage {
                         position: relative;
                         transition: height .25s linear, width .25s linear;
+                        overflow: hidden;
                         .presenter-container {
                             .presenter-icon {
                                 position: absolute;

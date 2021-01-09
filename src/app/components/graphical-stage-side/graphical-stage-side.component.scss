@@ -86,8 +86,8 @@
                 .stage-inner-container {
                     position: relative;
                     height: 100%;
-                    width: 90%;
-                    margin: 0 auto;
+                    width: 95%;
+                    margin-left: 5%;
                     .stage {
                         position: relative;
                         transition: height .25s linear, width .25s linear;
@@ -95,11 +95,21 @@
                         height: 100%;
                         overflow: hidden;
                         .audience-wrapper {
-                            display: flex;
+                            height: 100%;
                             position: absolute;
-                            bottom: 0px;
-                            .audience-icon {
+                            .audience-container {
+                                position: absolute;
+                                bottom: 0px;
+                                height: fit-content;
+                                display: flex;
+                                .audience-icon {
 
+                                }
+                            }
+                            .audience-microphones {
+                                .audience-microphone {
+                                    position: absolute;
+                                }
                             }
                         }
                         .person-wrapper {
