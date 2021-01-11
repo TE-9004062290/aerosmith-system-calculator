@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="audience-wrapper">
-                            <div class="measuring-stick-overlay depth-interval" 
+                            <div class="measuring-stick-overlay depth-interval" *ngIf="measuringStickDepthPosition"
                                 [ngStyle]="{'left': measuringStickDepthPosition.positionPercentage + 'px', 'top': '-30px', 'position': 'absolute'}">
                                 <app-measuring-stick orientation="horizontal" 
                                     [width]="microphoneDepthIntervalPx"
@@ -46,6 +46,16 @@
                                     [isInput]="false" 
                                     [twinned]="measuringStickDepthTwinned"
                                     [inputValue]="calculatorService.audienceMicrophoneIntervalDepth"
+                                ></app-measuring-stick>
+                            </div>
+                            <div class="measuring-stick-overlay width-interval" *ngIf="measuringStickWidthPosition"
+                                [ngStyle]="{'left': measuringStickWidthPosition.positionPercentage + 'px', 'top': measuringStickWidthPosition.positionPercentageVertical + '%', 'position': 'absolute'}">
+                                <app-measuring-stick orientation="vertical" 
+                                    [height]="microphoneWidthIntervalPx"
+                                    thinModeDirection="right"
+                                    [twinned]="measuringStickWidthTwinned"
+                                    [isInput]="false" 
+                                    [inputValue]="calculatorService.audienceMicrophoneIntervalWidth"
                                 ></app-measuring-stick>
                             </div>
                             <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterCaptureRadiusPx / 2)  + 'px', 'width': audienceDepthPx + 'px' }">

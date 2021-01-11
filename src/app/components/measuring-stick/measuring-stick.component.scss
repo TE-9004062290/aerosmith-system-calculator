@@ -175,6 +175,37 @@
     }
 }
 
+.vertical-wrapper {
+    &.twinned {
+
+        &[mode='thin'] {
+            position: relative;
+
+            .vertical-measure {
+                margin: 0;
+                &:last-child {
+                    .inputs-output {
+                    }
+                    // .stick.left{
+                    //     .stop {
+                    //         width: 0px;
+                    //     }
+                    // }
+                }
+                &:first-child {
+                    .inputs-output {
+                    }
+                    // .stick.right {
+                    //     .stop {
+                    //         width: 3px;
+                    //     }
+                    // }
+                }
+            }
+        }
+    }
+}
+
 .horizontal-measure {
     position: relative;
     height: 20px;
@@ -305,10 +336,10 @@
         }
         &[mode-direction='right'] {
             .inputs-output {
-                right: -45px;
+                right: -35px;
             }
             .inputs-input {
-                right: -55px;
+                right: -45px;
             }
         }
     }

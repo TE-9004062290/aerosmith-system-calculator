@@ -65,6 +65,9 @@ export class MeasuringStickComponent implements OnInit {
   private thinThreshold = 100; // 150px
   private shortThreshold = 60;
 
+  public firstContext = { first: true };
+  public secondContext = { first: false };
+
   ngOnInit() {
     if ((this._width && this._width < this.thinThreshold) || (this._height && this._height < this.shortThreshold)) {
       this.mode = 'thin';

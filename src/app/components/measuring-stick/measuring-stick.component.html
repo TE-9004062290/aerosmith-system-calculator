@@ -6,8 +6,9 @@
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="'vertical'">
-        <div class="vertical-wrapper">
-            <ng-container [ngTemplateOutlet]="vertical"></ng-container>
+        <div class="vertical-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
+            <ng-container *ngTemplateOutlet="vertical; context: firstContext"></ng-container>
+            <ng-container *ngTemplateOutlet="vertical; context: secondContext"></ng-container>
         </div>
     </ng-container>
 </ng-container>
@@ -48,15 +49,15 @@
     </div>
 </ng-template>
 
-<ng-template #vertical>
-    <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
+<ng-template #vertical let-first="first">
+    <div *ngIf="first || twinned" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
         [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
         [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
             <div class="arrow"></div>
             <div class="bar"></div>
         </div>
-        <div *ngIf="isInput" class="inputs-input" type="number" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + 'px' : undefined}">
+        <div *ngIf="isInput" class="inputs-input" type="number" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
             <input type="number" #inputElement
                 [min]="inputMin"
                 [max]="inputMax"
@@ -68,7 +69,7 @@
                 {{ calculatorService.measurementUnit.toString() }}
             </div>
         </div>
-        <div *ngIf="!isInput" class="inputs-output" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + 'px' : undefined}">
+        <div *ngIf="!isInput" class="inputs-output" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
             <div class="output-value">
                 {{ inputValue | number: '0.2-2'}} {{ calculatorService.measurementUnit.toString() }}
             </div>
