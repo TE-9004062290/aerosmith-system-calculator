@@ -214,6 +214,7 @@
             }
         }
         .inputs-input, .inputs-output {
+            min-width: 50px;
             position: absolute;
         }
         &[mode-direction='top'] {
@@ -229,7 +230,6 @@
     }
     .stick {
         height: 100%;
-        width: 100%;
         display: flex;
         align-items: center;
         .bar {
@@ -245,6 +245,7 @@
             width: 3px;
         }
         &.left {
+            flex-grow: 1;
             justify-content: flex-end;
             margin-right: 8px;
             .stop {
@@ -253,6 +254,7 @@
             }
         }
         &.right {
+            flex-grow: 1;
             justify-content: flex-start;
             margin-left: 8px;
             .stop {
@@ -341,7 +343,6 @@
     justify-content: center;
     border-radius: 3px;
     background-color: #8BC34A;
-    min-width: 50px;
     height: 18px;
     padding: 2px;
 

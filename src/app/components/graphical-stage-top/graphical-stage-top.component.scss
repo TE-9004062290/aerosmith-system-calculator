@@ -53,7 +53,6 @@
                     .stage {
                         position: relative;
                         transition: height .25s linear, width .25s linear;
-                        overflow: hidden;
                         .presenter-container {
                             .presenter-icon {
                                 position: absolute;
@@ -65,6 +64,7 @@
                         }
                         .audience-wrapper {
                             height: 100%;
+                            overflow: hidden;
                             .audience-container {
                                 position: relative; 
                                 // padding-top: 5%;

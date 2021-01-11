@@ -77,11 +77,13 @@ export class GraphicalStageTopComponent implements OnInit {
   public audiencePerRow: number[] = [];
   public audienceRows: number[] = [];
 
-  public leftMicrophoneOffset: number = 0;
-  public microphoneIntervalPx: number = 0;
-  public microphonesPerRow: number = 0;
-  public microphoneRows: number = 0;
-  
+  public microphoneDepthIntervalPx: number = 0;
+  public measuringStickDepthPosition: GraphicPosition = null;
+  public measuringStickDepthTwinned: boolean = null;
+  public microphoneWidthIntervalPx: number = 0;
+  public measuringStickWidthPosition: GraphicPosition = null;
+  public measuringStickWidthTwinned: boolean = false;
+
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
@@ -98,6 +100,9 @@ export class GraphicalStageTopComponent implements OnInit {
     return audienceMicPosition.number;
   }
 
+  measuringStickTrackByFn(index, measuringStickPosition: GraphicPosition) {
+    return index;
+  }
 
   personTrackByFn(index, personPosition: GraphicPosition) {
     return personPosition.number;
@@ -343,8 +348,13 @@ export class GraphicalStageTopComponent implements OnInit {
 
   private getAudienceMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneIntervalWidth: number, microphoneIntervalDepth: number): GraphicPosition[] {
     let microphones: GraphicPosition[] = [];
+    this.measuringStickDepthPosition = null;
+    this.measuringStickWidthPosition = null;
     const percentageIntervalDepth = (microphoneIntervalDepth / this.calculatorService.audienceDepth) * 100;
     const percentageIntervalWidth = (microphoneIntervalWidth / this.calculatorService.lectureWidth) * 100;
+
+    this.microphoneDepthIntervalPx = percentageIntervalDepth * this.audienceDepthPx / 100;
+    this.microphoneWidthIntervalPx = percentageIntervalWidth * this.stageHeight / 100;
 
     const numDepthEven = numMicrophonesDepth % 2 === 0;
     const numWidthEven = numMicrophonesWidth % 2 === 0;
@@ -381,6 +391,12 @@ export class GraphicalStageTopComponent implements OnInit {
       percentageIntervalWidth, percentageIntervalDepth, 
       widthMidpoint, depthMidpoint 
     } = parameterObject;
+
+    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    if (numMicrophonesDepth > 1) {
+      this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
+      this.measuringStickDepthTwinned = true;
+    }
 
     /* Start with `depthMidpoint` and go right, going up and down `width` for each `depth` mic. */
     for (let depthMic = depthMidpoint, i = 0; depthMic <= numMicrophonesDepth; depthMic++, i++) {
@@ -425,6 +441,12 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerRightInterval = 50 + (percentageIntervalDepth / 2);
     const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
 
+    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    if (numMicrophonesDepth > 1) {
+      this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
+      this.measuringStickDepthTwinned = false;
+    }
+
     // Right side
     for (let depthMic = depthMidpoint, i = 0; depthMic < numMicrophonesDepth; depthMic++, i++) {
       let dMid = centerRightInterval + (i * percentageIntervalDepth);
@@ -468,6 +490,12 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
+    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    if (numMicrophonesDepth > 1) {
+      this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
+      this.measuringStickDepthTwinned = true;
+    }
+    
     // Top side
     for (let widthMic = widthMidpoint, i = 0; widthMic < numMicrophonesWidth; widthMic++, i++) {
       const wMid = centerTopInterval - (i * percentageIntervalWidth);
@@ -514,6 +542,12 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
+    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    if (numMicrophonesDepth > 1) {
+      this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
+      this.measuringStickDepthTwinned = false;
+    }
+    
     // Inner Upper-Right corner
     for (let depthMic = depthMidpoint, i = 0; depthMic < numMicrophonesDepth; depthMic++, i++) {
       const dMid = centerRightInterval + (i * percentageIntervalDepth);

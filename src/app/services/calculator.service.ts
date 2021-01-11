@@ -434,14 +434,16 @@ export class CalculatorService {
 
   private calculateNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, audienceMicrophoneInterval: number) {
     const widthRaw = presentationWidth / audienceMicrophoneInterval;
-    const mantissaThresholdWidth = Math.trunc(widthRaw) > 3 ? .45 : .1;
-    const widthRawMantissa = widthRaw % 1;
-    const widthRounded = widthRawMantissa >= .2 ? Math.ceil(widthRaw) : Math.floor(widthRaw);
-
+    const widthRounded = Math.ceil(widthRaw);
+    // const mantissaThresholdWidth = Math.trunc(widthRaw) > 3 ? .45 : .1;
+    // const widthRawMantissa = widthRaw % 1;
+    // const widthRounded = widthRawMantissa >= .2 ? Math.ceil(widthRaw) : Math.floor(widthRaw);
+    
     const depthRaw = audienceDepth / audienceMicrophoneInterval;
-    const mantissaThresholdDepth = Math.trunc(depthRaw) > 3 ? .45 : .1;
-    const depthRawMantissa = depthRaw % 1;
-    const depthRounded = depthRawMantissa >= .1 ? Math.ceil(depthRaw) : Math.floor(depthRaw);
+    const depthRounded = Math.ceil(depthRaw);
+    // const mantissaThresholdDepth = Math.trunc(depthRaw) > 3 ? .45 : .1;
+    // const depthRawMantissa = depthRaw % 1;
+    // const depthRounded = depthRawMantissa >= .1 ? Math.ceil(depthRaw) : Math.floor(depthRaw);
     console.log(widthRaw, depthRaw);
     return {
       width: Math.max(widthRounded, 1),
@@ -452,10 +454,10 @@ export class CalculatorService {
   private refineAudienceMicrophoneInterval(lectureWidth: number, audienceDepth: number, audienceMicrophoneInterval: number, numAudienceMicrophones: any): any {
     const widthCount = numAudienceMicrophones.width;
     const depthCount = numAudienceMicrophones.depth;
-    //console.log(widthCount, depthCount);
+
     return {
-      width: Math.max(lectureWidth / widthCount, 1) * (audienceDepth > lectureWidth ? .8 : 1),
-      depth: Math.max(audienceDepth / depthCount, 1) * (lectureWidth > audienceDepth ? .8 : 1)
+      width: Math.max(lectureWidth / widthCount, 1) * (audienceDepth > lectureWidth ? 1 : 1),
+      depth: Math.max(audienceDepth / depthCount, 1) * (lectureWidth > audienceDepth ? 1 : 1)
     }
   }
 
