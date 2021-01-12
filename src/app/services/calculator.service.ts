@@ -444,7 +444,7 @@ export class CalculatorService {
     // const mantissaThresholdDepth = Math.trunc(depthRaw) > 3 ? .45 : .1;
     // const depthRawMantissa = depthRaw % 1;
     // const depthRounded = depthRawMantissa >= .1 ? Math.ceil(depthRaw) : Math.floor(depthRaw);
-    console.log(widthRaw, depthRaw);
+
     return {
       width: Math.max(widthRounded, 1),
       depth: Math.max(depthRounded, 1)

@@ -26,15 +26,19 @@
                         ></app-measuring-stick>
                     </div>
                     <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width' : '100%'}">
-                        <div class="presenter-container">
-                            <div class="presenter-icon left-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2) + 'px'}" style="top: 0%; left: 0%;" @animateOutputArea>
-                                <app-svg-standing-person mode="top"></app-svg-standing-person>
-                            </div>
-                            <div class="presenter-icon center-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2)  + 'px'}" style="top: 45%; left: 0%;" @animateOutputArea>
-                                <app-svg-standing-person mode="top"></app-svg-standing-person>
-                            </div>
-                            <div class="presenter-icon right-anchor" [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2)  + 'px'}" style="bottom: 0%; left: 0%;" @animateOutputArea>
-                                <app-svg-standing-person mode="top"></app-svg-standing-person>
+                        <div class="presenter-wrapper">
+                            <div class="presenter-container">
+                                <div *ngFor="let presenter of presenters" class="presenter-icon" [ngClass]="presenter.num"
+                                    [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterCaptureRadiusPx / 2) + 'px', 'top': presenter.positionPercentageVertical + '%'}"
+                                >
+                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                                </div>
+                                <div class="presenter-microphones">
+                                    <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
+                                        [ngStyle]="{'left': (presenterCaptureRadiusPx / 2) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
+                                        <app-svg-capture-radius [width]="presenterCaptureRadiusPx * 2" mode="presenterReinforcement"></app-svg-capture-radius>
+                                    </div>                                    
+                                </div>
                             </div>
                         </div>
                         <div class="audience-wrapper">
@@ -68,25 +72,11 @@
                                 <div class="audience-microphones">
                                     <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
                                         [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
-                                        <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                        <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2" mode="audienceRecording"></app-svg-capture-radius>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="person-wrapper" @animateOutputArea
-                            [ngStyle]="{'width': presenterSideWidth + 'px', 'left': (sideCapture / 2) + 'px'}">
-                            <app-svg-standing-person mode="side"></app-svg-standing-person>
-                        </div>
-                        <div class="audience-wrapper">
-                            <div *ngFor="let a of audience; trackBy: audienceTrackByFn" class="person-wrapper" @animateOutputArea
-                                [ngStyle]="{'width': audienceWidth + 'px', 'left': a.positionPercentage + 'px'}">
-                                <app-svg-standing-person mode="sitting"></app-svg-standing-person>
-                            </div>
-                        </div>
-                        <div *ngIf="calculatorService.hasFreshOutput" class="microphone-wrapper" @animateOutputArea                  
-                            [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': (sideCapture / 2) + 'px', 'position': 'absolute'}">
-                            <app-svg-microphone [calculationPriority]="calculatorService.calculationPriority" [extenderLength]="extenderLength"></app-svg-microphone>
-                        </div> -->
                     </div>
                 </div>
             </div>   

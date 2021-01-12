@@ -132,7 +132,7 @@
         width: 80%;
         transition: width .25s linear;
         padding-bottom: 240px;
-        background-color: #F2F5F7;
+        background-color: #FFFFFF;
     }
 
     .sidebar {
@@ -142,7 +142,7 @@
         max-width: 300px;
         padding-left: 24px;
         padding-right: 24px;
-        background-color: white;
+        background-color: rgba(240, 249, 250, .4);
         .sidebar-pullout {
             display: none;
         }

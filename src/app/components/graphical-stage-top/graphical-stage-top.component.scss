@@ -53,13 +53,27 @@
                     .stage {
                         position: relative;
                         transition: height .25s linear, width .25s linear;
-                        .presenter-container {
-                            .presenter-icon {
+                        .presenter-wrapper {
+                            position: absolute;
+                            height: 100%;
+                            .presenter-container {
+                                height: 100%;
+                                .presenter-icon {
+                                    position: absolute;
+                                    bottom: -5px;
+                                    left: 0%;
+                                    transition: width .25s linear, left .25s linear;
+                                    z-index: 1;
+                                }
+                            }
+                            .presenter-microphones {
+                                height: 100%;
                                 position: absolute;
-                                bottom: -5px;
-                                left: 0%;
-                                transition: width .25s linear, left .25s linear;
-                                z-index: 1;
+                                width: 100%;
+                                height: 100%;
+                                .presenter-microphone {
+                                    position: absolute;
+                                }
                             }
                         }
                         .audience-wrapper {
@@ -104,6 +118,9 @@
     }
     &.has-output {
         .audience-row {
+            opacity: .3;
+        }
+        .presenter-icon {
             opacity: .3;
         }
     }

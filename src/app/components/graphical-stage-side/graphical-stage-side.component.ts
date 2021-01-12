@@ -193,7 +193,6 @@ export class GraphicalStageSideComponent implements OnInit {
     this.audienceIntervalPx = audiencePositions.audienceIntervalPx;
     this.numAudience = audiencePositions.numAudience;
 
-    // console.log(this.audienceWidthPx, this.audienceHeightPx, this.audienceDepthPx)
   }
 
   private calculateStageRatios() {
@@ -269,8 +268,7 @@ export class GraphicalStageSideComponent implements OnInit {
     const audienceDepthPx = this.audienceDepthPx;
     const intraRowInterval = this.audienceWidthPx;
 
-    const audiencePerRow = round(audienceDepthPx / (this.audienceWidthPx + intraRowInterval), 0);
-    console.log(`${audiencePerRow} per row`)
+    const audiencePerRow = Math.ceil(audienceDepthPx / (this.audienceWidthPx + intraRowInterval));
     return {
       audienceIntervalPx: intraRowInterval,
       numAudience: Array(audiencePerRow).fill(0).map((x, i) => i)
@@ -314,7 +312,7 @@ export class GraphicalStageSideComponent implements OnInit {
         microphones.push(dMidMic);
       }
     }
-    console.log(numMicrophonesDepth, microphones);
+    
     return microphones;
   }
 }

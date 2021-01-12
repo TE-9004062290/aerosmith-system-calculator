@@ -10,6 +10,7 @@ export class SvgCaptureRadiusComponent implements OnInit {
 
   @Input() width: string = "100%";
   @Input() height: string = "100%";
+  @Input() mode: 'presenterReinforcement' | 'presenterRecording' | 'audienceRecording' = 'audienceRecording';
   
   constructor() { }
 
