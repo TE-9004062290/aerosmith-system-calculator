@@ -85,8 +85,8 @@
                 .stage-inner-container {
                     position: relative;
                     height: 100%;
-                    width: 95%;
-                    margin-left: 5%;
+                    width: 100%;
+                    // margin-left: 5%;
                     .stage {
                         position: relative;
                         transition: height .25s linear, width .25s linear;

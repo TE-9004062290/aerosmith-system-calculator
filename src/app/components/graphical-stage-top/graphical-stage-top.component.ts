@@ -414,7 +414,7 @@ export class GraphicalStageTopComponent implements OnInit {
       widthMidpoint, depthMidpoint 
     } = parameterObject;
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
       this.measuringStickDepthTwinned = true;
@@ -468,7 +468,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerRightInterval = 50 + (percentageIntervalDepth / 2);
     const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
       this.measuringStickDepthTwinned = false;
@@ -522,7 +522,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
       this.measuringStickDepthTwinned = true;
@@ -579,7 +579,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx / 2) + this.audienceDistance;
+    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
       this.measuringStickDepthTwinned = false;
