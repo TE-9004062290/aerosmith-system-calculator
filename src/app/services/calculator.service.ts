@@ -248,7 +248,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
-      this.m_distanceBetweenAudienceAndMicrophone = 1.1 * this.m_audienceHeight;
+      this.m_distanceBetweenAudienceAndMicrophone = Math.min(this.m_ceilingHeight - this.m_audienceHeight, 1.1 * this.m_audienceHeight);
       this.b_pristine = false;
       this.b_has_output = false;
 
