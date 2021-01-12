@@ -16,7 +16,7 @@
 }
 
 .inputs-container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     margin-top: 20px;
     padding-bottom: 16px;
@@ -43,8 +43,8 @@
             padding: 4px 10px !important;
         }
     }
-    width: 80%;
-    margin: 0 auto;
+    width: calc(100% - 80px);
+    margin: 0 40px 0 40px;
     padding-bottom: 16px;
     .header {
         display: flex;
@@ -125,6 +125,7 @@
     .data-row {
         color: #FFFFFF;
         .data-description {
+            color: #54B6A1;
             font-size: 12px;
         }
         .data-value {

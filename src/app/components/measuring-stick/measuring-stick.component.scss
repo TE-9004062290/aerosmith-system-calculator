@@ -7,63 +7,63 @@
     width: 0;
     height: 0;
     .bar {
-        background-color: #8BC34A;
+        background-color: #346389;
     }
     .stop {
-        background-color: #8BC34A;
+        background-color: #346389;
     }
     &.top {
         .arrow {
             border-bottom: 8px solid;
-            border-bottom-color: #8BC34A;
+            border-bottom-color: #346389;
         }
     }
     &.right {
         .arrow {
             border-left: 8px solid;
-            border-left-color: #8BC34A;
+            border-left-color: #346389;
         }
     }
     &.bottom {
         .arrow {
             border-top: 8px solid;
-            border-top-color: #8BC34A;
+            border-top-color: #346389;
         }
     }
     &.left {
         .arrow {
             border-right: 8px solid;
-            border-right-color: #8BC34A;
+            border-right-color: #346389;
         }
     }
 }
 
 .measurable-output {
     .bar {
-        background-color: #8BC34A;
+        background-color: #54B6A1;
     }
     .stop {
-        background-color: #8BC34A;
+        background-color: #54B6A1;
     }
     .stick {
         &.top {
             .arrow {
-                border-bottom-color: #8BC34A !important;
+                border-bottom-color: #54B6A1 !important;
             }
         }
         &.right {
             .arrow {
-                border-left-color: #8BC34A !important;
+                border-left-color: #54B6A1 !important;
             }
         }
         &.bottom {
             .arrow {
-                border-top-color: #8BC34A !important;
+                border-top-color: #54B6A1 !important;
             }
         }
         &.left {
             .arrow {
-                border-right-color: #8BC34A !important;
+                border-right-color: #54B6A1 !important;
             }
         }
     }
@@ -76,7 +76,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 3px;
-        background-color: #006DB3;
+        background-color: #346389;
         width: 10%;
         min-width: 60px;
         height: 18px;
@@ -99,29 +99,29 @@
     }
     .stick {
         .bar {
-            background-color: #006DB3;
+            background-color: #346389;
         }
         .stop {
-            background-color: #006DB3;
+            background-color: #346389;
         }
         &.top {
             .arrow {
-                border-bottom-color: #006DB3 !important;
+                border-bottom-color: #346389 !important;
             }
         }
         &.right {
             .arrow {
-                border-left-color: #006DB3 !important;
+                border-left-color: #346389 !important;
             }
         }
         &.bottom {
             .arrow {
-                border-top-color: #006DB3 !important;
+                border-top-color: #346389 !important;
             }
         }
         &.left {
             .arrow {
-                border-right-color: #006DB3 !important;
+                border-right-color: #346389 !important;
             }
         }
     }
@@ -373,7 +373,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 3px;
-    background-color: #8BC34A;
+    background-color: #54B6A1;
     height: 18px;
     padding: 2px;
 

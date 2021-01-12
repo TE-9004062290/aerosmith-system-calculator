@@ -125,11 +125,6 @@ export class GraphicalStageTopComponent implements OnInit {
         this.CalculatorMins = this.calculatorService.MINIMUMS;
         this.CalculatorMaxes = this.calculatorService.MAXIMUMS;
         this.calculateProportions();
-
-        this.audienceMicrophones = this.getAudienceMicrophonePositions(
-          this.calculatorService.requiredAudienceMicrophonesWidth, this.calculatorService.requiredAudienceMicrophonesDepth, 
-          this.calculatorService.audienceMicrophoneIntervalWidth, this.calculatorService.audienceMicrophoneIntervalDepth);
-        [this.presenters, this.presenterMicrophones] = this.getPresenterPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
       }
     });
 
@@ -137,11 +132,6 @@ export class GraphicalStageTopComponent implements OnInit {
     this.snapshotContainerDimensions();
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
     this.calculateProportions();
-
-    this.audienceMicrophones = this.getAudienceMicrophonePositions(
-      this.calculatorService.requiredAudienceMicrophonesWidth, this.calculatorService.requiredAudienceMicrophonesDepth, 
-      this.calculatorService.audienceMicrophoneIntervalWidth, this.calculatorService.audienceMicrophoneIntervalDepth);
-    [this.presenters, this.presenterMicrophones] = this.getPresenterPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -197,6 +187,11 @@ export class GraphicalStageTopComponent implements OnInit {
     this.intraRowInterval = intraRowInterval;
     this.audiencePerRow = audiencePerRow;
     this.audienceRows = audienceRows;
+
+    this.audienceMicrophones = this.getAudienceMicrophonePositions(
+      this.calculatorService.requiredAudienceMicrophonesWidth, this.calculatorService.requiredAudienceMicrophonesDepth, 
+      this.calculatorService.audienceMicrophoneIntervalWidth, this.calculatorService.audienceMicrophoneIntervalDepth);
+    [this.presenters, this.presenterMicrophones] = this.getPresenterPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
   }
 
   private calculateStageRatios() {
