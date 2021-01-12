@@ -26,8 +26,8 @@
             .inputs-label {
                 font-size: 14px;
                 line-height: 24px;
-                color: #494949;
-                font-weight: bold;
+                color: #2F3D4E;
+                font-weight: 500;
             }
             .inputs-value {
                 display: flex;
@@ -46,8 +46,9 @@
                 }
                 .unit-label {
                     font-size: 14px;
+                    font-weight: 400;
+                    color: #2F3D4E;
                     line-height: 24px;
-                    color: #494949;
                     width: 70px;
                 }
             }
@@ -68,8 +69,8 @@
         .advanced-inputs-label {
             font-size: 14px;
             line-height: 24px;
-            color: #494949;
-            font-weight: bold;
+            color: #2F3D4E;
+            font-weight: 500;
             margin-left: 8px;
         }
     }
@@ -79,7 +80,8 @@
         .advanced-inputs-info {
             font-size: 12px;
             line-height: 16px;
-            color: #494949;
+            color: #2F3D4E;
+            font-weight: 400;
         }
     }
 }
