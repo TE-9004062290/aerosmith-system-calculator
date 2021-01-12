@@ -118,7 +118,7 @@
             <div class="data-row" *ngIf="calculatorService.inputExtenderMaximum > 0">
                 <div class="data-description">Acceptable extender lengths</div>
                 <div class="data-value">
-                    {{ calculatorService.inputExtenderMinimum | number: '0.2-2' }} &mdash; {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }}
+                    Presenter: {{ calculatorService.inputExtenderMinimum | number: '0.2-2' }} &mdash; {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }}
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
             </div>

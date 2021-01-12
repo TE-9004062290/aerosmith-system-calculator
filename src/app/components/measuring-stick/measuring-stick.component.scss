@@ -302,6 +302,9 @@
     flex-direction: column;
     align-items: center;
     // justify-content: center;
+    .inputs-output {
+        width: 100%;
+    }
     &[mode='thin'] {
         .arrow {
             border-left: 4px solid transparent !important;
