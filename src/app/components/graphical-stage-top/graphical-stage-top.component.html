@@ -42,26 +42,28 @@
                             </div>
                         </div>
                         <div class="audience-wrapper">
-                            <div class="measuring-stick-overlay depth-interval" *ngIf="measuringStickDepthPosition"
-                                [ngStyle]="{'left': measuringStickDepthPosition.positionPercentage + 'px', 'top': '-30px', 'position': 'absolute'}">
-                                <app-measuring-stick orientation="horizontal" 
-                                    [width]="microphoneDepthIntervalPx"
-                                    thinModeDirection="top"
-                                    [isInput]="false" 
-                                    [twinned]="measuringStickDepthTwinned"
-                                    [inputValue]="calculatorService.audienceMicrophoneIntervalDepth"
-                                ></app-measuring-stick>
-                            </div>
-                            <div class="measuring-stick-overlay width-interval" *ngIf="measuringStickWidthPosition"
-                                [ngStyle]="{'left': measuringStickWidthPosition.positionPercentage + 'px', 'top': measuringStickWidthPosition.positionPercentageVertical + '%', 'position': 'absolute'}">
-                                <app-measuring-stick orientation="vertical" 
-                                    [height]="microphoneWidthIntervalPx"
-                                    thinModeDirection="right"
-                                    [twinned]="measuringStickWidthTwinned"
-                                    [isInput]="false" 
-                                    [inputValue]="calculatorService.audienceMicrophoneIntervalWidth"
-                                ></app-measuring-stick>
-                            </div>
+                            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                                <div class="measuring-stick-overlay depth-interval" *ngIf="measuringStickDepthPosition"
+                                    [ngStyle]="{'left': measuringStickDepthPosition.positionPercentage + 'px', 'top': '-30px', 'position': 'absolute'}">
+                                    <app-measuring-stick orientation="horizontal" 
+                                        [width]="microphoneDepthIntervalPx"
+                                        thinModeDirection="top"
+                                        [isInput]="false" 
+                                        [twinned]="measuringStickDepthTwinned"
+                                        [inputValue]="calculatorService.audienceMicrophoneIntervalDepth"
+                                    ></app-measuring-stick>
+                                </div>
+                                <div class="measuring-stick-overlay width-interval" *ngIf="measuringStickWidthPosition"
+                                    [ngStyle]="{'left': measuringStickWidthPosition.positionPercentage + 'px', 'top': measuringStickWidthPosition.positionPercentageVertical + '%', 'position': 'absolute'}">
+                                    <app-measuring-stick orientation="vertical" 
+                                        [height]="microphoneWidthIntervalPx"
+                                        thinModeDirection="right"
+                                        [twinned]="measuringStickWidthTwinned"
+                                        [isInput]="false" 
+                                        [inputValue]="calculatorService.audienceMicrophoneIntervalWidth"
+                                    ></app-measuring-stick>
+                                </div>
+                            </ng-container>
                             <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterCaptureRadiusPx / 2)  + 'px', 'width': audienceDepthPx + 'px' }">
                                 <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (interRowInterval / 2) + 'px', 'margin-top': (interRowInterval / 2) + 'px'}">
                                     <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
@@ -69,12 +71,14 @@
                                         <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
                                     </div>
                                 </div>
-                                <div class="audience-microphones">
-                                    <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
-                                        [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
-                                        <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2" mode="audienceRecording"></app-svg-capture-radius>
+                                <ng-container *ngIf="calculatorService.hasFreshOutput">
+                                    <div class="audience-microphones">
+                                        <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
+                                            [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
+                                            <app-svg-capture-radius [width]="audienceCaptureRadiusPx * 2" mode="audienceRecording"></app-svg-capture-radius>
+                                        </div>
                                     </div>
-                                </div>
+                                </ng-container>
                             </div>
                         </div>
                     </div>

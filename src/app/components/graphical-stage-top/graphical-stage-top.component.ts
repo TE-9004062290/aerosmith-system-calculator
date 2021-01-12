@@ -257,13 +257,19 @@ export class GraphicalStageTopComponent implements OnInit {
     return radiusStageHeightRatio * this.stageHeight;
   }
 
+  // if (!this.calculatorService.hasFreshOutput) {
+  //   return this.stageHeight * (1 * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
+  // }
+  // return (this.calculatorService.audienceDistance / this.calculatorService.ceilingHeight * this.stageHeight);
+
+
   private getAudienceDistance(): number {
     if (this.calculatorService.hasFreshOutput) {
       const distanceRatio = this.calculatorService.audienceDistance / this.calculatorService.lectureWidth;
       return this.stageHeight * distanceRatio;
     }
 
-    const distanceRatio = (1 * this.calculatorService.unitConversion) / this.calculatorService.audienceDepth;
+    const distanceRatio = (1 * this.calculatorService.unitConversion) / this.calculatorService.lectureWidth;
     return this.stageHeight * distanceRatio;
   }
 
