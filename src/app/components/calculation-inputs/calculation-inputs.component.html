@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="inputs-row">
+    <div *ngIf="calculatorService.recordAudience" class="inputs-row">
         <div class="inputs-group inputs-group--horizontal">
             <label class="inputs-label" for="audience-depth">
                 Audience depth

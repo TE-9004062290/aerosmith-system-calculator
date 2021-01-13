@@ -159,7 +159,9 @@ export class CalculatorService {
   get audienceExtenderRequired(): boolean { return this.b_audienceExtenderRequired; }
 
   get microphoneInterval(): number { return this.m_microphoneInterval; }
-  get audienceDistance(): number { return this.m_audienceDistance; }
+  get audienceDistance(): number { 
+    return Math.max(this.m_audienceDistance, this.unitConversion * 1); 
+  }
   get audienceMicrophoneInterval(): number { return this.m_audienceMicrophoneInterval; }
   get audienceMicrophoneIntervalWidth(): number { return this.m_audienceMicrophoneIntervalWidth; }
   get audienceMicrophoneIntervalDepth(): number { return this.m_audienceMicrophoneIntervalDepth; }
@@ -285,9 +287,9 @@ export class CalculatorService {
         this.m_secondaryCaptureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
       }
     } else {
+      this.m_secondaryCaptureRadius = 0;
       if (this.b_recordPresenter) {
         this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
-        this.m_secondaryCaptureRadius = 0;
       } else {
         this.m_captureRadius = 0;
       }
@@ -305,6 +307,7 @@ export class CalculatorService {
         this.m_secondaryCaptureRadius = 0;
       }
     } else {
+      this.m_secondaryCaptureRadius = 0;
       if (this.b_reinforcePresenter) {
         switch (this.e_soundReinforcementPriority) {
           case SoundReinforcementPriority.AudioQuality:
@@ -314,7 +317,8 @@ export class CalculatorService {
             this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterReinforcementRange;
             break;
         }
-        this.m_secondaryCaptureRadius = 0;
+      } else {
+        this.m_captureRadius = 0;
       }
     }
     this.updateAndEmit();

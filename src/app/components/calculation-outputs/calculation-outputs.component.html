@@ -63,33 +63,35 @@
             </div>
         </div>
         <div class="data-rows">
-            <div class="data-row">
+            <div *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter || calculatorService.recordAudience" class="data-row">
                 <div class="data-description">Number of microphones</div>
-                <div class="data-value">
+                <div *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter" class="data-value">
                     Presenter: {{ calculatorService.requiredMicrophones }} 
                     unit{{calculatorService.requiredMicrophones > 1 ? 's' : ''}}
                 </div>
-                <div class="data-value">
+                <div *ngIf="calculatorService.recordAudience" class="data-value">
                     Audience: {{ calculatorService.requiredAudienceMicrophonesWidth * calculatorService.requiredAudienceMicrophonesDepth }} 
                     unit{{calculatorService.requiredAudienceMicrophonesWidth * calculatorService.requiredAudienceMicrophonesDepth > 1 ? 's' : ''}}
                 </div>
             </div>
             <div class="data-row">
                 <div class="data-description">Distance between each microphone</div>
-                <div class="data-value">
+                <div class="data-value" *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter" >
                     Presenter: {{ calculatorService.microphoneInterval }} 
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.microphoneInterval === 1 ? '' : 's') : (calculatorService.microphoneInterval === 1 ? 'foot' : 'feet') }}
                 </div>
-                <div class="data-value">
-                    Audience: {{ calculatorService.audienceMicrophoneIntervalDepth }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceMicrophoneIntervalDepth === 1 ? '' : 's') : (calculatorService.audienceMicrophoneIntervalDepth === 1 ? 'foot' : 'feet') }}
-                    (depth)
-                </div>
-                <div class="data-value">
-                    Audience: {{ calculatorService.audienceMicrophoneIntervalWidth }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceMicrophoneIntervalWidth === 1 ? '' : 's') : (calculatorService.audienceMicrophoneIntervalWidth === 1 ? 'foot' : 'feet') }}
-                    (width)
-                </div>
+                <ng-container *ngIf="calculatorService.recordAudience">
+                    <div class="data-value">
+                        Audience: {{ calculatorService.audienceMicrophoneIntervalDepth }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceMicrophoneIntervalDepth === 1 ? '' : 's') : (calculatorService.audienceMicrophoneIntervalDepth === 1 ? 'foot' : 'feet') }}
+                        (depth)
+                    </div>
+                    <div class="data-value">
+                        Audience: {{ calculatorService.audienceMicrophoneIntervalWidth }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceMicrophoneIntervalWidth === 1 ? '' : 's') : (calculatorService.audienceMicrophoneIntervalWidth === 1 ? 'foot' : 'feet') }}
+                        (width)
+                    </div>
+                </ng-container>
             </div>
             <div class="data-row">
                 <div class="data-description">Distance between line of microphones and front <br/> of audience</div>
@@ -100,24 +102,28 @@
             </div>
             <div class="data-row">
                 <div class="data-description">Extender length (if required)</div>
-                <div *ngIf="calculatorService.extenderLength === 0" class="data-value">
-                    Presenter: Not required
-                </div>
-                <div *ngIf="calculatorService.extenderLength > 0" class="data-value">
-                    Presenter: {{ calculatorService.extenderLength | number: '0.2-2' }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength  === 1 ? 'foot' : 'feet') }}
-                </div>
-                <div *ngIf="calculatorService.audienceExtenderLength === 0" class="data-value">
-                    Audience: Not required
-                </div>
-                <div *ngIf="calculatorService.audienceExtenderLength  > 0" class="data-value">
-                    Presenter: {{ calculatorService.audienceExtenderLength  | number: '0.2-2' }} 
-                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceExtenderLength  === 1 ? '' : 's') : (calculatorService.audienceExtenderLength   === 1 ? 'foot' : 'feet') }}
-                </div>
+                <ng-container *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter">
+                    <div *ngIf="calculatorService.extenderLength === 0" class="data-value">
+                        Presenter: Not required
+                    </div>
+                    <div *ngIf="calculatorService.extenderLength > 0" class="data-value">
+                        Presenter: {{ calculatorService.extenderLength | number: '0.2-2' }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.extenderLength === 1 ? '' : 's') : (calculatorService.extenderLength  === 1 ? 'foot' : 'feet') }}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="calculatorService.recordAudience">
+                    <div *ngIf="calculatorService.audienceExtenderLength === 0" class="data-value">
+                        Audience: Not required
+                    </div>
+                    <div *ngIf="calculatorService.audienceExtenderLength  > 0" class="data-value">
+                        Audience: {{ calculatorService.audienceExtenderLength  | number: '0.2-2' }} 
+                        {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceExtenderLength  === 1 ? '' : 's') : (calculatorService.audienceExtenderLength   === 1 ? 'foot' : 'feet') }}
+                    </div>
+                </ng-container>
             </div>
             <div class="data-row" *ngIf="calculatorService.inputExtenderMaximum > 0">
                 <div class="data-description">Acceptable extender lengths</div>
-                <div class="data-value">
+                <div *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter" class="data-value">
                     Presenter: {{ calculatorService.inputExtenderMinimum | number: '0.2-2' }} &mdash; {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }}
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>

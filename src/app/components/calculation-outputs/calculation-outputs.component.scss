@@ -123,13 +123,16 @@
     display: flex;
     justify-content: space-between;
     .data-row {
+        line-height: 16px;
         color: #FFFFFF;
         .data-description {
-            color: #54B6A1;
             font-size: 12px;
+            font-weight: 400;
+            color: #54B6A1;
         }
         .data-value {
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 500;
         }
     }
     @media screen and (max-width: 767px) {
