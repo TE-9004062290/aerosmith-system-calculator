@@ -245,7 +245,7 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   private getCaptureRadius(captureRadius: number) {
-    const captureRadiusHeightRatio = captureRadius / this.calculatorService.ceilingHeight;
+    const captureRadiusHeightRatio = (captureRadius || 1 * this.calculatorService.unitConversion) / this.calculatorService.ceilingHeight;
     this.secondaryPresenterCaptureRadiusPx = this.calculatorService.secondaryCaptureRadius / this.calculatorService.ceilingHeight * this.stageHeight;
     return captureRadiusHeightRatio * this.stageHeight; 
   }

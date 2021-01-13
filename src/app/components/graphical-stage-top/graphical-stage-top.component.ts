@@ -246,7 +246,10 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getPresenterCaptureRadius(): number {
-    const radius = this.calculatorService.captureRadius;
+    let radius = this.calculatorService.captureRadius;
+    if (!this.calculatorService.reinforcePresenter && !this.calculatorService.recordPresenter) {
+      radius = 1 * this.calculatorService.unitConversion;
+    }
     const captureRadiusHeightRatio = radius / this.calculatorService.lectureWidth;
     this.secondaryPresenterCaptureRadiusPx = (this.calculatorService.secondaryCaptureRadius / this.calculatorService.lectureWidth) * this.stageHeight;
     return captureRadiusHeightRatio * this.stageHeight;
