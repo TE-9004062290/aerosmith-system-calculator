@@ -33,12 +33,20 @@
                                 >
                                     <app-svg-standing-person mode="top"></app-svg-standing-person>
                                 </div>
-                                <div class="presenter-microphones">
-                                    <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
-                                        [ngStyle]="{'left': (presenterCaptureRadiusPx / 1) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
-                                        <app-svg-capture-radius [width]="presenterCaptureRadiusPx * 2" mode="presenterReinforcement"></app-svg-capture-radius>
-                                    </div>                                    
-                                </div>
+                                <ng-container *ngIf="calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter || calculatorService.recordPresenter)">                              
+                                    <div class="presenter-microphones">
+                                        <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
+                                            [ngStyle]="{'left': (presenterCaptureRadiusPx) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
+                                            <app-svg-capture-radius [mode]="calculatorService.reinforcePresenter ? 'presenterReinforcement' : 'presenterRecording'" [width]="presenterCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                        </div>   
+                                        <ng-container *ngIf="calculatorService.recordPresenter && calculatorService.reinforcePresenter">
+                                            <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
+                                                [ngStyle]="{'left': (presenterCaptureRadiusPx) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
+                                                <app-svg-capture-radius mode="secondaryPresenterRecording" [width]="secondaryPresenterCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                            </div>  
+                                        </ng-container>                                 
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                         <div class="audience-wrapper">

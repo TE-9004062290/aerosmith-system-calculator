@@ -93,12 +93,19 @@
                                     <app-svg-standing-person></app-svg-standing-person>
                                 </div>
                             </ng-container>
-                            <ng-container *ngIf="calculatorService.hasFreshOutput">
+                            <ng-container *ngIf="calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter || calculatorService.recordPresenter)">
                                 <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
                                     class="microphone-wrapper" 
                                     [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
-                                    <app-svg-microphone [extenderLength]="extenderLength"></app-svg-microphone>
+                                    <app-svg-microphone [mode]="calculatorService.reinforcePresenter ? 'reinforcement' : 'presenterRecording'" [extenderLength]="extenderLength"></app-svg-microphone>
                                 </div>
+                                <ng-container *ngIf="calculatorService.recordPresenter && calculatorService.reinforcePresenter">
+                                    <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
+                                        class="microphone-wrapper" 
+                                        [ngStyle]="{'width': (2 * secondarySideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
+                                        <app-svg-microphone mode="presenterRecording" [extenderLength]="extenderLength"></app-svg-microphone>
+                                    </div>  
+                                </ng-container>
                             </ng-container>
                         </div>
                     </div>

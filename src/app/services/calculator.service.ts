@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs'
 
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
+import { MicrophoneRadii } from '@app/models/enums/microphone-radii.enum';
 
 import { environment } from 'environments/environment';
 
@@ -99,8 +100,9 @@ export class CalculatorService {
   private b_extenderProvided: boolean = false
 
   /* Measurable Quantity Inputs */
-  private m_captureRadius = 2;
-  private m_audienceCaptureRadius = 7;
+  private m_captureRadius = MicrophoneRadii.PresenterReinforcementQuality;
+  private m_secondaryCaptureRadius = MicrophoneRadii.PresenterRecording;
+  private m_audienceCaptureRadius = MicrophoneRadii.AudienceRecording;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
   private m_audienceDepth: number = this.DEFAULTS.audienceDepth;
@@ -120,6 +122,7 @@ export class CalculatorService {
   get extenderProvided(): boolean { return this.b_extenderProvided; }
 
   get captureRadius(): number { return this.m_captureRadius; }
+  get secondaryCaptureRadius(): number { return this.m_secondaryCaptureRadius; }
   get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get lectureWidth(): number { return this.m_lectureWidth; }
   get ceilingHeight(): number { return this.m_ceilingHeight; }
@@ -269,11 +272,51 @@ export class CalculatorService {
 
   set reinforcePresenter(val: boolean) {
     this.b_reinforcePresenter = val;
+    if (val) {
+      switch (this.e_soundReinforcementPriority) {
+        case SoundReinforcementPriority.AudioQuality:
+          this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterReinforcementQuality;
+          break;
+        case SoundReinforcementPriority.DetectionRange:
+          this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterReinforcementRange;
+          break;
+      }
+      if (this.b_recordPresenter) {
+        this.m_secondaryCaptureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
+      }
+    } else {
+      if (this.b_recordPresenter) {
+        this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
+        this.m_secondaryCaptureRadius = 0;
+      } else {
+        this.m_captureRadius = 0;
+      }
+    }
     this.updateAndEmit();
   }
 
   set recordPresenter(val: boolean) {
     this.b_recordPresenter = val;
+    if (val) {
+      if (this.b_reinforcePresenter) {
+        this.m_secondaryCaptureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
+      } else {
+        this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
+        this.m_secondaryCaptureRadius = 0;
+      }
+    } else {
+      if (this.b_reinforcePresenter) {
+        switch (this.e_soundReinforcementPriority) {
+          case SoundReinforcementPriority.AudioQuality:
+            this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterReinforcementQuality;
+            break;
+          case SoundReinforcementPriority.DetectionRange:
+            this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterReinforcementRange;
+            break;
+        }
+        this.m_secondaryCaptureRadius = 0;
+      }
+    }
     this.updateAndEmit();
   }
 

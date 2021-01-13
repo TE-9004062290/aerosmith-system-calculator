@@ -61,6 +61,7 @@ export class GraphicalStageTopComponent implements OnInit {
 
   public widthHeightRatio: number = 1;
   public presenterCaptureRadiusPx: number = 0;
+  public secondaryPresenterCaptureRadiusPx: number = 0;
   public audienceCaptureRadiusPx: number = 0;
 
   public audienceMicrophones: GraphicPosition[] = [];
@@ -247,6 +248,7 @@ export class GraphicalStageTopComponent implements OnInit {
   private getPresenterCaptureRadius(): number {
     const radius = this.calculatorService.captureRadius;
     const captureRadiusHeightRatio = radius / this.calculatorService.lectureWidth;
+    this.secondaryPresenterCaptureRadiusPx = (this.calculatorService.secondaryCaptureRadius / this.calculatorService.lectureWidth) * this.stageHeight;
     return captureRadiusHeightRatio * this.stageHeight;
   }
 

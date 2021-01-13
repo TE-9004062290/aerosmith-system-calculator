@@ -68,6 +68,7 @@ export class GraphicalStageSideComponent implements OnInit {
 
   public widthHeightRatio: number = 1;
   public presenterCaptureRadiusPx: number = 0;
+  public secondaryPresenterCaptureRadiusPx = 0;
   public audienceCaptureRadiusPx: number = 0;
   
   public microphones: GraphicPosition[] = [];
@@ -114,8 +115,6 @@ export class GraphicalStageSideComponent implements OnInit {
         this.CalculatorMaxes = this.calculatorService.MAXIMUMS;
         this.calculateProportions();
         this.audienceMicrophones = this.getAudienceMicrophonePositions(this.calculatorService.requiredAudienceMicrophonesDepth, this.calculatorService.audienceMicrophoneIntervalDepth);
-        //this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
-        //this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
       }
     });
     this.snapshotPageDimensions();
@@ -123,8 +122,6 @@ export class GraphicalStageSideComponent implements OnInit {
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
     this.calculateProportions();
     this.audienceMicrophones = this.getAudienceMicrophonePositions(this.calculatorService.requiredAudienceMicrophonesDepth, this.calculatorService.audienceMicrophoneIntervalDepth);
-    //this.calculateMicrophonePositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
-    //this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -249,6 +246,7 @@ export class GraphicalStageSideComponent implements OnInit {
 
   private getCaptureRadius(captureRadius: number) {
     const captureRadiusHeightRatio = captureRadius / this.calculatorService.ceilingHeight;
+    this.secondaryPresenterCaptureRadiusPx = this.calculatorService.secondaryCaptureRadius / this.calculatorService.ceilingHeight * this.stageHeight;
     return captureRadiusHeightRatio * this.stageHeight; 
   }
 

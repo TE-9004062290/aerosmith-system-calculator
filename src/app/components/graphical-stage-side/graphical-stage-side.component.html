@@ -55,13 +55,17 @@
                             <div class="audience-microphones" *ngIf="calculatorService.hasFreshOutput" @animateOutputArea>
                                 <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
                                     [ngStyle]="{'width': 2 * audienceCaptureRadiusPx + 'px', 'left': audMic.positionPercentage + '%'}">
-                                    <app-svg-microphone mode="recording" [extenderLength]="audienceExtenderLengthPx"></app-svg-microphone>
+                                    <app-svg-microphone mode="audienceRecording" [extenderLength]="audienceExtenderLengthPx"></app-svg-microphone>
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="calculatorService.hasFreshOutput" class="microphone-wrapper" @animateOutputArea                  
+                        <div *ngIf="calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter || calculatorService.recordPresenter)" class="microphone-wrapper" @animateOutputArea                  
                             [ngStyle]="{'width': (2 * presenterCaptureRadiusPx) + 'px', 'left': (presenterCaptureRadiusPx) + 'px', 'position': 'absolute'}">
-                            <app-svg-microphone [soundReinforcementPriority]="calculatorService.soundReinforcementPriority" [extenderLength]="extenderLengthPx"></app-svg-microphone>
+                            <app-svg-microphone [mode]="calculatorService.reinforcePresenter ? 'reinforcement' : 'presenterRecording'"  [soundReinforcementPriority]="calculatorService.soundReinforcementPriority" [extenderLength]="extenderLengthPx"></app-svg-microphone>
+                        </div>
+                        <div *ngIf="calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter && calculatorService.recordPresenter)" class="microphone-wrapper" @animateOutputArea                  
+                            [ngStyle]="{'width': (2 * secondaryPresenterCaptureRadiusPx) + 'px', 'left': (presenterCaptureRadiusPx) + 'px', 'position': 'absolute'}">
+                            <app-svg-microphone mode="presenterRecording" [extenderLength]="extenderLengthPx"></app-svg-microphone>
                         </div>
                     </div>
                 </div>

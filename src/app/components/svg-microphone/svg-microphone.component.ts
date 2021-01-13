@@ -11,7 +11,7 @@ export class SvgMicrophoneComponent implements OnInit {
   public static readonly WIDTH_HEIGHT_RATIO = 0.3463406889982537;
   public SoundReinforcementPriorityEnum = SoundReinforcementPriority;
 
-  @Input() mode: 'reinforcement' | 'recording' = 'reinforcement';
+  @Input() mode: 'reinforcement' | 'audienceRecording' | 'presenterRecording' = 'reinforcement';
   @Input() extenderLength: number = 0;
   @Input() soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
