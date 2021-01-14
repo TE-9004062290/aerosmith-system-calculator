@@ -46,6 +46,7 @@
         .sidebar {
             // padding-right: 0px !important;
             background-color: rgb(240, 249, 250) !important;
+            z-index: 500 !important;
             .sidebar-pullout {
                 cursor: pointer;
                 display: inline-flex !important;
@@ -69,7 +70,6 @@
             transition: transform .25s linear;
             position: fixed;
             top: 0px;
-            z-index: 101;
             background-color: white;
             right: 0;
             transform: translateX(100%);
@@ -153,8 +153,17 @@
         width: calc(100% - 402px);
         position: fixed;
         top: 88px;
-        margin-top: 40px;
+        padding-top: 40px;
         z-index: 500;
+        background-color: white;
+        .radii-legend-divider {
+            height: 1px;
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 21px;
+            background: #346389;
+    
+        }
     }
 
     .graphical-stage-wrapper {
@@ -167,22 +176,19 @@
     }
 
     .sidebar {
-        position: fixed;
+        position: absolute;
         right: 0;
         top: 88px;
         width: 304px;
-        height: 1000px;
+        height: 1490px;
         padding-left: 50px;
         padding-right: 48px;
+        padding-bottom: 240px;
         background-color: rgba(240, 249, 250, 0.4);
         .sidebar-pullout {
             display: none;
         }
         .sidebar-inner-container {
-            height: 1000px;
-            overflow: scroll;
-            padding-left: 12px;
-            padding-right: 12px;
             &::-webkit-scrollbar {
                 display: none;
             }

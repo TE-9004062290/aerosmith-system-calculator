@@ -126,7 +126,7 @@
         </div>
         <div *ngIf="showTechnicalSupport" class="technical-support-links" @animateToggle>
             <div *ngFor="let link of technicalSupportLinks" class="technical-support-link">
-                <a [href]="link.url" [ngStyle]="{'color': link.color}">{{link.text}}</a>
+                <a [href]="link.url" target="_blank">{{link.text}}</a>
             </div>
         </div>
     </div>

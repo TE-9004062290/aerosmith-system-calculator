@@ -1,27 +1,22 @@
 [
     {
         "text": "SI Guide",
-        "url": "https://www.sony.com",
-        "color": "#2F3D4E"
+        "url": "https://pro.sony/en_ME/support-resources/masm-1/manual"
     },
     {
         "text": "How to set up B-Mic video",
-        "url": "https://www.sony.com",
-        "color": "#2F3D4E"
+        "url": "https://www.sony.com"
     },
     {
-        "text": "CAD 2D (hover)",
-        "url": "https://www.sony.com",
-        "color": "#469B99"
+        "text": "CAD 2D",
+        "url": "https://pro.sony/en_ME/product-resources/diagrams/2d-cad-mas-a100"
     },
     {
         "text": "CAD 3D",
-        "url": "https://www.sony.com",
-        "color": "#2F3D4E"
+        "url": "https://pro.sony/en_ME/product-resources/diagrams/3d-cad-mas-a100-diagrams"
     },
     {
         "text": "Contact us",
-        "url": "https://www.sony.com",
-        "color": "#2F3D4E"
+        "url": "https://www.sony.com"
     }
 ]

@@ -105,6 +105,9 @@
                 font-weight: 400;
                 color: #2F3D4E; /* default */
                 text-decoration: none;
+                &:hover {
+                    color: #469B99;
+                }
             }
         }
     }
