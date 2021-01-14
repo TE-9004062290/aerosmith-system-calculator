@@ -50,7 +50,6 @@ export class CalculationInputsComponent implements OnInit {
   @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   
   ngOnInit() {
-    console.log(this.technicalSupportLinks);
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.CalculatorMins = this.calculatorService.MINIMUMS;
