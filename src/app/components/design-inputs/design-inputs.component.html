@@ -1,21 +1,15 @@
 <div class="design-inputs">
     <div class="design-input">
-        <app-radio-toggle
-            toggleLabel="Select measurement units:"
-            leftLabel="Meters"
-            rightLabel="Feet"
-            [leftOption]="MeasurementUnitsEnum.Meters"
-            [rightOption]="MeasurementUnitsEnum.Feet"
-            [(ngModel)]="calculatorService.measurementUnit">
-        </app-radio-toggle>
-        <div class="design-input-label">Select measurement units:</div>
-        <mat-radio-group 
-            aria-label="Select measurement units"
-            name="measurementUnits"
-            [(ngModel)]="calculatorService.measurementUnit">
-            <mat-radio-button name="meters" [value]="MeasurementUnitsEnum.Meters">Meters</mat-radio-button>
-            <mat-radio-button name="feet" [value]="MeasurementUnitsEnum.Feet">Feet</mat-radio-button>
-        </mat-radio-group>
+        <div class="measurement-input-radiogroup">
+            <div class="design-input-label">Select measurement units:</div>
+            <mat-radio-group 
+                aria-label="Select measurement units"
+                name="measurementUnits"
+                [(ngModel)]="calculatorService.measurementUnit">
+                <mat-radio-button name="meters" [value]="MeasurementUnitsEnum.Meters">Meters</mat-radio-button>
+                <mat-radio-button name="feet" [value]="MeasurementUnitsEnum.Feet">Feet</mat-radio-button>
+            </mat-radio-group>
+        </div>
     </div>
     <div class="design-input">
         <div class="design-input-label">

@@ -1,19 +1,22 @@
 .design-inputs {
     box-sizing: border-box;
     border-top: 1px solid #E6EBEF;
+    padding-top: 16px;
 
     .design-input {
         font-size: 14px;
         line-height: 24px;
         width: 100%;
-        margin-top: 8px;
-        margin-bottom: 20px;
-
+        margin-bottom: 24px;
+        &:last-child {
+            margin-bottom: 18px;
+        }
         .design-input-label {
             font-size: 14px;
             line-height: 24px;
             font-weight: 500;
             color: #2F3D4E;
+            margin-bottom: 4px;
         }
 
         .design-input-option {
@@ -25,9 +28,12 @@
         .design-input-radiogroup {
             display: flex;
             flex-direction: row;
+            align-items: baseline;
+            margin-left: 18px;
             .design-input-radiogroup-label {
                 &.reinforcement-priority {
                     font-size: 12px;
+                    margin-right: 12px;
                 }
             }
         }
@@ -35,6 +41,20 @@
         .microphone-modes {
             display: flex;
             flex-direction: column;
+        }
+
+        .measurement-input-radiogroup {
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            .design-input-label {
+                width: fit-content;
+            }
+            .mat-radio-group {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
         }
     }
 }
@@ -56,6 +76,9 @@
     }
 
     .mat-radio-button {
+        &:first-child {
+            margin-right: 18px;
+        }
         .mat-radio-label-content {
             font-size: 12px;
             padding-left: 0px !important;

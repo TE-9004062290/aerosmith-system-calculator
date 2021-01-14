@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import TechnicalSupportLinks from '@app/config/technical-support.json';
 
 import {
   trigger,
@@ -16,7 +17,7 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
   templateUrl: './calculation-inputs.component.html',
   styleUrls: ['./calculation-inputs.component.scss'],
   animations: [
-    trigger('animateAdvancedSettings', [
+    trigger('animateToggle', [
       transition(':enter', [
         style({ height: '0px'}),
         style({ opacity: 0 }),
@@ -41,11 +42,15 @@ export class CalculationInputsComponent implements OnInit {
   public CalculatorMins = this.calculatorService.MINIMUMS;
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
-  @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
-
   public showAdvancedSettings: boolean = false;
+  public showTechnicalSupport: boolean = false;
+
+  public technicalSupportLinks = TechnicalSupportLinks;
+
+  @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   
   ngOnInit() {
+    console.log(this.technicalSupportLinks);
     this.calculatorService.$recalculate.subscribe(recalc => {
       if (recalc) {
         this.CalculatorMins = this.calculatorService.MINIMUMS;
@@ -56,6 +61,10 @@ export class CalculationInputsComponent implements OnInit {
 
   public toggleAdvancedSettings() {
     this.showAdvancedSettings = !this.showAdvancedSettings;
+  }
+
+  public toggleTechnicalSupport() {
+    this.showTechnicalSupport = !this.showTechnicalSupport;
   }
   
   public updateInput(inputField, inputElement) {

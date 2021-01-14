@@ -56,18 +56,20 @@
         }
     }
 
-    .advanced-inputs-toggle {
+    .toggle-container {
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid #E6EBEF;
+        &:last-child {
+            border-bottom: 1px solid #E6EBEF;
+        }
     }
-    .advanced-inputs-toggle-group {
+    .toggle-header {
         display: flex;
         align-items: center;
-        padding: 12px 0px;
+        padding: 16px 0px 16px 0px;
         border-top: 1px solid #E6EBEF;
         cursor: pointer;
-        .advanced-inputs-label {
+        .toggle-label {
             font-size: 14px;
             line-height: 24px;
             color: #2F3D4E;
@@ -77,12 +79,33 @@
     }
 
     .advanced-inputs {
+        margin-top: -8px;
         border-top: 0;
+        &.inputs-container {
+            padding-top: 0px !important;
+        }
         .advanced-inputs-info {
             font-size: 12px;
             line-height: 16px;
             color: #2F3D4E;
             font-weight: 400;
+        }
+    }
+
+    .technical-support-links {
+        margin-top: -8px;
+        .technical-support-link {
+            margin-bottom: 8px;
+            &:last-child {
+                margin-bottom: 16px;
+            }
+            a {
+                font-size: 14px;
+                line-height: 24px;
+                font-weight: 400;
+                color: #2F3D4E; /* default */
+                text-decoration: none;
+            }
         }
     }
 }
