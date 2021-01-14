@@ -1,0 +1,23 @@
+.radii-legends {
+    width: 100%;
+    max-width: 767px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    .radii-legend {
+        display: flex;
+        align-items: center;
+        .legend-icon {
+            height: 32px;
+            width: 32px;
+            background-color: white;
+        }
+        .legend-label {
+            margin-left: 8px;
+            color: #2F3D4E;
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 14.38px;
+        }
+    }
+}

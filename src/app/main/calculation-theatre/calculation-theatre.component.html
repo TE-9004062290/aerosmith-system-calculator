@@ -13,7 +13,10 @@
             </svg>          
         </div>
     </div>
-    <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}">
+    <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
+        <div class="radii-legend-container">
+            <app-radii-legend></app-radii-legend>
+        </div>
         <div class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
             <app-graphical-stage></app-graphical-stage>
         </div>

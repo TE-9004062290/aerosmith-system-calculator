@@ -547,7 +547,7 @@ export class CalculatorService {
   }
 
   private updateAndEmit() {
-    if (environment.production || this.autoCalculateOutput) {
+    if (!environment.production || this.autoCalculateOutput) {
       this.calculateOutputs();
     }
     this.$recalculate.next(true);

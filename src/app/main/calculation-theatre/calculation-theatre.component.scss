@@ -31,6 +31,11 @@
         display: flex;
         flex-direction: column;
     }
+
+    .radii-legend-container {
+        width: 100% !important;
+    }
+
     .calculation-theatre-container {
         .graphical-stage-wrapper {
             width: 100% !important;
@@ -136,10 +141,18 @@
         }
     }
 
+    .radii-legend-container {
+        width: calc(100% - 402px);
+        position: fixed;
+        top: 88px;
+        margin-top: 40px;
+        z-index: 500;
+    }
+
     .graphical-stage-wrapper {
-        width: 80%;
+        width: 100%;
         margin-right: 402px;
-        margin-top: 88px;
+        margin-top: 48px;
         transition: width .25s linear;
         padding-bottom: 240px;
         background-color: #FFFFFF;
