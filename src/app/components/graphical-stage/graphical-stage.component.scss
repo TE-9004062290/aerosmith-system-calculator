@@ -49,6 +49,14 @@
             }
         }
     }
+    .graphical-output-front {
+        margin-top: 170px;
+    }
+    &.has-output {
+        .graphical-output-front {
+            margin-top: 210px !important;
+        }
+    }
 }
 
 .stage-wrapper {
@@ -86,10 +94,6 @@
             }
         }
     }
-}
-
-.graphical-output-front {
-    margin-top: 210px;
 }
 
 .measuring-stick-overlay {
