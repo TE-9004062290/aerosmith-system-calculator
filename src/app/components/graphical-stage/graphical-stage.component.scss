@@ -89,35 +89,6 @@
 }
 
 .graphical-output-front {
-
-}
-
-.graphical-output-side {
-    margin-top: 120px;
-    .stage-info-wrapper {
-        transition: height 0.25s linear;
-        .stage-wrapper {
-            height: 100%;
-
-            .person-wrapper {
-                position: absolute;
-                bottom: -4px;
-                left: 0%;
-                transition: width .25s linear, left .25s linear;
-                z-index: 1;
-            }
-
-            .microphone-wrapper {
-                position: absolute;
-                top: 0;
-                transition: width .25s linear, left .25s linear, top .25s linear;
-                z-index: 0;
-            }
-        }
-    }
-}
-
-.graphical-output-top {
     margin-top: 160px;
 }
 

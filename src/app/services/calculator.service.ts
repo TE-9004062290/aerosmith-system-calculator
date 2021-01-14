@@ -253,7 +253,11 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
-      this.m_distanceBetweenAudienceAndMicrophone = Math.min(this.m_ceilingHeight - this.m_audienceHeight, 1.1 * this.m_audienceHeight);
+      if (2.1 * this.m_audienceHeight > this.m_ceilingHeight) {
+        this.m_distanceBetweenAudienceAndMicrophone = this.m_ceilingHeight - this.m_audienceHeight;
+      } else {
+        this.m_distanceBetweenAudienceAndMicrophone = 1.1 * this.m_audienceHeight;
+      }
       this.b_pristine = false;
       this.b_has_output = false;
 
@@ -294,6 +298,9 @@ export class CalculatorService {
         this.m_captureRadius = 0;
       }
     }
+
+    this.b_pristine = false;
+    this.b_has_output = false;
     this.updateAndEmit();
   }
 
@@ -321,12 +328,18 @@ export class CalculatorService {
         this.m_captureRadius = 0;
       }
     }
+
+    this.b_pristine = false;
+    this.b_has_output = false;
     this.updateAndEmit();
   }
 
   set recordAudience(val: boolean) {
     this.b_recordAudience = val;
     this.updateAndEmit();
+
+    this.b_pristine = false;
+    this.b_has_output = false;
   }
 
   set inputExtenderLength(val: number) {
@@ -534,7 +547,7 @@ export class CalculatorService {
   }
 
   private updateAndEmit() {
-    if (!environment.production || this.autoCalculateOutput) {
+    if (environment.production || this.autoCalculateOutput) {
       this.calculateOutputs();
     }
     this.$recalculate.next(true);

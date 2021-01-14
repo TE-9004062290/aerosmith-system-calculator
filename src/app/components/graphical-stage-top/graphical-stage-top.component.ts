@@ -71,6 +71,7 @@ export class GraphicalStageTopComponent implements OnInit {
   public audienceDepthPx: number = 0;
   public depthOffset: number = 0;
   public presenterWidth: number = 0;
+  public presenterOffset: number = 0;
   public audienceWidth: number = 0;
   public audienceHeight: number = 0;
   public interRowInterval: number = 0;
@@ -176,7 +177,7 @@ export class GraphicalStageTopComponent implements OnInit {
     [this.stageHeight, this.stageWidth, this.ratioMode, this.depthOffset, this.audienceDepthPx] = this.calculateStageRatios();
 
 
-    this.presenterWidth = this.getPresenterWidth();
+    this.presenterOffset = this.presenterWidth = this.getPresenterWidth();
     this.audienceWidth = this.getAudienceWidth();
     this.audienceHeight = this.audienceWidth / SvgStandingPersonComponent.SITTING_TOP_WIDTH_HEIGHT_RATIO;
     this.presenterCaptureRadiusPx = this.getPresenterCaptureRadius();
@@ -322,7 +323,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const presenterHeightPercentage = (this.presenterWidth / SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO) / this.stageHeight * 100;
     this.presenterMicrophoneIntervalPx = intervalRatio * this.stageHeight;
 
-    if (!this.calculatorService.isPristine) {
+    if (!this.calculatorService.hasFreshOutput || (!this.calculatorService.recordPresenter && !this.calculatorService.reinforcePresenter)) {
       presenters.push(
         new GraphicPosition(0, 0, 0 + presenterHeightPercentage / 2),
         new GraphicPosition(1, 0, 50 - (presenterHeightPercentage / 2)),
@@ -419,7 +420,7 @@ export class GraphicalStageTopComponent implements OnInit {
       widthMidpoint, depthMidpoint 
     } = parameterObject;
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
+    const offsetToCenter = (3 * this.presenterOffset) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
       this.measuringStickDepthTwinned = true;
@@ -473,7 +474,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerRightInterval = 50 + (percentageIntervalDepth / 2);
     const centerLeftInterval = 50 - (percentageIntervalDepth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
+    const offsetToCenter = (3 * this.presenterOffset) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
       this.measuringStickDepthTwinned = false;
@@ -527,7 +528,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
+    const offsetToCenter = (3 * this.presenterOffset) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx / 2) - this.microphoneDepthIntervalPx);
       this.measuringStickDepthTwinned = true;
@@ -584,7 +585,7 @@ export class GraphicalStageTopComponent implements OnInit {
     const centerTopInterval = 50 - (percentageIntervalWidth / 2);
     const centerBottomInterval = 50 + (percentageIntervalWidth / 2);
 
-    const offsetToCenter = (this.presenterCaptureRadiusPx) + this.audienceDistance;
+    const offsetToCenter = (3 * this.presenterOffset) + this.audienceDistance;
     if (numMicrophonesDepth > 1) {
       this.measuringStickDepthPosition = new GraphicPosition(0, offsetToCenter + (this.audienceDepthPx - this.microphoneDepthIntervalPx) / 2, 0);
       this.measuringStickDepthTwinned = false;

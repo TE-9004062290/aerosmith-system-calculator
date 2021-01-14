@@ -79,6 +79,7 @@ export class GraphicalStageSideComponent implements OnInit {
   public audienceIntervalPx: number = 0;
   public numAudience: number[] = [];
   public presenterWidth: number = 0;
+  public presenterOffset: number = 0;
   public audienceWidthPx: number = 0;
   public audienceHeightPx: number = 0;
   public audienceDistance: number = 0;
@@ -178,6 +179,7 @@ export class GraphicalStageSideComponent implements OnInit {
     [this.stageHeight, this.stageWidth, this.ratioMode, this.audienceDepthPx] = this.calculateStageRatios();
 
     this.presenterWidth = this.getPresenterWidth();
+    this.presenterOffset = this.getPresenterOffset();
     this.audienceHeightPx = this.getAudienceHeight();
     this.audienceWidthPx = this.getAudienceWidth(this.audienceHeightPx);
     this.presenterCaptureRadiusPx = this.getCaptureRadius(this.calculatorService.captureRadius);
@@ -226,6 +228,12 @@ export class GraphicalStageSideComponent implements OnInit {
   private getPresenterWidth(): number {
     const presenterCeilingRatio = this.calculatorService.presenterHeight / this.calculatorService.ceilingHeight;
     return presenterCeilingRatio * this.stageHeight * SvgStandingPersonComponent.SIDE_WIDTH_HEIGHT_RATIO;
+  }
+
+  private getPresenterOffset(): number {
+    const presenterBodyWidth = this.calculatorService.presenterWidth * SvgStandingPersonComponent.TOP_WIDTH_HEIGHT_RATIO;
+    const presenterWidthRatio = presenterBodyWidth / this.calculatorService.ceilingHeight;
+    return presenterWidthRatio * this.stageHeight;
   }
 
   private getAudienceHeight(): number {
