@@ -56,18 +56,18 @@ export class CalculatorService {
   public readonly FEET_MINIMUMS = {
     ceilingHeight: round(this.METER_MINIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET, 0),
     lectureWidth: round(this.METER_MINIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
+    audienceDepth: round(this.METER_MINIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 0),
     presenterHeight: round(this.METER_MINIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
     audienceHeight: round(this.METER_MINIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1),
-    audienceDepth: round(this.METER_MINIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 1),
     microphoneInterval: this.METER_MINIMUMS.microphoneInterval * CalculatorService.METERS_TO_FEET
   }
-
+  
   public readonly FEET_MAXIMUMS = {
     ceilingHeight: round(this.METER_MAXIMUMS.ceilingHeight * CalculatorService.METERS_TO_FEET, 0),
     lectureWidth: round(this.METER_MAXIMUMS.lectureWidth * CalculatorService.METERS_TO_FEET, 0),
+    audienceDepth: round(this.METER_MAXIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 0),
     presenterHeight: round(this.METER_MAXIMUMS.presenterHeight * CalculatorService.METERS_TO_FEET, 1),
     audienceHeight: round(this.METER_MAXIMUMS.audienceHeight * CalculatorService.METERS_TO_FEET, 1),
-    audienceDepth: round(this.METER_MAXIMUMS.audienceDepth * CalculatorService.METERS_TO_FEET, 1),
   }
 
   public autoCalculateOutput: boolean = false;
