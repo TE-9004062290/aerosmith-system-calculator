@@ -32,10 +32,10 @@
                     <div class="calculation-theatre-inputs">
                         <app-calculation-inputs></app-calculation-inputs>
                     </div>
-                    <div *ngIf="calculatorService.isDirty" class="btn btn-calculate" (click)="calculate(true)">
+                    <div *ngIf="calculatorService.isDirty && calculatorService.designForActive" class="btn btn-calculate" (click)="calculate(true)">
                         Calculate
                     </div>
-                    <div *ngIf="calculatorService.isPristine && calculatorService.hasFreshOutput" class="btn btn-disabled">
+                    <div *ngIf="(calculatorService.isPristine && calculatorService.hasFreshOutput) || !calculatorService.designForActive" class="btn btn-disabled">
                         Calculate
                     </div>  
                 </div>

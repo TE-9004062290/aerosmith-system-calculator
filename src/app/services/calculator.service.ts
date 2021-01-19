@@ -94,9 +94,10 @@ export class CalculatorService {
   private e_soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
   /* Boolean Inputs */
-  private b_reinforcePresenter: boolean = false;
+  private b_reinforcePresenter: boolean = true;
   private b_recordPresenter: boolean = false;
   private b_recordAudience: boolean = false;
+  private b_designForActive: boolean = this.b_reinforcePresenter || this.b_recordPresenter || this.b_recordAudience;
   private b_extenderProvided: boolean = false
 
   /* Measurable Quantity Inputs */
@@ -119,6 +120,7 @@ export class CalculatorService {
   get reinforcePresenter(): boolean { return this.b_reinforcePresenter; }
   get recordPresenter(): boolean { return this.b_recordPresenter; }
   get recordAudience(): boolean { return this.b_recordAudience; }
+  get designForActive(): boolean { return this.b_designForActive; }
   get extenderProvided(): boolean { return this.b_extenderProvided; }
 
   get captureRadius(): number { return this.m_captureRadius; }
@@ -298,6 +300,7 @@ export class CalculatorService {
 
     this.b_pristine = false;
     this.b_has_output = false;
+    this.setDesignForActive();
     this.updateAndEmit();
   }
 
@@ -328,15 +331,17 @@ export class CalculatorService {
 
     this.b_pristine = false;
     this.b_has_output = false;
+    this.setDesignForActive();
     this.updateAndEmit();
   }
 
   set recordAudience(val: boolean) {
     this.b_recordAudience = val;
-    this.updateAndEmit();
 
     this.b_pristine = false;
     this.b_has_output = false;
+    this.setDesignForActive();
+    this.updateAndEmit();
   }
 
   set inputExtenderLength(val: number) {
@@ -411,6 +416,10 @@ export class CalculatorService {
 
   private get topOfHeadToMouth(): number {
     return 0.1 * this.unitConversion;
+  }
+
+  private setDesignForActive() {
+    this.b_designForActive = this.b_reinforcePresenter || this.b_recordPresenter || this.b_recordAudience;
   }
 
   private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight, ceilingHeight) {
@@ -555,9 +564,10 @@ export class CalculatorService {
 
   private updateAndEmit() {
 
-    if (!environment.production || this.autoCalculateOutput) {
+    if (this.designForActive && (!environment.production || this.autoCalculateOutput)) {
       this.calculateOutputs();
     }
+
     this.$recalculate.next(true);
     this.updateRouteParams();
   }
