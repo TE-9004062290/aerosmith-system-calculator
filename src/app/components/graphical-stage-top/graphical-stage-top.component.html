@@ -37,7 +37,10 @@
                                     <div class="presenter-microphones">
                                         <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
                                             [ngStyle]="{'left': (presenterOffset * 3) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
-                                            <app-svg-capture-radius [mode]="calculatorService.reinforcePresenter ? 'presenterReinforcement' : 'presenterRecording'" [width]="presenterCaptureRadiusPx * 2"></app-svg-capture-radius>
+                                            <app-svg-capture-radius 
+                                                [mode]="calculatorService.reinforcePresenter ? (calculatorService.soundReinforcementPriority ? 'presenterReinforcementRange' : 'presenterReinforcementQuality')  : 'presenterRecording'" 
+                                                [width]="presenterCaptureRadiusPx * 2">
+                                            </app-svg-capture-radius>
                                         </div>   
                                         <ng-container *ngIf="calculatorService.recordPresenter && calculatorService.reinforcePresenter">
                                             <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
