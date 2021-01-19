@@ -8,7 +8,7 @@
         </div>          
     </div>
     <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
-        <div *ngIf="calculatorService.hasFreshOutput" class="radii-legend-container">
+        <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="radii-legend-container">
             <app-radii-legend></app-radii-legend>
             <div class="radii-legend-divider"></div>
         </div>

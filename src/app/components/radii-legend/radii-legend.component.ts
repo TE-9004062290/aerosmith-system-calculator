@@ -16,14 +16,17 @@ export class RadiiLegendComponent implements OnInit {
   }
 
   public togglePresenterReinforcement(val: boolean) {
-    this.calculatorService.displayPresenterReinforcement = val;
+    this.calculatorService.displayPresenterRecording = val;
+    this.calculatorService.displayAudienceRecording = val;
   }
 
   public togglePresenterRecording(val: boolean) {
-    this.calculatorService.displayPresenterRecording = val;
+    this.calculatorService.displayPresenterReinforcement = val;
+    this.calculatorService.displayAudienceRecording = val;
   }
 
   public toggleAudienceRecording(val: boolean) {
-    this.calculatorService.displayAudienceRecording = val;
+    this.calculatorService.displayPresenterReinforcement = val;
+    this.calculatorService.displayPresenterRecording = val;
   }
 }

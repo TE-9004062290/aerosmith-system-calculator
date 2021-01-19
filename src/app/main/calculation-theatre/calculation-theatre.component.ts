@@ -33,6 +33,8 @@ export class CalculationTheatreComponent implements OnInit {
   public soundReinforcementPriority: SoundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
 
   public sideBarOut = false;
+
+  public numDesignActive: number = 0;
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,6 +59,13 @@ export class CalculationTheatreComponent implements OnInit {
         this.initialized = true;
       }
     });
+
+    this.numDesignActive = this._countDesignActive();
+    this.calculatorService.$recalculate.subscribe(recalc => {
+      if (recalc) {
+        this.numDesignActive = this._countDesignActive();
+      }
+    });
   }
 
   public calculate(track: boolean = false) {
@@ -75,6 +84,15 @@ export class CalculationTheatreComponent implements OnInit {
 
   public hideSideBar() {
     this.sideBarOut = false;
+  }
+
+  private _countDesignActive() {
+    const designModes = [
+      this.calculatorService.reinforcePresenter,
+      this.calculatorService.recordPresenter,
+      this.calculatorService.recordAudience
+    ]
+    return designModes.filter(mode => mode).length;
   }
 
   private parseParams(params) {
