@@ -98,7 +98,7 @@
                                     class="microphone-wrapper" 
                                     [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
                                     <app-svg-microphone 
-                                        [displayRadius]="calculatorService.displayPresenterReinforcement"
+                                        [displayRadius]="calculatorService.reinforcePresenter ? calculatorService.displayPresenterReinforcement : calculatorService.displayPresenterRecording"
                                         [mode]="calculatorService.reinforcePresenter ? 'reinforcement' : 'presenterRecording'" 
                                         [extenderLength]="extenderLength">
                                     </app-svg-microphone>

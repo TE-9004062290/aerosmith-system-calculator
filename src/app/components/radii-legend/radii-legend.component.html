@@ -1,5 +1,5 @@
 <div class="radii-legends">
-    <div class="radii-legend" (mouseenter)="togglePresenterReinforcement(false)" (mouseleave)="togglePresenterReinforcement(true)">
+    <div *ngIf="calculatorService.reinforcePresenter" class="radii-legend" (mouseenter)="togglePresenterReinforcement(false)" (mouseleave)="togglePresenterReinforcement(true)">
         <div class="legend-icon" [ngStyle]="{'background-color': '#66F3CB'}"></div>
         <div class="legend-label">
             Presenter sound reinforcement

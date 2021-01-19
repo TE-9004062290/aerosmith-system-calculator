@@ -207,9 +207,12 @@ export class CalculatorService {
   }
 
   set soundReinforcementPriority(val: SoundReinforcementPriority) {
+
+    if (!this.reinforcePresenter) {
+      return;
+    }
+    
     this.e_soundReinforcementPriority = val;
-    this.b_pristine = false;
-    this.b_has_output = false;
     if (this.e_soundReinforcementPriority === SoundReinforcementPriority.AudioQuality) {
       this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     } else if (this.e_soundReinforcementPriority === SoundReinforcementPriority.DetectionRange ) {
@@ -217,8 +220,10 @@ export class CalculatorService {
     } else {
       this.m_captureRadius = 2 * (this.measurementUnit === MeasurementUnits.Meters ? 1 : CalculatorService.METERS_TO_FEET);
     }
-    this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
 
+    this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
+    this.b_pristine = false;
+    this.b_has_output = false;
     this.updateAndEmit();
   }
 
