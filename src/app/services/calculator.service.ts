@@ -71,6 +71,9 @@ export class CalculatorService {
   }
 
   public autoCalculateOutput: boolean = false;
+  public displayPresenterReinforcement: boolean = true;
+  public displayPresenterRecording: boolean = true;
+  public displayAudienceRecording: boolean = true;
 
   public MINIMUMS = this.METER_MINIMUMS;
   public MAXIMUMS = this.METER_MAXIMUMS;

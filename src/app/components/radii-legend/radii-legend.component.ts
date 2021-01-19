@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalculatorService } from '@app/services/calculator.service';
 
 @Component({
   selector: 'app-radii-legend',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RadiiLegendComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public calculatorService: CalculatorService
+  ) { }
 
   ngOnInit() {
   }
 
+  public togglePresenterReinforcement(val: boolean) {
+    this.calculatorService.displayPresenterReinforcement = val;
+  }
+
+  public togglePresenterRecording(val: boolean) {
+    this.calculatorService.displayPresenterRecording = val;
+  }
+
+  public toggleAudienceRecording(val: boolean) {
+    this.calculatorService.displayAudienceRecording = val;
+  }
 }

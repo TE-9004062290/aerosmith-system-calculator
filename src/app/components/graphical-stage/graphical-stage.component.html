@@ -97,13 +97,21 @@
                                 <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
                                     class="microphone-wrapper" 
                                     [ngStyle]="{'width': (2 * sideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
-                                    <app-svg-microphone [mode]="calculatorService.reinforcePresenter ? 'reinforcement' : 'presenterRecording'" [extenderLength]="extenderLength"></app-svg-microphone>
+                                    <app-svg-microphone 
+                                        [displayRadius]="calculatorService.displayPresenterReinforcement"
+                                        [mode]="calculatorService.reinforcePresenter ? 'reinforcement' : 'presenterRecording'" 
+                                        [extenderLength]="extenderLength">
+                                    </app-svg-microphone>
                                 </div>
                                 <ng-container *ngIf="calculatorService.recordPresenter && calculatorService.reinforcePresenter">
                                     <div *ngFor="let mic of microphones.positions; trackBy: microphoneTrackByFn" @animateOutputArea 
                                         class="microphone-wrapper" 
                                         [ngStyle]="{'width': (2 * secondarySideCapture) + 'px', 'left': mic.positionPercentage + '%'}">
-                                        <app-svg-microphone mode="presenterRecording" [extenderLength]="extenderLength"></app-svg-microphone>
+                                        <app-svg-microphone 
+                                            [displayRadius]="calculatorService.displayPresenterRecording"
+                                            mode="presenterRecording" 
+                                            [extenderLength]="extenderLength">
+                                        </app-svg-microphone>
                                     </div>  
                                 </ng-container>
                             </ng-container>
