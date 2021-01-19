@@ -62,11 +62,24 @@
 
 ::ng-deep {
     .mat-checkbox {
+        .mat-checkbox-layout {
+            &:first-child {
+                vertical-align: baseline;
+            }
+        }
         .mat-checkbox-frame {
             border-color: #469B99;
         }
         &.mat-checkbox-checked .mat-checkbox-background {
             background-color: #469B99;
+            background-image: url("data:image/svg+xml,%3Csvg width='8' height='7' viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.92804 1.41421L6.51382 0L2.97854 3.53528L1.5646 2.12134L0.150391 3.53555L2.97882 6.36398L4.39303 4.94977L4.39276 4.94949L7.92804 1.41421Z' fill='white'/%3E%3C/svg%3E%0A");
+            background-repeat: no-repeat;
+            background-size: 8px;
+            background-position-y: 55%;
+            background-position-x: 50%;
+            svg {
+                display: none;
+            }
         }
         .mat-checkbox-checkmark-path {
             stroke: white !important;
@@ -105,6 +118,7 @@
                     border-color: #469B99 !important;
                 }
                 .mat-radio-inner-circle {
+                    transform: scale(0.42857142857) !important;
                     background-color: #469B99 !important;
                 }
             }
