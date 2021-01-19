@@ -375,6 +375,10 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getAudienceMicrophonePositions(numMicrophonesWidth: number, numMicrophonesDepth: number, microphoneIntervalWidth: number, microphoneIntervalDepth: number): GraphicPosition[] {
+    if (!this.calculatorService.recordAudience) {
+      return [];
+    }
+
     let microphones: GraphicPosition[] = [];
     this.measuringStickDepthPosition = null;
     this.measuringStickWidthPosition = null;

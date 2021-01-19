@@ -146,7 +146,7 @@ export class CalculatorService {
   private m_audienceMicrophoneIntervalDepth: number = 0;
   private m_extenderLength: number = 0;
   private m_audienceExtenderLength: number = 0;
-  private m_distanceBetweenAudienceAndMicrophone: number = 0; // The vertical distance between top of audience head and the audience microphone
+  private m_distanceBetweenAudienceAndMicrophone: number = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight); // The vertical distance between top of audience head and the audience microphone
 
   /* Countable Quantity Outputs */
   private c_requiredMicrophones: number = 0;
@@ -220,6 +220,7 @@ export class CalculatorService {
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
+      this.m_distanceBetweenAudienceAndMicrophone = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight);
       this.b_pristine = false;
       this.b_has_output = false;
 
@@ -253,11 +254,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_audienceHeight = round(Math.min(Math.max(this.MINIMUMS.audienceHeight, val), this.MAXIMUMS.audienceHeight), 2);
-      if (2.1 * this.m_audienceHeight > this.m_ceilingHeight) {
-        this.m_distanceBetweenAudienceAndMicrophone = this.m_ceilingHeight - this.m_audienceHeight;
-      } else {
-        this.m_distanceBetweenAudienceAndMicrophone = 1.1 * this.m_audienceHeight;
-      }
+      this.m_distanceBetweenAudienceAndMicrophone = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight);
       this.b_pristine = false;
       this.b_has_output = false;
 
@@ -416,6 +413,14 @@ export class CalculatorService {
     return 0.1 * this.unitConversion;
   }
 
+  private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight, ceilingHeight) {
+    if (2.1 * audienceHeight > ceilingHeight) {
+      return ceilingHeight - audienceHeight;
+    } else {
+      return 1.1 * audienceHeight;
+    }
+  }
+
   private isExtenderRequired(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - inputExtenderLength; 
     const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth; 
@@ -453,9 +458,11 @@ export class CalculatorService {
     const effectiveAudienceHeight = audienceHeight - this.topOfHeadToMouth;
     const heightDifference = effectiveCeilingHeight - effectiveAudienceHeight;
     const audienceDistance = Math.sqrt( (captureRadius ** 2) - (heightDifference)**2);
+
     if (isNaN(audienceDistance)) {
       return 1 * this.unitConversion;
     }
+
     return Math.max(1 * this.unitConversion, audienceDistance);
   }
 
@@ -547,6 +554,7 @@ export class CalculatorService {
   }
 
   private updateAndEmit() {
+
     if (!environment.production || this.autoCalculateOutput) {
       this.calculateOutputs();
     }

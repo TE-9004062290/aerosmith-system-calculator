@@ -282,6 +282,10 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   private getAudienceMicrophonePositions(numMicrophonesDepth: number, microphoneIntervalDepth: number): GraphicPosition[] {
+    if (!this.calculatorService.recordAudience) {
+      return [];
+    }
+
     let microphones: GraphicPosition[] = [];
     const percentageIntervalDepth = (microphoneIntervalDepth / this.calculatorService.audienceDepth) * 100;
 
@@ -318,7 +322,7 @@ export class GraphicalStageSideComponent implements OnInit {
         microphones.push(dMidMic);
       }
     }
-    
+
     return microphones;
   }
 }
