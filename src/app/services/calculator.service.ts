@@ -152,6 +152,7 @@ export class CalculatorService {
   private m_extenderLength: number = 0;
   private m_audienceExtenderLength: number = 0;
   private m_distanceBetweenAudienceAndMicrophone: number = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight); // The vertical distance between top of audience head and the audience microphone
+  private m_topAudienceIntersectionRadius: number = 0;
 
   /* Countable Quantity Outputs */
   private c_requiredMicrophones: number = 0;
@@ -172,6 +173,7 @@ export class CalculatorService {
   get audienceMicrophoneIntervalDepth(): number { return this.m_audienceMicrophoneIntervalDepth; }
   get extenderLength(): number { return this.m_extenderLength; }
   get audienceExtenderLength(): number { return this.m_audienceExtenderLength; }
+  get topAudienceIntersectionRadius(): number { return this.m_topAudienceIntersectionRadius; }
 
   get requiredMicrophones(): number { return this.c_requiredMicrophones; }
   get requiredAudienceMicrophonesWidth(): number { return this.c_requiredAudienceMicrophonesWidth; }
@@ -505,8 +507,8 @@ export class CalculatorService {
   /* Calculates the interval between audience microphones. Should be the same for both room width and depth */
   private calculateAudienceMicrophoneInterval(audienceHeight: number, ceilingHeight: number) {
     const captureRadius = this.m_audienceCaptureRadius;
-
     let halfChord = Math.sqrt( (captureRadius ** 2) - (this.m_distanceBetweenAudienceAndMicrophone ** 2) );
+    this.m_topAudienceIntersectionRadius = halfChord;
     halfChord = Math.sin(Math.PI / 4) * halfChord;
     return Math.max(1 * this.unitConversion, 2 * halfChord);
   }

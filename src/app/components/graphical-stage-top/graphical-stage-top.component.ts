@@ -257,7 +257,7 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getAudienceCaptureRadius(): number {
-    const radius = this.calculatorService.audienceCaptureRadius;
+    const radius = this.calculatorService.topAudienceIntersectionRadius;
     //const radius = this.calculatorService.audienceMicrophoneInterval / 2;
     const radiusStageHeightRatio = radius / this.calculatorService.lectureWidth;
     return radiusStageHeightRatio * this.stageHeight;
