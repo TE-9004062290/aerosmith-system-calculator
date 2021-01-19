@@ -606,6 +606,9 @@ export class CalculatorService {
     const inputs: string[] = [];
 
     inputs.push(`measurementUnit=${this.e_measurementUnit}`);
+    inputs.push(`reinforcePresenter=${+this.b_reinforcePresenter}`);
+    inputs.push(`recordPresenter=${+this.b_recordPresenter}`);
+    inputs.push(`recordAudience=${+this.b_recordAudience}`);
     inputs.push(`reinforcementPriority=${this.e_soundReinforcementPriority}`);
     inputs.push(`ceilingHeight=${this.m_ceilingHeight}`);
     inputs.push(`lectureWidth=${this.m_lectureWidth}`);
