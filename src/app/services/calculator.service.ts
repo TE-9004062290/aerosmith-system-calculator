@@ -389,7 +389,7 @@ export class CalculatorService {
     
     this.b_pristine = false;
     this.b_has_output = false;
-    this.b_audienceExtenderProvided = val > 0;
+    this.b_audienceExtenderProvided = true;
 
     this.updateAndEmit();
   }
@@ -417,6 +417,7 @@ export class CalculatorService {
         audienceHeight: this.m_audienceHeight,
         audienceDepth: this.m_audienceDepth,
         inputExtenderLength: this.m_inputExtenderLength,
+        inputAudienceExtenderLength: this.m_inputAudienceExtenderLength,
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false
@@ -494,6 +495,8 @@ export class CalculatorService {
     const effectiveCeilingHeight = ceilingHeight - inputAudienceExtenderLength;
     if (inputAudienceExtenderLength > 0) {
       return inputAudienceExtenderLength < this.inputAudienceExtenderMinimum;
+    // } else if (inputAudienceExtenderLength === 0 && effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight) {
+    //   return false;
     } else {
       return effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight;
     }
@@ -517,7 +520,7 @@ export class CalculatorService {
     if (audienceExtenderRequired) {
         return ceilingHeight - (this.m_distanceBetweenAudienceAndMicrophone + audienceHeight);
     } else {
-      if (inputAudienceExtenderLength > 0) {
+      if (inputAudienceExtenderLength >= 0) {
         return inputAudienceExtenderLength;
       }
       return 0;
@@ -685,6 +688,9 @@ export class CalculatorService {
     inputs.push(`audienceDepth=${this.m_audienceDepth}`);
     if (this.m_inputExtenderLength) {
       inputs.push(`inputExtenderLength=${this.m_inputExtenderLength}`);
+    }
+    if (this.m_inputAudienceExtenderLength) {
+      inputs.push(`inputAudienceExtenderLength=${this.m_inputAudienceExtenderLength}`);
     }
 
     return `${url}?${inputs.join('&')}`;

@@ -98,7 +98,7 @@ export class CalculationTheatreComponent implements OnInit {
   private parseParams(params) {
     const { 
       ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
-      inputExtenderLength, measurementUnit, 
+      inputExtenderLength, inputAudienceExtenderLength, measurementUnit, 
       reinforcePresenter, recordPresenter, recordAudience, reinforcementPriority } = params;
 
     let hasParam: boolean = false;
@@ -135,6 +135,10 @@ export class CalculationTheatreComponent implements OnInit {
     }
     if (inputExtenderLength) {
       this.calculatorService.inputExtenderLength = inputExtenderLength;
+      hasParam = true;
+    }
+    if (inputAudienceExtenderLength) {
+      this.calculatorService.inputAudienceExtenderLength = inputAudienceExtenderLength;
       hasParam = true;
     }
 

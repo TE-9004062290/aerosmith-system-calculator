@@ -127,6 +127,10 @@
                     Presenter: {{ calculatorService.inputExtenderMinimum | number: '0.2-2' }} &mdash; {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }}
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
+                <div *ngIf="calculatorService.recordAudience && calculatorService.audienceExtenderLength  > 0" class="data-value">
+                    Audience: {{ calculatorService.inputAudienceExtenderMinimum| number: '0.2-2' }} &mdash; {{ calculatorService.inputAudienceExtenderMaximum | number: '0.2-2' }}
+                    {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
+                </div>
             </div>
         </div>
     </div>
