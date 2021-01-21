@@ -117,6 +117,25 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="calculatorService.recordAudience" class="inputs-row">
+                <div class="inputs-group inputs-group--horizontal">
+                    <label class="inputs-label" for="input-audience-extender-length">
+                        Audience Extender Length
+                    </label>
+                    <div class="inputs-value">
+                        <input id="input-audience-extender-length" #inputAudienceExtenderLength class="inputs-input" type="number" 
+                            [min]="calculatorService.inputAudienceExtenderMinimum | number: '0.2-2'"
+                            [max]="calculatorService.inputAudienceExtenderMaximum | number: '0.2-2'"
+                            [step]="0.1 | number: '0.2-2'"
+                            [value]="(calculatorService.inputAudienceExtenderLength ? calculatorService.inputAudienceExtenderLength : calculatorService.inputAudienceExtenderMinimum) | number: '0.2-2'"
+                            (change)="updateInput('inputAudienceExtenderLength', inputAudienceExtenderLength)"
+                            (keyup)="calculatorService.forceDirty()"/>
+                        <span class="unit-label">
+                            {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }} 
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="toggle-container technical-support-toggle">
