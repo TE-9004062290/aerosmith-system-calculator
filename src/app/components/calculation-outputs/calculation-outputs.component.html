@@ -121,13 +121,13 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="data-row" *ngIf="calculatorService.inputExtenderMaximum > 0">
+            <div class="data-row" *ngIf="calculatorService.inputExtenderMaximum > 0 || calculatorService.inputAudienceExtenderMaximum > 0">
                 <div class="data-description">Acceptable extender lengths</div>
-                <div *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter" class="data-value">
+                <div *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter && calculatorService.inputExtenderMaximum > 0" class="data-value">
                     Presenter: {{ calculatorService.inputExtenderMinimum | number: '0.2-2' }} &mdash; {{ calculatorService.inputExtenderMaximum | number: '0.2-2' }}
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>
-                <div *ngIf="calculatorService.recordAudience && calculatorService.audienceExtenderLength  > 0" class="data-value">
+                <div *ngIf="calculatorService.recordAudience && calculatorService.inputAudienceExtenderMaximum > 0" class="data-value">
                     Audience: {{ calculatorService.inputAudienceExtenderMinimum| number: '0.2-2' }} &mdash; {{ calculatorService.inputAudienceExtenderMaximum | number: '0.2-2' }}
                     {{ calculatorService.measurementUnit === 'm' ? 'meters' : 'feet' }}
                 </div>

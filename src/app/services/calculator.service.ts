@@ -236,6 +236,7 @@ export class CalculatorService {
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
+      this.inputAudienceExtenderLength = this.m_inputAudienceExtenderLength;
       this.m_distanceBetweenAudienceAndMicrophone = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight);
       this.m_maxDistanceBetweenAudienceAndMicrophone = this.calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(this.m_audienceHeight, this.m_ceilingHeight);
       this.b_pristine = false;
@@ -384,7 +385,7 @@ export class CalculatorService {
       const extenderMax = this.inputAudienceExtenderMaximum;
       this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
     } else {
-      this.m_inputAudienceExtenderLength = this.audienceExtenderLength;
+      this.m_inputAudienceExtenderLength = this.inputAudienceExtenderMaximum;
     }
     
     this.b_pristine = false;
@@ -493,10 +494,8 @@ export class CalculatorService {
 
   private isAudienceExtenderRequired(captureRadius: number, ceilingHeight: number, audienceHeight: number, inputAudienceExtenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - inputAudienceExtenderLength;
-    if (inputAudienceExtenderLength > 0) {
+    if (inputAudienceExtenderLength >= 0) {
       return inputAudienceExtenderLength < this.inputAudienceExtenderMinimum;
-    // } else if (inputAudienceExtenderLength === 0 && effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight) {
-    //   return false;
     } else {
       return effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight;
     }
@@ -508,7 +507,7 @@ export class CalculatorService {
         const effectivePresenterHeight = presenterHeight - this.topOfHeadToMouth;
         return ceilingHeight - effectivePresenterHeight - this.verticalThreshold;
     } else {
-      if (inputExtenderLength > 0) {
+      if (inputExtenderLength >= 0) {
         return inputExtenderLength;
       }
       return 0;
