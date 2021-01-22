@@ -1,7 +1,11 @@
 
 @media print {
     .inputs-wrapper {
-        display: block !important;
+        // display: block !important;
+        display: none;
+    }
+    .outputs-wrapper {
+        display: none;
     }
     .actions {
         display: none !important;

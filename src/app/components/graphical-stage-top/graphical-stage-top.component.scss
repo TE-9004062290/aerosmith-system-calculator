@@ -2,15 +2,18 @@
     * {
         transition: none;
     }
+    .graphical-output-top {
+        margin-top: 120px !important;
+    }
 }
 
 @media print and (max-width: 40em) /* portrait. For some reason @media print and (orientation: portrait) doesn't work as expected*/ {
-    .graphical-output-side {
+    .graphical-output-top {
         page-break-before: avoid !important;
     }
 }
 @media print /* landscape */  {
-    .graphical-output-side {
+    .graphical-output-top {
         page-break-before: always;
     }
 }

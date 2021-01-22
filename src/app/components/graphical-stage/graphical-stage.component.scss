@@ -2,6 +2,13 @@
     * {
         transition: none;
     }
+
+    .graphical-output {
+        width: 100%;
+        .graphical-output-front {
+            margin-top: 150px !important;
+        }
+    }
 }
 
 @media print and (max-width: 40em) /* portrait. For some reason @media print and (orientation: portrait) doesn't work as expected*/ {
@@ -54,7 +61,6 @@
     }
     &.has-output {
         .graphical-output-front {
-            margin-top: 210px !important;
         }
     }
 }

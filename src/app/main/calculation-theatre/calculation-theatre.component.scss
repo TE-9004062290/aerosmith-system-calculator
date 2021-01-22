@@ -9,9 +9,20 @@
     }
     .calculation-theatre-header {
         width: 100%;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
     }
+    .radii-legend-container {
+        width: 100% !important;
+        .radii-legend-divider {
+            margin-top: 10px !important;
+        }
+        padding-top: 20px !important;
+    }
+
     .graphical-stage-wrapper {
         width: 100% !important;
+        margin-right: 0px !important;
     }
     .sidebar {
         width: 0%;
