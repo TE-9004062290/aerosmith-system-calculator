@@ -19,8 +19,13 @@ export class MeasuringStickComponent implements OnInit {
     return this._width;
   }
   @Input() set width(value: number) {
+    if (!value || isNaN(value)) {
+      return;
+    }
     this._width = value;
-    if (this._width && this._width < this.thinThreshold) {
+    if (this._width < this.ultraThinThreshold) {
+      this.mode = 'ultrathin';
+    } else if (this._width < this.thinThreshold) {
       this.mode = 'thin';
     } else {
       this.mode = 'wide';
@@ -32,8 +37,14 @@ export class MeasuringStickComponent implements OnInit {
     return this._height;
   }
   @Input() set height(value: number) {
+    if (!value || isNaN(value)) {
+      return;
+    }
+
     this._height = value;
-    if (this._height && this._height < this.shortThreshold) {
+    if (this._height < this.ultraShortThreshold) {
+      this.mode = 'ultrathin';
+    } else if (this._height < this.shortThreshold) {
       this.mode = 'thin';
     } else {
       this.mode = 'wide';
@@ -61,18 +72,34 @@ export class MeasuringStickComponent implements OnInit {
   
   @Output() public updated: EventEmitter<any> = new EventEmitter();
 
-  public mode: string = 'wide';
-  private thinThreshold = 100; // 150px
+  public mode: 'wide' | 'thin' | 'ultrathin' = 'wide';
+  private thinThreshold = 100; // px
+  private ultraThinThreshold = 25;
   private shortThreshold = 60;
+  private ultraShortThreshold = 25;
 
   public firstContext = { first: true };
   public secondContext = { first: false };
 
   ngOnInit() {
-    if ((this._width && this._width < this.thinThreshold) || (this._height && this._height < this.shortThreshold)) {
-      this.mode = 'thin';
-    } else {
-      this.mode = 'wide';
+    if (this._width) {
+      if (this._width < this.ultraThinThreshold) {
+        this.mode = 'ultrathin';
+      } else if (this._width < this.thinThreshold) {
+        this.mode = 'thin';
+      } else {
+        this.mode = 'wide';
+      }
+    }
+
+    if (this._height) {
+      if (this._height < this.ultraShortThreshold) {
+        this.mode = 'ultrathin';
+      } else if (this._height < this.shortThreshold) {
+        this.mode = 'thin';
+      } else {
+        this.mode = 'wide';
+      }
     }
 
     if (this._modeIsForced) {

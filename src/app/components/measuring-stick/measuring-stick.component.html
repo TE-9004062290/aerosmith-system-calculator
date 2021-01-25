@@ -54,6 +54,7 @@
         [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
         [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
+            <div class="stop"></div>
             <div class="arrow"></div>
             <div class="bar"></div>
         </div>
@@ -77,6 +78,7 @@
         <div class="stick bottom">
             <div class="bar"></div>
             <div class="arrow"></div>
+            <div class="stop"></div>
         </div>
     </div>
 </ng-template>

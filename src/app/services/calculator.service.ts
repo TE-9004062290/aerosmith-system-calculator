@@ -662,7 +662,8 @@ export class CalculatorService {
     let refinedAudienceMicrophoneIntervals = this.refineAudienceMicrophoneInterval(lectureWidth, audienceDepth, audienceMicrophoneInterval, numAudienceMicrophones);
     //numAudienceMicrophones = this.refineNumAudienceMicrophones(lectureWidth, audienceDepth, refinedAudienceMicrophoneIntervals.width, refinedAudienceMicrophoneIntervals.depth);
 
-    const audienceDistance = this.calculateAudienceDistance(this.m_captureRadius, ceilingHeight, audienceHeight, extenderLength);
+    const radiusForAudienceDistance = this.b_recordPresenter ? MicrophoneRadii.PresenterRecording : this.b_reinforcePresenter ? MicrophoneRadii.PresenterReinforcementRange : 1;
+    const audienceDistance = this.calculateAudienceDistance(radiusForAudienceDistance * this.unitConversion, ceilingHeight, audienceHeight, extenderLength);
 
 
     this.setOutputs(extenderLength, audienceDistance, microphoneInterval, refinedAudienceMicrophoneIntervals, numMicrophones, numAudienceMicrophones);
