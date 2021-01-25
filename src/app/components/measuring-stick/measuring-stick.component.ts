@@ -76,7 +76,7 @@ export class MeasuringStickComponent implements OnInit {
   private thinThreshold = 100; // px
   private ultraThinThreshold = 25;
   private shortThreshold = 60;
-  private ultraShortThreshold = 25;
+  private ultraShortThreshold = 30;
 
   public firstContext = { first: true };
   public secondContext = { first: false };
