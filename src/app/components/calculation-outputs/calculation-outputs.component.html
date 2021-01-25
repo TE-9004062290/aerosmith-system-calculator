@@ -7,21 +7,37 @@
         </div>
         <div class="data-rows">
             <div class="data-row">
-                <div class="data-description">Calculation Priority</div>
-                <div class="data-value">{{calculatorService.soundReinforcementPriority === 0 ? 'Audio quality' : 'Detection range' }}</div>
+                <div class="data-description">Design for:</div>
+                <div *ngIf="calculatorService.reinforcePresenter" class="data-value">
+                    Presenter sound reinforcement
+                    <div>Priority: ({{calculatorService.soundReinforcementPriority === 0 ? 'Audio quality' : 'Detection range' }})</div>
+                </div>
+                <div *ngIf="calculatorService.recordPresenter" class="data-value">
+                    Presenter recording
+                </div>
+                <div *ngIf="calculatorService.recordAudience" class="data-value">
+                    Audience recording
+                </div>
             </div>
             <div class="data-row">
-                <div class="data-description">Ceiling height</div>
+                <div class="data-description">Ceiling height:</div>
                 <div class="data-value">
                     {{ calculatorService.ceilingHeight }} 
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.ceilingHeight === 1 ? '' : 's') : (calculatorService.ceilingHeight === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
             <div class="data-row">
-                <div class="data-description">Presentation area width</div>
+                <div class="data-description">Presentation area width:</div>
                 <div class="data-value">
                     {{ calculatorService.lectureWidth}} 
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.lectureWidth === 1 ? '' : 's') : (calculatorService.lectureWidth === 1 ? 'foot' : 'feet') }}
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-description">Audience depth:</div>
+                <div class="data-value">
+                    {{ calculatorService.audienceDepth}} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceDepth === 1 ? '' : 's') : (calculatorService.audienceDepth === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
             <div class="data-row">
@@ -38,11 +54,15 @@
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceHeight === 1 ? '' : 's') : (calculatorService.audienceHeight === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
-            <div class="data-row" *ngIf="calculatorService.inputExtenderLength > 0 && !calculatorService.extenderRequired">
-                <div class="data-description">Extender length</div>
-                <div class="data-value">
-                    {{ calculatorService.inputExtenderLength}} 
+            <div class="data-row" *ngIf="calculatorService.inputExtenderLength > 0 && !calculatorService.extenderRequired || calculatorService.audienceExtenderProvided">
+                <div class="data-description">Input extender length</div>
+                <div *ngIf="calculatorService.inputExtenderLength > 0 && !calculatorService.extenderRequired" class="data-value">
+                    Presenter: {{ calculatorService.inputExtenderLength}} 
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.inputExtenderLength === 1 ? '' : 's') : (calculatorService.inputExtenderLength === 1 ? 'foot' : 'feet') }}
+                </div>
+                <div *ngIf="calculatorService.inputExtenderLength > 0 && !calculatorService.extenderRequired" class="data-value">
+                    Audience: {{ calculatorService.inputAudienceExtenderLength}} 
+                    {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.inputAudienceExtenderLength === 1 ? '' : 's') : (calculatorService.inputAudienceExtenderLength === 1 ? 'foot' : 'feet') }}     
                 </div>
             </div>
         </div>

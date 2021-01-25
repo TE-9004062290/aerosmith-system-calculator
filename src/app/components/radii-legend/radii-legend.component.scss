@@ -1,3 +1,9 @@
+@media print {
+    .radii-legends {
+        justify-content: space-evenly !important;
+    }
+}
+
 .radii-legends {
     width: 100%;
     max-width: 767px;
