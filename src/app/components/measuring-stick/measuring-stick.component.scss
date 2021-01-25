@@ -502,8 +502,7 @@
 
 .vertical-wrapper {
     &.twinned {
-
-        &[mode='thin'],&[mode='ultrathin'] {
+        &[mode$='thin'] {
             position: relative;
 
             .vertical-measure {
@@ -511,20 +510,36 @@
                 &:last-child {
                     .inputs-output {
                     }
-                    // .stick.left{
-                    //     .stop {
-                    //         width: 0px;
-                    //     }
-                    // }
                 }
                 &:first-child {
                     .inputs-output {
                     }
-                    // .stick.right {
-                    //     .stop {
-                    //         width: 3px;
-                    //     }
-                    // }
+                }
+            }
+        }
+        &[mode='ultrathin'] {
+            .vertical-measure {
+                &:first-child {
+                    .inputs-output {
+                        top: calc(25% - 11px);
+                    }
+                    .stick {
+                        &.bottom {
+                            .bar {
+                                opacity: 0;
+                            }
+                        }
+                    }
+                }
+                &:last-child {
+                    .inputs-output {
+                        top: calc(75% - 11px)
+                    }
+                    .stick {
+                        &.top {
+                            opacity: 0;
+                        }
+                    }
                 }
             }
         }
