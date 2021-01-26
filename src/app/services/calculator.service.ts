@@ -390,7 +390,11 @@ export class CalculatorService {
     
     this.b_pristine = false;
     this.b_has_output = false;
-    this.b_audienceExtenderProvided = true;
+    if (this.m_inputAudienceExtenderLength > 0 && val <= 0) {
+      this.b_audienceExtenderProvided = false;
+    } else if (val > 0) {
+      this.b_audienceExtenderProvided = true;
+    }
 
     this.updateAndEmit();
   }
@@ -494,7 +498,7 @@ export class CalculatorService {
 
   private isAudienceExtenderRequired(captureRadius: number, ceilingHeight: number, audienceHeight: number, inputAudienceExtenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - inputAudienceExtenderLength;
-    if (inputAudienceExtenderLength >= 0) {
+    if (this.b_audienceExtenderProvided) {
       return inputAudienceExtenderLength < this.inputAudienceExtenderMinimum;
     } else {
       return effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight;
