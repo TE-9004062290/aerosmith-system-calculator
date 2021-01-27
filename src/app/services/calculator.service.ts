@@ -385,26 +385,28 @@ export class CalculatorService {
       const extenderMax = this.inputAudienceExtenderMaximum;
       this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
     } else {
-      this.m_inputAudienceExtenderLength = this.inputAudienceExtenderMaximum;
+      this.b_audienceExtenderProvided = false;
+      this.m_inputAudienceExtenderLength = this.inputAudienceExtenderMinimum;
     }
     
     this.b_pristine = false;
     this.b_has_output = false;
-    if (this.m_inputAudienceExtenderLength > 0 && val <= 0) {
-      this.b_audienceExtenderProvided = false;
-    } else if (val > 0) {
-      this.b_audienceExtenderProvided = true;
-    }
+    this.b_audienceExtenderProvided = true;
 
     this.updateAndEmit();
   }
 
   public $recalculate: BehaviorSubject<boolean>;
+  public $refreshBeforePrint: BehaviorSubject<boolean>;
+  public $resizer: BehaviorSubject<boolean>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { 
     this.$recalculate = new BehaviorSubject(true);
+    this.$refreshBeforePrint = new BehaviorSubject(false);
+    this.$resizer = new BehaviorSubject(false);
   }
   
   private updateRouteParams() {
@@ -501,7 +503,7 @@ export class CalculatorService {
     if (this.b_audienceExtenderProvided) {
       return inputAudienceExtenderLength < this.inputAudienceExtenderMinimum;
     } else {
-      return effectiveCeilingHeight >= this.m_distanceBetweenAudienceAndMicrophone + audienceHeight;
+      return effectiveCeilingHeight >= this.m_maxDistanceBetweenAudienceAndMicrophone + audienceHeight;
     }
   }
 
@@ -521,7 +523,7 @@ export class CalculatorService {
   private calculateAudienceExtenderLength(audienceCaptureRadius: number, ceilingHeight: number, audienceHeight: number, inputAudienceExtenderLength: number = 0) {
     const audienceExtenderRequired = this.isAudienceExtenderRequired(audienceCaptureRadius, ceilingHeight, audienceHeight, inputAudienceExtenderLength);
     if (audienceExtenderRequired) {
-        return ceilingHeight - (this.m_distanceBetweenAudienceAndMicrophone + audienceHeight);
+        return ceilingHeight - (this.m_maxDistanceBetweenAudienceAndMicrophone + audienceHeight);
     } else {
       if (inputAudienceExtenderLength >= 0) {
         return inputAudienceExtenderLength;

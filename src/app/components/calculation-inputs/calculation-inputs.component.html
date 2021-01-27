@@ -127,7 +127,7 @@
                             [min]="calculatorService.inputAudienceExtenderMinimum | number: '0.2-2'"
                             [max]="calculatorService.inputAudienceExtenderMaximum | number: '0.2-2'"
                             [step]="0.1 | number: '0.2-2'"
-                            [value]="(calculatorService.audienceExtenderProvided ? calculatorService.inputAudienceExtenderLength : calculatorService.inputAudienceExtenderMaximum) | number: '0.2-2'"
+                            [value]="(calculatorService.audienceExtenderProvided ? calculatorService.inputAudienceExtenderLength : calculatorService.inputAudienceExtenderMinimum) | number: '0.2-2'"
                             (change)="updateInput('inputAudienceExtenderLength', inputAudienceExtenderLength)"
                             (keyup)="calculatorService.forceDirty()"/>
                         <span class="unit-label">
