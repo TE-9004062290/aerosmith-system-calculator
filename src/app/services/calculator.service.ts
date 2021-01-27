@@ -389,8 +389,10 @@ export class CalculatorService {
       const extenderMin = this.inputAudienceExtenderMinimum;
       const extenderMax = this.inputAudienceExtenderMaximum;
       this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
+      this.inputAudienceExtenderPristine = this.m_inputAudienceExtenderLength === extenderMin || this.m_inputAudienceExtenderLength === extenderMax;
     } else {
       this.b_audienceExtenderProvided = false;
+      this.inputAudienceExtenderPristine = true;
       this.m_inputAudienceExtenderLength = this.inputAudienceExtenderMinimum;
     }
     
