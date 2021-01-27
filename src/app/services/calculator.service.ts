@@ -236,9 +236,12 @@ export class CalculatorService {
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
       this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
-      this.m_distanceBetweenAudienceAndMicrophone = this.calculateDistanceBetweenAudienceAndAudienceMicrophone(this.m_audienceHeight, this.m_ceilingHeight);
-      this.m_maxDistanceBetweenAudienceAndMicrophone = this.calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(this.m_audienceHeight, this.m_ceilingHeight);
-      this.inputAudienceExtenderLength = this.m_inputAudienceExtenderLength;
+      if (this.b_audienceExtenderProvided) {
+        this.inputAudienceExtenderLength = this.m_inputAudienceExtenderLength;  
+      } else {
+        this.inputAudienceExtenderLength = this.inputAudienceExtenderMinimum;
+      }
+
       this.b_pristine = false;
       this.b_has_output = false;
 
