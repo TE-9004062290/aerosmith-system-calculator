@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 
 import {
@@ -57,7 +57,7 @@ export class CalculationInputsComponent implements OnInit {
       }
     });
   }
-
+  
   public toggleAdvancedSettings() {
     this.showAdvancedSettings = !this.showAdvancedSettings;
   }
@@ -79,6 +79,9 @@ export class CalculationInputsComponent implements OnInit {
      }) {
       cService[inputField] = numerical; // Rely on model logic implemented in setter
       inputElement.value = cService[inputField];
+    }
+    if (inputField === 'inputAudienceExtenderLength') {
+      this.calculatorService.inputAudienceExtenderPristine = false;
     }
   }
 }

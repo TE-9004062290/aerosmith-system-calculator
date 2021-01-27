@@ -84,6 +84,7 @@ export class CalculatorService {
   private readonly INTERVAL_THRESHOLD_1 = 4.24; // Meters
 
   private b_pristine: boolean = false;
+  public inputAudienceExtenderPristine: boolean = true;
   private b_has_output: boolean = false;
   
   get isPristine() { return this.b_pristine; }
@@ -395,7 +396,7 @@ export class CalculatorService {
     
     this.b_pristine = false;
     this.b_has_output = false;
-    this.b_audienceExtenderProvided = true;
+    this.b_audienceExtenderProvided = !this.inputAudienceExtenderPristine;
 
     this.updateAndEmit();
   }
