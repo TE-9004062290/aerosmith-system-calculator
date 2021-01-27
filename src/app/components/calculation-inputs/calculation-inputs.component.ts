@@ -80,8 +80,15 @@ export class CalculationInputsComponent implements OnInit {
       cService[inputField] = numerical; // Rely on model logic implemented in setter
       inputElement.value = cService[inputField];
     }
-    if (inputField === 'inputAudienceExtenderLength') {
-      this.calculatorService.inputAudienceExtenderPristine = false;
+
+    switch (inputField) {
+      case 'inputAudienceExtenderLength':
+        this.calculatorService.inputAudienceExtenderPristine = false;
+        break;
+      case 'inputExtenderLength':
+        this.calculatorService.inputExtenderPristine = false;
+        break;
+        
     }
   }
 }

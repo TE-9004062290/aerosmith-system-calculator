@@ -84,6 +84,7 @@ export class CalculatorService {
   private readonly INTERVAL_THRESHOLD_1 = 4.24; // Meters
 
   private b_pristine: boolean = false;
+  public inputExtenderPristine: boolean = true;
   public inputAudienceExtenderPristine: boolean = true;
   private b_has_output: boolean = false;
   
@@ -236,12 +237,8 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
-      this.inputExtenderLength = this.m_inputExtenderLength; // Re-validation
-      if (this.b_audienceExtenderProvided) {
-        this.inputAudienceExtenderLength = this.m_inputAudienceExtenderLength;  
-      } else {
-        this.inputAudienceExtenderLength = this.inputAudienceExtenderMinimum;
-      }
+      this.inputExtenderLength = this.b_extenderProvided ? this.m_inputExtenderLength : this.inputExtenderMinimum;
+      this.inputAudienceExtenderLength = this.b_audienceExtenderProvided ? this.m_inputAudienceExtenderLength : this.inputAudienceExtenderMinimum;
 
       this.b_pristine = false;
       this.b_has_output = false;
@@ -368,17 +365,20 @@ export class CalculatorService {
   set inputExtenderLength(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      const extenderMin = this.inputExtenderMinimum;
-      const extenderMax = this.inputExtenderMaximum;
-      this.m_inputExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
+      const extenderMin = round(this.inputExtenderMinimum, 2);
+      const extenderMax = round(this.inputExtenderMaximum, 2);
+      this.m_inputExtenderLength = val > extenderMax || val < extenderMin ? extenderMin : val;
+      // this.m_inputExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
+      this.inputExtenderPristine = this.m_inputExtenderLength === extenderMin || this.m_inputExtenderLength === extenderMax;
     } else {
       this.b_extenderProvided = false;
+      this.inputExtenderPristine = true;
       this.m_inputExtenderLength = this.inputExtenderMinimum;
     }
     
     this.b_pristine = false;
     this.b_has_output = false;
-    this.b_extenderProvided = val > 0;
+    this.b_extenderProvided = !this.inputExtenderPristine;
 
     this.updateAndEmit();
   }
@@ -447,7 +447,13 @@ export class CalculatorService {
   }
 
   private get verticalThreshold(): number {
-    return (this.soundReinforcementPriority === SoundReinforcementPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
+    if (this.b_reinforcePresenter) {
+      return (this.soundReinforcementPriority === SoundReinforcementPriority.AudioQuality ? this.VERTICAL_THRESHOLD_0 : this.VERTICAL_THRESHOLD_1) * this.unitConversion;
+    } else if (this.b_recordPresenter) {
+      const maxDistance = 0.75 * MicrophoneRadii.PresenterRecording;
+      return maxDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_presenterHeight : maxDistance;
+    }
+
   }
 
   private get verticalMinimum(): number {
@@ -460,7 +466,7 @@ export class CalculatorService {
   }
 
   private get audienceVerticalMinimum(): number {
-    const minDistance = 2.1 * this.m_audienceHeight;
+    const minDistance = 1.1 * this.m_audienceHeight;
     return minDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_audienceHeight : minDistance;
   }
 
