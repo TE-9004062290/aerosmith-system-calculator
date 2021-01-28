@@ -386,10 +386,16 @@ export class CalculatorService {
   set inputAudienceExtenderLength(val: number) {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
-      const extenderMin = this.inputAudienceExtenderMinimum;
-      const extenderMax = this.inputAudienceExtenderMaximum;
-      this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
-      this.inputAudienceExtenderPristine = this.m_inputAudienceExtenderLength === extenderMin || this.m_inputAudienceExtenderLength === extenderMax;
+      const extenderMin = round(this.inputAudienceExtenderMinimum, 2);
+      const extenderMax = round(this.inputAudienceExtenderMaximum, 2);
+      const previousLength = this.m_inputAudienceExtenderLength;
+      // this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
+      this.m_inputAudienceExtenderLength = val > extenderMax || val < extenderMin ? extenderMin : val;
+      if (round(val - previousLength, 2) <= 0.1) { // If the increase is equal to or lower than stepsize, then this is in almost all cases a manual interaction
+        this.inputAudienceExtenderPristine = false;
+      } else {
+        this.inputAudienceExtenderPristine = this.m_inputAudienceExtenderLength === extenderMin || this.m_inputAudienceExtenderLength === extenderMax;
+      }
     } else {
       this.b_audienceExtenderProvided = false;
       this.inputAudienceExtenderPristine = true;
@@ -461,12 +467,13 @@ export class CalculatorService {
   }
 
   private get audienceVerticalMaximum(): number {
-    const maxDistance = 0.75 * MicrophoneRadii.AudienceRecording;
+    const maxDistance = 0.75 * MicrophoneRadii.AudienceRecording * this.unitConversion;
     return maxDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_audienceHeight : maxDistance;
   }
 
   private get audienceVerticalMinimum(): number {
-    const minDistance = 1.1 * this.m_audienceHeight;
+    // const minDistance = 1.1 * this.m_audienceHeight;
+    const minDistance = 0.5 * this.unitConversion;
     return minDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_audienceHeight : minDistance;
   }
 
