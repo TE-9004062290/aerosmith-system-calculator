@@ -367,9 +367,16 @@ export class CalculatorService {
     if (!isNaN(val)) {
       const extenderMin = round(this.inputExtenderMinimum, 2);
       const extenderMax = round(this.inputExtenderMaximum, 2);
+      const previousLength = this.m_inputExtenderLength;
+      const stepDifference = Math.abs(round(val - previousLength, 2));
+
       this.m_inputExtenderLength = val > extenderMax || val < extenderMin ? extenderMin : val;
       // this.m_inputExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
-      this.inputExtenderPristine = this.m_inputExtenderLength === extenderMin || this.m_inputExtenderLength === extenderMax;
+      if (stepDifference <= 0.1 && stepDifference > 0) { // If the increase is equal to or lower than stepsize, then this is in almost all cases a manual interaction
+        this.inputExtenderPristine = false;
+      } else {
+        this.inputExtenderPristine = this.m_inputExtenderLength === extenderMin || this.m_inputExtenderLength === extenderMax;
+      }
     } else {
       this.b_extenderProvided = false;
       this.inputExtenderPristine = true;
@@ -389,7 +396,7 @@ export class CalculatorService {
       const extenderMin = round(this.inputAudienceExtenderMinimum, 2);
       const extenderMax = round(this.inputAudienceExtenderMaximum, 2);
       const previousLength = this.m_inputAudienceExtenderLength;
-      const stepDifference = round(val - previousLength, 2);
+      const stepDifference = Math.abs(round(val - previousLength, 2));
       // this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
       this.m_inputAudienceExtenderLength = val > extenderMax || val < extenderMin ? extenderMin : val;
       if (stepDifference <= 0.1 && stepDifference > 0) { // If the increase is equal to or lower than stepsize, then this is in almost all cases a manual interaction
@@ -478,6 +485,10 @@ export class CalculatorService {
     return minDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_audienceHeight : minDistance;
   }
 
+  public get inputExtenderMinimum(): number {
+    return Math.max(0, this.ceilingHeight - (this.presenterHeight - this.topOfHeadToMouth) - this.verticalThreshold - (0.1 * this.unitConversion));
+  }
+
   public get inputExtenderMaximum(): number {
     return Math.max(0, this.ceilingHeight - (this.presenterHeight - this.topOfHeadToMouth) - this.verticalMinimum - (0.1 * this.unitConversion));
   }
@@ -488,10 +499,6 @@ export class CalculatorService {
 
   public get inputAudienceExtenderMaximum(): number {
     return Math.max(0, this.ceilingHeight - (this.audienceVerticalMinimum + this.audienceHeight));
-  }
-
-  public get inputExtenderMinimum(): number {
-    return Math.max(0, this.ceilingHeight - (this.presenterHeight - this.topOfHeadToMouth) - this.verticalThreshold);
   }
 
   private get topOfHeadToMouth(): number {
@@ -521,9 +528,9 @@ export class CalculatorService {
 
   private isExtenderRequired(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0) {
     const effectiveCeilingHeight = ceilingHeight - inputExtenderLength; 
-    const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth; 
-    if (inputExtenderLength > 0) {
-      return inputExtenderLength < this.inputExtenderMinimum;
+    const effectivePersonHeight = presenterHeight - this.topOfHeadToMouth - (0.1 * this.unitConversion); 
+    if (this.b_extenderProvided) {
+      return inputExtenderLength < round(this.inputExtenderMinimum, 2);
     } else {
       return effectiveCeilingHeight - effectivePersonHeight > this.verticalThreshold;
     }
@@ -541,8 +548,7 @@ export class CalculatorService {
   private calculateExtenderLength(captureRadius: number, ceilingHeight: number, presenterHeight: number, inputExtenderLength: number = 0): number {
     const extenderRequired = this.isExtenderRequired(captureRadius, ceilingHeight, presenterHeight, inputExtenderLength);
     if (extenderRequired) {
-        const effectivePresenterHeight = presenterHeight - this.topOfHeadToMouth;
-        return ceilingHeight - effectivePresenterHeight - this.verticalThreshold;
+        return this.inputExtenderMinimum;
     } else {
       if (inputExtenderLength >= 0) {
         return inputExtenderLength;
