@@ -389,9 +389,10 @@ export class CalculatorService {
       const extenderMin = round(this.inputAudienceExtenderMinimum, 2);
       const extenderMax = round(this.inputAudienceExtenderMaximum, 2);
       const previousLength = this.m_inputAudienceExtenderLength;
+      const stepDifference = round(val - previousLength, 2);
       // this.m_inputAudienceExtenderLength = round(Math.min(Math.max(extenderMin, val), extenderMax), 2);
       this.m_inputAudienceExtenderLength = val > extenderMax || val < extenderMin ? extenderMin : val;
-      if (round(val - previousLength, 2) <= 0.1) { // If the increase is equal to or lower than stepsize, then this is in almost all cases a manual interaction
+      if (stepDifference <= 0.1 && stepDifference > 0) { // If the increase is equal to or lower than stepsize, then this is in almost all cases a manual interaction
         this.inputAudienceExtenderPristine = false;
       } else {
         this.inputAudienceExtenderPristine = this.m_inputAudienceExtenderLength === extenderMin || this.m_inputAudienceExtenderLength === extenderMax;
