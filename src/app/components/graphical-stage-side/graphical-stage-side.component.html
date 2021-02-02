@@ -29,16 +29,18 @@
                     <div *ngIf="calculatorService.hasFreshOutput" @animateOutputArea
                         class="measuring-stick-overlay audience-distance" 
                         [ngStyle]="{'left': (presenterOffset * 3) + 'px'}">
-                        <app-measuring-stick orientation="horizontal"
-                            [width]="audienceDistance"
-                            thinModeDirection="bottom"
-                            [isInput]="false" 
-                            [inputValue]="calculatorService.audienceDistance"
-                        ></app-measuring-stick>
-                        <div class="warning">
-                            <span class="warning-icon"><app-svg-icons iconType="warning"></app-svg-icons></span>
-                            <span class="warning-text">Loud audience sounds may be recorded if closer than this distance</span>
-                        </div>
+                        <ng-container *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter">
+                            <app-measuring-stick orientation="horizontal"
+                                [width]="audienceDistance"
+                                thinModeDirection="bottom"
+                                [isInput]="false" 
+                                [inputValue]="calculatorService.audienceDistance"
+                            ></app-measuring-stick>
+                            <div class="warning">
+                                <span class="warning-icon"><app-svg-icons iconType="warning"></app-svg-icons></span>
+                                <span class="warning-text">Loud audience sounds may be recorded if closer than this distance</span>
+                            </div>
+                        </ng-container>
                     </div>
                     <div class="stage">
                         <div class="person-wrapper" @animateOutputArea
