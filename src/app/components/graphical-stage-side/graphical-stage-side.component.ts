@@ -118,6 +118,19 @@ export class GraphicalStageSideComponent implements OnInit {
         this.audienceMicrophones = this.getAudienceMicrophonePositions(this.calculatorService.requiredAudienceMicrophonesDepth, this.calculatorService.audienceMicrophoneIntervalDepth);
       }
     });
+
+    this.calculatorService.$refreshBeforePrint.subscribe(refresh => {
+      if (refresh) {
+        this.onBeforePrint(null);
+      }
+    });
+
+    this.calculatorService.$refreshAfterPrint.subscribe(refresh => {
+      if (refresh) {
+        this.onAfterPrint(null);
+      }
+    })
+    
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
@@ -134,6 +147,7 @@ export class GraphicalStageSideComponent implements OnInit {
 
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
+    console.log('stage-side');
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();

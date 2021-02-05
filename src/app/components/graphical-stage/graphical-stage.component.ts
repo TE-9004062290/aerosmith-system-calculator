@@ -121,6 +121,19 @@ export class GraphicalStageComponent implements OnInit {
         this.calculatePersonPositions(this.calculatorService.requiredMicrophones, this.calculatorService.microphoneInterval);
       }
     });
+
+    this.calculatorService.$refreshBeforePrint.subscribe(refresh => {
+      if (refresh) {
+        this.onBeforePrint(null);
+      }
+    });
+
+    this.calculatorService.$refreshAfterPrint.subscribe(refresh => {
+      if (refresh) {
+        this.onAfterPrint(null);
+      }
+    })
+    
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
@@ -138,6 +151,7 @@ export class GraphicalStageComponent implements OnInit {
 
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
+    console.log('stage-front');
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();

@@ -130,6 +130,18 @@ export class GraphicalStageTopComponent implements OnInit {
       }
     });
 
+    this.calculatorService.$refreshBeforePrint.subscribe(refresh => {
+      if (refresh) {
+        this.onBeforePrint(null);
+      }
+    });
+
+    this.calculatorService.$refreshAfterPrint.subscribe(refresh => {
+      if (refresh) {
+        this.onAfterPrint(null);
+      }
+    })
+
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;

@@ -419,6 +419,7 @@ export class CalculatorService {
 
   public $recalculate: BehaviorSubject<boolean>;
   public $refreshBeforePrint: BehaviorSubject<boolean>;
+  public $refreshAfterPrint: BehaviorSubject<boolean>;
   public $resizer: BehaviorSubject<boolean>;
 
   constructor(
@@ -427,6 +428,7 @@ export class CalculatorService {
   ) { 
     this.$recalculate = new BehaviorSubject(true);
     this.$refreshBeforePrint = new BehaviorSubject(false);
+    this.$refreshAfterPrint = new BehaviorSubject(false);
     this.$resizer = new BehaviorSubject(false);
   }
   

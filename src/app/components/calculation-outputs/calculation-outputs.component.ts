@@ -16,7 +16,11 @@ export class CalculationOutputsComponent implements OnInit {
   ) { }
 
   public printOutput() {
-    window.print();
+    this.calculatorService.$refreshBeforePrint.next(true);
+    setTimeout(() => {
+      window.print();
+      this.calculatorService.$refreshAfterPrint.next(true);
+    }, 50);
     return false;
   }
 
