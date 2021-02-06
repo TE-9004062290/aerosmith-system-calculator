@@ -130,7 +130,7 @@ export class GraphicalStageSideComponent implements OnInit {
         this.onAfterPrint(null);
       }
     })
-    
+
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.stageWidth = this.stageRef ? this.stageRef.nativeElement.offsetWidth : this.stageWidth;
@@ -147,7 +147,6 @@ export class GraphicalStageSideComponent implements OnInit {
 
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
-    console.log('stage-side');
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();

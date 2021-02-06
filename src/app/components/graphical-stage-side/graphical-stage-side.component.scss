@@ -19,48 +19,6 @@
     }
 }
 
-// .stage-info-wrapper {
-
-// }
-
-
-// .stage-wrapper {
-//     position: relative;
-//     width: 70%;
-//     transition: width .25s linear;
-//     margin: 0 auto;
-//     border-bottom: solid #006DB3 1px;
-//     border-top: solid #006DB3 1px;
-    
-//     .stage-outer-container {
-
-//     }
-
-//     .stage-inner-container {
-//         width: 90%;
-//         margin: 0 auto;
-//         .stage {
-//             position: relative;
-//             max-width: 90%;
-//             margin: 0 auto;
-//             transition: height .25s linear, width .25s linear;
-//             .person-wrapper {
-//                 position: absolute;
-//                 bottom: -5px;
-//                 left: 0%;
-//                 transition: width .25s linear, left .25s linear;
-//                 z-index: 1;
-//             }
-//             .microphone-wrapper {
-//                 position: absolute;
-//                 top: 0;
-//                 transition: width .25s linear, left .25s linear, top .25s linear;
-//                 z-index: 0;
-//             }
-//         }
-//     }
-// }
-
 .graphical-output-side {
     margin-top: 160px;
     .stage-info-wrapper {
@@ -106,12 +64,13 @@
                                 height: fit-content;
                                 display: flex;
                                 .audience-icon {
-
+                                    z-index: 0;
                                 }
                             }
                             .audience-microphones {
                                 .audience-microphone {
                                     position: absolute;
+                                    z-index: 1;
                                 }
                             }
                         }
@@ -120,13 +79,13 @@
                             bottom: -5px;
                             left: 0%;
                             transition: width .25s linear, left .25s linear;
-                            z-index: 1;
+                            z-index: 0;
                         }
                         .microphone-wrapper {
                             position: absolute;
                             top: 0;
                             transition: width .25s linear, left .25s linear, top .25s linear;
-                            z-index: 0;
+                            z-index: 1;
                         }
                     }
                 }

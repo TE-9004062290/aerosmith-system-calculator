@@ -89,14 +89,14 @@
                 position: absolute;
                 bottom: -5px;
                 left: 0%;
-                transition: width .25s linear, left .25s linear;
-                z-index: 1;
+                transition: width .25s linear, left .25s linear, opacity .25s linear;
+                z-index: 0;
             }
             .microphone-wrapper {
                 position: absolute;
                 top: 0;
                 transition: width .25s linear, left .25s linear, top .25s linear;
-                z-index: 0;
+                z-index: 1;
             }
         }
     }

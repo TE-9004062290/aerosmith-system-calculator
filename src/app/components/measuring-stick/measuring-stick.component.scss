@@ -62,7 +62,7 @@
         }
         .stop {
             height: 100%;
-            width: 3px;
+            width: 2px;
         }
         &.left {
             flex-grow: 1;
@@ -70,7 +70,7 @@
             margin-right: 8px;
             .stop {
                 margin-right: 8px;
-                width: 3px;
+                width: 2px;
             }
         }
         &.right {
@@ -86,7 +86,7 @@
     &[mode$='thin'] {
         .stop {
             height: 80%;
-            width: 4px;
+            width: 2px;
         }
         .arrow {
             border-top: 4px solid transparent !important;
@@ -136,7 +136,7 @@
                     flex-shrink: 0;
                 }
                 .stop {
-                    width: 1px;
+                    width: 2px;
                     flex-shrink: 0;
                     height: 75%;
                     margin-right: 0;
@@ -267,7 +267,7 @@
             .stop {
                 display: block;
                 width: 8px;
-                height: 1px;
+                height: 2px;
             }
             &.top {
                 .arrow {
@@ -407,14 +407,14 @@
                 &:last-child {
                     .stick.left{
                         .stop {
-                            width: 1px;
+                            width: 2px;
                         }
                     }
                 }
                 &:first-child {
                     .stick.right {
                         .stop {
-                            width: 1px;
+                            width: 2px;
                         }
                     }
                     .inputs-output {
