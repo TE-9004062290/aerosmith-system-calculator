@@ -10,7 +10,7 @@
                 <div class="data-description">Design for:</div>
                 <div *ngIf="calculatorService.reinforcePresenter" class="data-value">
                     Presenter sound reinforcement
-                    <div>Priority: ({{calculatorService.soundReinforcementPriority === 0 ? 'Audio quality' : 'Detection range' }})</div>
+                    <div class="data-value">Priority: ({{calculatorService.soundReinforcementPriority === 0 ? 'Audio quality' : 'Detection range' }})</div>
                 </div>
                 <div *ngIf="calculatorService.recordPresenter" class="data-value">
                     Presenter recording
@@ -114,14 +114,14 @@
                 </ng-container>
             </div>
             <div class="data-row">
-                <div class="data-description">Distance between line of microphones and front <br/> of audience</div>
+                <div class="data-description">Distance between line of <br class="show-print"/> microphones and front <br class="hide-print"/> of audience</div>
                 <div class="data-value">
                     {{ calculatorService.audienceDistance }} 
                     {{ calculatorService.measurementUnit === 'm' ? 'meter' + (calculatorService.audienceDistance === 1 ? '' : 's') : (calculatorService.audienceDistance === 1 ? 'foot' : 'feet') }}
                 </div>
             </div>
             <div class="data-row">
-                <div class="data-description">Extender length (if required)</div>
+                <div class="data-description">Extender length <br class="show-print"/> (if required)</div>
                 <ng-container *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter">
                     <div *ngIf="calculatorService.extenderLength === 0" class="data-value">
                         Presenter: Not required

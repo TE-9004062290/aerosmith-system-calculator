@@ -1,6 +1,12 @@
 
 @media print {
 
+    .show-print {
+        display: block !important;
+    }
+    .hide-print {
+        display: none;
+    }
     .data-rows {
         .data-row {
             color: black !important;
@@ -40,6 +46,9 @@
     }
 }
 
+.show-print {
+    display: none;
+}
 .inputs-wrapper {
     display: none;
 }
