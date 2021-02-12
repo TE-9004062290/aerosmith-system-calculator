@@ -1,4 +1,4 @@
-<div class="graphical-output-top" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput }">
+<div class="graphical-output-top" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput, 'is-printing': isPrinting }">
     <div class="stage-info-wrapper">
         <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
             <app-measuring-stick orientation="vertical" [height]="stageHeight"

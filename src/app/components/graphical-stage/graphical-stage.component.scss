@@ -22,6 +22,12 @@
     }
 }
 
+.is-printing {
+    * {
+        transition: none !important;
+    }
+}
+
 .stage-info-wrapper {
     position: relative;
     width: 100%;

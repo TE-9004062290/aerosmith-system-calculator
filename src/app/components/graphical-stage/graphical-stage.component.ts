@@ -152,7 +152,7 @@ export class GraphicalStageComponent implements OnInit {
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
     this.isPrinting = true;
-    this.STAGE_PAGE_HEIGHT_RATIO = .20;
+    this.STAGE_PAGE_HEIGHT_RATIO = .18;
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();

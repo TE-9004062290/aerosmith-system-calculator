@@ -18,6 +18,12 @@
     }
 }
 
+.is-printing {
+    * {
+        transition: none !important;
+    }
+}
+
 .graphical-output-top {
     margin-top: 160px;
     .stage-info-wrapper {

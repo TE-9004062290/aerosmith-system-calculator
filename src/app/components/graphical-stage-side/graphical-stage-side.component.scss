@@ -19,6 +19,12 @@
     }
 }
 
+.is-printing {
+    * {
+        transition: none !important;
+    }
+}
+
 .graphical-output-side {
     margin-top: 160px;
     .stage-info-wrapper {

@@ -236,7 +236,6 @@
         right: 0;
         top: 88px;
         width: 304px;
-        height: 1490px;
         padding-left: 50px;
         padding-right: 48px;
         padding-bottom: 240px;
@@ -325,4 +324,13 @@
         opacity: 0.2;
         cursor: not-allowed;
     }
+}
+
+.browser-compatibility-disclaimer {
+    font-size: 12px;
+    line-height: 16px;
+    color: #54B6A1;
+    font-weight: 400;
+    margin-top: 32px;
+    padding-bottom: 32px;
 }
