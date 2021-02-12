@@ -63,12 +63,6 @@ export class GraphicalStageComponent implements OnInit {
   private wrapperHeight: number = 500;
   private containerWidth: number = 500;
   private containerHeight: number = 500;
-  public sideWrapperWidth: number = 500;
-  public sideWrapperHeight: number = 500;
-  public sideInnerContainerWidth: number = 500;
-  public topWrapperWidth: number = 50;
-  public topWrapperHeight: number = 50;
-  public topInnerContainerWidth: number = 500;
 
 
   public widthHeightRatio: number = 1;
@@ -92,8 +86,6 @@ export class GraphicalStageComponent implements OnInit {
   @ViewChild('wrapper', null) wrapperRef: ElementRef;
   @ViewChild('container', null) containerRef: ElementRef;
   @ViewChild('stage', null) stageRef: ElementRef;
-  @ViewChild('sideWrapper', null) sideWrapperRef: ElementRef;
-  @ViewChild('sideInnerContainer', null) sideInnerContainerRef: ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
@@ -152,7 +144,7 @@ export class GraphicalStageComponent implements OnInit {
   @HostListener('window:beforeprint',['$event'])
   onBeforePrint(event) {
     this.isPrinting = true;
-    this.STAGE_PAGE_HEIGHT_RATIO = .18;
+    this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
@@ -161,7 +153,7 @@ export class GraphicalStageComponent implements OnInit {
   @HostListener('window:afterprint',['$event'])
   onAfterPrint(event) {
     this.isPrinting = false;
-    this.STAGE_PAGE_HEIGHT_RATIO = .20;
+    this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
@@ -173,14 +165,14 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   private snapshotContainerDimensions() {
+    if (this.isPrinting) {
+      this.containerWidth = 450; // Good compromise between A4 and US Letter and default DPI
+    } else {
+      this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
+    }
     this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth : this.wrapperWidth;
     this.wrapperHeight = this.wrapperRef ? this.wrapperRef.nativeElement.offsetHeight : this.wrapperHeight;
-    this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
     this.containerHeight = this.containerRef ? this.containerRef.nativeElement.offsetHeight : this.containerHeight;
-
-    this.sideWrapperWidth = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetWidth : this.sideWrapperWidth;
-    this.sideWrapperHeight = this.sideWrapperRef ? this.sideWrapperRef.nativeElement.offsetHeight : this.sideWrapperHeight;
-    this.sideInnerContainerWidth = this.sideInnerContainerRef ? this.sideInnerContainerRef.nativeElement.offsetWidth : this.sideInnerContainerWidth;
   }
 
   private calculateProportions() {
@@ -279,7 +271,6 @@ export class GraphicalStageComponent implements OnInit {
   private getAudienceArray(): any {
     let audienceArray = [];
     const leftOffset = (this.sideCapture / 1.9) + this.audienceDistance;
-    // const effectiveStageWidth = (0.9 *this.sideWrapperWidth) - this.audienceDistance;
     const effectiveStageWidth = this.getAudienceDepthSide() - (1 * this.calculatorService.unitConversion);
     const numAudience = Math.floor(effectiveStageWidth / (2 * this.audienceWidth));
     for (let i = 0; i < numAudience; i++) {

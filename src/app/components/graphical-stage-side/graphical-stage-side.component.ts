@@ -182,9 +182,13 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   private snapshotContainerDimensions() {
+    if (this.isPrinting) {
+      this.containerWidth = 450; // Good compromise between A4 and US Letter and default DPI
+    } else {
+      this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
+    }
     this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth : this.wrapperWidth;
     this.wrapperHeight = this.wrapperRef ? this.wrapperRef.nativeElement.offsetHeight : this.wrapperHeight;
-    this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
     this.containerHeight = this.containerRef ? this.containerRef.nativeElement.offsetHeight : this.containerHeight;
   }
 

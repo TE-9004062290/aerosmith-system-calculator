@@ -179,9 +179,13 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private snapshotContainerDimensions() {
+    if (this.isPrinting) {
+      this.containerWidth = 450; // Good compromise between A4 and US Letter and default DPI
+    } else {
+      this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
+    }
     this.wrapperWidth = this.wrapperRef ? this.wrapperRef.nativeElement.offsetWidth : this.wrapperWidth;
     this.wrapperHeight = this.wrapperRef ? this.wrapperRef.nativeElement.offsetHeight : this.wrapperHeight;
-    this.containerWidth = this.containerRef ? this.containerRef.nativeElement.offsetWidth : this.containerWidth;
     this.containerHeight = this.containerRef ? this.containerRef.nativeElement.offsetHeight : this.containerHeight;
   }
 
@@ -232,14 +236,14 @@ export class GraphicalStageTopComponent implements OnInit {
       stageWidth = Math.min(0.9 * this.containerWidth, stageHeight * (1 / heightWidthRatio));
     } else {
       ratioMode = RatioMode.Width;
-      stageWidth = 0.9 * this.containerWidth;
+      stageWidth = 0.8 * this.containerWidth;
       stageHeight = stageWidth * heightWidthRatio;
       if (stageHeight / this.pageHeight > this.STAGE_PAGE_HEIGHT_RATIO) {
         stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
         stageWidth = stageHeight * (1 / heightWidthRatio);
       }
     }
-
+    
     audienceDepthPx = depthToWidthRatio * stageWidth;
     depthOffset = depthOffsetToWidthRatio * stageWidth;
 
