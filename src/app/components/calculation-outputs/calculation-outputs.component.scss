@@ -9,6 +9,12 @@
     }
     .data-rows {
         .data-row {
+            &:first-child {
+                margin-left: 0px !important;
+            }
+            &:last-child {
+                margin-right: 0px !important;
+            }
             margin-left: 12px;
             margin-right: 12px;
             color: black !important;
