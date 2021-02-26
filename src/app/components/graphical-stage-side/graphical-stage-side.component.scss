@@ -66,9 +66,10 @@
                             position: absolute;
                             .audience-container {
                                 position: absolute;
-                                bottom: 0px;
+                                width: 100%;
                                 height: fit-content;
                                 display: flex;
+                                justify-content: space-between;
                                 .audience-icon {
                                     z-index: 0;
                                 }

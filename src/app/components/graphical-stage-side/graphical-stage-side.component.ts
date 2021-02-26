@@ -229,7 +229,7 @@ export class GraphicalStageSideComponent implements OnInit {
       stageWidth = Math.min(.9 * this.containerWidth, stageHeight * (1 / heightWidthRatio));
     } else {
       ratioMode = RatioMode.Width;
-      stageWidth = 0.9 * this.containerWidth;
+      stageWidth = 0.8 * this.containerWidth;
       stageHeight = stageWidth * heightWidthRatio;
       if (stageHeight / this.pageHeight > this.STAGE_PAGE_HEIGHT_RATIO) {
         stageHeight = this.STAGE_PAGE_HEIGHT_RATIO * this.pageHeight;
@@ -288,13 +288,10 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   private getAudiencePositions(): any {
-    const audienceDepthPx = this.audienceDepthPx;
-    const intraRowInterval = this.audienceWidthPx;
-
-    const audiencePerRow = Math.ceil(audienceDepthPx / (this.audienceWidthPx + intraRowInterval));
+    const interval = this.calculatorService.audienceWidth / (this.calculatorService.audienceDepth + this.calculatorService.audienceDistance) * this.stageWidth;
     return {
-      audienceIntervalPx: intraRowInterval,
-      numAudience: Array(audiencePerRow).fill(0).map((x, i) => i)
+      audienceIntervalPx: interval,
+      numAudience: Array(this.calculatorService.audiencePerRow).fill(0).map((x, i) => i)
     };
   }
 

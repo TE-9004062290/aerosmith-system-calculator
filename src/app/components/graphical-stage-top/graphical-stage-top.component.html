@@ -83,7 +83,7 @@
                             <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3)  + 'px', 'width': audienceDepthPx + 'px' }">
                                 <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (interRowInterval / 2) + 'px', 'margin-top': (interRowInterval / 2) + 'px'}">
                                     <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
-                                        [ngStyle]="{'width': audienceWidth + 'px', 'margin-right': intraRowInterval + 'px'}">
+                                        [ngStyle]="{'width': audienceWidth + 'px'}">
                                         <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
                                     </div>
                                 </div>

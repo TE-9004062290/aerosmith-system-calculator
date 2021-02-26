@@ -296,19 +296,15 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   private getAudiencePositions(): any {
-    const audienceOffset = this.audienceDistance;
-    const audienceDepthPx = this.audienceDepthPx;
-
-    const intraRowInterval = this.audienceWidth; // back to front
     const interRowInterval = this.audienceWidth * 2; // side to side
 
-    const audiencePerRow = Math.ceil(audienceDepthPx / (this.audienceWidth + intraRowInterval));
     const numRows = round((.8 * this.stageHeight)  / (this.audienceWidth + interRowInterval), 0);
+    const interval = (1 * this.calculatorService.audienceWidth / this.calculatorService.audienceDepth) * this.audienceDepthPx; //(this.calculatorService.audienceDepth + this.calculatorService.audienceDistance) * this.stageWidth;
 
     return {
       interRowInterval: interRowInterval,
-      intraRowInterval: intraRowInterval,
-      audiencePerRow: Array(audiencePerRow).fill(0).map((x, i) => i),
+      intraRowInterval: interval,
+      audiencePerRow: Array(this.calculatorService.audiencePerRow).fill(0).map((x, i) => i),
       audienceRows: Array(numRows).fill(0).map((x, i) => i)
     };
   }

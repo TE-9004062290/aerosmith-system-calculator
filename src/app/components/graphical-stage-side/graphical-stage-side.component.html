@@ -38,7 +38,7 @@
                             ></app-measuring-stick>
                             <div class="warning">
                                 <span class="warning-icon"><app-svg-icons iconType="warning"></app-svg-icons></span>
-                                <span class="warning-text">Loud audience sounds may be recorded if closer than this distance</span>
+                                <span class="warning-text">Loud audience sounds may be picked up if closer than this distance</span>
                             </div>
                         </ng-container>
                     </div>
@@ -48,9 +48,9 @@
                             <app-svg-standing-person mode="side"></app-svg-standing-person>
                         </div>
                         <div class="audience-wrapper" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3) + 'px', 'width': audienceDepthPx + 'px'}">
-                            <div class="audience-container">
+                            <div class="audience-container" [ngStyle]="{'top': 'calc(100% - ' + audienceHeightPx + 'px)'}">
                                 <div *ngFor="let a of numAudience; trackBy: audienceTrackByFn" class="audience-icon" 
-                                    [ngStyle]="{'width': audienceWidthPx + 'px', 'height': audienceHeightPx + 'px', 'margin-right': audienceIntervalPx + 'px'}" @animateOutputArea>
+                                    [ngStyle]="{'width': audienceWidthPx + 'px', 'height': audienceHeightPx + 'px'}" @animateOutputArea>
                                     <app-svg-standing-person mode="sitting"></app-svg-standing-person>
                                 </div>
                             </div>

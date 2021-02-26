@@ -9,6 +9,7 @@ import { MicrophoneRadii } from '@app/models/enums/microphone-radii.enum';
 import { environment } from 'environments/environment';
 
 import { round } from '@app/helpers/arithmetic.helper';
+import { SvgStandingPersonComponent } from '@app/components/svg-standing-person/svg-standing-person.component';
 
 /* Private member naming conventions:
  * 'm_' prefix is reserved for measurable quantities using SI (preferrably) units or Imperial
@@ -141,6 +142,12 @@ export class CalculatorService {
   get audienceHeight(): number { return this.m_audienceHeight; }
   get inputExtenderLength(): number { return this.m_inputExtenderLength; }
   get inputAudienceExtenderLength(): number { return this.m_inputAudienceExtenderLength; }
+  get audienceWidth(): number {
+    return this.audienceHeight * SvgStandingPersonComponent.SITTING_WIDTH_HEIGHT_RATIO;
+  }
+  get audiencePerRow(): number {
+    return Math.ceil(this.audienceDepth / (2 * this.audienceWidth));
+  }
 
 
   /* Outputs */
