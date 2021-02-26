@@ -12,6 +12,7 @@
     }
     .stop {
         background-color: #346389;
+        border-color: #346389;
     }
     &.top {
         .arrow {
@@ -62,7 +63,8 @@
         }
         .stop {
             height: 100%;
-            width: 2px;
+            width: 0px;
+            border-color: #346389;
         }
         &.left {
             flex-grow: 1;
@@ -70,7 +72,8 @@
             margin-right: 8px;
             .stop {
                 margin-right: 8px;
-                width: 2px;
+                border-right-width: 2px;
+                border-right-style: solid;
             }
         }
         &.right {
@@ -79,6 +82,8 @@
             margin-left: 8px;
             .stop {
                 margin-left: 8px;
+                border-left-width: 2px;
+                border-left-style: solid;
             }
         }
     }
@@ -86,7 +91,6 @@
     &[mode$='thin'] {
         .stop {
             height: 80%;
-            width: 2px;
         }
         .arrow {
             border-top: 4px solid transparent !important;
@@ -99,6 +103,8 @@
             margin-right: 0px;
             .stop {
                 margin-right: 2px;
+                border-right-width: 2px;
+                border-right-style: solid;
             }
             .arrow {
                 border-right: 8px solid;
@@ -108,6 +114,8 @@
             margin-left: 0px;
             .stop {
                 margin-left: 2px;
+                border-left-width: 2px;
+                border-left-style: solid;
             }
             .arrow {
                 border-left: 8px solid;
@@ -136,7 +144,6 @@
                     flex-shrink: 0;
                 }
                 .stop {
-                    width: 2px;
                     flex-shrink: 0;
                     height: 75%;
                     margin-right: 0;
@@ -152,6 +159,10 @@
                 .arrow {
                     left: 100%;
                 }
+                .stop {
+                    border-right-width: 2px;
+                    border-right-style: solid;
+                }
             }
             &.right {
                 .bar {
@@ -162,6 +173,8 @@
                 }
                 .stop {
                     margin-left: 0;
+                    border-left-width: 2px;
+                    border-left-style: solid;
                 }
             }
         }
@@ -298,6 +311,7 @@
     }
     .stop {
         background-color: #54B6A1;
+        border-color: #54B6A1 !important;
     }
     .stick {
         &.top {
@@ -357,6 +371,7 @@
         }
         .stop {
             background-color: #346389;
+            border-color: #346389;
         }
         &.top {
             .arrow {
@@ -391,7 +406,7 @@
             &:first-child {
                 .stick.right {
                     .stop {
-                        width: 0px;
+                        width: 0px !important;
                     }
                 }
             }
@@ -407,7 +422,8 @@
                 &:last-child {
                     .stick.left{
                         .stop {
-                            width: 2px;
+                            width: 0px;
+                            border-right-width: 0px;
                         }
                     }
                 }
