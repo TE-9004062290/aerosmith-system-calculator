@@ -358,12 +358,14 @@
         color: white;
         background-color: transparent;
         border: none;
-        width: 34px;
+        width: 38px;
+        padding-left: 4px;
     }
     .measurement-unit {
         color: white;
         font-size: 12px;
         line-height: 14px;
+        padding-right: 4px;
     }
     .stick {
         .bar {
