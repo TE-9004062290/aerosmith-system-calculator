@@ -5,6 +5,7 @@
                 <app-measuring-stick orientation="vertical" [height]="stageHeight"
                     [isInput]="true"
                     thinModeDirection="left"
+                    [forcedMode]="ratioMode === RatioModeEnum.Width ? 'thin' : 'wide'"
                     [inputMin]="CalculatorMins.lectureWidth"
                     [inputMax]="CalculatorMaxes.lectureWidth"
                     [inputValue]="calculatorService.lectureWidth"

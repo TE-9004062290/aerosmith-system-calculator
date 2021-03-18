@@ -16,8 +16,6 @@ import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
-import { getLocaleTimeFormat } from '@angular/common';
-
 
 @Component({
   selector: 'app-graphical-stage-top',

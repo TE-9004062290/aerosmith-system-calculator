@@ -51,8 +51,8 @@ export class MeasuringStickComponent implements OnInit {
     }
   }
 
-  private _forcedMode: 'thin' | 'wide' = 'wide';
-  private _modeIsForced = false;
+  public _forcedMode: 'thin' | 'wide' = 'wide';
+  public _modeIsForced = false;
   get forcedMode(): 'thin' | 'wide' {
     return this._forcedMode;
   }

@@ -256,6 +256,7 @@
             }
             .inputs-input {
                 left: -55px;
+                top: calc(50% - 12px);
             }
         }
         &[mode-direction='right'] {
