@@ -244,6 +244,7 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_ceilingHeight = round(Math.min(Math.max(this.MINIMUMS.ceilingHeight, val), this.MAXIMUMS.ceilingHeight), 2);
+      this.m_presenterHeight = this.m_ceilingHeight < this.m_presenterHeight ? this.m_ceilingHeight : this.m_presenterHeight;
       this.inputExtenderLength = this.b_extenderProvided ? this.m_inputExtenderLength : this.inputExtenderMinimum;
       this.inputAudienceExtenderLength = this.b_audienceExtenderProvided ? this.m_inputAudienceExtenderLength : this.inputAudienceExtenderMinimum;
 
@@ -269,6 +270,9 @@ export class CalculatorService {
     val = parseFloat(<any>val);
     if (!isNaN(val)) {
       this.m_presenterHeight = round(Math.min(Math.max(this.MINIMUMS.presenterHeight, val), this.MAXIMUMS.presenterHeight), 2);
+      if (this.m_presenterHeight > this.m_ceilingHeight) {
+        this.m_presenterHeight = this.m_ceilingHeight;
+      }
       this.b_pristine = false;
       this.b_has_output = false;
 

@@ -22,16 +22,26 @@ export class MixpanelService {
       "Calculation Priority": cService.soundReinforcementPriority.toString(),
       "Ceiling Height": cService.ceilingHeight,
       "Presentation Area Width": cService.lectureWidth,
+      "Audience Depth": cService.audienceDepth,
       "Presenter Height": cService.presenterHeight,
       "Audience Height": cService.audienceHeight,
-      "Number of Microphones": cService.requiredMicrophones,
-      "Distance between Microphones": cService.microphoneInterval,
-      "Distance between Microphones and Audience": cService.audienceDistance,
-      "Minimum Extender Length Required": cService.extenderLength
+      "Number of Microphones (Presenter)": cService.requiredMicrophones,
+      "Distance between Microphones (Presenter)": cService.microphoneInterval,
+      "Distance between Microphones and Audience (Presenter)": cService.audienceDistance,
+      "Minimum Extender Length Required (Presenter)": cService.inputExtenderMinimum,
+      "Number of Microphones along Depth (Audience)": cService.requiredAudienceMicrophonesDepth,
+      "Distance between Microphones along Depth (Audience)": cService.audienceMicrophoneIntervalDepth,
+      "Number of Microphones along Width (Audience)": cService.requiredAudienceMicrophonesWidth,
+      "Distance between Microphones along Width (Audience)": cService.audienceMicrophoneIntervalWidth,
+      "Minimum Extender Length Required (Audience)": cService.inputAudienceExtenderMinimum,
     };
 
     if (cService.extenderProvided) {
-      toTrack['User-provided Extender Length'] = cService.inputExtenderLength;
+      toTrack['User-provided Extender Length (Presenter)'] = cService.inputExtenderLength;
+    }
+
+    if (cService.audienceExtenderProvided) {
+      toTrack['User-provided Extender Length (Audience)'] = cService.inputAudienceExtenderLength;
     }
 
     mixpanel.track("Speech Reinforcement Calculation", toTrack);

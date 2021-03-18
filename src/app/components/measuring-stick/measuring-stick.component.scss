@@ -415,6 +415,18 @@
             }
         }
 
+        &[mode$='wide'] {
+            .horizontal-measure {
+                &:first-child {
+                    .stick.right {
+                        .stop {
+                            border-left-width: 0px;
+                        }
+                    }
+                }
+            }
+        }
+
 
         &[mode$='thin'] {
             position: relative;

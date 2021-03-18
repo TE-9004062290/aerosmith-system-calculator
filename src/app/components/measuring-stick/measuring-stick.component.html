@@ -1,12 +1,12 @@
 <ng-container [ngSwitch]="orientation">
     <ng-container *ngSwitchCase="'horizontal'">
-        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="_modeIsForced ? _forcedMode : mode">
+        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
             <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
             <ng-container *ngIf="twinned" [ngTemplateOutlet]="horizontal"></ng-container>
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="'vertical'">
-        <div class="vertical-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="_modeIsForced ? _forcedMode : mode">
+        <div class="vertical-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
             <ng-container *ngTemplateOutlet="vertical; context: firstContext"></ng-container>
             <ng-container *ngTemplateOutlet="vertical; context: secondContext"></ng-container>
         </div>
@@ -14,7 +14,7 @@
 </ng-container>
 
 <ng-template #horizontal>
-    <div [attr.mode]="_modeIsForced ? _forcedMode : mode" [attr.mode-direction]="thinModeDirection"
+    <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection"
     class="horizontal-measure" [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
         [ngStyle]="{'width': width + 'px', 'max-width': maxWidth}">
         <div class="stick left">
@@ -50,7 +50,7 @@
 </ng-template>
 
 <ng-template #vertical let-first="first">
-    <div *ngIf="first || twinned" [attr.mode]="_modeIsForced ? _forcedMode : mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
+    <div *ngIf="first || twinned" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
         [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
         [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">

@@ -6,7 +6,6 @@
                 <app-measuring-stick orientation="vertical" [height]="stageHeight"
                     [isInput]="true"
                     thinModeDirection="left"
-                    [forcedMode]="stageHeight < 3 * 22 ? 'thin' : 'wide'"
                     [inputMin]="CalculatorMins.ceilingHeight"
                     [inputMax]="CalculatorMaxes.ceilingHeight"
                     [inputValue]="calculatorService.ceilingHeight"

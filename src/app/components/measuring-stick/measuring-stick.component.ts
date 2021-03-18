@@ -13,6 +13,16 @@ export class MeasuringStickComponent implements OnInit {
 
   @Input() public orientation: 'horizontal' | 'vertical' = 'horizontal';
   @Input() public step = 1;
+
+  private _forcedMode: 'ultrathin' | 'thin' | 'wide' = 'wide';
+  private _modeIsForced = false;
+  get forcedMode(): 'ultrathin' | 'thin' | 'wide' {
+    return this._forcedMode;
+  }
+  @Input() set forcedMode(value: 'ultrathin' | 'thin' | 'wide') {
+    this._forcedMode = value;
+    this._modeIsForced = true;
+  }
   
   private _width: number = 0;
   get width(): number {
@@ -28,7 +38,7 @@ export class MeasuringStickComponent implements OnInit {
     } else if (this._width < this.thinThreshold) {
       this.mode = 'thin';
     } else {
-      this.mode = 'wide';
+      this.mode = this._modeIsForced ? this._forcedMode : 'wide';
     }
   }
 
@@ -40,26 +50,15 @@ export class MeasuringStickComponent implements OnInit {
     if (!value || isNaN(value)) {
       return;
     }
-
+    
     this._height = value;
     if (this._height < this.ultraShortThreshold) {
       this.mode = 'ultrathin';
     } else if (this._height < this.shortThreshold) {
       this.mode = 'thin';
     } else {
-      this.mode = 'wide';
+      this.mode = this._modeIsForced ? this._forcedMode : 'wide';
     }
-  }
-
-  public _forcedMode: 'thin' | 'wide' = 'wide';
-  public _modeIsForced = false;
-  get forcedMode(): 'thin' | 'wide' {
-    return this._forcedMode;
-  }
-  @Input() set forcedMode(value: 'thin' | 'wide') {
-    this.mode = value;
-    this._forcedMode = value;
-    this._modeIsForced = true;
   }
 
   @Input() public twinned: boolean = false; /* I realize this is a hack, fight me */
@@ -98,12 +97,8 @@ export class MeasuringStickComponent implements OnInit {
       } else if (this._height < this.shortThreshold) {
         this.mode = 'thin';
       } else {
-        this.mode = 'wide';
+        this.mode = this._modeIsForced ? this._forcedMode : 'wide';
       }
-    }
-
-    if (this._modeIsForced) {
-      this.mode = this._forcedMode;
     }
   }
 
