@@ -1,16 +1,16 @@
 <div class="graphical-output-top" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput, 'is-printing': isPrinting }">
     <div class="stage-info-wrapper">
-        <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
-            <app-measuring-stick orientation="vertical" [height]="stageHeight"
-                [isInput]="true"
-                thinModeDirection="left"
-                [inputMin]="CalculatorMins.lectureWidth"
-                [inputMax]="CalculatorMaxes.lectureWidth"
-                [inputValue]="calculatorService.lectureWidth"
-                (updated)="updateInput('lectureWidth', $event)"
-            ></app-measuring-stick>
-        </div>
         <div #wrapper class="stage-wrapper">
+            <div class="measuring-stick-overlay lecture-width">
+                <app-measuring-stick orientation="vertical" [height]="stageHeight"
+                    [isInput]="true"
+                    thinModeDirection="left"
+                    [inputMin]="CalculatorMins.lectureWidth"
+                    [inputMax]="CalculatorMaxes.lectureWidth"
+                    [inputValue]="calculatorService.lectureWidth"
+                    (updated)="updateInput('lectureWidth', $event)"
+                ></app-measuring-stick>
+            </div>
             <div #container class="stage-outer-container">
                 <div class="stage-label">Top view</div>
                 <div class="stage-inner-container">

@@ -1,39 +1,6 @@
 <div class="graphical-output" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'is-printing': isPrinting }" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
     <div class="graphical-output-front" *ngIf="calculatorService.reinforcePresenter || calculatorService.recordPresenter || !calculatorService.designForActive">
         <div class="stage-info-wrapper">
-            <div class="measuring-stick-overlay" style="position: absolute; top: 0; left: 10%;">
-                <app-measuring-stick orientation="vertical" 
-                    [height]="stageHeight"
-                    thinModeDirection="left"
-                    [isInput]="true"
-                    [inputMin]="CalculatorMins.ceilingHeight"
-                    [inputMax]="CalculatorMaxes.ceilingHeight"
-                    [inputValue]="calculatorService.ceilingHeight"
-                    (updated)="updateInput('ceilingHeight', $event)"
-                ></app-measuring-stick>
-            </div>
-            <div class="measuring-stick-overlay presenter-height">
-                <app-measuring-stick orientation="vertical" 
-                    [height]="presenterWidth / graphicsService.presenterWidthHeight"
-                    thinModeDirection="right"
-                    [isInput]="true"
-                    [inputMin]="CalculatorMins.presenterHeight"
-                    [inputMax]="CalculatorMaxes.presenterHeight"
-                    step="0.1"
-                    [inputValue]="calculatorService.presenterHeight"
-                    (updated)="updateInput('presenterHeight', $event)"
-                ></app-measuring-stick>
-            </div>
-            <div *ngIf="calculatorService.hasFreshOutput && extenderLength > 0" class="measuring-stick-overlay extender-length" @animateOutputArea>
-                <app-measuring-stick orientation="vertical" 
-                    [height]="extenderLength"
-                    thinModeDirection="right"
-                    [isInput]="!calculatorService.extenderRequired"
-                    step="0.5"
-                    [inputValue]="calculatorService.extenderLength"
-                    (updated)="updateInput('inputExtenderLength', $event)"
-                ></app-measuring-stick>
-            </div>
             <div class="measuring-stick-overlay lectureWidth" style="position: absolute; margin: 0 auto; bottom: -40px; width: 100%;">
                 <app-measuring-stick orientation="horizontal" 
                     [width]="stageWidth"
@@ -72,6 +39,39 @@
                 </ng-container>
             </ng-container>
             <div #wrapper class="stage-wrapper" [attr.app-display-mode]="RatioModeEnum[ratioMode] | lowercase">
+                <div class="measuring-stick-overlay ceiling-height">
+                    <app-measuring-stick orientation="vertical" 
+                        [height]="stageHeight"
+                        thinModeDirection="left"
+                        [isInput]="true"
+                        [inputMin]="CalculatorMins.ceilingHeight"
+                        [inputMax]="CalculatorMaxes.ceilingHeight"
+                        [inputValue]="calculatorService.ceilingHeight"
+                        (updated)="updateInput('ceilingHeight', $event)"
+                    ></app-measuring-stick>
+                </div>
+                <div class="measuring-stick-overlay presenter-height">
+                    <app-measuring-stick orientation="vertical" 
+                        [height]="presenterWidth / graphicsService.presenterWidthHeight"
+                        thinModeDirection="right"
+                        [isInput]="true"
+                        [inputMin]="CalculatorMins.presenterHeight"
+                        [inputMax]="CalculatorMaxes.presenterHeight"
+                        step="0.1"
+                        [inputValue]="calculatorService.presenterHeight"
+                        (updated)="updateInput('presenterHeight', $event)"
+                    ></app-measuring-stick>
+                </div>
+                <div *ngIf="calculatorService.hasFreshOutput && extenderLength > 0" class="measuring-stick-overlay extender-length" @animateOutputArea>
+                    <app-measuring-stick orientation="vertical" 
+                        [height]="extenderLength"
+                        thinModeDirection="right"
+                        [isInput]="!calculatorService.extenderRequired"
+                        step="0.5"
+                        [inputValue]="calculatorService.extenderLength"
+                        (updated)="updateInput('inputExtenderLength', $event)"
+                    ></app-measuring-stick>
+                </div>
                 <div class="stage-label">Front view</div>
                 <div class="stage-outer-container">
                     <div #container class="stage-inner-container">

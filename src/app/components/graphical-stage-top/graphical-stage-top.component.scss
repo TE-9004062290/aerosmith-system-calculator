@@ -150,37 +150,9 @@
 
 .measuring-stick-overlay {
     z-index: 100;
-    &.audience-distance-side {
-        display: flex;
-        position: absolute; 
-        top: calc(100% + 20px);
-        transition: left .25s linear, width .25s linear;
-        .warning {
-            display: flex;
-            margin-left: 6px;
-            .warning-text {
-                margin-left: 4px;
-                font-size: 12px;
-                line-height: 18px;
-                color: #494949;
-            }
-        }
-    }
-    &.presenter-height, &.audience-height, &.extender-length {
+    &.lecture-width {
         position: absolute;
-        left: 84%;
-        @media screen and (max-width: 767px) {
-            left: 80%;
-        }
-    }
-    &.presenter-height {
-        bottom: 0;
-    }
-    &.audience-height {
-        bottom: 0;
-    }
-    &.extender-length {
-        top: 0;
+        left: calc(0% - 50px);
     }
 }
 
