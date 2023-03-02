@@ -1,7 +1,7 @@
 # AerosmithSystemCalculator
 
-Written in version 8 of Angular2. Recommend at least Node v16 installed on a system building the project.
-Once cloned, run `npm install` and then `npm start` in the project root directory to start the project.
+#### Written in version 8 of Angular2. Recommend at least Node v16 installed on a system building the project.
+#### Once cloned, run `npm install` and then `npm start` in the project root directory to start the project.
 
 ## Development server
 
