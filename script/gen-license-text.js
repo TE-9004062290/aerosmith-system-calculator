@@ -23,7 +23,6 @@ function genLicenseText() {
   Promise.resolve()
     .then(() => {
       return new Promise((resolve, reject) => {
-        // dps_digitalpaperapp-pc/static_modules (./app/modules/*)
         getPackageLegal(null, './').then((ret) => {
           if (ret[1]) {
             reject(ret[1]);
