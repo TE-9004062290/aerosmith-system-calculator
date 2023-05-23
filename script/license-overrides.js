@@ -1,7 +1,7 @@
 /**
 	license-overrides.js
 	
-	created:	2023/5/23 S.Sugawara
+  created:	2023/5/23 S.Sugawara
 
 	description:	
 	License override.
