@@ -25,6 +25,7 @@ import { DesignInputsComponent } from './components/design-inputs/design-inputs.
 import { SvgCaptureRadiusComponent } from './components/svg-capture-radius/svg-capture-radius.component';
 import { GraphicalStageSideComponent } from './components/graphical-stage-side/graphical-stage-side.component';
 import { RadiiLegendComponent } from './components/radii-legend/radii-legend.component';
+import { VersionOutputComponent } from './components/version-output/version-output.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { RadiiLegendComponent } from './components/radii-legend/radii-legend.com
     SvgCaptureRadiusComponent,
     GraphicalStageSideComponent,
     RadiiLegendComponent,
+    VersionOutputComponent,
   ],
   imports: [
     BrowserModule,
