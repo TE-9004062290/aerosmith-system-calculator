@@ -1,10 +1,8 @@
 #!/bin/sh
-#
-#	digitalpaperapp_package.sh
 #	
 #	creator:		S.Sugawara
 #	created:		2023-06-02
-#	modified:	
+#	modified:		R.Maki 2023-06-16 アプリバージョンとOSSライセンスのjsonファイルを生成する処理を追加
 #	description:	Build script
 #	
 
@@ -14,6 +12,11 @@
 
 if [ ! -d "./src" ]; then
     echo "Calling from wrong directory. This script need to be called from repo root."
+    exit 1
+fi
+
+if [ ! -e "./version.txt" ] || [ ! -e "./LICENSES.txt" ]; then
+	echo "version.txt or LICENSES.txt does not exist."
     exit 1
 fi
 
@@ -91,8 +94,20 @@ fi
 JSON_DATA='{\n\t"version": "'$APP_VERSION'"\n}'
 FILE_VER_JSON="./src/app/config/version.json"
 
-#jsonファイルに作成したデータを出力
+#アプリバージョンのjson形式のファイルを作成
 echo -e $JSON_DATA > $FILE_VER_JSON
+
+
+FILE_LICENSES_TXT="LICENSES.txt"
+FILE_LICENSES_JSON="./src/app/config/LICENSES.json"
+JSON_BEGIN_PARTS='{\n\t"content": "'
+JSON_END_PARTS='"\n}'
+
+#OSSライセンスのjson形式のファイルを作成
+echo -en $JSON_BEGIN_PARTS > $FILE_LICENSES_JSON
+sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\t/\\t/g' -ze 's/\n/\\n/g' -e 's/^\xEF\xBB\xBF//' $FILE_LICENSES_TXT >> $FILE_LICENSES_JSON
+echo -e $JSON_END_PARTS >> $FILE_LICENSES_JSON
+
 
 ## 入力のみで使用するためコメントアウト
 #echo $APP_VERSION > $FILE_VER_TXT

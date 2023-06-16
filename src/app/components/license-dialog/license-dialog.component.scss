@@ -1,0 +1,35 @@
+.modal-content-wrapper {
+    height: 100%;
+
+    .licenses-dialog-header {
+        margin-bottom: 25px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .licenses-content {
+        overflow: auto;
+        border: solid 1px;
+        padding: 0 15px;
+        margin:0 5px;
+        max-height:80%;
+        
+        pre {
+            margin:0;
+            white-space: pre-wrap;
+        }
+    }
+    .mat-dialog-actions { 
+        margin-top: 10px;
+        margin-right: 5px;
+
+        button {
+            width: 6.5em;
+            height: 2.5em;
+        }
+    }
+}
+
+
+
+

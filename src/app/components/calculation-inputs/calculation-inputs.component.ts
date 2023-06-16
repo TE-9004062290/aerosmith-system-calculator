@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import TechnicalSupportLinks from '@app/config/technical-support.json';
+import LicensesText from '@app/config/LICENSES.json';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import {
   trigger,
@@ -10,6 +12,7 @@ import {
 
 import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
+import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
 
 
 @Component({
@@ -35,7 +38,10 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 })
 export class CalculationInputsComponent implements OnInit {
 
-  constructor(public calculatorService: CalculatorService) { }
+  constructor(
+    public calculatorService: CalculatorService,
+    private matDialog: MatDialog
+  ) { }
 
   public MeasurementUnitsEnum = MeasurementUnits;
   public CalculatorDefaults = this.calculatorService.DEFAULTS;
@@ -46,6 +52,7 @@ export class CalculationInputsComponent implements OnInit {
   public showTechnicalSupport: boolean = false;
 
   public technicalSupportLinks = TechnicalSupportLinks;
+  public licensesText: string = LicensesText.content;
 
   @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   
@@ -90,5 +97,16 @@ export class CalculationInputsComponent implements OnInit {
         break;
         
     }
+  }
+
+  public openLicenseDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.height = "800px";
+    dialogConfig.width = "800px";
+    dialogConfig.data = { content: this.licensesText };
+
+    this.matDialog.open(LicenseDialogComponent, dialogConfig);
   }
 }
