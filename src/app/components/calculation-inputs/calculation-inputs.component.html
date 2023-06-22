@@ -147,6 +147,10 @@
             <div *ngFor="let link of technicalSupportLinks" class="technical-support-link">
                 <a [href]="link.url" target="_blank">{{link.text}}</a>
             </div>
+            <div class="licences-link" (click)="openLicenseDialog()">
+                <a>Open source license</a>        
+            </div>
+            <app-version-output></app-version-output>
         </div>
     </div>
 </div>

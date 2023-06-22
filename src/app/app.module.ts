@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from "@angular/material";
 
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -25,6 +26,8 @@ import { DesignInputsComponent } from './components/design-inputs/design-inputs.
 import { SvgCaptureRadiusComponent } from './components/svg-capture-radius/svg-capture-radius.component';
 import { GraphicalStageSideComponent } from './components/graphical-stage-side/graphical-stage-side.component';
 import { RadiiLegendComponent } from './components/radii-legend/radii-legend.component';
+import { VersionOutputComponent } from './components/version-output/version-output.component';
+import { LicenseDialogComponent } from './components/license-dialog/license-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,8 @@ import { RadiiLegendComponent } from './components/radii-legend/radii-legend.com
     SvgCaptureRadiusComponent,
     GraphicalStageSideComponent,
     RadiiLegendComponent,
+    VersionOutputComponent,
+    LicenseDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +57,10 @@ import { RadiiLegendComponent } from './components/radii-legend/radii-legend.com
     FormsModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LicenseDialogComponent]
 })
 export class AppModule { }
