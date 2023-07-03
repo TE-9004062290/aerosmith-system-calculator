@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatDialogModule } from "@angular/material";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -60,7 +60,6 @@ import { LicenseDialogComponent } from './components/license-dialog/license-dial
     MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [LicenseDialogComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
