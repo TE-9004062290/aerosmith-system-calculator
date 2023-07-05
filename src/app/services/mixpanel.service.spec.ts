@@ -6,7 +6,7 @@ describe('MixpanelService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MixpanelService = TestBed.get(MixpanelService);
+    const service: MixpanelService = TestBed.inject(MixpanelService);
     expect(service).toBeTruthy();
   });
 });
