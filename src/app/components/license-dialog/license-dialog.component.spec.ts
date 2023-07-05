@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LicenseDialogComponent } from './license-dialog.component';
 
@@ -6,7 +6,7 @@ describe('LicenseDialogComponent', () => {
   let component: LicenseDialogComponent;
   let fixture: ComponentFixture<LicenseDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LicenseDialogComponent ]
     })

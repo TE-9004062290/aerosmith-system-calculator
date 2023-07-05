@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RadioToggleComponent } from './radio-toggle.component';
 
@@ -6,7 +6,7 @@ describe('RadioToggleComponent', () => {
   let component: RadioToggleComponent;
   let fixture: ComponentFixture<RadioToggleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RadioToggleComponent ]
     })

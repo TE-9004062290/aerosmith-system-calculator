@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SvgCaptureRadiusComponent } from './svg-capture-radius.component';
 
@@ -6,7 +6,7 @@ describe('SvgCaptureRadiusComponent', () => {
   let component: SvgCaptureRadiusComponent;
   let fixture: ComponentFixture<SvgCaptureRadiusComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SvgCaptureRadiusComponent ]
     })
