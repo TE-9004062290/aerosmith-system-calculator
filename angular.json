@@ -65,20 +65,24 @@
                   "maximumError": "11kb"
                 }
               ]
-            }
+            },
+            "development": {}
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "aerosmith-system-calculator:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "aerosmith-system-calculator:build:production"
+            },
+            "development": {
+              "browserTarget": "aerosmith-system-calculator:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -120,14 +124,17 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "aerosmith-system-calculator:serve"
+            "protractorConfig": "e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "aerosmith-system-calculator:serve:production"
+            },
+            "development": {
+              "devServerTarget": "aerosmith-system-calculator:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
