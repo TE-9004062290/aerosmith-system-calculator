@@ -106,6 +106,7 @@ export class CalculationInputsComponent implements OnInit {
     dialogConfig.height = "800px";
     dialogConfig.width = "800px";
     dialogConfig.data = { content: this.licensesText };
+    dialogConfig.panelClass = "custom-dialog-container";
 
     this.matDialog.open(LicenseDialogComponent, dialogConfig);
   }
