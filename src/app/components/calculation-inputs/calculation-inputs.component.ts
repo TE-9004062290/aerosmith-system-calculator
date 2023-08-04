@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 import LicensesText from '@app/config/LICENSES.json';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 
 import {
   trigger,
@@ -106,6 +106,7 @@ export class CalculationInputsComponent implements OnInit {
     dialogConfig.height = "800px";
     dialogConfig.width = "800px";
     dialogConfig.data = { content: this.licensesText };
+    dialogConfig.panelClass = "custom-dialog-container";
 
     this.matDialog.open(LicenseDialogComponent, dialogConfig);
   }

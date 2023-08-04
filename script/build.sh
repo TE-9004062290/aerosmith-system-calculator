@@ -119,4 +119,4 @@ echo "#####################"
 echo ""
 
 echo "Build in progress"
-npm run build-prd
+npm run build

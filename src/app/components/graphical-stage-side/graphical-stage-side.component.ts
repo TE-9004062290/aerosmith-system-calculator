@@ -85,9 +85,9 @@ export class GraphicalStageSideComponent implements OnInit {
   public audienceDistance: number = 0;
   public audience: number[] = [];
   
-  @ViewChild('wrapper', null) wrapperRef: ElementRef;
-  @ViewChild('container', null) containerRef: ElementRef;
-  @ViewChild('stage', null) stageRef: ElementRef;
+  @ViewChild('wrapper', { static :true }) wrapperRef: ElementRef;
+  @ViewChild('container', { static :true }) containerRef: ElementRef;
+  @ViewChild('stage', { static :true }) stageRef: ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 

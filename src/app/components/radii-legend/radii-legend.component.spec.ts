@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RadiiLegendComponent } from './radii-legend.component';
 
@@ -6,7 +6,7 @@ describe('RadiiLegendComponent', () => {
   let component: RadiiLegendComponent;
   let fixture: ComponentFixture<RadiiLegendComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RadiiLegendComponent ]
     })

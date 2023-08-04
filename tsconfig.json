@@ -1,19 +1,19 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src", // required to give the paths property context
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "es2020",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -22,10 +22,17 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["app/*"],
-      "@components/*": ["app/components/*"],
-      "@main/*": ["app/main/*"]
-    }
+      "@app/*": [
+        "app/*"
+      ],
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@main/*": [
+        "app/main/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
