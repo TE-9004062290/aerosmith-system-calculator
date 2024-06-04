@@ -728,7 +728,7 @@ export class CalculatorService {
   }
 
   public serializeToUrl() {
-    const url: string = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+    const url: string = `${top.location.protocol}//${top.location.host}${top.location.pathname}`;
     const inputs: string[] = [];
 
     inputs.push(`measurementUnit=${this.e_measurementUnit}`);
