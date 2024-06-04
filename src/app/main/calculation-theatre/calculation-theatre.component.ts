@@ -66,6 +66,20 @@ export class CalculationTheatreComponent implements OnInit {
         this.numDesignActive = this._countDesignActive();
       }
     });
+    
+    let fragment = top.location.search;
+    let paramaters = {}; 
+    fragment.slice(0).split('&').forEach( function(param) {
+       let pair = param.split('='); 
+       paramaters[pair[0]] = decodeURIComponent(pair[1] || ''); 
+    });
+    
+    if( Object.keys(paramaters).length != 0 ){
+      const hasParam = this.parseParams(paramaters);
+      if (hasParam) {
+        this.calculate(false);
+      }
+    }
   }
 
   public calculate(track: boolean = false) {
