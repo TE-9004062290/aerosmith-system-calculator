@@ -51,10 +51,21 @@ export class CalculationTheatreComponent implements OnInit {
 
     this.activatedRoute.queryParams
     .subscribe(params => {
+      //paramsの値はiframe内のパラメーターを取得してしまい期待する値を取得出来ない為
+      //パラメーターの値はURLから直接取得しparamsの値は使用しない
       if (!this.initialized) {
-        const hasParam = this.parseParams(params);
-        if (hasParam) {
-          this.calculate(false);
+        let search = top.location.search;
+        let paramaters = {}; 
+        search.slice(0).split('&').forEach( function(param) {
+           let pair = param.split('='); 
+           paramaters[pair[0]] = decodeURIComponent(pair[1] || ''); 
+        });
+        
+        if( Object.keys(paramaters).length != 0 ){
+          const hasParam = this.parseParams(paramaters);
+          if (hasParam) {
+            this.calculate(false);
+          }
         }
         this.initialized = true;
       }
@@ -66,20 +77,6 @@ export class CalculationTheatreComponent implements OnInit {
         this.numDesignActive = this._countDesignActive();
       }
     });
-    
-    let fragment = top.location.search;
-    let paramaters = {}; 
-    fragment.slice(0).split('&').forEach( function(param) {
-       let pair = param.split('='); 
-       paramaters[pair[0]] = decodeURIComponent(pair[1] || ''); 
-    });
-    
-    if( Object.keys(paramaters).length != 0 ){
-      const hasParam = this.parseParams(paramaters);
-      if (hasParam) {
-        this.calculate(false);
-      }
-    }
   }
 
   public calculate(track: boolean = false) {
