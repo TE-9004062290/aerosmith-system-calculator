@@ -445,25 +445,6 @@ export class CalculatorService {
   
   private updateRouteParams() {    
     top.history.replaceState({}, '', this.serializeToUrl());
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        measurementUnit: this.e_measurementUnit,
-        reinforcePresenter: +this.b_reinforcePresenter, // converts to 0 or 1
-        recordPresenter: +this.b_recordPresenter,
-        recordAudience: +this.b_recordAudience,
-        reinforcementPriority: this.e_soundReinforcementPriority,
-        ceilingHeight: this.m_ceilingHeight,
-        lectureWidth: this.m_lectureWidth,
-        presenterHeight: this.m_presenterHeight,
-        audienceHeight: this.m_audienceHeight,
-        audienceDepth: this.m_audienceDepth,
-        inputExtenderLength: this.m_inputExtenderLength,
-        inputAudienceExtenderLength: this.m_inputAudienceExtenderLength,
-      },
-      queryParamsHandling: 'merge',
-      skipLocationChange: false
-    });
   }
 
   public forceDirty() {
