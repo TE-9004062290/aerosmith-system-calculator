@@ -443,7 +443,7 @@ export class CalculatorService {
     this.$resizer = new BehaviorSubject(false);
   }
   
-  private updateRouteParams() {    
+  private updateRouteParams() {
     top.history.replaceState({}, '', this.serializeToUrl());
   }
 
