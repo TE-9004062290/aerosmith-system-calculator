@@ -444,7 +444,9 @@ export class CalculatorService {
   }
   
   private updateRouteParams() {
-    top.history.replaceState({}, '', this.serializeToUrl());
+    console.log('[debug]call updateRouteParams');
+    top.history.replaceState({}, '', this.serializeToUrl());    
+    console.log('[debug]updateRouteParams this.serializeToUrl='+this.serializeToUrl());
   }
 
   public forceDirty() {
@@ -710,8 +712,10 @@ export class CalculatorService {
   }
 
   public serializeToUrl() {
+    console.log('[debug]call serializeToUrl');
     const url: string = `${top.location.protocol}//${top.location.host}${top.location.pathname}`;
     const inputs: string[] = [];
+    console.log('[debug]serializeToUrl url='+url);
 
     inputs.push(`measurementUnit=${this.e_measurementUnit}`);
     inputs.push(`reinforcePresenter=${+this.b_reinforcePresenter}`);
