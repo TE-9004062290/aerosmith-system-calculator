@@ -161,6 +161,5 @@ export class CalculationInputsComponent implements OnInit {
               this.updateBtnEnabled = false;
               this.textareaContents = null;
         }
-
   }
 }

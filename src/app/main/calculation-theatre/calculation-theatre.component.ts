@@ -178,6 +178,5 @@ export class CalculationTheatreComponent implements OnInit {
         if (hasParam) {
           this.calculate(false);
         }
-        // falseできたらエラーメッセージが出るように
   }
 }
