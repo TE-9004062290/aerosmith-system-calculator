@@ -18,12 +18,41 @@
         </div>
         <app-calculation-outputs></app-calculation-outputs>
     </div>
-    <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
+    <div *ngIf="!calculatorService.hasFreshOutput || numDesignActive <= 1" class="toggle-container restore-from-url-toggle">
+      <div class="toggle-header restore-from-url-toggle-group" (click)="toggleRestorefromUrl()">
+          <app-svg-icons iconType="toggle" [transformString]="showRestorefromUrl ? 'rotate(0deg)' : 'rotate(-90deg)'"></app-svg-icons>
+          <div class="toggle-label restore-from-url-label">(要検討)Restore from Url</div>
+      </div>
+      <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
+      <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
+      <input type="text" id="restore-textarea" (focus)="forcusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
+      <input type="button" id="restore-btn" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
+      <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
+      <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
+      </div>
+    </div>
+    <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="toggle-container-with-design restore-from-url-toggle">
+      <div class="toggle-header restore-from-url-toggle-group" (click)="toggleRestorefromUrl()">
+          <app-svg-icons iconType="toggle" [transformString]="showRestorefromUrl ? 'rotate(0deg)' : 'rotate(-90deg)'"></app-svg-icons>
+          <div class="toggle-label restore-from-url-label">(要検討)Restore from Url</div>
+      </div>
+      <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
+      <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
+      <input type="text" id="restore-textarea" (focus)="forcusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
+      <input type="button" id="restore-btn" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
+      <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
+      <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
+      </div>
+    </div>
+    <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}">
         <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="radii-legend-container">
             <app-radii-legend></app-radii-legend>
             <div class="radii-legend-divider"></div>
         </div>
-        <div class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
+        <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="graphical-stage-wrapper-with-design" (click)="hideSideBar()" (touch)="hideSideBar()">
+          <app-graphical-stage></app-graphical-stage>
+      </div>
+        <div *ngIf="!calculatorService.hasFreshOutput || numDesignActive <= 1" class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
             <app-graphical-stage></app-graphical-stage>
         </div>
         <div class="sidebar">
