@@ -232,8 +232,8 @@ export class CalculationTheatreComponent implements OnInit {
     } catch (error) {
       this.errorMassage = true;
     }
-
   }
+
   public forcusTextarea() {
     document.getElementById('restore-textarea').addEventListener('keydown',
       function (event) {
@@ -255,7 +255,6 @@ export class CalculationTheatreComponent implements OnInit {
               this.updateBtnEnabled = false;
               this.textareaContents = null;
         }
-
   }
 
 }
