@@ -20,7 +20,23 @@ import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcemen
 @Component({
   selector: 'app-calculation-theatre',
   templateUrl: './calculation-theatre.component.html',
-  styleUrls: ['./calculation-theatre.component.scss']
+  styleUrls: ['./calculation-theatre.component.scss'],
+  animations: [
+    trigger('animateToggle', [
+      transition(':enter', [
+        style({ height: '0px'}),
+        style({ opacity: 0 }),
+        animate('.25s', style({ height: '*'})),
+        animate('.075s', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        style({ height: '*' }),
+        animate('.075s', style({ opacity: 0 })),
+        animate('.25s', style({ height: '0px' }))
+      ])
+    ])
+  ]
 })
 export class CalculationTheatreComponent implements OnInit {
 
@@ -36,6 +52,15 @@ export class CalculationTheatreComponent implements OnInit {
 
   public numDesignActive: number = 0;
   
+  public showRestorefromUrl: boolean = false;
+
+  public updateBtnEnabled: boolean = false;
+  public updateBtnDisabled: boolean = true;
+
+  public textareaContents: string = null;
+
+  public errorMassage: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public calculatorService: CalculatorService,
