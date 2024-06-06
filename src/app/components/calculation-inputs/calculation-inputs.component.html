@@ -146,7 +146,7 @@
       <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
         <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
         <textarea id="restore-textarea" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents"></textarea>
-        <div class="restore-error-massage" *ngIf="errorMassage">Please enter correct parameter information.</div>
+        <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
         <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
         <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
       </div>
