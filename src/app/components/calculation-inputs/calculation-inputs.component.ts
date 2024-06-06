@@ -13,6 +13,7 @@ import {
 import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
+import { CalculationTheatreComponent } from '@app/main/calculation-theatre/calculation-theatre.component';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class CalculationInputsComponent implements OnInit {
 
   constructor(
     public calculatorService: CalculatorService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private calsulationTheare : CalculationTheatreComponent
   ) { }
 
   public MeasurementUnitsEnum = MeasurementUnits;
@@ -49,10 +51,18 @@ export class CalculationInputsComponent implements OnInit {
   public CalculatorMaxes = this.calculatorService.MAXIMUMS;
 
   public showAdvancedSettings: boolean = false;
+  public showRestorefromUrl: boolean = false;
   public showTechnicalSupport: boolean = false;
 
   public technicalSupportLinks = TechnicalSupportLinks;
   public licensesText: string = LicensesText.content;
+
+  public updateBtnEnabled: boolean = false;
+  public updateBtnDisabled: boolean = true;
+
+  public textareaContents: string = null;
+
+  public errorMassage: boolean = false;
 
   @Input() measurementUnit: MeasurementUnits = MeasurementUnits.Meters;
   
@@ -67,6 +77,10 @@ export class CalculationInputsComponent implements OnInit {
   
   public toggleAdvancedSettings() {
     this.showAdvancedSettings = !this.showAdvancedSettings;
+  }
+
+  public toggleRestorefromUrl() {
+    this.showRestorefromUrl = !this.showRestorefromUrl;
   }
 
   public toggleTechnicalSupport() {
@@ -109,5 +123,44 @@ export class CalculationInputsComponent implements OnInit {
     dialogConfig.panelClass = "custom-dialog-container";
 
     this.matDialog.open(LicenseDialogComponent, dialogConfig);
+  }
+
+  public clickUpdateBtn() {
+    try {
+      this.errorMassage = false;
+
+      const searchString = "/calculator?";
+      let index = this.textareaContents.indexOf(searchString);
+
+      if(index !== -1) {
+        let paramsStr = this.textareaContents.substring(index + searchString.length);
+        let paramaters = {};
+        paramsStr.slice(0).split('&').forEach( function(param) {
+           let pair = param.split('=');
+           paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
+        });
+
+        this.calsulationTheare.restoreFromUrl(paramaters);
+
+      } else {
+        this.errorMassage = true;
+      }
+    } catch (error) {
+      this.errorMassage = true;
+    }
+  }
+
+  public inputTextarea() {
+      const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
+        if (textArea.value.trim().length > 0) {
+              this.updateBtnEnabled = true;
+              this.updateBtnDisabled = false;
+              this.textareaContents = textArea.value;
+        } else {
+              this.updateBtnDisabled = true;
+              this.updateBtnEnabled = false;
+              this.textareaContents = null;
+        }
+
   }
 }

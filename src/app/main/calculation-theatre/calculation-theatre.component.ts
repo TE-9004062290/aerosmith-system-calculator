@@ -172,4 +172,12 @@ export class CalculationTheatreComponent implements OnInit {
 
     return hasParam;
   }
+
+  public restoreFromUrl(params) {
+    const hasParam = this.parseParams(params);
+        if (hasParam) {
+          this.calculate(false);
+        }
+        // falseできたらエラーメッセージが出るように
+  }
 }
