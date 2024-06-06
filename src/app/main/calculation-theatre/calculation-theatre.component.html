@@ -59,4 +59,17 @@
             <app-version-stamp *ngIf="!calculatorService.hasFreshOutput"></app-version-stamp>
         </div>
     </div>
+    <div class="toggle-container restore-from-url-toggle">
+      <div class="toggle-header restore-from-url-toggle-group" (click)="toggleRestorefromUrl()">
+          <app-svg-icons iconType="toggle" [transformString]="showRestorefromUrl ? 'rotate(0deg)' : 'rotate(-90deg)'"></app-svg-icons>
+          <div class="toggle-label restore-from-url-label">(要検討)Restore from Url</div>
+      </div>
+      <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
+        <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
+        <input type="text" id="restore-textarea" class="restore-textarea" (focus)="forcusTextarea()" (input)="inputTextarea()" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
+        <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" id="restore-btn" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
+        <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
+        <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
+      </div>
+    </div>
 </div>

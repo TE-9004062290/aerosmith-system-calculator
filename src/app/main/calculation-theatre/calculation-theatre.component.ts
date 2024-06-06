@@ -20,7 +20,23 @@ import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcemen
 @Component({
   selector: 'app-calculation-theatre',
   templateUrl: './calculation-theatre.component.html',
-  styleUrls: ['./calculation-theatre.component.scss']
+  styleUrls: ['./calculation-theatre.component.scss'],
+  animations: [
+    trigger('animateToggle', [
+      transition(':enter', [
+        style({ height: '0px'}),
+        style({ opacity: 0 }),
+        animate('.25s', style({ height: '*'})),
+        animate('.075s', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        style({ height: '*' }),
+        animate('.075s', style({ opacity: 0 })),
+        animate('.25s', style({ height: '0px' }))
+      ])
+    ])
+  ]
 })
 export class CalculationTheatreComponent implements OnInit {
 
@@ -36,6 +52,15 @@ export class CalculationTheatreComponent implements OnInit {
 
   public numDesignActive: number = 0;
   
+  public showRestorefromUrl: boolean = false;
+
+  public updateBtnEnabled: boolean = false;
+  public updateBtnDisabled: boolean = true;
+
+  public textareaContents: string = null;
+
+  public errorMassage: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public calculatorService: CalculatorService,
@@ -172,4 +197,65 @@ export class CalculationTheatreComponent implements OnInit {
 
     return hasParam;
   }
+
+  public restoreFromUrl(params) {
+    const hasParam = this.parseParams(params);
+        if (hasParam) {
+          this.calculate(false);
+        }
+  }
+
+  public toggleRestorefromUrl() {
+    this.showRestorefromUrl = !this.showRestorefromUrl;
+  }
+
+  public clickUpdateBtn() {
+    try {
+      this.errorMassage = false;
+
+      const searchString = "/calculator?";
+      let index = this.textareaContents.indexOf(searchString);
+
+      if(index !== -1) {
+        let paramsStr = this.textareaContents.substring(index + searchString.length);
+        let paramaters = {};
+        paramsStr.slice(0).split('&').forEach( function(param) {
+           let pair = param.split('=');
+           paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
+        });
+
+        this.restoreFromUrl(paramaters);
+
+      } else {
+        this.errorMassage = true;
+      }
+    } catch (error) {
+      this.errorMassage = true;
+    }
+
+  }
+  public forcusTextarea() {
+    document.getElementById('restore-textarea').addEventListener('keydown',
+      function (event) {
+        if (event.key == "Enter") {
+          const updateButton = document.getElementById('restore-btn')
+          updateButton.click();
+        }
+      });
+  }
+
+  public inputTextarea() {
+      const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
+        if (textArea.value.trim().length > 0) {
+              this.updateBtnEnabled = true;
+              this.updateBtnDisabled = false;
+              this.textareaContents = textArea.value;
+        } else {
+              this.updateBtnDisabled = true;
+              this.updateBtnEnabled = false;
+              this.textareaContents = null;
+        }
+
+  }
+
 }
