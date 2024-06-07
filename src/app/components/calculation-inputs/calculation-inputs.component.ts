@@ -145,15 +145,15 @@ export class CalculationInputsComponent implements OnInit {
   }
 
   public inputTextarea() {
-      const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
-        if (textArea.value.trim().length > 0) {
-          this.updateBtnEnabled = true;
-          this.updateBtnDisabled = false;
-          this.textareaContents = textArea.value;
-        } else {
-          this.updateBtnDisabled = true;
-          this.updateBtnEnabled = false;
-          this.textareaContents = null;
-        }
+    const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
+    if (textArea.value.trim().length > 0) {
+      this.updateBtnEnabled = true;
+      this.updateBtnDisabled = false;
+      this.textareaContents = textArea.value;
+    } else {
+      this.updateBtnDisabled = true;
+      this.updateBtnEnabled = false;
+      this.textareaContents = null;
+    }
   }
 }
