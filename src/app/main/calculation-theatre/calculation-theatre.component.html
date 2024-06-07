@@ -51,7 +51,7 @@
         </div>
         <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="graphical-stage-wrapper-with-design" (click)="hideSideBar()" (touch)="hideSideBar()">
           <app-graphical-stage></app-graphical-stage>
-      </div>
+        </div>
         <div *ngIf="!calculatorService.hasFreshOutput || numDesignActive <= 1" class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
             <app-graphical-stage></app-graphical-stage>
         </div>
