@@ -126,22 +126,22 @@ export class CalculationInputsComponent implements OnInit {
   }
 
   public clickUpdateBtn() {
-      const searchString = "/calculator?";
-      let index = this.textareaContents.indexOf(searchString);
+    const searchString = "/calculator?";
+    let index = this.textareaContents.indexOf(searchString);
 
-      if(index !== -1) {
-        let paramsStr = this.textareaContents.substring(index + searchString.length);
-        let paramaters = {};
-        paramsStr.slice(0).split('&').forEach( function(param) {
-           let pair = param.split('=');
-           paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
-        });
+    if(index !== -1) {
+      let paramsStr = this.textareaContents.substring(index + searchString.length);
+      let paramaters = {};
+      paramsStr.slice(0).split('&').forEach( function(param) {
+         let pair = param.split('=');
+         paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
+      });
 
-        this.calsulationTheare.restoreFromUrl(paramaters);
-        this.errorMassage = false;
-      } else {
-        this.errorMassage = true;
-      }
+      this.calsulationTheare.restoreFromUrl(paramaters);
+      this.errorMassage = false;
+    } else {
+      this.errorMassage = true;
+    }
   }
 
   public inputTextarea() {
