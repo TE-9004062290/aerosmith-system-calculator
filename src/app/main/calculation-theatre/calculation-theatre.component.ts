@@ -210,26 +210,20 @@ export class CalculationTheatreComponent implements OnInit {
   }
 
   public clickUpdateBtn() {
-    try {
+    const searchString = "/calculator?";
+    let index = this.textareaContents.indexOf(searchString);
+
+    if(index !== -1) {
+      let paramsStr = this.textareaContents.substring(index + searchString.length);
+      let paramaters = {};
+      paramsStr.slice(0).split('&').forEach( function(param) {
+         let pair = param.split('=');
+         paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
+      });
+
+      this.restoreFromUrl(paramaters);
       this.errorMassage = false;
-
-      const searchString = "/calculator?";
-      let index = this.textareaContents.indexOf(searchString);
-
-      if(index !== -1) {
-        let paramsStr = this.textareaContents.substring(index + searchString.length);
-        let paramaters = {};
-        paramsStr.slice(0).split('&').forEach( function(param) {
-           let pair = param.split('=');
-           paramaters[pair[0]] = decodeURIComponent(pair[1] || '');
-        });
-
-        this.restoreFromUrl(paramaters);
-
-      } else {
-        this.errorMassage = true;
-      }
-    } catch (error) {
+    } else {
       this.errorMassage = true;
     }
   }
@@ -247,13 +241,13 @@ export class CalculationTheatreComponent implements OnInit {
   public inputTextarea() {
       const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
         if (textArea.value.trim().length > 0) {
-              this.updateBtnEnabled = true;
-              this.updateBtnDisabled = false;
-              this.textareaContents = textArea.value;
+          this.updateBtnEnabled = true;
+          this.updateBtnDisabled = false;
+          this.textareaContents = textArea.value;
         } else {
-              this.updateBtnDisabled = true;
-              this.updateBtnEnabled = false;
-              this.textareaContents = null;
+          this.updateBtnDisabled = true;
+          this.updateBtnEnabled = false;
+          this.textareaContents = null;
         }
   }
 
