@@ -54,21 +54,21 @@ export class CalculationTheatreComponent implements OnInit {
       //paramsの値はiframe内のパラメーターを取得してしまい期待する値を取得出来ない為
       //パラメーターの値はURLから直接取得しparamsの値は使用しない
       if (!this.initialized) {
-        console.log('[debug]top.location.search='+top.location.search);
-        let search = top.location.search;
-        console.log('[debug]search='+search);
+        console.log('[debug]queryParams.subscribe top.location.search = ' + top.location.search);
+        let search = top.location.search;        
+        console.log('[debug]queryParams.subscribe search =' + search);
+
         let paramaters = {}; 
         search.slice(1).split('&').forEach( function(param) {
-           let pair = param.split('='); 
-           paramaters[pair[0]] = decodeURIComponent(pair[1] || ''); 
+          let pair = param.split('=');
+          paramaters[pair[0]] = decodeURIComponent(pair[1] || ''); 
         });
         
-        console.log('[debug]paramaters'+paramaters);
-        if( Object.keys(paramaters).length != 0 ){
-          const hasParam = this.parseParams(paramaters);
-          if (hasParam) {
-            this.calculate(false);
-          }
+        console.log('[debug]queryParams.subscribe paramaters = ' + paramaters);
+        const hasParam = this.parseParams(paramaters);
+        if (hasParam) {
+          console.log('[debug]queryParams.subscribe hasParam = ' + hasParam);
+          this.calculate(false);
         }
         this.initialized = true;
       }
@@ -120,67 +120,67 @@ export class CalculationTheatreComponent implements OnInit {
     switch (measurementUnit) {
       case 'ft':
         this.calculatorService.measurementUnit = MeasurementUnits.Feet;
-        console.log('[debug]parseParams measurementUnit='+this.calculatorService.measurementUnit);
+        console.log('[debug]parseParams measurementUnit = ' + this.calculatorService.measurementUnit);
         hasParam = true;
         break;
       case 'm':
         this.calculatorService.measurementUnit = MeasurementUnits.Meters;
-        console.log('[debug]parseParams measurementUnit='+this.calculatorService.measurementUnit);
+        console.log('[debug]parseParams measurementUnit = ' + this.calculatorService.measurementUnit);
         hasParam = true;
         break;
     }
 
     if (ceilingHeight) {
       this.calculatorService.ceilingHeight = ceilingHeight;
-      console.log('[debug]parseParams ceilingHeight='+this.calculatorService.ceilingHeight);
+      console.log('[debug]parseParams ceilingHeight = ' + this.calculatorService.ceilingHeight);
       hasParam = true;
     }
     if (lectureWidth) {
       this.calculatorService.lectureWidth = lectureWidth;
-      console.log('[debug]parseParams lectureWidth='+this.calculatorService.lectureWidth);
+      console.log('[debug]parseParams lectureWidth = ' + this.calculatorService.lectureWidth);
       hasParam = true;
     }
     if (presenterHeight) {
       this.calculatorService.presenterHeight = presenterHeight;
-      console.log('[debug]parseParams presenterHeight='+this.calculatorService.presenterHeight);
+      console.log('[debug]parseParams presenterHeight = ' + this.calculatorService.presenterHeight);
       hasParam = true;
     }
     if (audienceHeight) {
       this.calculatorService.audienceHeight = audienceHeight;
-      console.log('[debug]parseParams audienceHeight='+this.calculatorService.audienceHeight);
+      console.log('[debug]parseParams audienceHeight = ' + this.calculatorService.audienceHeight);
       hasParam = true;
     }
     if (audienceDepth) {
       this.calculatorService.audienceDepth = audienceDepth;
-      console.log('[debug]parseParams audienceDepth='+this.calculatorService.audienceDepth);
+      console.log('[debug]parseParams audienceDepth = ' + this.calculatorService.audienceDepth);
       hasParam = true;
     }
     if (inputExtenderLength) {
       this.calculatorService.inputExtenderLength = inputExtenderLength;
-      console.log('[debug]parseParams inputExtenderLength='+this.calculatorService.inputExtenderLength);
+      console.log('[debug]parseParams inputExtenderLength = ' + this.calculatorService.inputExtenderLength);
       hasParam = true;
     }
     if (inputAudienceExtenderLength) {
       this.calculatorService.inputAudienceExtenderLength = inputAudienceExtenderLength;
-      console.log('[debug]parseParams inputAudienceExtenderLength='+this.calculatorService.inputAudienceExtenderLength);
+      console.log('[debug]parseParams inputAudienceExtenderLength = ' + this.calculatorService.inputAudienceExtenderLength);
       hasParam = true;
     }
 
     if (reinforcePresenter) {
       this.calculatorService.reinforcePresenter = !!(+reinforcePresenter);
-      console.log('[debug]parseParams reinforcePresenter='+this.calculatorService.reinforcePresenter);
+      console.log('[debug]parseParams reinforcePresenter = ' + this.calculatorService.reinforcePresenter);
       hasParam = true;
     }
 
     if (recordPresenter) {
       this.calculatorService.recordPresenter = !!(+recordPresenter);
-      console.log('[debug]parseParams recordPresenter='+this.calculatorService.recordPresenter);
+      console.log('[debug]parseParams recordPresenter = ' + this.calculatorService.recordPresenter);
       hasParam = true;
     }
 
     if (recordAudience) {
       this.calculatorService.recordAudience = !!(+recordAudience);
-      console.log('[debug]parseParams recordAudience='+this.calculatorService.recordAudience);
+      console.log('[debug]parseParams recordAudience = ' + this.calculatorService.recordAudience);
       hasParam = true;
     }
 
@@ -188,13 +188,13 @@ export class CalculationTheatreComponent implements OnInit {
       case 0:
       case '0':
         this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
-        console.log('[debug]parseParams soundReinforcementPriority='+this.calculatorService.soundReinforcementPriority);
+        console.log('[debug]parseParams soundReinforcementPriority = ' +this.calculatorService.soundReinforcementPriority);
         hasParam = true;
         break;
       case 1:
       case '1':
         this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.DetectionRange;
-        console.log('[debug]parseParams DetectionRange='+this.calculatorService.soundReinforcementPriority);
+        console.log('[debug]parseParams DetectionRange = ' + this.calculatorService.soundReinforcementPriority);
         hasParam = true;
         break;
     }
