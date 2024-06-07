@@ -25,6 +25,7 @@ export class CalculationOutputsComponent implements OnInit {
   }
 
   public shareOutput() {
+    console.log('[debug]call shareOutput')
     this.clipboardService.copyToClipboard(this.calculatorService.serializeToUrl());
   }
 
