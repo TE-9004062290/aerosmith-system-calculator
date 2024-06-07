@@ -446,7 +446,7 @@ export class CalculatorService {
   private updateRouteParams() {
     console.log('[debug]call updateRouteParams');
     top.history.replaceState({}, '', this.serializeToUrl());    
-    console.log('[debug]updateRouteParams this.serializeToUrl = '+this.serializeToUrl());
+    console.log('[debug]updateRouteParams this.serializeToUrl = ' + this.serializeToUrl());
   }
 
   public forceDirty() {
