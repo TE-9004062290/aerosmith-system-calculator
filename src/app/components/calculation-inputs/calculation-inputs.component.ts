@@ -126,9 +126,6 @@ export class CalculationInputsComponent implements OnInit {
   }
 
   public clickUpdateBtn() {
-    try {
-      this.errorMassage = false;
-
       const searchString = "/calculator?";
       let index = this.textareaContents.indexOf(searchString);
 
@@ -141,25 +138,22 @@ export class CalculationInputsComponent implements OnInit {
         });
 
         this.calsulationTheare.restoreFromUrl(paramaters);
-
+        this.errorMassage = false;
       } else {
         this.errorMassage = true;
       }
-    } catch (error) {
-      this.errorMassage = true;
-    }
   }
 
   public inputTextarea() {
       const textArea = <HTMLInputElement>document.getElementById('restore-textarea');
         if (textArea.value.trim().length > 0) {
-              this.updateBtnEnabled = true;
-              this.updateBtnDisabled = false;
-              this.textareaContents = textArea.value;
+          this.updateBtnEnabled = true;
+          this.updateBtnDisabled = false;
+          this.textareaContents = textArea.value;
         } else {
-              this.updateBtnDisabled = true;
-              this.updateBtnEnabled = false;
-              this.textareaContents = null;
+          this.updateBtnDisabled = true;
+          this.updateBtnEnabled = false;
+          this.textareaContents = null;
         }
   }
 }
