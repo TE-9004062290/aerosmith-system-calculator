@@ -40,8 +40,6 @@ import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcemen
 })
 export class CalculationTheatreComponent implements OnInit {
 
-  private initialized = false;
-
   public MeasurementUnitsEnum = MeasurementUnits;
   public SoundReinforcementPriorityEnum = SoundReinforcementPriority;
 
@@ -62,7 +60,6 @@ export class CalculationTheatreComponent implements OnInit {
   public errorMassage: boolean = false;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     public calculatorService: CalculatorService,
     public mixpanelService: MixpanelService) {} 
 
@@ -71,17 +68,6 @@ export class CalculationTheatreComponent implements OnInit {
     window.addEventListener('keypress', (e) => {
       if (e.key === '*') {
         this.calculatorService.autoCalculateOutput = !this.calculatorService.autoCalculateOutput;
-      }
-    });
-
-    this.activatedRoute.queryParams
-    .subscribe(params => {
-      if (!this.initialized) {
-        const hasParam = this.parseParams(params);
-        if (hasParam) {
-          this.calculate(false);
-        }
-        this.initialized = true;
       }
     });
 
@@ -126,83 +112,95 @@ export class CalculationTheatreComponent implements OnInit {
       inputExtenderLength, inputAudienceExtenderLength, measurementUnit, 
       reinforcePresenter, recordPresenter, recordAudience, reinforcementPriority } = params;
 
-    let hasParam: boolean = false;
     switch (measurementUnit) {
       case 'ft':
         this.calculatorService.measurementUnit = MeasurementUnits.Feet;
-        hasParam = true;
         break;
       case 'm':
         this.calculatorService.measurementUnit = MeasurementUnits.Meters;
-        hasParam = true;
+        break;
+      default:
+        this.calculatorService.measurementUnit = MeasurementUnits.Meters;
         break;
     }
 
-    if (ceilingHeight) {
+    if (this.isNumber(ceilingHeight)) {
       this.calculatorService.ceilingHeight = ceilingHeight;
-      hasParam = true;
+    } else {
+      this.calculatorService.ceilingHeight = this.calculatorService.DEFAULTS.ceilingHeight;
     }
-    if (lectureWidth) {
+    if (this.isNumber(lectureWidth)) {
       this.calculatorService.lectureWidth = lectureWidth;
-      hasParam = true;
+    } else {
+      this.calculatorService.lectureWidth = this.calculatorService.DEFAULTS.lectureWidth;
     }
-    if (presenterHeight) {
+    if (this.isNumber(presenterHeight)) {
       this.calculatorService.presenterHeight = presenterHeight;
-      hasParam = true;
+    } else {
+      this.calculatorService.presenterHeight = this.calculatorService.DEFAULTS.presenterHeight;
     }
-    if (audienceHeight) {
+    if (this.isNumber(audienceHeight)) {
       this.calculatorService.audienceHeight = audienceHeight;
-      hasParam = true;
+    } else {
+      this.calculatorService.audienceHeight = this.calculatorService.DEFAULTS.audienceHeight;
     }
-    if (audienceDepth) {
+    if (this.isNumber(audienceDepth)) {
       this.calculatorService.audienceDepth = audienceDepth;
-      hasParam = true;
+    } else {
+      this.calculatorService.audienceDepth = this.calculatorService.DEFAULTS.audienceDepth;
     }
-    if (inputExtenderLength) {
+    if (this.isNumber(inputExtenderLength)) {
       this.calculatorService.inputExtenderLength = inputExtenderLength;
-      hasParam = true;
+    } else {
+      this.calculatorService.inputExtenderLength = 0;
     }
-    if (inputAudienceExtenderLength) {
+    if (this.isNumber(inputAudienceExtenderLength)) {
       this.calculatorService.inputAudienceExtenderLength = inputAudienceExtenderLength;
-      hasParam = true;
+    } else {
+      this.calculatorService.inputAudienceExtenderLength = 0;
     }
 
     if (reinforcePresenter) {
       this.calculatorService.reinforcePresenter = !!(+reinforcePresenter);
-      hasParam = true;
+    } else {
+      this.calculatorService.reinforcePresenter = true;
     }
 
     if (recordPresenter) {
       this.calculatorService.recordPresenter = !!(+recordPresenter);
-      hasParam = true;
+    } else {
+      this.calculatorService.recordPresenter = false;
     }
 
     if (recordAudience) {
       this.calculatorService.recordAudience = !!(+recordAudience);
-      hasParam = true;
+    } else {
+      this.calculatorService.recordAudience = false;
     }
 
     switch (reinforcementPriority) {
       case 0:
       case '0':
         this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
-        hasParam = true;
         break;
       case 1:
       case '1':
         this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.DetectionRange;
-        hasParam = true;
+        break;
+      default:
+        this.calculatorService.soundReinforcementPriority = SoundReinforcementPriority.AudioQuality;
         break;
     }
-
-    return hasParam;
   }
 
-  public restoreFromUrl(params) {
-    const hasParam = this.parseParams(params);
-        if (hasParam) {
-          this.calculate(false);
-        }
+  private isNumber(param) {
+    const pattern = /^([1-9]\d*|0)(\.\d+)?$/;
+    return pattern.test(param);
+  }
+
+  private restoreFromUrl(params) {
+    this.parseParams(params);
+    this.calculate(false);
   }
 
   public toggleRestorefromUrl() {
@@ -228,7 +226,7 @@ export class CalculationTheatreComponent implements OnInit {
     }
   }
 
-  public forcusTextarea() {
+  public focusTextarea() {
     document.getElementById('restore-textarea').addEventListener('keydown',
       function (event) {
         if (event.key == "Enter") {
