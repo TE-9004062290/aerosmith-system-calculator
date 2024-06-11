@@ -25,7 +25,7 @@
       </div>
       <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
       <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
-      <input type="text" id="restore-textarea" (focus)="forcusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
+      <input type="text" id="restore-textarea" (focus)="focusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
       <input type="button" id="restore-btn" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
       <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
       <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
@@ -38,7 +38,7 @@
       </div>
       <div *ngIf="showRestorefromUrl" class="restore-from-Url" @animateToggle>
       <div class="restore-explanation">(説明文をここに入れるか別途検討)</div>
-      <input type="text" id="restore-textarea" (focus)="forcusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
+      <input type="text" id="restore-textarea" (focus)="focusTextarea()" (input)="inputTextarea()" class="restore-textarea" placeholder="(要検討)Please enter the URL." [value]="textareaContents">
       <input type="button" id="restore-btn" value="(要検討)UPDATE" *ngIf="updateBtnEnabled" class="restore-btn btn-enabled" (click)="clickUpdateBtn()">
       <input type="button" value="(要検討)UPDATE" *ngIf="updateBtnDisabled" class="restore-btn btn-disabled">
       <div class="restore-error-massage" *ngIf="errorMassage">(要検討)Please enter correct parameter information.</div>
