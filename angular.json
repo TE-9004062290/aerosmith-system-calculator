@@ -79,10 +79,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "aerosmith-system-calculator:build:production"
+              "buildTarget": "aerosmith-system-calculator:build:production"
             },
             "development": {
-              "browserTarget": "aerosmith-system-calculator:build:development"
+              "buildTarget": "aerosmith-system-calculator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "aerosmith-system-calculator:build"
+            "buildTarget": "aerosmith-system-calculator:build"
           }
         },
         "test": {
