@@ -319,11 +319,11 @@ export class CalculatorService {
         this.m_secondaryCaptureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
       }
     } else {
-      this.m_secondaryCaptureRadius = 0;
+      this.m_secondaryCaptureRadius = null;
       if (this.b_recordPresenter) {
         this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
       } else {
-        this.m_captureRadius = 0;
+        this.m_captureRadius = null;
       }
     }
 
@@ -340,10 +340,10 @@ export class CalculatorService {
         this.m_secondaryCaptureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
       } else {
         this.m_captureRadius = this.unitConversion * MicrophoneRadii.PresenterRecording;
-        this.m_secondaryCaptureRadius = 0;
+        this.m_secondaryCaptureRadius = null;
       }
     } else {
-      this.m_secondaryCaptureRadius = 0;
+      this.m_secondaryCaptureRadius = null;
       if (this.b_reinforcePresenter) {
         switch (this.e_soundReinforcementPriority) {
           case SoundReinforcementPriority.AudioQuality:
@@ -354,7 +354,7 @@ export class CalculatorService {
             break;
         }
       } else {
-        this.m_captureRadius = 0;
+        this.m_captureRadius = null;
       }
     }
 
