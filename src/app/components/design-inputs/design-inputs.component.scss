@@ -51,7 +51,7 @@
             .design-input-label {
                 width: fit-content;
             }
-            .mat-radio-group {
+            .mat-mdc-radio-group {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
@@ -61,19 +61,26 @@
 }
 
 ::ng-deep {
-    .mat-checkbox {
+    .mat-mdc-checkbox {
         margin-top: 7px;
         margin-bottom: 7px;
-        .mat-checkbox-layout {
+        .mdc-checkbox {
+            padding: 0px !important;
+        }
+        .mdc-form-field.mat-internal-form-field {
             &:first-child {
                 vertical-align: baseline;
             }
         }
-        .mat-checkbox-frame {
-            border-color: #469B99;
+        .mdc-checkbox__background {
+            top: 0px !important;
+            left: 0px !important;
+            height: 15.5px;
+            width: 16px;
+            border-color: #469B99 !important;
         }
-        &.mat-checkbox-checked .mat-checkbox-background {
-            background-color: #469B99;
+        &.mat-mdc-checkbox-checked .mdc-checkbox__background {
+            background-color: #469B99 !important;
             background-image: url("data:image/svg+xml,%3Csvg width='8' height='7' viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.92804 1.41421L6.51382 0L2.97854 3.53528L1.5646 2.12134L0.150391 3.53555L2.97882 6.36398L4.39303 4.94977L4.39276 4.94949L7.92804 1.41421Z' fill='white'/%3E%3C/svg%3E%0A");
             background-repeat: no-repeat;
             background-size: 8px;
@@ -83,51 +90,70 @@
                 display: none;
             }
         }
-        .mat-checkbox-checkmark-path {
+        .mdc-checkbox__checkmark-path {
             stroke: white !important;
         }
-        .mat-checkbox-inner-container {
+        .mat-mdc-checkbox-touch-target {
+            height: 15.5px;
+            width: 16px;
+        }
+        .mdc-checkbox__native-control {
+            height: 15.5px !important;
+            width: 16px !important;
             margin-right: 5px !important;
         }
-        .mat-checkbox-ripple {
+        .mdc-checkbox__ripple {
             display: none;
         }
     }
 
-    .mat-radio-button {
+    .mat-mdc-radio-button {
+        .mdc-radio {
+            padding: 0px !important;
+        }
+        .mat-mdc-radio-touch-target {
+          width: 14px;
+          height: 14px;
+        }
+        .mdc-radio__native-control {
+          width: 14px !important;
+          height: 14px !important;
+        }
         &:first-child {
             margin-right: 18px;
         }
-        .mat-radio-label-content {
+        .mdc-label {
             font-size: 12px;
             color: #2F3D4E;
             padding-left: 0px !important;
             margin-left: 5px;
         }
-        .mat-radio-container {
+        .mdc-radio__background {
             width: 14px;
             height: 14px;
-            .mat-radio-outer-circle {
-                border-color: #469B99;
+            .mdc-radio__outer-circle {
+                border-color: #469B99 !important;
                 width: 14px;
                 height: 14px;
             }
-            .mat-radio-inner-circle {
+            .mdc-radio__inner-circle {
+                border-color: #469B99 !important;
                 width: 14px;
                 height: 14px;
             }
-            .mat-radio-ripple {
+            .mdc-radio__ripple {
                 display: none;
             }
         }
-        &.mat-radio-checked {
-            .mat-radio-container {
-                .mat-radio-outer-circle {
+        &.mat-mdc-radio-checked {
+            .mdc-radio__background {
+                .mdc-radio__outer-circle {
                     border-color: #469B99 !important;
                 }
-                .mat-radio-inner-circle {
+                .mdc-radio__inner-circle {
                     transform: scale(0.42857142857) !important;
                     background-color: #469B99 !important;
+                    border-width: 0px;
                 }
             }
         }
