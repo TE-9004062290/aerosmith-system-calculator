@@ -110,14 +110,15 @@
     .mat-mdc-radio-button {
         .mdc-radio {
             padding: 0px !important;
+            margin-top: 3px;
         }
         .mat-mdc-radio-touch-target {
-          width: 14px;
-          height: 14px;
+            width: 14px;
+            height: 14px;
         }
         .mdc-radio__native-control {
-          width: 14px !important;
-          height: 14px !important;
+            width: 14px !important;
+            height: 14px !important;
         }
         &:first-child {
             margin-right: 18px;
