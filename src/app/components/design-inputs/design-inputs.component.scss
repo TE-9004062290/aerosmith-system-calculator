@@ -68,6 +68,9 @@
         .mdc-checkbox {
             padding: 0px !important;
         }
+        .mdc-label {
+            -webkit-font-smoothing: none !important;
+        }
         .mdc-form-field.mat-internal-form-field {
             &:first-child {
                 vertical-align: baseline;
@@ -129,6 +132,7 @@
             color: #2F3D4E !important;
             padding-left: 0px !important;
             margin-left: 5px;
+            -webkit-font-smoothing: none !important;
         }
         .mdc-radio__background {
             width: 14px;
