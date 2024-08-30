@@ -18,7 +18,44 @@
         </div>
         <app-calculation-outputs></app-calculation-outputs>
     </div>
-    <div class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
+    <div *ngIf="!calculatorService.hasFreshOutput" class="calculation-theatre-container" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
+        <div class="graphical-stage-wrapper" (click)="hideSideBar()" (touch)="hideSideBar()">
+            <app-graphical-stage></app-graphical-stage>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-pullout" (click)="toggleSideBar()" (touch)="toggleSideBar()">
+                <app-svg-icons iconType="toggle" width="40" height="40" primaryFill="white" [transformString]="sideBarOut ? 'rotate(-90deg)' : 'rotate(90deg)'"></app-svg-icons>
+            </div>
+            <div class="sidebar-inner-container">
+                <div class="sidebar-main">
+                    <div class="calculation-theatre-title">
+                            Beamforming Microphone <br/> MAS-A100
+                    </div>
+                    <div class="calculation-theatre-misc">
+                        <strong class="note">Note</strong>: Any loudspeakers should be placed at least {{ calculatorService.measurementUnit === 'm' ? '2 meters' : '6.56 feet' }}  away from the microphone.
+                        <br/><strong class="parenthetical">({{ calculatorService.measurementUnit === 'm' ? '3 meters' : '9.84 feet' }} or more is recommended)</strong>
+                    </div>
+                    <app-design-inputs></app-design-inputs>
+                    <div class="calculation-theatre-inputs">
+                        <app-calculation-inputs></app-calculation-inputs>
+                    </div>
+                    <div *ngIf="calculatorService.isDirty && calculatorService.designForActive" class="btn btn-calculate" (click)="calculate(true)">
+                        Calculate
+                    </div>
+                    <div *ngIf="(calculatorService.isPristine && calculatorService.hasFreshOutput) || !calculatorService.designForActive" class="btn btn-disabled">
+                        Calculate
+                    </div>  
+                    <div class="browser-compatibility-disclaimer">
+                        Calculator verified for use in Google Chrome.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="version-stamp">
+            <app-version-stamp *ngIf="!calculatorService.hasFreshOutput"></app-version-stamp>
+        </div>
+    </div>
+    <div *ngIf="calculatorService.hasFreshOutput" class="calculation-theatre-container-output" [ngClass]="{'has-output': calculatorService.hasFreshOutput, 'pulled-out': sideBarOut}"> 
         <div *ngIf="calculatorService.hasFreshOutput && numDesignActive > 1" class="radii-legend-container">
             <app-radii-legend></app-radii-legend>
             <div class="radii-legend-divider"></div>
