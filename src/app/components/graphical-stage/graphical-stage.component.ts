@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
+import { CalculationTheatreComponent } from '@app/main/calculation-theatre/calculation-theatre.component';
 
 import { GraphicPosition } from '@app/models/graphic-position.model';
 
@@ -88,8 +89,9 @@ export class GraphicalStageComponent implements OnInit {
   @ViewChild('stage') stageRef: ElementRef;
 
   constructor(
-    public calculatorService: CalculatorService, 
-    public graphicsService: GraphicsService) { }
+    public calculatorService: CalculatorService,
+    public graphicsService: GraphicsService,
+    public calculationTheatreComponent:CalculationTheatreComponent) { }
 
   microphoneTrackByFn(index, micPosition: GraphicPosition) {
     return micPosition.number;
@@ -288,7 +290,7 @@ export class GraphicalStageComponent implements OnInit {
     }
 
     if (inputField === 'inputExtenderLength') {
-      cService.calculateOutputs();
+      this.calculationTheatreComponent.calculate(true);
     }
   }
 
