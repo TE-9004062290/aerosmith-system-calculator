@@ -17,6 +17,9 @@ import {
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
+const THREE_VIEW_BLANK_MARGIN: string = '124px';
+const TWO_VIEW_BLANK_MARGIN: string = '0px';
+
 @Component({
   selector: 'app-calculation-theatre',
   templateUrl: './calculation-theatre.component.html',
@@ -76,6 +79,18 @@ export class CalculationTheatreComponent implements OnInit {
     if (environment.production && track) {
       this.mixpanelService.trackCalculation();
     }
+    
+    let graphicalOutputElement: any = document.getElementsByClassName('graphical-output')[0];
+    if( (this.calculatorService.reinforcePresenter || this.calculatorService.recordPresenter) &&
+          this.calculatorService.recordAudience)
+    {
+      graphicalOutputElement.style.marginBottom = THREE_VIEW_BLANK_MARGIN;
+    }
+    else
+    {
+      graphicalOutputElement.style.marginBottom = TWO_VIEW_BLANK_MARGIN;
+    }
+
   }
 
   public toggleSideBar() {
