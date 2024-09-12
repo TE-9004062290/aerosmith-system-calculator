@@ -14,6 +14,8 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
 
+const ADVACED_SETTINGS_HEIGHT: number = 176;
+const TECHNICAL_SUPPORT_HEIGHT: number = 237;
 
 @Component({
   selector: 'app-calculation-inputs',
@@ -67,10 +69,32 @@ export class CalculationInputsComponent implements OnInit {
   
   public toggleAdvancedSettings() {
     this.showAdvancedSettings = !this.showAdvancedSettings;
+    
+    var sidebarMainElement: any = document.getElementsByClassName('sidebar-main')[0];
+    let sidebarMainHeight = sidebarMainElement.getBoundingClientRect().height;
+      if(this.showAdvancedSettings)
+      {
+        sidebarMainElement.style.height = (sidebarMainHeight + ADVACED_SETTINGS_HEIGHT) + "px";
+      }
+      else
+      {
+        sidebarMainElement.style.height = (sidebarMainHeight - ADVACED_SETTINGS_HEIGHT) + "px";
+      }
   }
 
   public toggleTechnicalSupport() {
     this.showTechnicalSupport = !this.showTechnicalSupport;
+    
+    var sidebarMainElement: any = document.getElementsByClassName('sidebar-main')[0];
+    let sidebarMainHeight = sidebarMainElement.getBoundingClientRect().height;
+      if(this.showTechnicalSupport)
+      {
+        sidebarMainElement.style.height = (sidebarMainHeight + TECHNICAL_SUPPORT_HEIGHT) + "px";
+      }
+      else
+      {
+        sidebarMainElement.style.height = (sidebarMainHeight - TECHNICAL_SUPPORT_HEIGHT) + "px";
+      }
   }
   
   public updateInput(inputField, inputElement) {
