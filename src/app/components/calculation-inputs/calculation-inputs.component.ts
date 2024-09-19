@@ -14,7 +14,7 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
 
-const ADVACED_SETTINGS_HEIGHT: number = 176;
+const ADVANCED_SETTINGS_HEIGHT: number = 176;
 const TECHNICAL_SUPPORT_HEIGHT: number = 237;
 
 @Component({
@@ -74,11 +74,11 @@ export class CalculationInputsComponent implements OnInit {
     let sidebarMainHeight = sidebarMainElement.getBoundingClientRect().height;
       if(this.showAdvancedSettings)
       {
-        sidebarMainElement.style.height = (sidebarMainHeight + ADVACED_SETTINGS_HEIGHT) + "px";
+        sidebarMainElement.style.height = (sidebarMainHeight + ADVANCED_SETTINGS_HEIGHT) + "px";
       }
       else
       {
-        sidebarMainElement.style.height = (sidebarMainHeight - ADVACED_SETTINGS_HEIGHT) + "px";
+        sidebarMainElement.style.height = (sidebarMainHeight - ADVANCED_SETTINGS_HEIGHT) + "px";
       }
   }
 
