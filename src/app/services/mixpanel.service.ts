@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import mixpanel from 'mixpanel-browser';
+import * as mixpanel from 'mixpanel-browser';
 
 import { CalculatorService } from './calculator.service';
 
