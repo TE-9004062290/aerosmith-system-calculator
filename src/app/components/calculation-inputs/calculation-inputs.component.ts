@@ -16,25 +16,26 @@ import { LicenseDialogComponent } from '../license-dialog/license-dialog.compone
 
 
 @Component({
-  selector: 'app-calculation-inputs',
-  templateUrl: './calculation-inputs.component.html',
-  styleUrls: ['./calculation-inputs.component.scss'],
-  animations: [
-    trigger('animateToggle', [
-      transition(':enter', [
-        style({ height: '0px'}),
-        style({ opacity: 0 }),
-        animate('.25s', style({ height: '*'})),
-        animate('.075s', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        style({ height: '*' }),
-        animate('.075s', style({ opacity: 0 })),
-        animate('.25s', style({ height: '0px' }))
-      ])
-    ])
-  ]
+    selector: 'app-calculation-inputs',
+    templateUrl: './calculation-inputs.component.html',
+    styleUrls: ['./calculation-inputs.component.scss'],
+    animations: [
+        trigger('animateToggle', [
+            transition(':enter', [
+                style({ height: '0px' }),
+                style({ opacity: 0 }),
+                animate('.25s', style({ height: '*' })),
+                animate('.075s', style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                style({ height: '*' }),
+                animate('.075s', style({ opacity: 0 })),
+                animate('.25s', style({ height: '0px' }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class CalculationInputsComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-version-stamp',
-  templateUrl: './version-stamp.component.html',
-  styleUrls: ['./version-stamp.component.scss']
+    selector: 'app-version-stamp',
+    templateUrl: './version-stamp.component.html',
+    styleUrls: ['./version-stamp.component.scss'],
+    standalone: false
 })
 export class VersionStampComponent implements OnInit {
 

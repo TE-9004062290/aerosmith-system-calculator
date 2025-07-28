@@ -10,10 +10,11 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 @Component({
-  selector: 'app-radio-toggle',
-  templateUrl: './radio-toggle.component.html',
-  styleUrls: ['./radio-toggle.component.scss'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+    selector: 'app-radio-toggle',
+    templateUrl: './radio-toggle.component.html',
+    styleUrls: ['./radio-toggle.component.scss'],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+    standalone: false
 })
 export class RadioToggleComponent implements ControlValueAccessor {
 

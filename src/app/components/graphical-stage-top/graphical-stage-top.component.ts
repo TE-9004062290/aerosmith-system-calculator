@@ -18,21 +18,22 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { round } from '@app/helpers/arithmetic.helper';
 
 @Component({
-  selector: 'app-graphical-stage-top',
-  templateUrl: './graphical-stage-top.component.html',
-  styleUrls: ['./graphical-stage-top.component.scss'],
-  animations: [
-    trigger('animateOutputArea', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('.1s', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('.1s', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+    selector: 'app-graphical-stage-top',
+    templateUrl: './graphical-stage-top.component.html',
+    styleUrls: ['./graphical-stage-top.component.scss'],
+    animations: [
+        trigger('animateOutputArea', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('.1s', style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate('.1s', style({ opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class GraphicalStageTopComponent implements OnInit {
 

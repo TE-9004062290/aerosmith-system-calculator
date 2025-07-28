@@ -12,25 +12,26 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
-  selector: 'app-design-inputs',
-  templateUrl: './design-inputs.component.html',
-  styleUrls: ['./design-inputs.component.scss'],
-  animations: [
-    trigger('animateReinforcementPriorities', [
-      transition(':enter', [
-        style({ height: '0px'}),
-        style({ opacity: 0 }),
-        animate('.25s', style({ height: '*'})),
-        animate('.075s', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        style({ height: '*' }),
-        animate('.075s', style({ opacity: 0 })),
-        animate('.25s', style({ height: '0px' }))
-      ])
-    ])
-  ]
+    selector: 'app-design-inputs',
+    templateUrl: './design-inputs.component.html',
+    styleUrls: ['./design-inputs.component.scss'],
+    animations: [
+        trigger('animateReinforcementPriorities', [
+            transition(':enter', [
+                style({ height: '0px' }),
+                style({ opacity: 0 }),
+                animate('.25s', style({ height: '*' })),
+                animate('.075s', style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                style({ height: '*' }),
+                animate('.075s', style({ opacity: 0 })),
+                animate('.25s', style({ height: '0px' }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class DesignInputsComponent implements OnInit {
 
