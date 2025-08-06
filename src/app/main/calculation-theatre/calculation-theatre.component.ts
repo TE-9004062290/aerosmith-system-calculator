@@ -18,9 +18,10 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
-  selector: 'app-calculation-theatre',
-  templateUrl: './calculation-theatre.component.html',
-  styleUrls: ['./calculation-theatre.component.scss']
+    selector: 'app-calculation-theatre',
+    templateUrl: './calculation-theatre.component.html',
+    styleUrls: ['./calculation-theatre.component.scss'],
+    standalone: false
 })
 export class CalculationTheatreComponent implements OnInit {
 

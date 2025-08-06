@@ -4,9 +4,10 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { ClipboardService } from '@app/services/clipboard.service';
 
 @Component({
-  selector: 'app-calculation-outputs',
-  templateUrl: './calculation-outputs.component.html',
-  styleUrls: ['./calculation-outputs.component.scss']
+    selector: 'app-calculation-outputs',
+    templateUrl: './calculation-outputs.component.html',
+    styleUrls: ['./calculation-outputs.component.scss'],
+    standalone: false
 })
 export class CalculationOutputsComponent implements OnInit {
 

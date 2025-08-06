@@ -3,9 +3,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 
 @Component({
-  selector: 'app-measuring-stick',
-  templateUrl: './measuring-stick.component.html',
-  styleUrls: ['./measuring-stick.component.scss']
+    selector: 'app-measuring-stick',
+    templateUrl: './measuring-stick.component.html',
+    styleUrls: ['./measuring-stick.component.scss'],
+    standalone: false
 })
 export class MeasuringStickComponent implements OnInit {
 

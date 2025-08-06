@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 
 @Component({
-  selector: 'app-radii-legend',
-  templateUrl: './radii-legend.component.html',
-  styleUrls: ['./radii-legend.component.scss']
+    selector: 'app-radii-legend',
+    templateUrl: './radii-legend.component.html',
+    styleUrls: ['./radii-legend.component.scss'],
+    standalone: false
 })
 export class RadiiLegendComponent implements OnInit {
 

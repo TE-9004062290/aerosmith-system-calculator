@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-svg-icons',
-  templateUrl: './svg-icons.component.html',
-  styleUrls: ['./svg-icons.component.scss']
+    selector: 'app-svg-icons',
+    templateUrl: './svg-icons.component.html',
+    styleUrls: ['./svg-icons.component.scss'],
+    standalone: false
 })
 export class SvgIconsComponent implements OnInit {
 

@@ -22,21 +22,22 @@ enum RatioMode {
 }
 
 @Component({
-  selector: 'app-graphical-stage-side',
-  templateUrl: './graphical-stage-side.component.html',
-  styleUrls: ['./graphical-stage-side.component.scss'],
-  animations: [
-    trigger('animateOutputArea', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('.1s', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('.1s', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+    selector: 'app-graphical-stage-side',
+    templateUrl: './graphical-stage-side.component.html',
+    styleUrls: ['./graphical-stage-side.component.scss'],
+    animations: [
+        trigger('animateOutputArea', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('.1s', style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate('.1s', style({ opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class GraphicalStageSideComponent implements OnInit {
 

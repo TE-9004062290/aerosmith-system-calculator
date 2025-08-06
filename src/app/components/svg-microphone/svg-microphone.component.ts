@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
-  selector: 'app-svg-microphone',
-  templateUrl: './svg-microphone.component.html',
-  styleUrls: ['./svg-microphone.component.scss']
+    selector: 'app-svg-microphone',
+    templateUrl: './svg-microphone.component.html',
+    styleUrls: ['./svg-microphone.component.scss'],
+    standalone: false
 })
 export class SvgMicrophoneComponent implements OnInit {
 
