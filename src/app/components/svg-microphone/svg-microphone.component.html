@@ -1,29 +1,41 @@
-<div class="x" *ngIf="mode === 'reinforcement'">
+@if (mode === 'reinforcement') {
+  <div class="x">
     <div class="microphone-extender" [ngStyle]="{'height': extenderLength + 'px'}"></div>
     <svg class="svg-microphone" viewBox="0 0 225 113" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path *ngIf="displayRadius" opacity="0.3" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#66F3CB"/>
-        <g [attr.transform]="soundReinforcementPriority === SoundReinforcementPriorityEnum.AudioQuality ? 'scale(0.50) translate(111.5 0)' : 'scale(.33333) translate(223 0)'">
-            <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
-        </g>
-    </svg>  
-</div>
-
-<div class="x" *ngIf="mode === 'audienceRecording'">
-    <div class="microphone-extender" [ngStyle]="{'height': extenderLength + 'px'}"></div>
-    <svg class="svg-microphone" viewBox="0 0 225 113" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path *ngIf="displayRadius" opacity="0.15" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#3BB0FF"/>
-        <g [attr.transform]="'scale(0.14285714285) translate(674 0)'">
-            <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
-        </g>
+      @if (displayRadius) {
+        <path opacity="0.3" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#66F3CB"/>
+      }
+      <g [attr.transform]="soundReinforcementPriority === SoundReinforcementPriorityEnum.AudioQuality ? 'scale(0.50) translate(111.5 0)' : 'scale(.33333) translate(223 0)'">
+        <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
+      </g>
     </svg>
-</div>
+  </div>
+}
 
-<div class="x" *ngIf="mode === 'presenterRecording'">
+@if (mode === 'audienceRecording') {
+  <div class="x">
     <div class="microphone-extender" [ngStyle]="{'height': extenderLength + 'px'}"></div>
     <svg class="svg-microphone" viewBox="0 0 225 113" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path *ngIf="displayRadius" opacity="0.1" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#EEA230"/>
-        <g [attr.transform]="'scale(0.14285714285) translate(674 0)'">
-            <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
-        </g>
-    </svg>  
-</div>
+      @if (displayRadius) {
+        <path opacity="0.15" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#3BB0FF"/>
+      }
+      <g [attr.transform]="'scale(0.14285714285) translate(674 0)'">
+        <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
+      </g>
+    </svg>
+  </div>
+}
+
+@if (mode === 'presenterRecording') {
+  <div class="x">
+    <div class="microphone-extender" [ngStyle]="{'height': extenderLength + 'px'}"></div>
+    <svg class="svg-microphone" viewBox="0 0 225 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+      @if (displayRadius) {
+        <path opacity="0.1" d="M224.5 0C224.5 62.1341 174.354 112.5 112.5 112.5C50.6462 112.5 0.5 62.1341 0.5 0C0.5 -62.1341 50.6462 -112.5 112.5 -112.5C174.354 -112.5 224.5 -62.1341 224.5 0Z" fill="#EEA230"/>
+      }
+      <g [attr.transform]="'scale(0.14285714285) translate(674 0)'">
+        <path d="M97 4.28571L106.143 0H119.857L129 4.28571V8H97V4.28571Z" fill="#00375E"/>
+      </g>
+    </svg>
+  </div>
+}

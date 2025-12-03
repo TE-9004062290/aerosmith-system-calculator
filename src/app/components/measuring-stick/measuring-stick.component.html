@@ -1,84 +1,97 @@
-<ng-container [ngSwitch]="orientation">
-    <ng-container *ngSwitchCase="'horizontal'">
-        <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
-            <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
-            <ng-container *ngIf="twinned" [ngTemplateOutlet]="horizontal"></ng-container>
-        </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'vertical'">
-        <div class="vertical-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
-            <ng-container *ngTemplateOutlet="vertical; context: firstContext"></ng-container>
-            <ng-container *ngTemplateOutlet="vertical; context: secondContext"></ng-container>
-        </div>
-    </ng-container>
-</ng-container>
+
+@switch (orientation) {
+  @case ('horizontal') {
+    <div class="horizontal-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
+      <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
+      @if (twinned) {
+        <ng-container [ngTemplateOutlet]="horizontal"></ng-container>
+      }
+    </div>
+  }
+  @case ('vertical') {
+    <div class="vertical-wrapper" [ngClass]="{'twinned': twinned}" [attr.mode]="mode">
+      <ng-container *ngTemplateOutlet="vertical; context: firstContext"></ng-container>
+      <ng-container *ngTemplateOutlet="vertical; context: secondContext"></ng-container>
+    </div>
+  }
+}
 
 <ng-template #horizontal>
-    <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection"
-    class="horizontal-measure" [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
-        [ngStyle]="{'width': width + 'px', 'max-width': maxWidth}">
-        <div class="stick left">
-            <div class="stop"></div>
-            <div class="arrow">     
-            </div>
-            <div class="bar"></div>
-        </div>
-        <div *ngIf="isInput" class="inputs-input" type="number">
-            <input type="number" #inputElement
-                [min]="inputMin"
-                [max]="inputMax"
-                [step]="step"
-                [value]="inputValue | number: '0.2-2'"
-                (change)="onInputChange(inputElement)"
-            />
-            <div class="measurement-unit">
-                {{ calculatorService.measurementUnit.toString() }}
-            </div>
-        </div>
-        <div *ngIf="!isInput" class="inputs-output">
-            <div class="output-value">
-                {{ inputValue | number: '0.2-2' }} {{ calculatorService.measurementUnit.toString() }}
-            </div>
-        </div>
-        <div class="stick right">
-            <div class="bar"></div>
-            <div class="arrow">
-            </div>
-            <div class="stop"></div>
-        </div>
+  <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection"
+    class="horizontal-measure" [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}"
+    [ngStyle]="{'width': width + 'px', 'max-width': maxWidth}">
+    <div class="stick left">
+      <div class="stop"></div>
+      <div class="arrow">
+      </div>
+      <div class="bar"></div>
     </div>
-</ng-template>
+    @if (isInput) {
+      <div class="inputs-input" type="number">
+        <input type="number" #inputElement
+          [min]="inputMin"
+          [max]="inputMax"
+          [step]="step"
+          [value]="inputValue | number: '0.2-2'"
+          (change)="onInputChange(inputElement)"
+          />
+          <div class="measurement-unit">
+            {{ calculatorService.measurementUnit.toString() }}
+          </div>
+        </div>
+      }
+      @if (!isInput) {
+        <div class="inputs-output">
+          <div class="output-value">
+            {{ inputValue | number: '0.2-2' }} {{ calculatorService.measurementUnit.toString() }}
+          </div>
+        </div>
+      }
+      <div class="stick right">
+        <div class="bar"></div>
+        <div class="arrow">
+        </div>
+        <div class="stop"></div>
+      </div>
+    </div>
+  </ng-template>
 
-<ng-template #vertical let-first="first">
-    <div *ngIf="first || twinned" [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure" 
-        [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}" 
+  <ng-template #vertical let-first="first">
+    @if (first || twinned) {
+      <div [attr.mode]="mode" [attr.mode-direction]="thinModeDirection" class="vertical-measure"
+        [ngClass]="{'measurable-input': isInput, 'measurable-output': !isInput}"
         [ngStyle]="{'height': height + 'px'}">
         <div class="stick top">
-            <div class="stop"></div>
-            <div class="arrow"></div>
-            <div class="bar"></div>
+          <div class="stop"></div>
+          <div class="arrow"></div>
+          <div class="bar"></div>
         </div>
-        <div *ngIf="isInput" class="inputs-input" type="number" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
+        @if (isInput) {
+          <div class="inputs-input" type="number" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
             <input type="number" #inputElement
-                [min]="inputMin"
-                [max]="inputMax"
-                [step]="step"
-                [value]="inputValue | number: '0.2-2'"
-                (change)="onInputChange(inputElement)"
-            />
-            <div class="measurement-unit">
+              [min]="inputMin"
+              [max]="inputMax"
+              [step]="step"
+              [value]="inputValue | number: '0.2-2'"
+              (change)="onInputChange(inputElement)"
+              />
+              <div class="measurement-unit">
                 {{ calculatorService.measurementUnit.toString() }}
+              </div>
             </div>
-        </div>
-        <div *ngIf="!isInput" class="inputs-output" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
-            <div class="output-value">
+          }
+          @if (!isInput) {
+            <div class="inputs-output" [ngStyle]="{'top': mode === 'thin' ? ((height - 22) / 2) + (!first && twinned ? height : 0) + 'px' : undefined}">
+              <div class="output-value">
                 {{ inputValue | number: '0.2-2'}} {{ calculatorService.measurementUnit.toString() }}
+              </div>
             </div>
-        </div>
-        <div class="stick bottom">
+          }
+          <div class="stick bottom">
             <div class="bar"></div>
             <div class="arrow"></div>
             <div class="stop"></div>
+          </div>
         </div>
-    </div>
-</ng-template>
+      }
+    </ng-template>

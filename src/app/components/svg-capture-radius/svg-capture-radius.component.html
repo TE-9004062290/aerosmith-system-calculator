@@ -1,26 +1,45 @@
-<svg *ngIf="mode === 'audienceRecording'" class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%) translateY(-50%)', 'position': 'absolute'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle *ngIf="displayRadius" opacity="0.15" cx="80" cy="80" r="79.5" fill="#3BB0FF"/>
+@if (mode === 'audienceRecording') {
+  <svg class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%) translateY(-50%)', 'position': 'absolute'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    @if (displayRadius) {
+      <circle opacity="0.15" cx="80" cy="80" r="79.5" fill="#3BB0FF"/>
+    }
     <circle cx="80" cy="80" r="2" fill="#2F3D4E"/>
-</svg>    
+  </svg>
+}
 
-<svg *ngIf="mode === 'presenterReinforcementQuality'" class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle *ngIf="displayRadius" opacity="0.3" cx="80" cy="80" r="79.5" fill="#66F3CB"/>
+@if (mode === 'presenterReinforcementQuality') {
+  <svg class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    @if (displayRadius) {
+      <circle opacity="0.3" cx="80" cy="80" r="79.5" fill="#66F3CB"/>
+    }
     <circle cx="80" cy="80" r="6.99" fill="#2F3D4E"/>
-</svg>   
+  </svg>
+}
 
-<svg *ngIf="mode === 'presenterReinforcementRange'" class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle *ngIf="displayRadius" opacity="0.3" cx="80" cy="80" r="79.5" fill="#66F3CB"/>
+@if (mode === 'presenterReinforcementRange') {
+  <svg class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    @if (displayRadius) {
+      <circle opacity="0.3" cx="80" cy="80" r="79.5" fill="#66F3CB"/>
+    }
     <circle cx="80" cy="80" r="4.66" fill="#2F3D4E"/>
-</svg>   
+  </svg>
+}
 
-<svg *ngIf="mode === 'presenterRecording'" class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle *ngIf="displayRadius" opacity="0.1" cx="80" cy="80" r="79.5" fill="#EEA230"/>
+@if (mode === 'presenterRecording') {
+  <svg class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    @if (displayRadius) {
+      <circle opacity="0.1" cx="80" cy="80" r="79.5" fill="#EEA230"/>
+    }
     <circle cx="80" cy="80" r="2" fill="#2F3D4E"/>
-</svg>    
+  </svg>
+}
 
-<svg *ngIf="mode === 'secondaryPresenterRecording'" class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%) translateY(-35.75%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle *ngIf="displayRadius" opacity="0.1" cx="80" cy="80" r="79.5" fill="#EEA230"/>
-</svg>    
+@if (mode === 'secondaryPresenterRecording') {
+  <svg class="svg-microphone-top" [ngStyle]="{'width': width + 'px', 'transform': 'translateX(-50%) translateY(-35.75%)'}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    @if (displayRadius) {
+      <circle opacity="0.1" cx="80" cy="80" r="79.5" fill="#EEA230"/>
+    }
+  </svg>
+}
 
-    
-    
+

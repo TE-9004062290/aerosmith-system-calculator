@@ -1,108 +1,124 @@
 <div class="graphical-output-top" [ngClass]="{ 'has-output': calculatorService.hasFreshOutput, 'is-printing': isPrinting }">
-    <div class="stage-info-wrapper">
-        <div #wrapper class="stage-wrapper">
-            <div class="measuring-stick-overlay lecture-width">
-                <app-measuring-stick orientation="vertical" [height]="stageHeight"
-                    [isInput]="true"
-                    thinModeDirection="left"
-                    [inputMin]="CalculatorMins.lectureWidth"
-                    [inputMax]="CalculatorMaxes.lectureWidth"
-                    [inputValue]="calculatorService.lectureWidth"
-                    (updated)="updateInput('lectureWidth', $event)"
-                ></app-measuring-stick>
+  <div class="stage-info-wrapper">
+    <div #wrapper class="stage-wrapper">
+      <div class="measuring-stick-overlay lecture-width">
+        <app-measuring-stick orientation="vertical" [height]="stageHeight"
+          [isInput]="true"
+          thinModeDirection="left"
+          [inputMin]="CalculatorMins.lectureWidth"
+          [inputMax]="CalculatorMaxes.lectureWidth"
+          [inputValue]="calculatorService.lectureWidth"
+          (updated)="updateInput('lectureWidth', $event)"
+        ></app-measuring-stick>
+      </div>
+      <div #container class="stage-outer-container">
+        <div class="stage-label">Top view</div>
+        <div class="stage-inner-container">
+          <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3) + 'px'}" style="position: absolute; bottom: -40px;">
+            <app-measuring-stick orientation="horizontal"
+              [width]="audienceDepthPx"
+              thinModeDirection="bottom"
+              [isInput]="true"
+              [inputMin]="CalculatorMins.audienceDepth"
+              [inputMax]="CalculatorMaxes.audienceDepth"
+              [inputValue]="calculatorService.audienceDepth"
+              (updated)="updateInput('audienceDepth', $event)"
+            ></app-measuring-stick>
+          </div>
+          <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width' : '100%'}">
+            <div class="presenter-wrapper">
+              <div class="presenter-container">
+                @for (presenter of presenters; track presenter) {
+                  <div class="presenter-icon" [ngClass]="presenter.num"
+                    [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterOffset * 3) + 'px', 'top': presenter.positionPercentageVertical + '%'}"
+                    >
+                    <app-svg-standing-person mode="top"></app-svg-standing-person>
+                  </div>
+                }
+                @if (calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter || calculatorService.recordPresenter)) {
+                  <div class="presenter-microphones">
+                    @for (presMic of presenterMicrophones; track audienceMicrophoneTrackByFn($index, presMic)) {
+                      <div class="presenter-microphone"
+                        [ngStyle]="{'left': (presenterOffset * 3) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
+                        <app-svg-capture-radius
+                          [displayRadius]="calculatorService.reinforcePresenter ? calculatorService.displayPresenterReinforcement : calculatorService.displayPresenterRecording"
+                          [mode]="calculatorService.reinforcePresenter ? (calculatorService.soundReinforcementPriority ? 'presenterReinforcementRange' : 'presenterReinforcementQuality')  : 'presenterRecording'"
+                          [width]="presenterCaptureRadiusPx * 2">
+                        </app-svg-capture-radius>
+                      </div>
+                    }
+                    @if (calculatorService.recordPresenter && calculatorService.reinforcePresenter) {
+                      @for (presMic of presenterMicrophones; track audienceMicrophoneTrackByFn($index, presMic)) {
+                        <div class="presenter-microphone"
+                          [ngStyle]="{'left': (presenterOffset * 3) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
+                          <app-svg-capture-radius
+                            [displayRadius]="calculatorService.displayPresenterRecording"
+                            mode="secondaryPresenterRecording"
+                            [width]="secondaryPresenterCaptureRadiusPx * 2">
+                          </app-svg-capture-radius>
+                        </div>
+                      }
+                    }
+                  </div>
+                }
+              </div>
             </div>
-            <div #container class="stage-outer-container">
-                <div class="stage-label">Top view</div>
-                <div class="stage-inner-container">
-                    <div class="measuring-stick-overlay audience-depth" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3) + 'px'}" style="position: absolute; bottom: -40px;">
-                        <app-measuring-stick orientation="horizontal" 
-                            [width]="audienceDepthPx"
-                            thinModeDirection="bottom"
-                            [isInput]="true" 
-                            [inputMin]="CalculatorMins.audienceDepth"
-                            [inputMax]="CalculatorMaxes.audienceDepth"
-                            [inputValue]="calculatorService.audienceDepth"
-                            (updated)="updateInput('audienceDepth', $event)"
-                        ></app-measuring-stick>
-                    </div>
-                    <div #stage class="stage" [ngStyle]="{'height': stageHeight + 'px', 'width' : '100%'}">
-                        <div class="presenter-wrapper">
-                            <div class="presenter-container">
-                                <div *ngFor="let presenter of presenters" class="presenter-icon" [ngClass]="presenter.num"
-                                    [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterOffset * 3) + 'px', 'top': presenter.positionPercentageVertical + '%'}"
-                                >
-                                    <app-svg-standing-person mode="top"></app-svg-standing-person>
-                                </div>
-                                <ng-container *ngIf="calculatorService.hasFreshOutput && (calculatorService.reinforcePresenter || calculatorService.recordPresenter)">                              
-                                    <div class="presenter-microphones">
-                                        <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
-                                            [ngStyle]="{'left': (presenterOffset * 3) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
-                                            <app-svg-capture-radius 
-                                                [displayRadius]="calculatorService.reinforcePresenter ? calculatorService.displayPresenterReinforcement : calculatorService.displayPresenterRecording"
-                                                [mode]="calculatorService.reinforcePresenter ? (calculatorService.soundReinforcementPriority ? 'presenterReinforcementRange' : 'presenterReinforcementQuality')  : 'presenterRecording'" 
-                                                [width]="presenterCaptureRadiusPx * 2">
-                                            </app-svg-capture-radius>
-                                        </div>   
-                                        <ng-container *ngIf="calculatorService.recordPresenter && calculatorService.reinforcePresenter">
-                                            <div *ngFor="let presMic of presenterMicrophones; trackBy: audienceMicrophoneTrackByFn" class="presenter-microphone" 
-                                                [ngStyle]="{'left': (presenterOffset * 3) + 'px', 'top': presMic.positionPercentageVertical + '%'}">
-                                                <app-svg-capture-radius 
-                                                    [displayRadius]="calculatorService.displayPresenterRecording"
-                                                    mode="secondaryPresenterRecording" 
-                                                    [width]="secondaryPresenterCaptureRadiusPx * 2">
-                                                </app-svg-capture-radius>
-                                            </div>  
-                                        </ng-container>                                 
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="audience-wrapper">
-                            <ng-container *ngIf="calculatorService.hasFreshOutput">
-                                <div class="measuring-stick-overlay depth-interval" *ngIf="measuringStickDepthPosition"
-                                    [ngStyle]="{'left': measuringStickDepthPosition.positionPercentage + 'px', 'top': '-30px', 'position': 'absolute'}">
-                                    <app-measuring-stick orientation="horizontal" 
-                                        [width]="microphoneDepthIntervalPx"
-                                        thinModeDirection="top"
-                                        [isInput]="false" 
-                                        [twinned]="measuringStickDepthTwinned"
-                                        [inputValue]="calculatorService.audienceMicrophoneIntervalDepth"
-                                    ></app-measuring-stick>
-                                </div>
-                                <div class="measuring-stick-overlay width-interval" *ngIf="measuringStickWidthPosition"
-                                    [ngStyle]="{'left': measuringStickWidthPosition.positionPercentage + 'px', 'top': measuringStickWidthPosition.positionPercentageVertical + '%', 'position': 'absolute'}">
-                                    <app-measuring-stick orientation="vertical" 
-                                        [height]="microphoneWidthIntervalPx"
-                                        thinModeDirection="right"
-                                        [twinned]="measuringStickWidthTwinned"
-                                        [isInput]="false" 
-                                        [inputValue]="calculatorService.audienceMicrophoneIntervalWidth"
-                                    ></app-measuring-stick>
-                                </div>
-                            </ng-container>
-                            <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3)  + 'px', 'width': audienceDepthPx + 'px' }">
-                                <div *ngFor="let audienceRow of audienceRows; trackBy: audienceRowTrackByFn" class="audience-row" [ngStyle]="{'margin-bottom': (interRowInterval / 2) + 'px', 'margin-top': (interRowInterval / 2) + 'px'}">
-                                    <div *ngFor="let a of audiencePerRow; trackBy: audienceTrackByFn" class="audience-icon" @animateOutputArea
-                                        [ngStyle]="{'width': audienceWidth + 'px'}">
-                                        <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
-                                    </div>
-                                </div>
-                                <ng-container *ngIf="calculatorService.hasFreshOutput">
-                                    <div class="audience-microphones">
-                                        <div *ngFor="let audMic of audienceMicrophones; trackBy: audienceMicrophoneTrackByFn" class="audience-microphone" 
-                                            [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
-                                            <app-svg-capture-radius 
-                                                [displayRadius]="calculatorService.displayAudienceRecording"
-                                                [width]="audienceCaptureRadiusPx * 2" 
-                                                mode="audienceRecording"></app-svg-capture-radius>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>   
+            <div class="audience-wrapper">
+              @if (calculatorService.hasFreshOutput) {
+                @if (measuringStickDepthPosition) {
+                  <div class="measuring-stick-overlay depth-interval"
+                    [ngStyle]="{'left': measuringStickDepthPosition.positionPercentage + 'px', 'top': '-30px', 'position': 'absolute'}">
+                    <app-measuring-stick orientation="horizontal"
+                      [width]="microphoneDepthIntervalPx"
+                      thinModeDirection="top"
+                      [isInput]="false"
+                      [twinned]="measuringStickDepthTwinned"
+                      [inputValue]="calculatorService.audienceMicrophoneIntervalDepth"
+                    ></app-measuring-stick>
+                  </div>
+                }
+                @if (measuringStickWidthPosition) {
+                  <div class="measuring-stick-overlay width-interval"
+                    [ngStyle]="{'left': measuringStickWidthPosition.positionPercentage + 'px', 'top': measuringStickWidthPosition.positionPercentageVertical + '%', 'position': 'absolute'}">
+                    <app-measuring-stick orientation="vertical"
+                      [height]="microphoneWidthIntervalPx"
+                      thinModeDirection="right"
+                      [twinned]="measuringStickWidthTwinned"
+                      [isInput]="false"
+                      [inputValue]="calculatorService.audienceMicrophoneIntervalWidth"
+                    ></app-measuring-stick>
+                  </div>
+                }
+              }
+              <div class="audience-container" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3)  + 'px', 'width': audienceDepthPx + 'px' }">
+                @for (audienceRow of audienceRows; track audienceRowTrackByFn($index, audienceRow)) {
+                  <div class="audience-row" [ngStyle]="{'margin-bottom': (interRowInterval / 2) + 'px', 'margin-top': (interRowInterval / 2) + 'px'}">
+                    @for (a of audiencePerRow; track audienceTrackByFn($index, a)) {
+                      <div class="audience-icon" @animateOutputArea
+                        [ngStyle]="{'width': audienceWidth + 'px'}">
+                        <app-svg-standing-person mode="sitting-top"></app-svg-standing-person>
+                      </div>
+                    }
+                  </div>
+                }
+                @if (calculatorService.hasFreshOutput) {
+                  <div class="audience-microphones">
+                    @for (audMic of audienceMicrophones; track audienceMicrophoneTrackByFn($index, audMic)) {
+                      <div class="audience-microphone"
+                        [ngStyle]="{'left': audMic.positionPercentage + '%', 'top': audMic.positionPercentageVertical + '%'}">
+                        <app-svg-capture-radius
+                          [displayRadius]="calculatorService.displayAudienceRecording"
+                          [width]="audienceCaptureRadiusPx * 2"
+                        mode="audienceRecording"></app-svg-capture-radius>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
