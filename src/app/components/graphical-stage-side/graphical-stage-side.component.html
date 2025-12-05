@@ -51,7 +51,7 @@
             </div>
             <div class="audience-wrapper" [ngStyle]="{'left': audienceDistance + (presenterOffset * 3) + 'px', 'width': audienceDepthPx + 'px'}">
               <div class="audience-container" [ngStyle]="{'top': 'calc(100% - ' + audienceHeightPx + 'px)'}">
-                @for (a of numAudience; track audienceTrackByFn($index, a)) {
+                @for (a of numAudience; track audienceTrackByFn) {
                   <div class="audience-icon"
                     [ngStyle]="{'width': audienceWidthPx + 'px', 'height': audienceHeightPx + 'px'}" @animateOutputArea>
                     <app-svg-standing-person mode="sitting"></app-svg-standing-person>
