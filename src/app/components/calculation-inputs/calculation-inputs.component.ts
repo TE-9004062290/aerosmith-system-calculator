@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 import LicensesText from '@app/config/LICENSES.json';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -35,6 +35,7 @@ import { LicenseDialogComponent } from '../license-dialog/license-dialog.compone
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CalculationInputsComponent implements OnInit {

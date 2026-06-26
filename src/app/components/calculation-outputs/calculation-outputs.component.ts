@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { CalculatorService } from '@app/services/calculator.service';
 import { ClipboardService } from '@app/services/clipboard.service';
@@ -7,6 +7,7 @@ import { ClipboardService } from '@app/services/clipboard.service';
     selector: 'app-calculation-outputs',
     templateUrl: './calculation-outputs.component.html',
     styleUrls: ['./calculation-outputs.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CalculationOutputsComponent implements OnInit {

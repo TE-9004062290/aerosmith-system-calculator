@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -21,6 +21,7 @@ import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcemen
     selector: 'app-calculation-theatre',
     templateUrl: './calculation-theatre.component.html',
     styleUrls: ['./calculation-theatre.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CalculationTheatreComponent implements OnInit {

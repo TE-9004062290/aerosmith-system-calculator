@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import {
   trigger,
   style,
@@ -33,6 +33,7 @@ import { round } from '@app/helpers/arithmetic.helper';
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GraphicalStageTopComponent implements OnInit {

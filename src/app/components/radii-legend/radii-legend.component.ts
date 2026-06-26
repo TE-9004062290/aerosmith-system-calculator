@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 
 @Component({
     selector: 'app-radii-legend',
     templateUrl: './radii-legend.component.html',
     styleUrls: ['./radii-legend.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RadiiLegendComponent implements OnInit {

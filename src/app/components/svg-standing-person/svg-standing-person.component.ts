@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-svg-standing-person',
     templateUrl: './svg-standing-person.component.html',
     styleUrls: ['./svg-standing-person.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SvgStandingPersonComponent implements OnInit {

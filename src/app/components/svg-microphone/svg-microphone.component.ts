@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
 @Component({
     selector: 'app-svg-microphone',
     templateUrl: './svg-microphone.component.html',
     styleUrls: ['./svg-microphone.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SvgMicrophoneComponent implements OnInit {
