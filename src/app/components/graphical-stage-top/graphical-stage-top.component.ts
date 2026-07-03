@@ -16,6 +16,7 @@ import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
+import { CalculatorInputField, CalculatorInputService } from '../../types/calculator-input-field.type';
 
 @Component({
     selector: 'app-graphical-stage-top',
@@ -96,27 +97,27 @@ export class GraphicalStageTopComponent implements OnInit {
     public calculatorService: CalculatorService, 
     public graphicsService: GraphicsService) { }
 
-  microphoneTrackByFn(index, micPosition: GraphicPosition) {
+  microphoneTrackByFn(index: number, micPosition: GraphicPosition) {
     return micPosition.number;
   }
 
-  audienceMicrophoneTrackByFn(index, audienceMicPosition: GraphicPosition) {
+  audienceMicrophoneTrackByFn(index: number, audienceMicPosition: GraphicPosition) {
     return audienceMicPosition.number;
   }
 
-  measuringStickTrackByFn(index, measuringStickPosition: GraphicPosition) {
+  measuringStickTrackByFn(index: number, measuringStickPosition: GraphicPosition) {
     return index;
   }
 
-  personTrackByFn(index, personPosition: GraphicPosition) {
+  personTrackByFn(index: number, personPosition: GraphicPosition) {
     return personPosition.number;
   }
 
-  audienceRowTrackByFn(index, audiencePosition: number) {
+  audienceRowTrackByFn(index: number, audiencePosition: number) {
     return index;
   }
 
-  audienceTrackByFn(index, audiencePosition: number) {
+  audienceTrackByFn(index: number, audiencePosition: number) {
     return index;
   }
 
@@ -149,14 +150,14 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event: Event) {
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event) {
+  onBeforePrint(event: Event) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .18;
     this.snapshotPageDimensions();
@@ -165,7 +166,7 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event) {
+  onAfterPrint(event: Event) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .33;
     this.snapshotPageDimensions();
@@ -309,12 +310,13 @@ export class GraphicalStageTopComponent implements OnInit {
     };
   }
 
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: CalculatorInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      const typedCService = cService as CalculatorInputService;
+      typedCService[inputField] = numerical;
+      inputElement.value = String(typedCService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {

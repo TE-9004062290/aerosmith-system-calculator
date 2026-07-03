@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, E
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 import LicensesText from '@app/config/LICENSES.json';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CalculatorInputField, CalculatorInputService } from '@app/types/calculator-input-field.type';
 
 import {
   trigger,
@@ -75,7 +76,7 @@ export class CalculationInputsComponent implements OnInit {
     this.showTechnicalSupport = !this.showTechnicalSupport;
   }
   
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: CalculatorInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 
@@ -86,8 +87,9 @@ export class CalculationInputsComponent implements OnInit {
       'inputExtenderLength': null,
       'inputAudienceExtenderLength': null,
      }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      const typedCService = cService as CalculatorInputService;
+      typedCService[inputField] = numerical;
+      inputElement.value = String(typedCService[inputField]);
     }
 
     switch (inputField) {
