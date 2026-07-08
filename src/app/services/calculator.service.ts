@@ -480,7 +480,7 @@ export class CalculatorService {
       const maxDistance = 0.75 * MicrophoneRadii.PresenterRecording;
       return maxDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_presenterHeight : maxDistance;
     }
-
+    return 0;
   }
 
   private get verticalMinimum(): number {
