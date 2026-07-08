@@ -75,8 +75,8 @@ export class GraphicalStageComponent implements OnInit {
   public capturePosition: number = 0;
   public captureTop: number = 0;
 
-  public microphones = { leftMost: 0, rightMost: 0, positions: []};
-  public persons = { leftMost: 0, rightMost: 0, positions: []};
+  public microphones = { leftMost: 0, rightMost: 0, positions: [] as GraphicPosition[] };
+  public persons = { leftMost: 0, rightMost: 0, positions: [] as GraphicPosition[] };
 
   public presenterWidth: number = 0;
   public presenterSideWidth: number = 0;

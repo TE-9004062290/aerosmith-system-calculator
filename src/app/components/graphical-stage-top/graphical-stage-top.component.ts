@@ -83,10 +83,10 @@ export class GraphicalStageTopComponent implements OnInit {
 
   public presenterMicrophoneIntervalPx: number = 0;
   public microphoneDepthIntervalPx: number = 0;
-  public measuringStickDepthPosition: GraphicPosition = null;
-  public measuringStickDepthTwinned: boolean = null;
+  public measuringStickDepthPosition: GraphicPosition | null = null;
+  public measuringStickDepthTwinned: boolean | null = null;
   public microphoneWidthIntervalPx: number = 0;
-  public measuringStickWidthPosition: GraphicPosition = null;
+  public measuringStickWidthPosition: GraphicPosition | null = null;
   public measuringStickWidthTwinned: boolean = false;
 
   @ViewChild('wrapper',   { static: true }) wrapperRef!:   ElementRef;

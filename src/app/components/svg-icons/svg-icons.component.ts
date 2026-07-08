@@ -15,7 +15,7 @@ export class SvgIconsComponent implements OnInit {
   @Input() width!:  number;
   @Input() height!: number;
   @Input() primaryFill: string = '#757575';
-  @Input() transformString: string = undefined;
+  @Input() transformString?: string;
   ngOnInit() {
   }
 

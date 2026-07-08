@@ -107,8 +107,8 @@ export class CalculatorService {
   private b_audienceExtenderProvided: boolean = false;
 
   /* Measurable Quantity Inputs */
-  private m_captureRadius = MicrophoneRadii.PresenterReinforcementQuality;
-  private m_secondaryCaptureRadius = MicrophoneRadii.PresenterRecording;
+  private m_captureRadius: MicrophoneRadii | null = MicrophoneRadii.PresenterReinforcementQuality;
+  private m_secondaryCaptureRadius: MicrophoneRadii | null = MicrophoneRadii.PresenterRecording;
   private m_audienceCaptureRadius = MicrophoneRadii.AudienceRecording;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
