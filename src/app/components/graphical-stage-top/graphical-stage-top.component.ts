@@ -89,9 +89,9 @@ export class GraphicalStageTopComponent implements OnInit {
   public measuringStickWidthPosition: GraphicPosition = null;
   public measuringStickWidthTwinned: boolean = false;
 
-  @ViewChild('wrapper', { static :true }) wrapperRef: ElementRef;
-  @ViewChild('container', { static :true }) containerRef: ElementRef;
-  @ViewChild('stage', { static :true }) stageRef: ElementRef;
+  @ViewChild('wrapper',   { static: true }) wrapperRef!:   ElementRef;
+  @ViewChild('container', { static: true }) containerRef!: ElementRef;
+  @ViewChild('stage',     { static: true }) stageRef!:     ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
