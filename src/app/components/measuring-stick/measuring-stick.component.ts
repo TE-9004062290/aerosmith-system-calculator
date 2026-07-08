@@ -104,7 +104,7 @@ export class MeasuringStickComponent implements OnInit {
     }
   }
 
-  onInputChange(inputElement) {
+  onInputChange(inputElement: HTMLInputElement): void {
     this.updated.emit(inputElement);
   }
 

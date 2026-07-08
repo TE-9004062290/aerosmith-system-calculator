@@ -7,7 +7,7 @@ export class GraphicPosition {
         return this.number;
     }
 
-    constructor(num, positionPerc, positionPercVert?) {
+    constructor(num: number, positionPerc: number, positionPercVert?: number) {
         this.number = num;
         this.positionPercentage = positionPerc;
         if (!isNaN(positionPercVert)) {

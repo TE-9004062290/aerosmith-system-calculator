@@ -17,6 +17,8 @@ import {
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
+import { Params } from '@angular/router';
+
 @Component({
     selector: 'app-calculation-theatre',
     templateUrl: './calculation-theatre.component.html',
@@ -97,7 +99,7 @@ export class CalculationTheatreComponent implements OnInit {
     return designModes.filter(mode => mode).length;
   }
 
-  private parseParams(params) {
+  private parseParams(params: Params): void {
     const { 
       ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
       inputExtenderLength, inputAudienceExtenderLength, measurementUnit, 

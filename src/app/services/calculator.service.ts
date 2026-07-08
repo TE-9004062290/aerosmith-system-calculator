@@ -522,7 +522,7 @@ export class CalculatorService {
     this.b_designForActive = this.b_reinforcePresenter || this.b_recordPresenter || this.b_recordAudience;
   }
 
-  private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight, ceilingHeight) {
+  private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight: number, ceilingHeight: number) {
     if (2.1 * audienceHeight > ceilingHeight) {
       return ceilingHeight - audienceHeight;
     } else {
@@ -530,7 +530,7 @@ export class CalculatorService {
     }
   }
 
-  private calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(audienceHeight, ceilingHeight) {
+  private calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(audienceHeight: number, ceilingHeight: number) {
     const maxDistance = 0.75 * MicrophoneRadii.AudienceRecording;
     if (maxDistance > ceilingHeight) {
       return ceilingHeight - audienceHeight;
@@ -615,7 +615,7 @@ export class CalculatorService {
     return Math.ceil(rawNumber)
   }
 
-  private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones) {
+  private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones: number) {
     return presentationWidth / firstApproxNumMicrophones;
   }
 
@@ -663,7 +663,7 @@ export class CalculatorService {
     }
   }
 
-  private refineNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, intervalWidth: number, intervalDepth) {
+  private refineNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, intervalWidth: number, intervalDepth: number) {
     const widthRaw = presentationWidth / intervalWidth;
     const depthRaw = audienceDepth / intervalDepth;
     return {
