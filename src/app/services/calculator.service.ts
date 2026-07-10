@@ -211,8 +211,9 @@ export class CalculatorService {
     if (conversionRequired) {
       this.e_measurementUnit = val;
       let convertibles = Object.keys(this).filter((classMember) => classMember.startsWith('m_'));
+      const self = this as unknown as Record<string, number>;
       convertibles.forEach((classMember) => {
-        this[classMember] = round(this[classMember] * conversionFactor, 2);
+        self[classMember] = round(self[classMember] * conversionFactor, 2);
       });
 
       this.updateAndEmit();

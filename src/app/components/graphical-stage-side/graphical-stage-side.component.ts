@@ -6,8 +6,6 @@ import { GraphicPosition } from '@app/models/graphic-position.model';
 
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
-import { CalculatorInputField, CalculatorInputService } from '@app/types/calculator-input-field.type';
-
 
 import {
   trigger,
@@ -22,6 +20,13 @@ enum RatioMode {
   Width,
   HalfSquareWidth
 }
+
+export type StageSideInputField =
+  | 'ceilingHeight'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'inputExtenderLength'
+  | 'audienceDepth';
 
 @Component({
     selector: 'app-graphical-stage-side',
@@ -167,13 +172,12 @@ export class GraphicalStageSideComponent implements OnInit {
     this.calculateProportions();
   }
 
-  public updateInput(inputField: CalculatorInputField, inputElement: HTMLInputElement): void {
+  public updateInput(inputField: StageSideInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      const typedCService = cService as CalculatorInputService;
-      typedCService[inputField] = numerical;
-      inputElement.value = String(typedCService[inputField]);
+      cService[inputField] = numerical; 
+      inputElement.value = String(cService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {

@@ -16,7 +16,14 @@ import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
-import { CalculatorInputField, CalculatorInputService } from '../../types/calculator-input-field.type';
+
+export type StageTopInputField =
+  | 'ceilingHeight'
+  | 'lectureWidth'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'inputExtenderLength'
+  | 'audienceDepth';
 
 @Component({
     selector: 'app-graphical-stage-top',
@@ -310,13 +317,12 @@ export class GraphicalStageTopComponent implements OnInit {
     };
   }
 
-  public updateInput(inputField: CalculatorInputField, inputElement: HTMLInputElement): void {
+  public updateInput(inputField: StageTopInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      const typedCService = cService as CalculatorInputService;
-      typedCService[inputField] = numerical;
-      inputElement.value = String(typedCService[inputField]);
+      cService[inputField] = numerical;
+      inputElement.value = String(cService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {

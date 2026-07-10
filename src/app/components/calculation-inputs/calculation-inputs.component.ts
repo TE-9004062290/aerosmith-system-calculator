@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, E
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 import LicensesText from '@app/config/LICENSES.json';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CalculatorInputField, CalculatorInputService } from '@app/types/calculator-input-field.type';
 
 import {
   trigger,
@@ -15,6 +14,14 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
 
+export type CalculationInputField =
+  | 'ceilingHeight'
+  | 'lectureWidth'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'audienceDepth'
+  | 'inputExtenderLength'
+  | 'inputAudienceExtenderLength';
 
 @Component({
     selector: 'app-calculation-inputs',
@@ -76,7 +83,7 @@ export class CalculationInputsComponent implements OnInit {
     this.showTechnicalSupport = !this.showTechnicalSupport;
   }
   
-  public updateInput(inputField: CalculatorInputField, inputElement: HTMLInputElement): void {
+  public updateInput(inputField: CalculationInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 
@@ -87,9 +94,8 @@ export class CalculationInputsComponent implements OnInit {
       'inputExtenderLength': null,
       'inputAudienceExtenderLength': null,
      }) {
-      const typedCService = cService as CalculatorInputService;
-      typedCService[inputField] = numerical;
-      inputElement.value = String(typedCService[inputField]);
+      cService[inputField] = numerical;
+      inputElement.value = String(cService[inputField]);
     }
 
     switch (inputField) {

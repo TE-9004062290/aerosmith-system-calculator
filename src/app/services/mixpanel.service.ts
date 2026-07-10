@@ -17,7 +17,7 @@ export class MixpanelService {
 
   trackCalculation() {
     const cService = this.calculatorService;
-    let toTrack = {
+    let toTrack: Record<string, string | number> = {
       'Measurement Units': cService.measurementUnit.toString(),
       "Calculation Priority": cService.soundReinforcementPriority.toString(),
       "Ceiling Height": cService.ceilingHeight,
