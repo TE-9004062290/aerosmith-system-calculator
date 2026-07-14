@@ -99,7 +99,7 @@ export class CalculationTheatreComponent implements OnInit {
     return designModes.filter(mode => mode).length;
   }
 
-  private parseParams(params: Params): void {
+  private parseParams(params: Params): boolean {
     const { 
       ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
       inputExtenderLength, inputAudienceExtenderLength, measurementUnit, 
