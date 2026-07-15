@@ -24,6 +24,9 @@
       ],
       "@main/*": [
         "./src/app/main/*"
+      ],
+      "environments/*": [
+        "./src/environments/*"
       ]
     },
     "useDefineForClassFields": false
