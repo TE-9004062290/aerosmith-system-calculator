@@ -10,8 +10,8 @@ import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core
 export class SvgCaptureRadiusComponent implements OnInit {
 
 
-  @Input() width: string = "100%";
-  @Input() height: string = "100%";
+  @Input() width: number = 0;
+  @Input() height: number = 0;
   @Input() mode: 'presenterReinforcementQuality' | 'presenterReinforcementRange' | 'presenterRecording' | 'secondaryPresenterRecording' | 'audienceRecording' = 'audienceRecording';
   @Input() displayRadius: boolean = true;
   

@@ -91,7 +91,7 @@ export class GraphicalStageTopComponent implements OnInit {
   public presenterMicrophoneIntervalPx: number = 0;
   public microphoneDepthIntervalPx: number = 0;
   public measuringStickDepthPosition: GraphicPosition | null = null;
-  public measuringStickDepthTwinned: boolean | null = null;
+  public measuringStickDepthTwinned: boolean = false;
   public microphoneWidthIntervalPx: number = 0;
   public measuringStickWidthPosition: GraphicPosition | null = null;
   public measuringStickWidthTwinned: boolean = false;
@@ -164,7 +164,7 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event: Event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .18;
     this.snapshotPageDimensions();
@@ -173,7 +173,7 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event: Event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .33;
     this.snapshotPageDimensions();

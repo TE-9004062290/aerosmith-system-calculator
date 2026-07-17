@@ -155,7 +155,7 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event: Event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();
@@ -164,7 +164,7 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event: Event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .33;
     this.snapshotPageDimensions();

@@ -152,7 +152,7 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event: Event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
@@ -161,7 +161,7 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event: Event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
@@ -195,7 +195,7 @@ export class GraphicalStageComponent implements OnInit {
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
     this.sideCapture = this.getSideRadius();
     this.audienceDistance = this.getAudienceDistance();
-    this.captureTop = this.getRadiusTopPosition(null);
+    this.captureTop = this.getRadiusTopPosition();
     this.audience = this.getAudienceArray();
   }
 
@@ -258,7 +258,7 @@ export class GraphicalStageComponent implements OnInit {
     return captureRadiusHeightRatio * this.stageHeight;
   }
 
-  private getRadiusTopPosition(numMicrophone: number): number {
+  private getRadiusTopPosition(): number {
     const cService = this.calculatorService;
     const extenderLength = cService.extenderLength;
     this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;

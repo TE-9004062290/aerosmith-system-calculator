@@ -131,8 +131,8 @@ export class CalculatorService {
   get extenderProvided(): boolean { return this.b_extenderProvided; }
   get audienceExtenderProvided(): boolean { return this.b_audienceExtenderProvided; }
 
-  get captureRadius(): number { return this.m_captureRadius; }
-  get secondaryCaptureRadius(): number { return this.m_secondaryCaptureRadius; }
+  get captureRadius(): number { return this.m_captureRadius ?? 0; }
+  get secondaryCaptureRadius(): number { return this.m_secondaryCaptureRadius ?? 0; }
   get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get lectureWidth(): number { return this.m_lectureWidth; }
   get ceilingHeight(): number { return this.m_ceilingHeight; }

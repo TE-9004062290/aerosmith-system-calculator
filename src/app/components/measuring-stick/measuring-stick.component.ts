@@ -64,8 +64,8 @@ export class MeasuringStickComponent implements OnInit {
   }
 
   @Input() public twinned: boolean = false; /* I realize this is a hack, fight me */
-  @Input() public maxWidth: string = undefined;
-  @Input() public thinModeDirection: 'top' | 'right' | 'down' | 'left' = 'top';
+  @Input() public maxWidth?: string;
+  @Input() public thinModeDirection: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() public isInput: boolean = false;
   @Input() public inputMin: number = 0;
   @Input() public inputMax: number = 100;

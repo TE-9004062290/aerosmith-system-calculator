@@ -32,7 +32,7 @@
     </div>
     <div class="sidebar">
       <div class="sidebar-pullout" (click)="toggleSideBar()" (touch)="toggleSideBar()">
-        <app-svg-icons iconType="toggle" width="40" height="40" primaryFill="white" [transformString]="sideBarOut ? 'rotate(-90deg)' : 'rotate(90deg)'"></app-svg-icons>
+        <app-svg-icons iconType="toggle" [width]="40" [height]="40" primaryFill="white" [transformString]="sideBarOut ? 'rotate(-90deg)' : 'rotate(90deg)'"></app-svg-icons>
       </div>
       <div class="sidebar-inner-container">
         <div class="sidebar-main">
