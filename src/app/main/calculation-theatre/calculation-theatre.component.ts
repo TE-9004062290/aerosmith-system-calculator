@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -17,10 +17,13 @@ import {
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcement-priority.enum';
 
+import { Params } from '@angular/router';
+
 @Component({
     selector: 'app-calculation-theatre',
     templateUrl: './calculation-theatre.component.html',
     styleUrls: ['./calculation-theatre.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CalculationTheatreComponent implements OnInit {
@@ -96,7 +99,7 @@ export class CalculationTheatreComponent implements OnInit {
     return designModes.filter(mode => mode).length;
   }
 
-  private parseParams(params) {
+  private parseParams(params: Params): boolean {
     const { 
       ceilingHeight, lectureWidth, presenterHeight, audienceHeight, audienceDepth,
       inputExtenderLength, inputAudienceExtenderLength, measurementUnit, 

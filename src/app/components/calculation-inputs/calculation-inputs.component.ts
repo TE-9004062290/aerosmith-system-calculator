@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import TechnicalSupportLinks from '@app/config/technical-support.json';
 import LicensesText from '@app/config/LICENSES.json';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -14,6 +14,14 @@ import { CalculatorService } from '@app/services/calculator.service';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 import { LicenseDialogComponent } from '../license-dialog/license-dialog.component';
 
+export type CalculationInputField =
+  | 'ceilingHeight'
+  | 'lectureWidth'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'audienceDepth'
+  | 'inputExtenderLength'
+  | 'inputAudienceExtenderLength';
 
 @Component({
     selector: 'app-calculation-inputs',
@@ -35,6 +43,7 @@ import { LicenseDialogComponent } from '../license-dialog/license-dialog.compone
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CalculationInputsComponent implements OnInit {
@@ -74,7 +83,7 @@ export class CalculationInputsComponent implements OnInit {
     this.showTechnicalSupport = !this.showTechnicalSupport;
   }
   
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: CalculationInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 
@@ -85,8 +94,8 @@ export class CalculationInputsComponent implements OnInit {
       'inputExtenderLength': null,
       'inputAudienceExtenderLength': null,
      }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      cService[inputField] = numerical;
+      inputElement.value = String(cService[inputField]);
     }
 
     switch (inputField) {

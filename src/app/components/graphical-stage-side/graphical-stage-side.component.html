@@ -18,7 +18,7 @@
           thinModeDirection="right"
           [inputMin]="CalculatorMins.audienceHeight"
           [inputMax]="CalculatorMaxes.audienceHeight"
-          step="0.1"
+          [step]="0.1"
           [inputValue]="calculatorService.audienceHeight"
           (updated)="updateInput('audienceHeight', $event)"
         ></app-measuring-stick>

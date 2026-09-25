@@ -29,7 +29,7 @@
             <div class="presenter-wrapper">
               <div class="presenter-container">
                 @for (presenter of presenters; track presenter) {
-                  <div class="presenter-icon" [ngClass]="presenter.number"
+                  <div class="presenter-icon"
                     [ngStyle]="{'width': presenterWidth + 'px', 'left': (presenterOffset * 3) + 'px', 'top': presenter.positionPercentageVertical + '%'}"
                     >
                     <app-svg-standing-person mode="top"></app-svg-standing-person>

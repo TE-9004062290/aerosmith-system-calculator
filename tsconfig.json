@@ -1,11 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "module": "es2020",
     "moduleResolution": "bundler",
@@ -19,13 +17,16 @@
     ],
     "paths": {
       "@app/*": [
-        "app/*"
+        "./src/app/*"
       ],
       "@components/*": [
-        "app/components/*"
+        "./src/app/components/*"
       ],
       "@main/*": [
-        "app/main/*"
+        "./src/app/main/*"
+      ],
+      "environments/*": [
+        "./src/environments/*"
       ]
     },
     "useDefineForClassFields": false

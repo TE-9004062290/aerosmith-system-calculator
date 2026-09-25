@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   trigger,
   style,
@@ -31,6 +31,7 @@ import { SoundReinforcementPriority } from '@app/models/enums/sound-reinforcemen
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DesignInputsComponent implements OnInit {

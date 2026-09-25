@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import {
   trigger,
   style,
@@ -17,6 +17,14 @@ import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
 
 import { round } from '@app/helpers/arithmetic.helper';
 
+export type StageTopInputField =
+  | 'ceilingHeight'
+  | 'lectureWidth'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'inputExtenderLength'
+  | 'audienceDepth';
+
 @Component({
     selector: 'app-graphical-stage-top',
     templateUrl: './graphical-stage-top.component.html',
@@ -33,6 +41,7 @@ import { round } from '@app/helpers/arithmetic.helper';
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GraphicalStageTopComponent implements OnInit {
@@ -81,41 +90,41 @@ export class GraphicalStageTopComponent implements OnInit {
 
   public presenterMicrophoneIntervalPx: number = 0;
   public microphoneDepthIntervalPx: number = 0;
-  public measuringStickDepthPosition: GraphicPosition = null;
-  public measuringStickDepthTwinned: boolean = null;
+  public measuringStickDepthPosition: GraphicPosition | null = null;
+  public measuringStickDepthTwinned: boolean = false;
   public microphoneWidthIntervalPx: number = 0;
-  public measuringStickWidthPosition: GraphicPosition = null;
+  public measuringStickWidthPosition: GraphicPosition | null = null;
   public measuringStickWidthTwinned: boolean = false;
 
-  @ViewChild('wrapper', { static :true }) wrapperRef: ElementRef;
-  @ViewChild('container', { static :true }) containerRef: ElementRef;
-  @ViewChild('stage', { static :true }) stageRef: ElementRef;
+  @ViewChild('wrapper',   { static: true }) wrapperRef!:   ElementRef;
+  @ViewChild('container', { static: true }) containerRef!: ElementRef;
+  @ViewChild('stage',     { static: true }) stageRef!:     ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
     public graphicsService: GraphicsService) { }
 
-  microphoneTrackByFn(index, micPosition: GraphicPosition) {
+  microphoneTrackByFn(index: number, micPosition: GraphicPosition) {
     return micPosition.number;
   }
 
-  audienceMicrophoneTrackByFn(index, audienceMicPosition: GraphicPosition) {
+  audienceMicrophoneTrackByFn(index: number, audienceMicPosition: GraphicPosition) {
     return audienceMicPosition.number;
   }
 
-  measuringStickTrackByFn(index, measuringStickPosition: GraphicPosition) {
+  measuringStickTrackByFn(index: number, measuringStickPosition: GraphicPosition) {
     return index;
   }
 
-  personTrackByFn(index, personPosition: GraphicPosition) {
+  personTrackByFn(index: number, personPosition: GraphicPosition) {
     return personPosition.number;
   }
 
-  audienceRowTrackByFn(index, audiencePosition: number) {
+  audienceRowTrackByFn(index: number, audiencePosition: number) {
     return index;
   }
 
-  audienceTrackByFn(index, audiencePosition: number) {
+  audienceTrackByFn(index: number, audiencePosition: number) {
     return index;
   }
 
@@ -148,14 +157,14 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event: Event) {
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .18;
     this.snapshotPageDimensions();
@@ -164,7 +173,7 @@ export class GraphicalStageTopComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .33;
     this.snapshotPageDimensions();
@@ -308,12 +317,12 @@ export class GraphicalStageTopComponent implements OnInit {
     };
   }
 
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: StageTopInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      cService[inputField] = numerical;
+      inputElement.value = String(cService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
@@ -21,6 +21,13 @@ enum RatioMode {
   HalfSquareWidth
 }
 
+export type StageSideInputField =
+  | 'ceilingHeight'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'inputExtenderLength'
+  | 'audienceDepth';
+
 @Component({
     selector: 'app-graphical-stage-side',
     templateUrl: './graphical-stage-side.component.html',
@@ -37,6 +44,7 @@ enum RatioMode {
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GraphicalStageSideComponent implements OnInit {
@@ -86,27 +94,27 @@ export class GraphicalStageSideComponent implements OnInit {
   public audienceDistance: number = 0;
   public audience: number[] = [];
   
-  @ViewChild('wrapper', { static :true }) wrapperRef: ElementRef;
-  @ViewChild('container', { static :true }) containerRef: ElementRef;
-  @ViewChild('stage', { static :true }) stageRef: ElementRef;
+  @ViewChild('wrapper',   { static: true }) wrapperRef!:   ElementRef;
+  @ViewChild('container', { static: true }) containerRef!: ElementRef;
+  @ViewChild('stage',     { static: true }) stageRef!:     ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
     public graphicsService: GraphicsService) { }
 
-  microphoneTrackByFn(index, micPosition: GraphicPosition) {
+  microphoneTrackByFn(index: number, micPosition: GraphicPosition) {
     return micPosition.number;
   }
 
-  audienceMicrophoneTrackByFn(index, audienceMicPosition: GraphicPosition) {
+  audienceMicrophoneTrackByFn(index: number, audienceMicPosition: GraphicPosition) {
     return audienceMicPosition.number;
   }
 
-  personTrackByFn(index, personPosition: GraphicPosition) {
+  personTrackByFn(index: number, personPosition: GraphicPosition) {
     return personPosition.number;
   }
 
-  audienceTrackByFn(index, audiencePosition: GraphicPosition) {
+  audienceTrackByFn(index: number, audiencePosition: GraphicPosition) {
     return index;
   }
 
@@ -140,14 +148,14 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event: Event) {
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .20;
     this.snapshotPageDimensions();
@@ -156,7 +164,7 @@ export class GraphicalStageSideComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .33;
     this.snapshotPageDimensions();
@@ -164,12 +172,12 @@ export class GraphicalStageSideComponent implements OnInit {
     this.calculateProportions();
   }
 
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: StageSideInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      cService[inputField] = numerical; 
+      inputElement.value = String(cService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {

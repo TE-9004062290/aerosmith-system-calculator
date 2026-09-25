@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { CalculatorService } from '@app/services/calculator.service';
 
@@ -6,6 +6,7 @@ import { CalculatorService } from '@app/services/calculator.service';
     selector: 'app-measuring-stick',
     templateUrl: './measuring-stick.component.html',
     styleUrls: ['./measuring-stick.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MeasuringStickComponent implements OnInit {
@@ -63,8 +64,8 @@ export class MeasuringStickComponent implements OnInit {
   }
 
   @Input() public twinned: boolean = false; /* I realize this is a hack, fight me */
-  @Input() public maxWidth: string = undefined;
-  @Input() public thinModeDirection: 'top' | 'right' | 'down' | 'left' = 'top';
+  @Input() public maxWidth?: string;
+  @Input() public thinModeDirection: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() public isInput: boolean = false;
   @Input() public inputMin: number = 0;
   @Input() public inputMax: number = 100;
@@ -103,7 +104,7 @@ export class MeasuringStickComponent implements OnInit {
     }
   }
 
-  onInputChange(inputElement) {
+  onInputChange(inputElement: HTMLInputElement): void {
     this.updated.emit(inputElement);
   }
 

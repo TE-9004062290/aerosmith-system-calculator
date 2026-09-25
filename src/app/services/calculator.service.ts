@@ -107,8 +107,8 @@ export class CalculatorService {
   private b_audienceExtenderProvided: boolean = false;
 
   /* Measurable Quantity Inputs */
-  private m_captureRadius = MicrophoneRadii.PresenterReinforcementQuality;
-  private m_secondaryCaptureRadius = MicrophoneRadii.PresenterRecording;
+  private m_captureRadius: MicrophoneRadii | null = MicrophoneRadii.PresenterReinforcementQuality;
+  private m_secondaryCaptureRadius: MicrophoneRadii | null = MicrophoneRadii.PresenterRecording;
   private m_audienceCaptureRadius = MicrophoneRadii.AudienceRecording;
   private m_lectureWidth: number = this.DEFAULTS.lectureWidth;
   private m_ceilingHeight: number = this.DEFAULTS.ceilingHeight;
@@ -131,8 +131,8 @@ export class CalculatorService {
   get extenderProvided(): boolean { return this.b_extenderProvided; }
   get audienceExtenderProvided(): boolean { return this.b_audienceExtenderProvided; }
 
-  get captureRadius(): number { return this.m_captureRadius; }
-  get secondaryCaptureRadius(): number { return this.m_secondaryCaptureRadius; }
+  get captureRadius(): number { return this.m_captureRadius ?? 0; }
+  get secondaryCaptureRadius(): number { return this.m_secondaryCaptureRadius ?? 0; }
   get audienceCaptureRadius(): number { return this.m_audienceCaptureRadius; }
   get lectureWidth(): number { return this.m_lectureWidth; }
   get ceilingHeight(): number { return this.m_ceilingHeight; }
@@ -211,8 +211,9 @@ export class CalculatorService {
     if (conversionRequired) {
       this.e_measurementUnit = val;
       let convertibles = Object.keys(this).filter((classMember) => classMember.startsWith('m_'));
+      const self = this as unknown as Record<string, number>;
       convertibles.forEach((classMember) => {
-        this[classMember] = round(this[classMember] * conversionFactor, 2);
+        self[classMember] = round(self[classMember] * conversionFactor, 2);
       });
 
       this.updateAndEmit();
@@ -480,7 +481,7 @@ export class CalculatorService {
       const maxDistance = 0.75 * MicrophoneRadii.PresenterRecording;
       return maxDistance > this.m_ceilingHeight ? this.m_ceilingHeight - this.m_presenterHeight : maxDistance;
     }
-
+    return 0;
   }
 
   private get verticalMinimum(): number {
@@ -522,7 +523,7 @@ export class CalculatorService {
     this.b_designForActive = this.b_reinforcePresenter || this.b_recordPresenter || this.b_recordAudience;
   }
 
-  private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight, ceilingHeight) {
+  private calculateDistanceBetweenAudienceAndAudienceMicrophone(audienceHeight: number, ceilingHeight: number) {
     if (2.1 * audienceHeight > ceilingHeight) {
       return ceilingHeight - audienceHeight;
     } else {
@@ -530,7 +531,7 @@ export class CalculatorService {
     }
   }
 
-  private calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(audienceHeight, ceilingHeight) {
+  private calculateMaxDistanceBetweenAudienceAndAudienceMicrophones(audienceHeight: number, ceilingHeight: number) {
     const maxDistance = 0.75 * MicrophoneRadii.AudienceRecording;
     if (maxDistance > ceilingHeight) {
       return ceilingHeight - audienceHeight;
@@ -615,7 +616,7 @@ export class CalculatorService {
     return Math.ceil(rawNumber)
   }
 
-  private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones) {
+  private refineMicrophoneInterval(presentationWidth: number, firstApproxNumMicrophones: number) {
     return presentationWidth / firstApproxNumMicrophones;
   }
 
@@ -663,7 +664,7 @@ export class CalculatorService {
     }
   }
 
-  private refineNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, intervalWidth: number, intervalDepth) {
+  private refineNumAudienceMicrophones(presentationWidth: number, audienceDepth: number, intervalWidth: number, intervalDepth: number) {
     const widthRaw = presentationWidth / intervalWidth;
     const depthRaw = audienceDepth / intervalDepth;
     return {

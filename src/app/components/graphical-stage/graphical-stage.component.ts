@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { CalculatorService } from '@app/services/calculator.service';
 import { GraphicsService } from '@app/services/graphics.service';
 
@@ -6,6 +6,14 @@ import { GraphicPosition } from '@app/models/graphic-position.model';
 
 import { SvgStandingPersonComponent } from '@components/svg-standing-person/svg-standing-person.component';
 import { MeasurementUnits } from '@app/models/enums/measurement-units.enum';
+
+export type StageInputField =
+  | 'ceilingHeight'
+  | 'lectureWidth'
+  | 'presenterHeight'
+  | 'audienceHeight'
+  | 'inputExtenderLength'
+  | 'audienceDepth';
 
 import {
   trigger,
@@ -37,6 +45,7 @@ enum RatioMode {
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GraphicalStageComponent implements OnInit {
@@ -73,8 +82,8 @@ export class GraphicalStageComponent implements OnInit {
   public capturePosition: number = 0;
   public captureTop: number = 0;
 
-  public microphones = { leftMost: 0, rightMost: 0, positions: []};
-  public persons = { leftMost: 0, rightMost: 0, positions: []};
+  public microphones = { leftMost: 0, rightMost: 0, positions: [] as GraphicPosition[] };
+  public persons = { leftMost: 0, rightMost: 0, positions: [] as GraphicPosition[] };
 
   public presenterWidth: number = 0;
   public presenterSideWidth: number = 0;
@@ -84,23 +93,23 @@ export class GraphicalStageComponent implements OnInit {
   public audienceDistance: number = 0;
   public audience: number[] = [];
   
-  @ViewChild('wrapper') wrapperRef: ElementRef;
-  @ViewChild('container') containerRef: ElementRef;
-  @ViewChild('stage') stageRef: ElementRef;
+  @ViewChild('wrapper')   wrapperRef!:   ElementRef;
+  @ViewChild('container') containerRef!: ElementRef;
+  @ViewChild('stage')     stageRef!:     ElementRef;
 
   constructor(
     public calculatorService: CalculatorService, 
     public graphicsService: GraphicsService) { }
 
-  microphoneTrackByFn(index, micPosition: GraphicPosition) {
+  microphoneTrackByFn(index: number, micPosition: GraphicPosition) {
     return micPosition.number;
   }
 
-  personTrackByFn(index, personPosition: GraphicPosition) {
+  personTrackByFn(index: number, personPosition: GraphicPosition) {
     return personPosition.number;
   }
 
-  audienceTrackByFn(index, audiencePosition: GraphicPosition) {
+  audienceTrackByFn(index: number, audiencePosition: GraphicPosition) {
     return audiencePosition.number;
   }
 
@@ -136,14 +145,14 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event: Event) {
     this.snapshotPageDimensions();
     this.snapshotContainerDimensions();
     this.calculateProportions();
   }
 
   @HostListener('window:beforeprint',['$event'])
-  onBeforePrint(event) {
+  onBeforePrint(event: Event | null) {
     this.isPrinting = true;
     this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
@@ -152,7 +161,7 @@ export class GraphicalStageComponent implements OnInit {
   }
 
   @HostListener('window:afterprint',['$event'])
-  onAfterPrint(event) {
+  onAfterPrint(event: Event | null) {
     this.isPrinting = false;
     this.STAGE_PAGE_HEIGHT_RATIO = .2;
     this.snapshotPageDimensions();
@@ -186,7 +195,7 @@ export class GraphicalStageComponent implements OnInit {
     this.captureWidthPercentage = this.getRadiusWidthPercentage();
     this.sideCapture = this.getSideRadius();
     this.audienceDistance = this.getAudienceDistance();
-    this.captureTop = this.getRadiusTopPosition(null);
+    this.captureTop = this.getRadiusTopPosition();
     this.audience = this.getAudienceArray();
   }
 
@@ -249,7 +258,7 @@ export class GraphicalStageComponent implements OnInit {
     return captureRadiusHeightRatio * this.stageHeight;
   }
 
-  private getRadiusTopPosition(numMicrophone): number {
+  private getRadiusTopPosition(): number {
     const cService = this.calculatorService;
     const extenderLength = cService.extenderLength;
     this.inputExtenderLength = cService.inputExtenderLength / cService.ceilingHeight * this.stageHeight;
@@ -280,12 +289,12 @@ export class GraphicalStageComponent implements OnInit {
     return audienceArray;
   }
 
-  public updateInput(inputField, inputElement) {
+  public updateInput(inputField: StageInputField, inputElement: HTMLInputElement): void {
     let numerical = parseFloat(inputElement.value);
     const cService = this.calculatorService;
     if (inputField in { 'ceilingHeight': null, 'lectureWidth': null, 'presenterHeight': null, 'audienceHeight': null, 'inputExtenderLength': null, 'audienceDepth': null }) {
-      cService[inputField] = numerical; // Rely on model logic implemented in setter
-      inputElement.value = cService[inputField];
+      cService[inputField] = numerical;
+      inputElement.value = String(cService[inputField]);
     }
 
     if (inputField === 'inputExtenderLength') {
